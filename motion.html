@@ -144,6 +144,18 @@
     @media (prefers-reduced-motion: reduce) {
       .puck, .spec-fade-in, .spec-rise-in, .spec-slide-in, .spec-scale-in, .spec-pulse, .spec-shimmer { animation: none !important; }
     }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+      .principles { grid-template-columns: 1fr; }
+      .demo-grid { grid-template-columns: 1fr; }
+      .easing-grid { grid-template-columns: 1fr; }
+      .easing { grid-template-columns: 80px 1fr; padding: 18px; gap: 12px; }
+      .anim-grid { grid-template-columns: 1fr 1fr; }
+      .section-block { margin-bottom: 56px; }
+      .tokens-used { padding: 16px 18px; overflow-x: auto; }
+    }
   </style>
 </head>
 <body>

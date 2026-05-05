@@ -522,6 +522,27 @@
       text-underline-offset: 3px;
     }
     .body-link:hover { text-decoration-thickness: 2px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px !important; }
+      .type-row { grid-template-columns: 1fr; }
+      .type-sample { padding: 24px 0 12px; min-width: 0; overflow: hidden; }
+      .type-sample > * { max-width: 100%; word-break: break-word; }
+      .type-specs { padding: 12px 0 24px; border-left: none; border-top: 1px solid var(--rule); flex-direction: row; flex-wrap: wrap; gap: 12px 24px; }
+      .spec-item { flex: 0 0 auto; }
+      .t-display { font-size: 56px; }
+      .t-h1 { font-size: 40px; }
+      .t-h2 { font-size: 32px; }
+      .t-h3 { font-size: 24px; }
+      .demo-card { padding: 28px 24px; }
+      .demo-h { font-size: 28px; }
+      .weight-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .demo-card div[style*="font-size:200px"] { font-size: 120px !important; }
+      .demo-card .demo-h[style*="font-size:56px"] { font-size: 44px !important; }
+      .demo-card .demo-h[style*="font-size:32px"] { font-size: 26px !important; }
+      .demo-card div[style*="display:flex"] { gap: 16px !important; }
+    }
   </style>
 </head>
 <body>

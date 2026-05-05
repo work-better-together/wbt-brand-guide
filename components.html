@@ -355,6 +355,21 @@
        ════════════════════════════════════════════════════════════ */
     .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
     .stack { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+      .stage { padding: 24px 16px; }
+      .stage-grid { gap: 16px; }
+      .stage-grid.cols-2,
+      .stage-grid.cols-3,
+      .stage-grid.cols-4,
+      .stage-grid.cols-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .state-cell { min-width: 0; }
+      .state-cell button, .state-cell .btn { max-width: 100%; }
+      .tokens-used { padding: 16px 18px; overflow-x: auto; }
+      .nav-links { flex-wrap: wrap; }
+    }
   </style>
 </head>
 <body>

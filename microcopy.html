@@ -95,6 +95,16 @@
     .state-card .sc-cta { font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-inverse); background: var(--c-intentional-blue); padding: 8px 14px; border-radius: 2px; display: inline-block; }
 
     .row-list { font-family: var(--font-body); font-size: 14px; line-height: 1.8; padding-left: 22px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+      .principles { grid-template-columns: 1fr; }
+      .lengths { grid-template-columns: 1fr; }
+      .length-card { padding: 18px; }
+      .state-grid { grid-template-columns: 1fr; }
+      .state-card { padding: 18px; }
+    }
   </style>
 </head>
 <body>
