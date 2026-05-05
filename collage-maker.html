@@ -548,6 +548,64 @@
     border: 1px solid var(--rule);
     border-radius: 999px;
   }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    /* Body is overflow:hidden on desktop (canvas stage fills remaining viewport).
+       On mobile, allow full-page scroll so the rail + stage are both reachable. */
+    html, body {
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .layout {
+      display: block; /* single column, stacked */
+      height: auto;
+      overflow: visible;
+    }
+
+    /* Rail scrolls with page rather than independently */
+    .rail {
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 16px 20px 24px;
+      overflow-y: visible;
+      max-height: none;
+      height: auto;
+    }
+
+    /* Toolbar buttons full-width */
+    .toolbar-buttons { grid-template-columns: 1fr; }
+
+    /* Compact swatch grids on narrow viewports */
+    .swatch-grid--bg { grid-template-columns: repeat(3, 1fr); }
+    .swatch-grid--compact { grid-template-columns: repeat(6, 1fr); }
+
+    /* Stage: natural height rather than flex remainder */
+    .stage {
+      height: auto;
+      min-height: 340px;
+      padding: 20px;
+      overflow: visible;
+    }
+
+    /* Canvas: use viewport-relative sizing that fits mobile */
+    .canvas-wrap {
+      width: min(86vw, 420px);
+      margin: 0 auto;
+    }
+
+    /* Stage hint: static below canvas rather than fixed overlay */
+    .stage-hint {
+      position: static;
+      transform: none;
+      left: auto;
+      bottom: auto;
+      margin: 16px auto 0;
+      display: block;
+      width: fit-content;
+    }
+  }
 </style>
 </head>
 <body>
@@ -706,7 +764,6 @@ const STATIC_CONCEPTS = [
     images: [
       'assets/Illustrations/Heart.png',
       'assets/Illustrations/Heart-Tablet.png',
-      'assets/Illustrations/Heart-Tablet-2.png',
     ],
   },
   {

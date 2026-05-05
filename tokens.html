@@ -406,6 +406,38 @@
     .code-block .c-key { color: var(--c-radiant-gold); }
     .code-block .c-val { color: var(--c-calm-blue); }
     .code-block .c-comment { color: rgba(249,248,242,0.45); }
+
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+
+      /* Grids → single column */
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .status-grid { grid-template-columns: 1fr; }
+      .motion-grid { grid-template-columns: 1fr; }
+      .radius-grid { grid-template-columns: repeat(3, 1fr); }
+
+      /* Type rows → stack, hide meta column */
+      .type-row { grid-template-columns: 1fr; gap: var(--space-1); }
+      .type-row > div:last-child { display: none; }
+
+      /* Scale rows → shrink label columns */
+      .scale-row { grid-template-columns: 72px 40px 1fr; gap: var(--space-3); }
+
+      /* Border rows → shrink token column */
+      .border-row { grid-template-columns: 96px 1fr auto; gap: var(--space-3); }
+
+      /* Container rows → cap bar width */
+      .container-row { grid-template-columns: 1fr auto; gap: var(--space-3); }
+      .container-bar { display: none; }
+
+      /* Tables → scrollable, tighter padding */
+      .section-block { overflow-x: auto; }
+      .token-table th, .token-table td { padding: var(--space-2) var(--space-3); }
+      .token-table .name-col code, .token-table .value-col code { white-space: nowrap; }
+      .token-table .role-col { display: none; }
+      .token-table .preview-col { width: 56px; }
+      .swatch-chip { width: 48px; height: 24px; }
+    }
   </style>
 </head>
 <body>
@@ -413,7 +445,7 @@
 
   <!-- Page header -->
   <header class="page-header">
-    <span class="label">Work Better Together · Brand Guide</span>
+    
     <h1>Design tokens</h1>
     <p>The system layer beneath the brand. Three tiers — primitives, semantic, component — that translate brand expression into reusable, role-based values.</p>
   </header>

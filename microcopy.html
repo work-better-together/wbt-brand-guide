@@ -91,17 +91,27 @@
     .state-card { background: var(--surface-default); border: 1px solid var(--border-subtle); padding: 24px; }
     .state-card .sc-tag { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-clean-slate); margin-bottom: 10px; }
     .state-card h4 { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin-bottom: 10px; }
-    .state-card .sc-msg { font-family: var(--font-body); font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
-    .state-card .sc-cta { font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-inverse); background: var(--c-intentional-blue); padding: 8px 14px; border-radius: 2px; display: inline-block; }
+    .state-card .sc-msg { font-family: var(--font-body); font-size: 14px; line-height: 1.6; margin-bottom: 0; }
+    .state-card .sc-cta { font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-inverse); background: var(--c-intentional-blue); padding: 8px 14px; border-radius: 7px; display: inline-block; margin-top: 12px; }
 
     .row-list { font-family: var(--font-body); font-size: 14px; line-height: 1.8; padding-left: 22px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+      .principles { grid-template-columns: 1fr; }
+      .lengths { grid-template-columns: 1fr; }
+      .length-card { padding: 18px; }
+      .state-grid { grid-template-columns: 1fr; }
+      .state-card { padding: 18px; }
+    }
   </style>
 </head>
 <body>
 <div class="page">
 
   <header class="page-header">
-    <span class="label">Work Better Together · Brand Guide</span>
+    
     <h1>Microcopy</h1>
     <p>Voice in product UI: button labels, error messages, empty states, confirmations. Where the brand's "calm under pressure" actually has to land.</p>
   </header>
@@ -321,7 +331,8 @@
       <div class="state-card">
         <div class="sc-tag">404</div>
         <h4>This page isn't here.</h4>
-        <div class="sc-msg">It may have moved, or you may have arrived from a stale link. <span class="sc-cta">Back home</span></div>
+        <div class="sc-msg">It may have moved, or you may have arrived from a stale link.</div>
+        <span class="sc-cta">Back home</span>
       </div>
       <div class="state-card">
         <div class="sc-tag">No permission</div>
@@ -331,7 +342,8 @@
       <div class="state-card">
         <div class="sc-tag">Session expired</div>
         <h4>You've been signed out.</h4>
-        <div class="sc-msg">For your security, sessions time out after a stretch of inactivity. <span class="sc-cta">Sign in again</span></div>
+        <div class="sc-msg">For your security, sessions time out after a stretch of inactivity.</div>
+        <span class="sc-cta">Sign in again</span>
       </div>
     </div>
   </div>

@@ -142,6 +142,36 @@
     .we-text { font-family: var(--font-body); font-size: 17px; line-height: 1.75; color: var(--ink); max-width: 600px; text-wrap: pretty; }
     .we-text em { font-style: italic; color: var(--ink); }
     .we-headline { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); margin-bottom: 12px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+      .page-header { margin-bottom: 48px; padding-bottom: 24px; }
+      .section-divider { margin: 48px 0; }
+      .pmv-grid { grid-template-columns: 1fr; }
+      .pmv-card { padding: 24px 20px; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .voice-attrs { grid-template-columns: 1fr; }
+      .voice-attr { padding: 24px 20px; }
+      .tone-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tone-cell { min-width: 0; padding: 20px 16px; }
+      .tone-list .tone-cell[style*="span 2"] { grid-column: span 2 !important; }
+      .do-dont { grid-template-columns: 1fr; }
+      .do-card, .dont-card { padding: 24px 20px; }
+      .personality-block { padding: 32px 24px; }
+      .writing-example { padding: 28px 24px; }
+      .we-headline { font-size: 26px; }
+      /* Inline-styled "Core Brand Language" 2-col grid */
+      .page > div[style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+      .page > div[style*="grid-template-columns:1fr 1fr"] > div {
+        padding: 28px 24px !important;
+      }
+      .page > div[style*="grid-template-columns:1fr 1fr"] > div > div[style*="font-size:36px"] {
+        font-size: 28px !important;
+      }
+    }
   </style>
 </head>
 <body>

@@ -33,16 +33,27 @@
       --font-mono: 'Inconsolata', monospace;
     }
 
-    html, body {
+    html {
       background-color: var(--calm-blue);
-      background-image: url('assets/Watercolor Textures/Backgrounds/Calm Blue/WBT-20260403-Calm-Blue-Watercolor-Background-2.jpg');
-      background-size: cover;
-      background-position: center top;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
       color: var(--grounded-black);
       font-family: var(--font-body);
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('assets/Watercolor Textures/Backgrounds/Calm Blue/WBT-20260403-Calm-Blue-Watercolor-Background-2.jpg');
+      background-size: cover;
+      background-position: center top;
+      z-index: -1;
     }
 
     /* ── Hero ── */

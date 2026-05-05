@@ -115,13 +115,24 @@
     pre.snip .c { color: rgba(249,248,242,0.45); }
     pre.snip .k { color: var(--c-radiant-gold); }
     pre.snip .v { color: var(--c-calm-blue); }
+
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+      .specs-grid { grid-template-columns: 1fr; }
+      .size-grid { grid-template-columns: repeat(2, 1fr); }
+      .icon-color-grid { grid-template-columns: repeat(2, 1fr); }
+      .icons-sample { grid-template-columns: repeat(4, 1fr); }
+      .icons-sample .icon-cell { padding: 14px 8px; }
+      .icons-sample .icon-cell .i-name { letter-spacing: 0; }
+      .do-dont-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 <div class="page">
 
   <header class="page-header">
-    <span class="label">Work Better Together · Brand Guide</span>
+    
     <h1>Iconography</h1>
     <p>One library, one stroke, four sizes. Icons should feel like a quieter sibling of the typography — not the star of the room.</p>
   </header>

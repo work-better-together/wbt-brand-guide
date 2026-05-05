@@ -143,8 +143,14 @@
       font-family: 'League Spartan', sans-serif;
       font-weight: 700;
       font-size: 20px;
+      line-height: 1.05;
       letter-spacing: -0.01em;
       color: #1a1a1a;
+    }
+    @media (max-width: 520px) {
+      .wbt-page-footer { padding: 24px 20px 60px; }
+      .wbt-page-footer-title { font-size: 16px; }
+      .wbt-page-footer-label { font-size: 9px; }
     }
     .wbt-page-footer-up {
       font-size: 16px;
@@ -177,15 +183,15 @@
     .wbt-nav-drawer-close:hover { color: #F9F8F2; }
     .wbt-nav-drawer-list { list-style: none; padding: 32px 0 0; overflow-y: auto; flex: 1; }
     .wbt-nav-drawer-group-label {
-      padding: 24px 32px 8px; font-family: 'League Spartan', sans-serif;
+      padding: 16px 32px 6px; font-family: 'League Spartan', sans-serif;
       font-weight: 500; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
       color: rgba(249,248,242,0.35); border-bottom: 1px solid rgba(249,248,242,0.08);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .wbt-nav-drawer-group-label:first-child { padding-top: 0; }
     .wbt-nav-drawer-list a {
-      display: block; padding: 9px 32px;
-      font-family: 'League Spartan', sans-serif; font-weight: 500; font-size: 14px;
+      display: block; padding: 6px 32px;
+      font-family: 'League Spartan', sans-serif; font-weight: 500; font-size: 13px;
       letter-spacing: 0.04em; text-transform: uppercase;
       color: rgba(249,248,242,0.75); text-decoration: none;
       transition: color 0.15s;
@@ -286,12 +292,20 @@
       { file: 'photos.html', title: 'Photos' },
       { file: 'swag.html',          title: 'Swag' },
       { file: 'clients.html',         title: 'Clients' },
+      { file: 'motion.html',          title: 'Motion' },
     ]},
     { label: 'Tools', pages: [
       { file: 'collage-maker.html',      title: 'Collage Maker' },
       { file: 'deck-template/index.html',  title: 'Deck Template' },
       { file: 'newsletter.html',  title: 'Newsletter' },
       { file: 'social-maker.html',               title: 'Social Maker', wip: true },
+    ]},
+    { label: 'Design System', pages: [
+      { file: 'tokens.html',      title: 'Tokens' },
+      { file: 'components.html',  title: 'Components' },
+      { file: 'iconography.html', title: 'Iconography' },
+      { file: 'data-viz.html',    title: 'Data Viz' },
+      { file: 'microcopy.html',   title: 'Microcopy' },
     ]},
   ];
 

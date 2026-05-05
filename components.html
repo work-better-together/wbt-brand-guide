@@ -336,8 +336,9 @@
       color: var(--nav-ink);
     }
     .nav-brand { display: flex; align-items: center; gap: 14px; font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--nav-ink); }
-    .nav-brand .b-mark { width: 28px; height: 28px; border-radius: 999px; border: 1.5px solid var(--c-clear-white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; }
+    .nav-brand .b-mark { width: 32px; height: auto; filter: invert(1); display: block; }
     .nav-links { display: flex; gap: 4px; }
+    .nav-hamburger { display: none; background: none; border: none; color: var(--nav-ink); font-size: 18px; cursor: pointer; padding: 4px; line-height: 1; }
     .nav-link { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--nav-ink); padding: 8px 14px; border-radius: 2px; text-decoration: none; transition: background var(--motion-state); }
     .nav-link:hover { background: rgba(249,248,242,0.12); }
     .nav-link.is-active { color: var(--c-radiant-gold); }
@@ -355,6 +356,23 @@
        ════════════════════════════════════════════════════════════ */
     .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
     .stack { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+      .stage { padding: 24px 16px; }
+      .stage-grid { gap: 16px; }
+      .stage-grid.cols-2,
+      .stage-grid.cols-3,
+      .stage-grid.cols-4,
+      .stage-grid.cols-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .state-cell { min-width: 0; }
+      .state-cell button, .state-cell .btn { max-width: 100%; }
+      .tokens-used { padding: 16px 18px; overflow-x: auto; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .stage-grid.cols-3 { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -362,7 +380,7 @@
 
   <!-- Page header -->
   <header class="page-header">
-    <span class="label">Work Better Together · Brand Guide</span>
+    
     <h1>Components</h1>
     <p>The component layer. Each component reads from the semantic and component tokens — change a token, every consumer updates.</p>
   </header>
@@ -820,7 +838,7 @@
     <div class="stage" style="padding:0;">
       <div class="nav-component">
         <div class="nav-brand">
-          <div class="b-mark">W</div>
+          <img class="b-mark" src="assets/Logos/WBT-20260502-WBT-Monogram-Black.svg" alt="WBT">
           <span>Brand Guide · 2026</span>
         </div>
         <div class="nav-links">
@@ -831,6 +849,7 @@
           <a class="nav-link" href="#">Elements</a>
           <a class="nav-link" href="#">Tokens</a>
         </div>
+        <button class="nav-hamburger">☰</button>
       </div>
     </div>
 

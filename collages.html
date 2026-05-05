@@ -215,6 +215,12 @@
       .finished-grid { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 768px) {
+      .page { padding: 40px 20px 80px; }
+      .page-header { margin-bottom: 40px; padding-bottom: 20px; }
+      .static-section-intro { grid-template-columns: 1fr; gap: 16px; }
+    }
+
     /* ── Saved-from-Builder cards (localStorage-backed) ── */
     .finished-card--saved { position: relative; }
     .finished-card--saved .finished-thumb {
@@ -272,6 +278,7 @@
     .coming-card .coming-tag { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate); background: var(--slate-light); padding: 2px 7px; border-radius: 2px; align-self: flex-start; }
     .coming-card h4 { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--ink); }
     .coming-card p { font-family: var(--font-body); font-size: 13px; color: var(--ink); line-height: 1.55; }
+    @media (max-width: 768px) { .coming-soon-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>

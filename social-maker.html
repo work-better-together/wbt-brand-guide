@@ -509,11 +509,37 @@
 
   /* ── Responsive ── */
   @media (max-width: 760px) {
-    .tool-layout { grid-template-columns: 1fr; }
-    .panel-right { position: static; }
     .page-wrap { padding: 0 20px 60px; }
+
+    .page-header { padding: 32px 0 24px; }
+    .page-header p { font-size: 14px; }
+
     .format-bar { gap: 6px; }
     .carousel-toggle { margin-left: 0; }
+    .format-btn { font-size: 9px; padding: 7px 10px; }
+
+    .tool-layout { grid-template-columns: 1fr; gap: 24px; }
+    .panel-left, .panel-right { min-width: 0; }
+    .panel-right { position: static; }
+
+    /* Canvas: fit within page content */
+    .canvas-wrap { padding: 12px; min-height: 240px; overflow: hidden; }
+
+    /* Template thumbnails: 2 columns on mobile */
+    .template-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+
+    /* Color swatches: 4 cols fit at 335px (83px each) */
+    .color-swatches { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+
+    /* Spot grid: 4 cols still scrollable within 170px max-height */
+    .spot-grid { grid-template-columns: repeat(4, 1fr); }
+
+    /* Scribble subgrid: 5 cols → 4 on mobile */
+    .scribble-subgrid { grid-template-columns: repeat(4, 1fr); }
+
+    /* Export row: full-width buttons */
+    .export-row { flex-direction: column; }
+    .btn-export { flex: none; }
   }
 </style>
 </head>
@@ -691,7 +717,7 @@ const WC_BG = {
 
 const SPOTS = [
   'Blue-Blob','Eye','Eye-Rays','Gold-Blue-Eye','Hands-With-Eyes',
-  'Heart','Heart-Tablet','Heart-Tablet-2','Hourglass','Key',
+  'Heart','Heart-Tablet','Hourglass','Key',
   'Map','Mirror','Nest','Nest-Bird','Open-Doors',
   'Pink-Blob','Pink-Torn-Paper-1','Pink-Torn-Paper-2','Rays','Red-Butterfly',
   'Roots','Star','Star-Colors','Sun','Sun2','Tree-Roots','Watch',
@@ -1095,7 +1121,13 @@ function sizeCanvas() {
   const fmt = FORMATS[state.format];
   canvas.width  = fmt.w;
   canvas.height = fmt.h;
-  const scale = Math.min(PREV_MAX_W / fmt.w, PREV_MAX_H / fmt.h, 1);
+  // document.documentElement.clientWidth is always in CSS px (excludes scrollbar).
+  // Subtract page horizontal padding (40px at mobile, 80px at desktop).
+  const cssVW = document.documentElement.clientWidth;
+  const pagePad = cssVW <= 760 ? 40 : 80;
+  const safeW = Math.max(cssVW - pagePad, 120);
+  const availW = Math.min(PREV_MAX_W, safeW);
+  const scale = Math.min(availW / fmt.w, PREV_MAX_H / fmt.h, 1);
   canvas.style.width  = Math.round(fmt.w * scale) + 'px';
   canvas.style.height = Math.round(fmt.h * scale) + 'px';
 }
@@ -1481,6 +1513,11 @@ function init() {
 }
 
 init();
+
+window.addEventListener('resize', () => {
+  sizeCanvas();
+  scheduleRedraw();
+});
 </script>
 </body>
 </html>
