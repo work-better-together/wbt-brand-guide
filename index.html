@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/svg+xml" href="assets/Logos/WBT-20260505-Favicon-Intentional-Blue.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brand Guide — Work Better Together</title>
@@ -67,13 +68,6 @@
       pointer-events: none;
       user-select: none;
     }
-    @media (max-width: 900px) {
-      .hero-illustration {
-        right: -8%;
-        opacity: 0.55;
-        width: clamp(420px, 80vw, 600px);
-      }
-    }
 
     .hero-nav {
       display: flex;
@@ -94,6 +88,8 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--grounded-black);
+      text-align: right;
+      line-height: 1.6;
     }
 
     .hero-body {
@@ -403,6 +399,36 @@
     .coming-card .c-num { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px; }
     .coming-card h4 { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--ink); margin-bottom: 6px; }
     .coming-card p { font-family: var(--font-body); font-size: 13px; color: var(--ink); line-height: 1.55; }
+    @media (max-width: 900px) {
+      .hero {
+        display: flex;
+        flex-direction: column;
+        padding: 32px 24px 48px;
+      }
+      .hero-nav  { order: 0; }
+      .hero-illustration {
+        order: 1;
+        position: static;
+        opacity: 1;
+        width: 100%;
+        max-width: 480px;
+        transform: none;
+        align-self: center;
+        margin: 16px 0 0;
+      }
+      .hero-body {
+        order: 2;
+        padding: 8px 0 0;
+      }
+      .hero-footer { order: 3; margin-top: 40px; }
+      .hero { min-height: unset; }
+      .section-cards,
+      .section-cards.two-col { grid-template-columns: 1fr; }
+      .section-card.full { grid-column: span 1; }
+      .sections { padding: 48px 24px 80px; }
+      .coming-section { padding: 0 24px 60px; }
+      .coming-cards { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -415,7 +441,7 @@
 
     <nav class="hero-nav">
       <img class="wordmark-logo" src="assets/Logos/WBT-20260502-Work-Better-Together-Wordmark-Black.svg" alt="Work Better Together">
-      <span class="guide-label">Last updated · April 2026</span>
+      <span class="guide-label">Last updated<br>May 5, 2026</span>
     </nav>
 
     <div class="hero-body">
@@ -446,18 +472,7 @@
       </a>
 
       <a class="section-card themed" style="--card-bg:#ACCDD9;--card-text:#061A49" href="color.html">
-        <div class="card-title-row">
-          <div class="card-title">Color</div>
-          <div class="color-preview">
-            <div class="color-pip" style="background:#061A49"></div>
-            <div class="color-pip" style="background:#2531A5"></div>
-            <div class="color-pip" style="background:#CD9F36"></div>
-            <div class="color-pip" style="background:#1E4D5C"></div>
-            <div class="color-pip" style="background:#B55312"></div>
-            <div class="color-pip" style="background:#F9F8F2;border:1px solid rgba(6,26,73,0.15)"></div>
-            <div class="color-pip" style="background:#1F1E1E"></div>
-          </div>
-        </div>
+        <div class="card-title">Color</div>
       </a>
 
       <a class="section-card themed" style="--card-bg:#CD9F36;--card-text:#1F1E1E" href="elements.html">

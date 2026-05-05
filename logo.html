@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/svg+xml" href="assets/Logos/WBT-20260505-Favicon-Intentional-Blue.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Logo &amp; Mark — Work Better Together</title>
@@ -328,6 +329,7 @@
 
     .variant svg.wm { height: 56px; max-width: 100%; }
     .variant svg.mn { height: 88px; max-width: 100%; }
+    .variant-grid:not(.social-grid) .wm-md { height: 77px; }
 
     .variant .v-label {
       position: absolute;
@@ -356,6 +358,62 @@
     }
     .variant.dark .v-spec, .variant.steady .v-spec, .variant.slate .v-spec, .variant.black .v-spec, .variant.ochre .v-spec, .variant.intentional .v-spec { color: rgba(249,248,242,0.5); }
     .variant.gold .v-spec, .variant.calm .v-spec, .variant.calm-gold .v-spec { color: rgba(31,30,30,0.55); }
+
+    /* ── Social profile tiles (section 03 monogram grid) ── */
+    .social-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .social-grid .variant {
+      aspect-ratio: 1;
+      min-height: unset;
+      padding: 0;
+      position: relative;
+    }
+    .social-grid .variant svg.mn {
+      height: 58%;
+      width: auto;
+      max-width: 58%;
+      display: block;
+    }
+    .social-grid .variant .v-label,
+    .social-grid .variant .v-spec {
+      display: none;
+    }
+    .social-tile-dl {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      border: none;
+      padding: 0;
+    }
+    .social-grid .variant:hover .social-tile-dl {
+      opacity: 1;
+    }
+    .social-tile-dl svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .social-grid .variant.cream .social-tile-dl {
+      background: rgba(0,0,0,0.18);
+    }
+    .social-grid .variant.cream .social-tile-dl svg {
+      stroke: #1F1E1E;
+    }
 
     /* ── Construction ── */
     .construction {
@@ -591,6 +649,7 @@
 
     @media (max-width: 760px) {
       .variant-grid { grid-template-columns: 1fr 1fr; }
+      .social-grid { grid-template-columns: repeat(3, 1fr); }
       .two-up { grid-template-columns: 1fr; }
       .dodont-grid { grid-template-columns: 1fr; }
       .files-row { grid-template-columns: 40px 1fr; }
@@ -652,13 +711,13 @@
       <p class="section-intro">The wordmark is the primary expression — use it wherever space allows. The monogram is the secondary, reserved for tight or square contexts.</p>
 
       <div class="two-up">
-        <div class="cell" style="color: var(--steady-blue);">
+        <div class="cell" style="color: var(--grounded-black);">
           <span class="role">Primary</span>
           <span class="role-meta">Wordmark</span>
           <svg class="wm wm-xl"><use href="#wbt-wordmark"/></svg>
           <p class="name"><strong>Wordmark</strong>The full name in custom letterforms — the default identity.</p>
         </div>
-        <div class="cell" style="color: var(--steady-blue);">
+        <div class="cell" style="color: var(--grounded-black);">
           <span class="role">Secondary</span>
           <span class="role-meta">Monogram</span>
           <svg class="mn mn-xl"><use href="#wbt-monogram"/></svg>
@@ -677,49 +736,31 @@
 
       <div class="variant-grid">
         <div class="variant cream" style="color: var(--grounded-black);">
-          <span class="v-label">Clear White</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Clear White / Black</span>
         </div>
         <div class="variant slate" style="color: var(--calm-blue);">
-          <span class="v-label">Clean Slate</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Clean Slate / Calm Blue</span>
         </div>
         <div class="variant calm" style="color: var(--clean-slate);">
-          <span class="v-label">Calm Blue</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Calm Blue / Clean Slate</span>
         </div>
         <div class="variant gold" style="color: var(--steady-blue);">
-          <span class="v-label">Radiant Gold</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Radiant Gold / Steady Blue</span>
         </div>
         <div class="variant ochre" style="color: var(--clear-white);">
-          <span class="v-label">Honest Ochre</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Honest Ochre / Clear White</span>
         </div>
         <div class="variant black" style="color: var(--clear-white);">
-          <span class="v-label">Grounded Black</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Grounded Black / Clear White</span>
         </div>
         <div class="variant steady" style="color: var(--gold);">
-          <span class="v-label">Steady Blue</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Steady Blue / Radiant Gold</span>
         </div>
         <div class="variant intentional" style="color: var(--clear-white);">
-          <span class="v-label">Intentional Blue</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Intentional Blue / Clear White</span>
         </div>
         <div class="variant cream" style="color: var(--intentional-blue);">
-          <span class="v-label">Clear White · Intentional</span>
           <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
-          <span class="v-spec">Clear White / Intentional Blue</span>
         </div>
       </div>
     </section>
@@ -730,57 +771,66 @@
         <h2>03 · Monogram · Color variants</h2>
         <span class="meta">9 approved treatments</span>
       </div>
-      <p class="section-intro">The monogram uses the same eight approved color pairings as the wordmark — calm in calm contexts, bold where it counts.</p>
+      <p class="section-intro">The monogram uses the same eight approved color pairings as the wordmark — calm in calm contexts, bold where it counts. Hover any tile to <strong>download as a social profile picture</strong>.</p>
 
       <div class="callout" style="margin-bottom: 28px;">
         <strong>About the mark.</strong> The “T” stretches across the width of the rounded square — visually carrying the “W” and “B” beneath it. The shape is a quiet metaphor for <strong>Together</strong>: a single beam holding the rest in place. The rounded outline is also intended to suggest a mirror — because this work is about self-reflection.
       </div>
 
-      <div class="variant-grid">
-        <div class="variant cream" style="color: var(--grounded-black);">
-          <span class="v-label">Clear White</span>
+      <div class="variant-grid social-grid">
+        <div class="variant cream" style="color: var(--grounded-black);" data-dl-bg="#F9F8F2" data-dl-fg="#1F1E1E" data-dl-name="wbt-monogram-clear-white">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Clear White / Black</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
-        <div class="variant slate" style="color: var(--calm-blue);">
-          <span class="v-label">Clean Slate</span>
+        <div class="variant slate" style="color: var(--calm-blue);" data-dl-bg="#1E4D5C" data-dl-fg="#ACCDD9" data-dl-name="wbt-monogram-clean-slate">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Clean Slate / Calm Blue</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
-        <div class="variant calm" style="color: var(--clean-slate);">
-          <span class="v-label">Calm Blue</span>
+        <div class="variant calm" style="color: var(--clean-slate);" data-dl-bg="#ACCDD9" data-dl-fg="#1E4D5C" data-dl-name="wbt-monogram-calm-blue">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Calm Blue / Clean Slate</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
-        <div class="variant gold" style="color: var(--steady-blue);">
-          <span class="v-label">Radiant Gold</span>
+        <div class="variant gold" style="color: var(--steady-blue);" data-dl-bg="#CD9F36" data-dl-fg="#061A49" data-dl-name="wbt-monogram-radiant-gold">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Radiant Gold / Steady Blue</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
-        <div class="variant ochre" style="color: var(--clear-white);">
-          <span class="v-label">Honest Ochre</span>
+        <div class="variant ochre" style="color: var(--clear-white);" data-dl-bg="#B55312" data-dl-fg="#F9F8F2" data-dl-name="wbt-monogram-honest-ochre">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Honest Ochre / Clear White</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
-        <div class="variant black" style="color: var(--clear-white);">
-          <span class="v-label">Grounded Black</span>
+        <div class="variant black" style="color: var(--clear-white);" data-dl-bg="#1F1E1E" data-dl-fg="#F9F8F2" data-dl-name="wbt-monogram-grounded-black">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Grounded Black / Clear White</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
-        <div class="variant steady" style="color: var(--gold);">
-          <span class="v-label">Steady Blue</span>
+        <div class="variant steady" style="color: var(--gold);" data-dl-bg="#061A49" data-dl-fg="#CD9F36" data-dl-name="wbt-monogram-steady-blue">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Steady Blue / Radiant Gold</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
-        <div class="variant intentional" style="color: var(--clear-white);">
-          <span class="v-label">Intentional Blue</span>
+        <div class="variant intentional" style="color: var(--clear-white);" data-dl-bg="#2531A5" data-dl-fg="#F9F8F2" data-dl-name="wbt-monogram-intentional-blue">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Intentional Blue / Clear White</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
-        <div class="variant cream" style="color: var(--intentional-blue);">
-          <span class="v-label">Clear White · Intentional</span>
+        <div class="variant cream" style="color: var(--intentional-blue);" data-dl-bg="#F9F8F2" data-dl-fg="#2531A5" data-dl-name="wbt-monogram-clear-white-intentional">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
-          <span class="v-spec">Clear White / Intentional Blue</span>
+          <button class="social-tile-dl" title="Download as PNG" onclick="downloadMonogramTile(this)">
+            <svg viewBox="0 0 16 16"><line x1="8" y1="2" x2="8" y2="10"/><polyline points="5,7 8,10 11,7"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -795,7 +845,7 @@
 
       <div class="construction">
         <div class="construction-flex">
-          <div class="construction-stage" style="color: var(--steady-blue);">
+          <div class="construction-stage" style="color: var(--grounded-black);">
             <div class="clearspace-frame"></div>
             <div class="clearspace-corner tl"></div>
             <div class="clearspace-corner tr"></div>
@@ -823,7 +873,7 @@
       </div>
       <p class="section-intro">Below the minimum sizes, the custom letterforms lose fidelity. When you need to go smaller, switch to the monogram — that’s what it’s for.</p>
 
-      <div class="sizing-row" style="color: var(--steady-blue);">
+      <div class="sizing-row" style="color: var(--grounded-black);">
         <div class="sizing-item">
           <svg class="wm wm-lg"><use href="#wbt-wordmark"/></svg>
           <div class="sizing-spec">
@@ -858,7 +908,7 @@
         </div>
       </div>
 
-      <div class="sizing-row" style="color: var(--steady-blue); margin-top: 2px;">
+      <div class="sizing-row" style="color: var(--grounded-black); margin-top: 2px;">
         <div class="sizing-item">
           <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
           <div class="sizing-spec">
@@ -902,14 +952,14 @@
         <div class="dodont-col dont">
           <h3 style="display:none;">Don’t <span class="pill">Avoid</span></h3>
           <div class="dodont-grid" style="grid-template-columns: repeat(3, 1fr);">
-            <div class="dodont-cell" style="color: var(--steady-blue);">
+            <div class="dodont-cell" style="color: var(--grounded-black);">
               <span class="badge no">✕</span>
               <div class="violation-stretched">
                 <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
               </div>
               <span class="caption">Don’t stretch, squeeze, or distort.</span>
             </div>
-            <div class="dodont-cell" style="color: var(--steady-blue);">
+            <div class="dodont-cell" style="color: var(--grounded-black);">
               <span class="badge no">✕</span>
               <div class="violation-rotated">
                 <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
@@ -921,12 +971,12 @@
               <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
               <span class="caption" style="color: var(--ink);">Don’t introduce off-palette colors.</span>
             </div>
-            <div class="dodont-cell violation-shadow" style="color: var(--steady-blue);">
+            <div class="dodont-cell violation-shadow" style="color: var(--grounded-black);">
               <span class="badge no">✕</span>
               <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
               <span class="caption">Don’t add shadows, glows, or effects.</span>
             </div>
-            <div class="dodont-cell" style="color: var(--steady-blue);">
+            <div class="dodont-cell" style="color: var(--grounded-black);">
               <span class="badge no">✕</span>
               <div style="display: inline-flex; align-items: center; gap: 0; margin-left: 30px;">
                 <svg class="mn" style="height: 56px; width: 47px; flex: 0 0 auto; margin-right: -33px;"><use href="#wbt-monogram"/></svg>
@@ -934,7 +984,7 @@
               </div>
               <span class="caption">Don’t pair the monogram and wordmark side by side.</span>
             </div>
-            <div class="dodont-cell" style="color: var(--steady-blue);">
+            <div class="dodont-cell" style="color: var(--grounded-black);">
               <span class="badge no">✕</span>
               <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 8px;">
                 <svg class="mn" style="height: 52px; width: 43px; flex: 0 0 auto;"><use href="#wbt-monogram"/></svg>
@@ -1006,5 +1056,62 @@
   </main>
 
 <script src="nav.js"></script>
+<script>
+// Monogram SVG path data (inlined for canvas export)
+const MONOGRAM_PATHS = [
+  // Outer oval ring
+  "M339.54,188.36c-2.66-44.12-15.24-90.73-27.08-114.95C294,32.09,247.69,5.65,187.5,1.47c-5.57-.39-12.55-.58-17.1-.58s-11.77.2-17.45.6C92.92,5.76,46.75,32.17,28.34,73.41,16.49,97.62,3.92,144.21,1.26,188.32c-.33,5.52-.51,14.41-.51,16.42s.18,10.92.51,16.45c2.66,44.1,15.24,90.68,27.08,114.89,18.43,41.26,64.65,67.69,124.74,71.92,5.64.4,14.78.6,17.27.6s11.61-.2,17.19-.59c60.18-4.19,106.46-30.63,124.91-71.93,11.84-24.21,24.41-70.78,27.08-114.88.33-5.54.51-12.58.51-16.44s-.18-10.89-.51-16.41ZM318.46,220.22c-2.33,41.46-13.34,85.24-23.7,108-16.15,38.83-56.67,63.68-109.35,67.62-4.89.37-12.88.55-15.05.55s-10.18-.19-15.12-.56c-52.61-3.98-93.07-28.82-109.2-67.61-10.36-22.76-21.37-66.55-23.7-108.01-.29-5.2-.45-13.57-.45-15.47s.16-10.25.45-15.44c2.33-41.47,13.34-85.26,23.7-108.03C62.16,42.51,102.57,17.67,155.12,13.67c4.97-.38,11.29-.57,15.27-.57s10.09.18,14.97.55c52.7,3.93,93.24,28.79,109.39,67.63,10.37,22.77,21.38,66.59,23.71,108.07.29,5.18.45,11.79.45,15.42s-.16,10.25-.45,15.46Z",
+  // WBT letterforms (upper half)
+  "M245.75,148.05c11.46-3.57,18.92-12.87,18.92-24.84,0-15.53-12.39-25.73-31.44-25.73-4.8,0-12.92.51-21.45.51-5.71.04-23.36.04-27.26,0-7.06,0-13.19-.51-14.66-.51-1.6,0-2.53.76-2.53,2.16,0,1.27.8,2.3,2.53,2.55,7.6,1.15,10.66,3.44,9.06,9.56l-18.12,70.68c-.27,1.03-.53,1.15-.93,0l-22.12-72.22c-1.6-5.09.93-6.75,8.93-8.02,1.6-.25,2.13-1.28,2.13-2.42,0-1.4-.8-2.3-2.53-2.3-2.13,0-9.86.64-17.45.64-10.53,0-14.2-.64-16.87-.64-1.33,0-2.26.76-2.26,2.16s.67,2.16,2.4,2.55c5.06,1.15,5.81,2.67,7.27,7.26l11.33,35.03c.4,1.27.4,2.55-.13,4.21l-12.26,35.92c-.4,1.02-.66,1.14-1.06,0l-25.58-74.4c-1.74-5.22-2.26-6.87,5.73-8.02,1.6-.25,2.4-.9,2.4-2.42,0-1.4-.8-2.3-2.53-2.3-2.14,0-7.73.64-16.26.64-7.32,0-15.05-.64-17.05-.64-1.46,0-2.4.76-2.4,2.16s.8,2.16,2.53,2.55c5.33,1.27,7.2,2.67,8.93,7.26l33.71,93.24c1.07,3.06,3.2,4.33,6.53,4.33s4.93-1.27,5.99-4.33l15.32-43.31c.4-1.02.67-1.02,1.07.13l13.99,43.18c.94,3.06,3.07,4.33,6.4,4.33s5.06-1.27,5.86-4.33l24.92-91.84c1.13-4.13,3.47-5.92,7.11-7.19,1.85-.59,4.52-.25,5.2.19,1.35.88,2.31,2.11,2.31,3.94v88.91c0,4.08-4.67,5.35-8.13,5.99-2.13.39-2.53,1.27-2.53,2.29,0,.9.53,2.04,2.67,2.04,3.06,0,9.72-.25,18.38-.25l22.51.25c21.19,0,34.91-12.09,34.91-30.7,0-14.01-9.46-24.96-23.45-28.28ZM218.7,108.44c0-4.72,2.53-5.87,8.66-5.87,11.72,0,18.65,7.9,18.65,21.41s-8.39,22.67-21.45,22.67c-4.53,0-5.86-1.15-5.86-4.71v-33.5ZM230.42,201.93c-7.86,0-11.72-2.67-11.72-9.55v-35.67c0-4.2,1.33-4.97,6.92-4.97,15.06,0,24.92,9.94,24.92,25.1s-7.73,25.1-20.12,25.1Z",
+  // T crossbar (lower half)
+  "M243.55,231.12c0-2.81-1.6-3.82-4.93-3.82-6.4,0-49.52,3.26-66.04,3.26h-.04c-16.52,0-59.59-3.26-65.99-3.26-3.33,0-4.93,1.02-4.93,3.82l.27,10.2-.13,9.54c0,1.4.8,2.16,2.13,2.16s1.54-.74,2.93-3.18c9.33-18,51.19-13.3,51.19-13.3,4.13,0,5.86,2.04,5.86,5.73v83.44c0,6.63-4.66,7.9-8.39,8.66-1.73.39-2.13,1.15-2.13,2.16,0,.9.53,2.04,2.26,2.04,1.46,0,9.33-.76,16.92-.76h0s.01,0,.02,0h.02s0,0,0,0c7.6,0,15.46.76,16.92.76,1.73,0,2.26-1.15,2.26-2.04,0-1.02-.4-1.78-2.13-2.16-3.73-.76-8.39-2.03-8.39-8.66v-83.44c0-3.69,1.73-5.73,5.86-5.73,0,0,41.92-4.71,51.25,13.3,1.39,2.44,1.6,3.18,2.93,3.18s2.13-.76,2.13-2.16l-.13-9.54.27-10.2Z"
+];
+
+function downloadMonogramTile(btn) {
+  const tile = btn.closest('[data-dl-bg]');
+  const bg = tile.dataset.dlBg;
+  const fg = tile.dataset.dlFg;
+  const name = tile.dataset.dlName;
+
+  const size = 800;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, size, size);
+
+  // Build standalone SVG with monogram scaled to fill ~62% of the square
+  const viewBox = "0 0 341.64 409.21";
+  const svgW = 341.64, svgH = 409.21;
+  const padding = size * 0.19;
+  const drawW = size - padding * 2;
+  const drawH = size - padding * 2;
+  // Keep aspect ratio
+  const scale = Math.min(drawW / svgW, drawH / svgH);
+  const scaledW = svgW * scale;
+  const scaledH = svgH * scale;
+  const x = (size - scaledW) / 2;
+  const y = (size - scaledH) / 2;
+
+  const pathsHTML = MONOGRAM_PATHS.map(d => `<path d="${d}" fill="${fg}"/>`).join('');
+  const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width="${scaledW}" height="${scaledH}">${pathsHTML}</svg>`;
+  const blob = new Blob([svgStr], {type: 'image/svg+xml'});
+  const url = URL.createObjectURL(blob);
+
+  const img = new Image();
+  img.onload = () => {
+    ctx.drawImage(img, x, y, scaledW, scaledH);
+    URL.revokeObjectURL(url);
+    const a = document.createElement('a');
+    a.download = `${name}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  };
+  img.src = url;
+}
+</script>
 </body>
 </html>
