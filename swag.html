@@ -129,13 +129,14 @@
     .item-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
     }
     .item-grid.three { grid-template-columns: repeat(3, 1fr); }
 
     .item {
       background: var(--bg-card);
-      border: 1px solid var(--rule);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -212,7 +213,6 @@
       display: grid;
       grid-template-columns: 1.1fr 1fr;
       background: var(--bg-card);
-      border: 1px solid var(--rule);
       overflow: hidden;
     }
     .feature .item-image { aspect-ratio: auto; height: 100%; min-height: 480px; }
@@ -330,8 +330,9 @@
     }
     @media (max-width: 900px) {
       .item-grid, .item-grid.three, .ideas { grid-template-columns: 1fr; }
-      .feature { grid-template-columns: 1fr; }
+      .feature { grid-column: span 1; grid-template-columns: 1fr; }
       .feature .item-image { min-height: 320px; }
+      .item .item-image.contain { aspect-ratio: 3/2; }
       .callout { grid-template-columns: 1fr; padding: 40px 32px; }
       .callout-mono { display: none; }
     }
@@ -514,49 +515,6 @@
       </div>
     </section>
 
-    <!-- ── 04 · Future ideas ── -->
-    <section class="section">
-      <div class="section-head">
-        <h2>04 · On the horizon</h2>
-        <span class="meta">Concepts · Not yet produced</span>
-      </div>
-      <p class="section-intro">Items being explored. Each one held to the same standard — useful objects with a long life, made well, given with intention.</p>
-
-      <div class="ideas">
-        <div class="idea">
-          <div class="num">01</div>
-          <h4>Field notebook</h4>
-          <p>Pocket-size, lay-flat binding. Calm Blue cover, monogram debossed. For coaching sessions, off-sites, and the in-between moments.</p>
-        </div>
-        <div class="idea">
-          <div class="num">02</div>
-          <h4>Heavyweight tote</h4>
-          <p>14oz natural canvas, gusseted. Wordmark on the front in Grounded Black; monogram tag on the inside seam.</p>
-        </div>
-        <div class="idea">
-          <div class="num">03</div>
-          <h4>Crewneck sweatshirt</h4>
-          <p>Mid-weight French terry. Cream with grounded-black wordmark on the chest, or steady-blue with tone-on-tone.</p>
-        </div>
-        <div class="idea">
-          <div class="num">04</div>
-          <h4>Ceramic mug</h4>
-          <p>Stoneware, thrown-feel handle. Monogram glazed on one side. Clear white body, calm-blue interior.</p>
-        </div>
-        <div class="idea">
-          <div class="num">05</div>
-          <h4>Embroidered patch</h4>
-          <p>Iron-on or sew-on monogram patch in the full color range. For jackets, bags, the back of a chair you love.</p>
-        </div>
-        <div class="idea">
-          <div class="num">06</div>
-          <h4>Coaching deck</h4>
-          <p>A boxed set of prompt cards in heavy stock. Used in session, gifted as a takeaway. The wordmark on the case, illustrations on the cards.</p>
-        </div>
-      </div>
-
-      <p class="footer-note">If you’re producing merch under the WBT name, talk to brand first. Quality, fit, and finish matter as much as the embroidery — every object that leaves with the wordmark on it has to be worth keeping.</p>
-    </section>
 
   </main>
 <script src="nav.js"></script>

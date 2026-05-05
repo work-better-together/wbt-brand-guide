@@ -400,6 +400,88 @@
       max-width: 640px;
     }
     .moodboard-note p em { font-style: italic; }
+
+    /* ── Mobile responsive ── */
+    @media (max-width: 768px) {
+      .page {
+        padding: 40px 20px 80px;
+      }
+      .page-header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+      }
+      .page-header p {
+        font-size: 16px;
+      }
+
+      /* Palette strip — keep 8 cols, just shorter */
+      .palette-strip {
+        height: 56px;
+      }
+
+      /* Color tier grids collapse */
+      .color-grid {
+        grid-template-columns: 1fr;
+      }
+      .color-grid.tier-3 {
+        grid-template-columns: 1fr;
+      }
+      .color-card.full-width {
+        grid-column: span 1;
+      }
+
+      /* Swatches — slightly shorter, less padding */
+      .swatch {
+        height: 180px;
+        padding: 20px 22px;
+      }
+      .swatch-name {
+        font-size: 20px;
+      }
+      .swatch-hex {
+        font-size: 24px;
+      }
+
+      /* Color meta — stack HEX/RGB/CMYK */
+      .color-meta {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px 22px 18px;
+      }
+      .color-grid.tier-3 .color-meta {
+        padding: 14px 22px 16px;
+      }
+      .color-grid.tier-3 .swatch-hex { font-size: 24px; }
+
+      /* Tints — keep 4 cols */
+      .color-tints {
+        padding: 12px 22px 14px;
+      }
+
+      /* Tier spacing */
+      .color-tier { margin-bottom: 40px; }
+      .color-tier:last-of-type { margin-bottom: 56px; }
+
+      /* Pairs grid — single column */
+      .pairs-grid {
+        grid-template-columns: 1fr;
+      }
+      .pairs-section { margin-bottom: 56px; }
+
+      /* Moodboard note */
+      .moodboard-note {
+        padding: 24px 22px;
+      }
+
+      /* Attributes table — horizontal scroll wrapper */
+      .attributes-section {
+        margin-bottom: 56px;
+      }
+      .attr-table th:nth-child(3),
+      .attr-table td:nth-child(3) { display: none; }
+      .attr-name { font-size: 13px; }
+      .attr-use { font-size: 12px; }
+    }
   </style>
 </head>
 <body>

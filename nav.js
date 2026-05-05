@@ -143,8 +143,14 @@
       font-family: 'League Spartan', sans-serif;
       font-weight: 700;
       font-size: 20px;
+      line-height: 1.05;
       letter-spacing: -0.01em;
       color: #1a1a1a;
+    }
+    @media (max-width: 520px) {
+      .wbt-page-footer { padding: 24px 20px 60px; }
+      .wbt-page-footer-title { font-size: 16px; }
+      .wbt-page-footer-label { font-size: 9px; }
     }
     .wbt-page-footer-up {
       font-size: 16px;
