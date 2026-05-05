@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Card Maker — Work Better Together</title>
+<style>
+  @font-face {
+    font-family: 'League Spartan';
+    src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype');
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: 'Lora';
+    src: url('assets/Fonts/Lora-Variable.ttf') format('truetype');
+    font-weight: 400 700;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Lora';
+    src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype');
+    font-weight: 400 700;
+    font-style: italic;
+  }
+  @font-face {
+    font-family: 'Inconsolata';
+    src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype');
+    font-weight: 200 900;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1F1E1E;
+    --ink-muted: #6b6b6b;
+    --ink-faint: #c8c8c8;
+    --bg: #faf9f7;
+    --bg-card: #ffffff;
+    --rule: #e4e2de;
+    --slate: #1E4D5C;
+    --slate-light: #E0E8EB;
+    --gold: #CD9F36;
+    --paper: #F9F8F2;
+    --font-display: 'League Spartan', sans-serif;
+    --font-body: 'Lora', serif;
+    --font-mono: 'Inconsolata', monospace;
+  }
+
+  html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); }
+
+  /* ── Page wrapper ── */
+  .page-wrap { max-width: 960px; margin: 0 auto; padding: 0 40px 80px; }
+
+  /* ── Page header ── */
+  .page-header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+  .page-header h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .page-header p {
+    font-size: 16px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    max-width: 540px;
+  }
+
+  /* ── Format bar ── */
+  .format-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .format-btn {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink-muted);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .format-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .format-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .format-btn .fmt-icon { font-size: 11px; opacity: 0.7; }
+  .carousel-toggle {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink-muted);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+  .carousel-toggle:hover { border-color: var(--ink); color: var(--ink); }
+  .carousel-toggle.active { background: var(--slate); border-color: var(--slate); color: var(--paper); }
+
+  /* ── Tool layout ── */
+  .tool-layout {
+    display: grid;
+    grid-template-columns: 272px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* ── Left panel ── */
+  .panel-left { display: flex; flex-direction: column; }
+  .panel-section { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .panel-section:first-child { padding-top: 0; }
+  .panel-section:last-child { border-bottom: none; padding-bottom: 0; }
+  .panel-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+
+  /* ── Template grid ── */
+  .template-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .template-card {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .template-card:hover { border-color: var(--slate-light); }
+  .template-card.active { border-color: var(--slate); }
+  .template-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .template-card-label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 5px 4px;
+    text-align: center;
+    background: var(--bg-card);
+    border-top: 1px solid var(--rule);
+    line-height: 1.2;
+  }
+  .template-card.active .template-card-label { color: var(--slate); }
+
+  /* Template thumbnail mock-ups */
+  .tmpl-bold .template-thumb { background: #061A49; flex-direction: column; align-items: flex-start; padding: 8px; justify-content: flex-end; padding-bottom: 10px; }
+  .tmpl-bold .t-bar { width: 28%; height: 2px; background: #ACCDD9; margin-bottom: 7px; }
+  .tmpl-bold .t-h1 { width: 88%; height: 5px; background: #F9F8F2; border-radius: 1px; margin-bottom: 3px; }
+  .tmpl-bold .t-h2 { width: 72%; height: 5px; background: #F9F8F2; border-radius: 1px; margin-bottom: 7px; }
+  .tmpl-bold .t-sub { width: 92%; height: 2.5px; background: rgba(249,248,242,0.4); border-radius: 1px; margin-bottom: 2px; }
+  .tmpl-bold .t-sub2 { width: 60%; height: 2.5px; background: rgba(249,248,242,0.4); border-radius: 1px; }
+
+  .tmpl-watercolor .template-thumb { background: #1E4D5C; flex-direction: column; align-items: flex-start; padding: 8px; justify-content: flex-end; padding-bottom: 10px; overflow: hidden; }
+  .tmpl-watercolor .t-wash { position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 35%, rgba(172,205,217,0.5) 0%, transparent 55%), radial-gradient(ellipse at 72% 65%, rgba(172,205,217,0.35) 0%, transparent 45%); }
+  .tmpl-watercolor .t-h1 { position: relative; z-index: 1; width: 84%; height: 5px; background: #F9F8F2; border-radius: 1px; margin-bottom: 3px; }
+  .tmpl-watercolor .t-h2 { position: relative; z-index: 1; width: 65%; height: 5px; background: #F9F8F2; border-radius: 1px; margin-bottom: 7px; }
+  .tmpl-watercolor .t-sub { position: relative; z-index: 1; width: 90%; height: 2.5px; background: rgba(249,248,242,0.45); border-radius: 1px; margin-bottom: 2px; }
+  .tmpl-watercolor .t-sub2 { position: relative; z-index: 1; width: 55%; height: 2.5px; background: rgba(249,248,242,0.45); border-radius: 1px; }
+
+  .tmpl-split .template-thumb { background: #F9F8F2; flex-direction: row; align-items: stretch; padding: 0; justify-content: flex-start; }
+  .tmpl-split .t-left { width: 44%; background: #061A49; display: flex; flex-direction: column; justify-content: center; padding: 7px 6px; gap: 4px; }
+  .tmpl-split .t-right { width: 56%; display: flex; flex-direction: column; justify-content: center; padding: 7px 6px; gap: 4px; }
+  .tmpl-split .t-lh1 { height: 4px; background: #F9F8F2; border-radius: 1px; width: 88%; }
+  .tmpl-split .t-lh2 { height: 4px; background: #F9F8F2; border-radius: 1px; width: 70%; }
+  .tmpl-split .t-rh1 { height: 2.5px; background: rgba(31,30,30,0.6); border-radius: 1px; width: 85%; }
+  .tmpl-split .t-rh2 { height: 2.5px; background: rgba(31,30,30,0.35); border-radius: 1px; width: 65%; }
+  .tmpl-split .t-rh3 { height: 2.5px; background: rgba(31,30,30,0.25); border-radius: 1px; width: 50%; }
+
+  .tmpl-quote .template-thumb { background: #B55312; flex-direction: column; padding: 8px; align-items: flex-start; justify-content: center; gap: 5px; }
+  .tmpl-quote .t-qmark { font-family: Georgia, serif; font-size: 24px; color: rgba(249,248,242,0.2); line-height: 0.8; }
+  .tmpl-quote .t-ql1 { width: 90%; height: 3px; background: rgba(249,248,242,0.85); border-radius: 1px; }
+  .tmpl-quote .t-ql2 { width: 75%; height: 3px; background: rgba(249,248,242,0.7); border-radius: 1px; }
+  .tmpl-quote .t-ql3 { width: 55%; height: 3px; background: rgba(249,248,242,0.5); border-radius: 1px; }
+  .tmpl-quote .t-qattr { width: 40%; height: 2px; background: rgba(249,248,242,0.3); border-radius: 1px; margin-top: 3px; }
+
+  .tmpl-stat .template-thumb { background: #2531A5; flex-direction: column; align-items: flex-start; padding: 8px 10px; justify-content: center; gap: 6px; }
+  .tmpl-stat .t-sbar { width: 24%; height: 2px; background: #ACCDD9; }
+  .tmpl-stat .t-snum { font-family: 'League Spartan', sans-serif; font-size: 26px; font-weight: 800; color: #F9F8F2; line-height: 1; }
+  .tmpl-stat .t-sl1 { width: 80%; height: 3px; background: rgba(249,248,242,0.45); border-radius: 1px; }
+  .tmpl-stat .t-sl2 { width: 60%; height: 3px; background: rgba(249,248,242,0.25); border-radius: 1px; }
+
+  .tmpl-photo .template-thumb { flex-direction: row; padding: 0; background: #1F1E1E; align-items: stretch; justify-content: flex-start; }
+  .tmpl-photo .t-photo { width: 50%; background: linear-gradient(140deg, #888 0%, #ccc 100%); }
+  .tmpl-photo .t-ptext { width: 50%; background: #1F1E1E; display: flex; flex-direction: column; justify-content: center; padding: 7px 6px; gap: 4px; }
+  .tmpl-photo .t-ph1 { height: 4px; background: rgba(249,248,242,0.9); border-radius: 1px; width: 85%; }
+  .tmpl-photo .t-ph2 { height: 4px; background: rgba(249,248,242,0.75); border-radius: 1px; width: 65%; }
+  .tmpl-photo .t-psub { height: 2.5px; background: rgba(249,248,242,0.35); border-radius: 1px; width: 90%; }
+
+  /* ── Content fields ── */
+  .field-group { display: flex; flex-direction: column; gap: 12px; }
+  .field-item { display: flex; flex-direction: column; gap: 5px; }
+  .field-item label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .field-item input,
+  .field-item textarea {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 8px 10px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink);
+    border-radius: 2px;
+    width: 100%;
+    transition: border-color 0.15s;
+    resize: vertical;
+  }
+  .field-item input:focus,
+  .field-item textarea:focus { outline: none; border-color: var(--slate); }
+
+  /* Photo upload */
+  .photo-upload-btn {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 9px 12px;
+    border: 1px dashed var(--rule);
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+    text-align: center;
+    width: 100%;
+  }
+  .photo-upload-btn:hover { border-color: var(--slate); color: var(--slate); }
+  .photo-preview-thumb {
+    width: 100%;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 2px;
+    display: none;
+  }
+
+  /* ── Color swatches ── */
+  .color-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+  .color-swatch {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+  .color-swatch:hover { transform: scale(1.08); }
+  .color-swatch.active { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ink); }
+  .color-swatch[data-color="clear-white"] { border: 1px solid var(--rule); }
+
+  /* ── Toggle switch ── */
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .toggle-label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .toggle-switch {
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--ink-faint);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .toggle-switch.on { background: var(--slate); }
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    left: 2px; top: 2px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: white;
+    transition: left 0.15s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle-switch.on::after { left: 18px; }
+
+  /* Watercolor variants */
+  .wc-variants { display: flex; gap: 6px; margin-top: 10px; }
+  .wc-variant-btn {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink-muted);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+    flex: 1;
+  }
+  .wc-variant-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+  /* ── Spot grid ── */
+  .spot-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    max-height: 170px;
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+  .spot-grid::-webkit-scrollbar { width: 4px; }
+  .spot-grid::-webkit-scrollbar-track { background: transparent; }
+  .spot-grid::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+  .spot-btn {
+    aspect-ratio: 1;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    background: var(--bg-card);
+    padding: 4px;
+    transition: border-color 0.15s;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .spot-btn:hover { border-color: var(--slate-light); }
+  .spot-btn.active { border-color: var(--slate); background: var(--slate-light); }
+  .spot-btn img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .spot-none-btn {
+    aspect-ratio: 1;
+    border: 2px solid var(--rule);
+    border-radius: 3px;
+    cursor: pointer;
+    background: var(--bg-card);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .spot-none-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .spot-none-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+  /* Scribble picker */
+  .scribble-subgrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  /* ── Right panel ── */
+  .panel-right { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 60px; }
+
+  .canvas-wrap {
+    background: #e8e7e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    border-radius: 4px;
+    min-height: 360px;
+  }
+  #previewCanvas {
+    display: block;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.22);
+  }
+
+  /* ── Carousel strip ── */
+  .carousel-strip { display: none; border-top: 1px solid var(--rule); padding-top: 14px; }
+  .carousel-strip.visible { display: block; }
+  .slide-count-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .slide-strip-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .slide-strip-row::-webkit-scrollbar { height: 4px; }
+  .slide-strip-row::-webkit-scrollbar-track { background: transparent; }
+  .slide-strip-row::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+  .slide-thumb {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.15s;
+    background: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide-thumb canvas { display: block; }
+  .slide-thumb.active { border-color: var(--slate); }
+  .slide-thumb:hover:not(.active) { border-color: var(--slate-light); }
+  .strip-actions { display: flex; gap: 8px; }
+  .btn-sm {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 7px 12px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+  .btn-sm:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn-sm-danger { color: #c13b3b; border-color: #f0d0d0; }
+  .btn-sm-danger:hover { background: #c13b3b; color: white; border-color: #c13b3b; }
+
+  /* ── Export row ── */
+  .export-row {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+  }
+  .btn-export {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 11px 18px;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+    flex: 1;
+  }
+  .btn-export:hover { background: var(--slate); border-color: var(--slate); }
+  .btn-export-secondary {
+    background: transparent;
+    color: var(--ink);
+  }
+  .btn-export-secondary:hover { background: var(--ink); color: var(--paper); }
+  .btn-export-zip { display: none; }
+  .btn-export-zip.visible { display: block; }
+
+  /* ── Responsive ── */
+  @media (max-width: 760px) {
+    .tool-layout { grid-template-columns: 1fr; }
+    .panel-right { position: static; }
+    .page-wrap { padding: 0 20px 60px; }
+    .format-bar { gap: 6px; }
+    .carousel-toggle { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <header class="page-header">
+    <h1>Social Card Maker</h1>
+    <p>Create on-brand social assets for Instagram and LinkedIn. Pick a format, choose a template, customize your content, and export at full resolution.</p>
+  </header>
+
+  <!-- FORMAT BAR -->
+  <div class="format-bar">
+    <button class="format-btn active" data-format="ig-square">
+      <span class="fmt-icon">▪</span>IG Square
+    </button>
+    <button class="format-btn" data-format="ig-portrait">
+      <span class="fmt-icon">▯</span>IG Portrait
+    </button>
+    <button class="format-btn" data-format="li-banner">
+      <span class="fmt-icon">▬</span>LinkedIn Banner
+    </button>
+    <button class="format-btn" data-format="li-square">
+      <span class="fmt-icon">▪</span>LinkedIn Square
+    </button>
+    <button class="carousel-toggle" id="carouselToggle">☰ Carousel</button>
+  </div>
+
+  <!-- TOOL LAYOUT -->
+  <div class="tool-layout">
+
+    <!-- LEFT PANEL -->
+    <aside class="panel-left">
+
+      <!-- Templates -->
+      <div class="panel-section">
+        <div class="panel-label">Template</div>
+        <div class="template-grid" id="templateGrid"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="panel-section">
+        <div class="panel-label">Content</div>
+        <div class="field-group">
+          <div class="field-item">
+            <label for="fieldHeadline">Headline</label>
+            <input type="text" id="fieldHeadline" placeholder="Leadership starts here." maxlength="100">
+          </div>
+          <div class="field-item">
+            <label for="fieldSubhead">Subhead / Body</label>
+            <textarea id="fieldSubhead" rows="3" placeholder="Supporting message or context for your audience." maxlength="300"></textarea>
+          </div>
+          <div class="field-item">
+            <label for="fieldAttribution">Attribution</label>
+            <input type="text" id="fieldAttribution" placeholder="@workbettertogether" maxlength="80">
+          </div>
+          <div class="field-item" id="photoField" style="display:none;">
+            <label>Photo</label>
+            <button class="photo-upload-btn" id="photoUploadBtn">↑ Upload Photo</button>
+            <input type="file" id="photoInput" accept="image/*" style="display:none;">
+            <img class="photo-preview-thumb" id="photoPreviewThumb" alt="Uploaded photo">
+          </div>
+        </div>
+      </div>
+
+      <!-- Color -->
+      <div class="panel-section">
+        <div class="panel-label">Background Color</div>
+        <div class="color-swatches" id="colorSwatches"></div>
+      </div>
+
+      <!-- Watercolor texture -->
+      <div class="panel-section">
+        <div class="toggle-row">
+          <span class="toggle-label">Watercolor Texture</span>
+          <button class="toggle-switch" id="watercolorToggle" aria-pressed="false" aria-label="Toggle watercolor texture"></button>
+        </div>
+        <div id="watercolorVariants" style="display:none;">
+          <div class="wc-variants">
+            <button class="wc-variant-btn active" data-variant="1">Variant 1</button>
+            <button class="wc-variant-btn" data-variant="2">Variant 2</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spot Illustrations -->
+      <div class="panel-section">
+        <div class="panel-label">Spot Illustration</div>
+        <div class="spot-grid" id="spotGrid"></div>
+      </div>
+
+      <!-- Scribble accent -->
+      <div class="panel-section">
+        <div class="toggle-row">
+          <span class="toggle-label">Scribble Accent</span>
+          <button class="toggle-switch" id="scribbleToggle" aria-pressed="false" aria-label="Toggle scribble accent"></button>
+        </div>
+        <div id="scribblePicker" style="display:none;"></div>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT PANEL -->
+    <main class="panel-right">
+
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="previewCanvas"></canvas>
+      </div>
+
+      <!-- Carousel strip -->
+      <div class="carousel-strip" id="carouselStrip">
+        <div class="slide-count-label" id="slideCountLabel">1 / 1</div>
+        <div class="slide-strip-row" id="slideStripRow"></div>
+        <div class="strip-actions">
+          <button class="btn-sm" id="btnAddSlide">+ Add Slide</button>
+          <button class="btn-sm btn-sm-danger" id="btnRemoveSlide">− Remove</button>
+        </div>
+      </div>
+
+      <!-- Export -->
+      <div class="export-row">
+        <button class="btn-export btn-export-secondary" id="btnExportPng">↓ Download PNG</button>
+        <button class="btn-export btn-export-zip" id="btnExportZip">↓ Download ZIP</button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+'use strict';
+
+// ── Constants ──────────────────────────────────────────────────────────────
+
+const FORMATS = {
+  'ig-square':   { label: 'IG Square',       w: 1080, h: 1080 },
+  'ig-portrait': { label: 'IG Portrait',     w: 1080, h: 1350 },
+  'li-banner':   { label: 'LinkedIn Banner', w: 1200, h: 627  },
+  'li-square':   { label: 'LinkedIn Square', w: 1080, h: 1080 },
+};
+
+const TEMPLATES = [
+  { id: 'bold',       label: 'Bold Headline', cls: 'tmpl-bold' },
+  { id: 'watercolor', label: 'Watercolor',    cls: 'tmpl-watercolor' },
+  { id: 'split',      label: 'Split',         cls: 'tmpl-split' },
+  { id: 'quote',      label: 'Quote',         cls: 'tmpl-quote' },
+  { id: 'stat',       label: 'Stat Card',     cls: 'tmpl-stat' },
+  { id: 'photo',      label: 'Photo + Text',  cls: 'tmpl-photo' },
+];
+
+const COLORS = [
+  { id: 'steady-blue',      label: 'Steady Blue',      hex: '#061A49', text: '#F9F8F2', accent: '#ACCDD9' },
+  { id: 'clean-slate',      label: 'Clean Slate',      hex: '#1E4D5C', text: '#F9F8F2', accent: '#ACCDD9' },
+  { id: 'intentional-blue', label: 'Intentional Blue', hex: '#2531A5', text: '#F9F8F2', accent: '#ACCDD9' },
+  { id: 'calm-blue',        label: 'Calm Blue',        hex: '#ACCDD9', text: '#1F1E1E', accent: '#061A49' },
+  { id: 'grounded-black',   label: 'Grounded Black',   hex: '#1F1E1E', text: '#F9F8F2', accent: '#CD9F36' },
+  { id: 'radiant-gold',     label: 'Radiant Gold',     hex: '#CD9F36', text: '#1F1E1E', accent: '#061A49' },
+  { id: 'honest-ochre',     label: 'Honest Ochre',     hex: '#B55312', text: '#F9F8F2', accent: '#F9F8F2' },
+  { id: 'clear-white',      label: 'Clear White',      hex: '#F9F8F2', text: '#1F1E1E', accent: '#1E4D5C' },
+];
+
+// Watercolor background texture paths (Radiant Gold uses "Gold" in filename, not "Radiant-Gold")
+const WC_BG = {
+  'steady-blue':      (v) => `assets/Watercolor Textures/Backgrounds/Steady Blue/WBT-20260403-Steady-Blue-Watercolor-Background-${v}.jpg`,
+  'clean-slate':      (v) => `assets/Watercolor Textures/Backgrounds/Clean Slate/WBT-20260403-Clean-Slate-Watercolor-Background-${v}.jpg`,
+  'intentional-blue': (v) => `assets/Watercolor Textures/Backgrounds/Intentional Blue/WBT-20260403-Intentional-Blue-Watercolor-Background-${v}.jpg`,
+  'calm-blue':        (v) => `assets/Watercolor Textures/Backgrounds/Calm Blue/WBT-20260403-Calm-Blue-Watercolor-Background-${v}.jpg`,
+  'grounded-black':   (v) => `assets/Watercolor Textures/Backgrounds/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Background-${v}.jpg`,
+  'radiant-gold':     (v) => `assets/Watercolor Textures/Backgrounds/Radiant Gold/WBT-20260403-Gold-Watercolor-Background-${v}.jpg`,
+  'honest-ochre':     (v) => `assets/Watercolor Textures/Backgrounds/Honest Ochre/WBT-20260403-Honest-Ochre-Watercolor-Background-${v}.jpg`,
+  'clear-white':      null,
+};
+
+const SPOTS = [
+  'Blue-Blob','Eye','Eye-Rays','Gold-Blue-Eye','Hands-With-Eyes',
+  'Heart','Heart-Tablet','Heart-Tablet-2','Hourglass','Key',
+  'Map','Mirror','Nest','Nest-Bird','Open-Doors',
+  'Pink-Blob','Pink-Torn-Paper-1','Pink-Torn-Paper-2','Rays','Red-Butterfly',
+  'Roots','Star','Star-Colors','Sun','Sun2','Tree-Roots','Watch',
+];
+
+const SCRIBBLES = [
+  'WBT-scribble-cascading-ovals',
+  'WBT-scribble-double-oval-tail',
+  'WBT-scribble-heart-black',
+  'WBT-scribble-long-sweep-spiral',
+  'WBT-scribble-loop-wavy-tail',
+  'WBT-scribble-looping-wave',
+  'WBT-scribble-overlapping-ovals',
+  'WBT-scribble-s-curve-loop',
+  'WBT-scribble-sweep-with-leaves',
+  'WBT-scribble-swooping-line-leaves',
+];
+
+const MONOGRAM = 'assets/Logos/WBT-20260502-WBT-Monogram-Black.svg';
+
+// ── State ──────────────────────────────────────────────────────────────────
+
+function defaultSlide() {
+  return {
+    headline:         'Leadership starts here.',
+    subhead:          'Coaching and facilitation for teams doing meaningful work together.',
+    attribution:      '@workbettertogether',
+    colorId:          'steady-blue',
+    watercolor:       false,
+    wcVariant:        1,
+    scribbleOn:       false,
+    scribble:         SCRIBBLES[0],
+    spot:             null,
+    photoUrl:         null,
+  };
+}
+
+const state = {
+  format:      'ig-square',
+  template:    'bold',
+  carousel:    false,
+  slides:      [defaultSlide()],
+  activeSlide: 0,
+};
+
+// ── Image cache ────────────────────────────────────────────────────────────
+
+const imgCache = {};
+
+function loadImg(src) {
+  if (!imgCache[src]) {
+    imgCache[src] = new Promise((resolve) => {
+      const img = new Image();
+      img.onload  = () => resolve(img);
+      img.onerror = () => resolve(null);
+      img.src = src;
+    });
+  }
+  return imgCache[src];
+}
+
+// ── Color utilities ────────────────────────────────────────────────────────
+
+function rgba(hex, a) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+// ── Text utilities ─────────────────────────────────────────────────────────
+
+function wrapLines(ctx, text, maxWidth) {
+  const words = (text || '').split(' ').filter(Boolean);
+  const lines = [];
+  let line = '';
+  for (const word of words) {
+    const test = line ? line + ' ' + word : word;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function drawWrapped(ctx, text, x, y, maxWidth, lineH) {
+  const lines = wrapLines(ctx, text, maxWidth);
+  lines.forEach((l, i) => ctx.fillText(l, x, y + i * lineH));
+  return lines.length;
+}
+
+// ── Draw: main dispatcher ─────────────────────────────────────────────────
+
+async function drawSlide(ctx, slide, fmt, forTemplate) {
+  const W = fmt.w, H = fmt.h;
+  const PAD = W * 0.08;
+  const col = COLORS.find(c => c.id === slide.colorId) || COLORS[0];
+  const tmpl = forTemplate || state.template;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = col.hex;
+  ctx.fillRect(0, 0, W, H);
+
+  // Watercolor texture (forced on for 'watercolor' template, or when toggle is on)
+  const useTexture = (tmpl === 'watercolor' || slide.watercolor) && WC_BG[slide.colorId];
+  if (useTexture) {
+    const src = WC_BG[slide.colorId](slide.wcVariant);
+    const img = await loadImg(src);
+    if (img) {
+      ctx.globalAlpha = 0.52;
+      ctx.drawImage(img, 0, 0, W, H);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // Template-specific layout
+  if      (tmpl === 'bold' || tmpl === 'watercolor') await drawBold(ctx, slide, W, H, PAD, col);
+  else if (tmpl === 'split')                          await drawSplit(ctx, slide, W, H, PAD, col);
+  else if (tmpl === 'quote')                          await drawQuote(ctx, slide, W, H, PAD, col);
+  else if (tmpl === 'stat')                           await drawStat(ctx, slide, W, H, PAD, col);
+  else if (tmpl === 'photo')                          await drawPhoto(ctx, slide, W, H, PAD, col);
+
+  // Spot illustration (top-right)
+  if (slide.spot) {
+    const img = await loadImg(`assets/Illustrations/${slide.spot}.png`);
+    if (img) {
+      const sz = W * 0.26;
+      ctx.drawImage(img, W - sz - PAD * 0.4, PAD * 0.4, sz, sz * (img.height / img.width));
+    }
+  }
+
+  // Scribble accent (bottom-right, semi-transparent)
+  if (slide.scribbleOn && slide.scribble) {
+    const img = await loadImg(`assets/Scribbles/${slide.scribble}.png`);
+    if (img) {
+      const sw = W * 0.42;
+      const sh = sw * (img.height / img.width);
+      ctx.globalAlpha = 0.55;
+      ctx.drawImage(img, W - sw - PAD * 0.2, H - sh - PAD * 0.2, sw, sh);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // Monogram (always — bottom right)
+  await drawMonogram(ctx, W, H, PAD, col);
+}
+
+// ── Draw: Bold Headline ───────────────────────────────────────────────────
+
+async function drawBold(ctx, slide, W, H, PAD, col) {
+  const isWide = W > H;
+  const headSz = isWide ? W * 0.066 : W * 0.082;
+  const subSz  = isWide ? W * 0.026 : W * 0.031;
+  const attrSz = W * 0.022;
+
+  // Accent bar
+  ctx.fillStyle = col.accent;
+  ctx.fillRect(PAD, PAD * 0.9, W * 0.055, W * 0.005);
+
+  // Headline
+  ctx.font = `700 ${headSz}px 'League Spartan', sans-serif`;
+  ctx.fillStyle = col.text;
+  ctx.textBaseline = 'top';
+  const headY = PAD * 1.05;
+  const headLines = drawWrapped(ctx, slide.headline, PAD, headY, W - PAD * 2, headSz * 1.1);
+
+  // Subhead
+  if (slide.subhead) {
+    ctx.font = `400 ${subSz}px 'Lora', serif`;
+    ctx.fillStyle = rgba(col.text, 0.72);
+    const subY = headY + headLines * headSz * 1.1 + headSz * 0.55;
+    drawWrapped(ctx, slide.subhead, PAD, subY, W - PAD * 2, subSz * 1.55);
+  }
+
+  // Attribution
+  if (slide.attribution) {
+    ctx.font = `500 ${attrSz}px 'Inconsolata', monospace`;
+    ctx.fillStyle = rgba(col.text, 0.45);
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(slide.attribution, PAD, H - PAD * 0.85);
+  }
+}
+
+// ── Draw: Split ───────────────────────────────────────────────────────────
+
+async function drawSplit(ctx, slide, W, H, PAD, col) {
+  const isWide = W > H;
+  const splitX = isWide ? W * 0.44 : W * 0.42;
+
+  // Right panel tint
+  ctx.fillStyle = rgba(col.text, 0.07);
+  ctx.fillRect(splitX, 0, W - splitX, H);
+
+  // Vertical divider
+  ctx.fillStyle = rgba(col.text, 0.15);
+  ctx.fillRect(splitX - 1, 0, 1, H);
+
+  // Left — headline
+  const headSz = isWide ? W * 0.058 : W * 0.072;
+  ctx.font = `700 ${headSz}px 'League Spartan', sans-serif`;
+  ctx.fillStyle = col.text;
+  const leftLines = wrapLines(ctx, slide.headline, splitX - PAD * 1.4);
+  const totalHH = leftLines.length * headSz * 1.1;
+  let hy = H / 2 - totalHH / 2;
+  ctx.textBaseline = 'top';
+  leftLines.forEach(line => {
+    ctx.fillText(line, PAD, hy);
+    hy += headSz * 1.1;
+  });
+
+  // Right — subhead
+  const rPad = PAD * 0.7;
+  const subSz = isWide ? W * 0.026 : W * 0.030;
+  ctx.font = `400 ${subSz}px 'Lora', serif`;
+  ctx.fillStyle = rgba(col.text, 0.78);
+  drawWrapped(ctx, slide.subhead, splitX + rPad, H * 0.3, W - splitX - rPad * 2, subSz * 1.55);
+
+  if (slide.attribution) {
+    const attrSz = W * 0.022;
+    ctx.font = `500 ${attrSz}px 'Inconsolata', monospace`;
+    ctx.fillStyle = rgba(col.text, 0.4);
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(slide.attribution, splitX + rPad, H - PAD * 0.85);
+  }
+}
+
+// ── Draw: Quote ───────────────────────────────────────────────────────────
+
+async function drawQuote(ctx, slide, W, H, PAD, col) {
+  const isWide = W > H;
+
+  // Big decorative quote mark
+  ctx.font = `700 ${W * 0.22}px Georgia, serif`;
+  ctx.fillStyle = rgba(col.text, 0.1);
+  ctx.textBaseline = 'top';
+  ctx.fillText('"', PAD * 0.5, PAD * 0.1);
+
+  // Quote text
+  const qSz = isWide ? W * 0.044 : W * 0.056;
+  ctx.font = `italic 400 ${qSz}px 'Lora', serif`;
+  ctx.fillStyle = col.text;
+  ctx.textBaseline = 'top';
+  const qY = isWide ? H * 0.22 : H * 0.24;
+  const qLines = drawWrapped(ctx, slide.headline, PAD, qY, W - PAD * 2, qSz * 1.5);
+
+  // Divider
+  const divY = qY + qLines * qSz * 1.5 + qSz * 0.9;
+  ctx.fillStyle = rgba(col.text, 0.25);
+  ctx.fillRect(PAD, divY, W * 0.07, W * 0.003);
+
+  // Attribution (below divider)
+  if (slide.attribution) {
+    const attrSz = W * 0.025;
+    ctx.font = `500 ${attrSz}px 'Inconsolata', monospace`;
+    ctx.fillStyle = rgba(col.text, 0.6);
+    ctx.textBaseline = 'top';
+    ctx.fillText(slide.attribution, PAD, divY + qSz * 0.55);
+  }
+
+  // Optional subhead smaller
+  if (slide.subhead) {
+    const subSz = W * 0.024;
+    ctx.font = `400 ${subSz}px 'Lora', serif`;
+    ctx.fillStyle = rgba(col.text, 0.45);
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(slide.subhead.substring(0,60), PAD, H - PAD * 0.85);
+  }
+}
+
+// ── Draw: Stat Card ───────────────────────────────────────────────────────
+
+async function drawStat(ctx, slide, W, H, PAD, col) {
+  const isWide = W > H;
+  const numSz = isWide ? W * 0.155 : W * 0.20;
+  const subSz = isWide ? W * 0.034 : W * 0.038;
+
+  // Accent bar top
+  ctx.fillStyle = col.accent;
+  ctx.fillRect(PAD, PAD, W * 0.055, W * 0.006);
+
+  // Big stat number
+  ctx.font = `800 ${numSz}px 'League Spartan', sans-serif`;
+  ctx.fillStyle = col.text;
+  ctx.textBaseline = 'top';
+  const numY = isWide ? H * 0.25 : H * 0.28;
+  ctx.fillText(slide.headline || '87%', PAD, numY);
+
+  // Label / descriptor
+  if (slide.subhead) {
+    ctx.font = `400 ${subSz}px 'Lora', serif`;
+    ctx.fillStyle = rgba(col.text, 0.72);
+    drawWrapped(ctx, slide.subhead, PAD, numY + numSz * 1.12, W - PAD * 2.5, subSz * 1.5);
+  }
+
+  if (slide.attribution) {
+    const attrSz = W * 0.022;
+    ctx.font = `500 ${attrSz}px 'Inconsolata', monospace`;
+    ctx.fillStyle = rgba(col.text, 0.45);
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(slide.attribution, PAD, H - PAD * 0.85);
+  }
+}
+
+// ── Draw: Photo + Text ────────────────────────────────────────────────────
+
+async function drawPhoto(ctx, slide, W, H, PAD, col) {
+  const isWide = W > H;
+  const splitX = isWide ? W * 0.46 : W * 0.5;
+
+  // Photo (left half)
+  if (slide.photoUrl) {
+    const img = await loadImg(slide.photoUrl);
+    if (img) {
+      // cover-crop into left half
+      const dAspect = splitX / H;
+      const sAspect = img.width / img.height;
+      let sx, sy, sw, sh;
+      if (sAspect > dAspect) {
+        sh = img.height; sw = sh * dAspect;
+        sx = (img.width - sw) / 2; sy = 0;
+      } else {
+        sw = img.width; sh = sw / dAspect;
+        sx = 0; sy = (img.height - sh) / 2;
+      }
+      ctx.save();
+      ctx.beginPath(); ctx.rect(0, 0, splitX, H); ctx.clip();
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, splitX, H);
+      ctx.restore();
+    }
+  } else {
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.fillRect(0, 0, splitX, H);
+    ctx.font = `500 ${W * 0.028}px 'Inconsolata', monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('UPLOAD PHOTO', splitX / 2, H / 2);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+  }
+
+  // Text (right half)
+  const rPad = PAD * 0.75;
+  const headSz = W * 0.068;
+  ctx.font = `700 ${headSz}px 'League Spartan', sans-serif`;
+  ctx.fillStyle = col.text;
+  ctx.textBaseline = 'top';
+  const headLines = drawWrapped(ctx, slide.headline, splitX + rPad, H * 0.22, W - splitX - rPad * 1.5, headSz * 1.1);
+
+  if (slide.subhead) {
+    const subSz = W * 0.030;
+    ctx.font = `400 ${subSz}px 'Lora', serif`;
+    ctx.fillStyle = rgba(col.text, 0.72);
+    drawWrapped(ctx, slide.subhead, splitX + rPad, H * 0.22 + headLines * headSz * 1.1 + headSz * 0.5, W - splitX - rPad * 1.5, subSz * 1.55);
+  }
+
+  if (slide.attribution) {
+    const attrSz = W * 0.022;
+    ctx.font = `500 ${attrSz}px 'Inconsolata', monospace`;
+    ctx.fillStyle = rgba(col.text, 0.45);
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(slide.attribution, splitX + rPad, H - PAD * 0.85);
+  }
+}
+
+// ── Draw: Monogram ────────────────────────────────────────────────────────
+
+async function drawMonogram(ctx, W, H, PAD, col) {
+  const img = await loadImg(MONOGRAM);
+  if (!img) return;
+
+  // Tint: use off-screen canvas with source-in composite
+  const mH = W * 0.065;
+  const mW = mH * (341.64 / 409.21);
+  const offCanvas = Object.assign(document.createElement('canvas'), { width: Math.ceil(mW), height: Math.ceil(mH) });
+  const offCtx = offCanvas.getContext('2d');
+  offCtx.drawImage(img, 0, 0, Math.ceil(mW), Math.ceil(mH));
+  offCtx.globalCompositeOperation = 'source-in';
+  offCtx.fillStyle = col.text;
+  offCtx.fillRect(0, 0, Math.ceil(mW), Math.ceil(mH));
+
+  ctx.globalAlpha = 0.45;
+  ctx.drawImage(offCanvas, W - mW - PAD * 0.65, H - mH - PAD * 0.55);
+  ctx.globalAlpha = 1;
+}
+
+// ── Canvas & preview ──────────────────────────────────────────────────────
+
+const canvas = document.getElementById('previewCanvas');
+const ctx    = canvas.getContext('2d');
+const PREV_MAX_W = 520;
+const PREV_MAX_H = 560;
+
+function sizeCanvas() {
+  const fmt = FORMATS[state.format];
+  canvas.width  = fmt.w;
+  canvas.height = fmt.h;
+  const scale = Math.min(PREV_MAX_W / fmt.w, PREV_MAX_H / fmt.h, 1);
+  canvas.style.width  = Math.round(fmt.w * scale) + 'px';
+  canvas.style.height = Math.round(fmt.h * scale) + 'px';
+}
+
+let drawPending = false;
+let drawTimer   = null;
+
+async function doRedraw() {
+  if (drawPending) return;
+  drawPending = true;
+  await document.fonts.ready;
+  drawPending = false;
+  const slide = state.slides[state.activeSlide];
+  const fmt   = FORMATS[state.format];
+  await drawSlide(ctx, slide, fmt);
+  if (state.carousel) refreshThumb(state.activeSlide);
+}
+
+function scheduleRedraw() {
+  clearTimeout(drawTimer);
+  drawTimer = setTimeout(doRedraw, 70);
+}
+
+// ── Thumbnail helpers ─────────────────────────────────────────────────────
+
+async function drawThumbnail(miniCtx, slide, fmt) {
+  const offC = document.createElement('canvas');
+  offC.width  = fmt.w;
+  offC.height = fmt.h;
+  const offX  = offC.getContext('2d');
+  await drawSlide(offX, slide, fmt);
+  miniCtx.drawImage(offC, 0, 0, miniCtx.canvas.width, miniCtx.canvas.height);
+}
+
+function refreshThumb(idx) {
+  const thumbs = document.querySelectorAll('.slide-thumb');
+  const thumb  = thumbs[idx];
+  if (!thumb) return;
+  const mc = thumb.querySelector('canvas');
+  if (!mc) return;
+  const fmt = FORMATS[state.format];
+  drawThumbnail(mc.getContext('2d'), state.slides[idx], fmt);
+}
+
+// ── Build: template grid ──────────────────────────────────────────────────
+
+const THUMB_HTML = {
+  bold: `<div class="t-bar"></div><div class="t-h1"></div><div class="t-h2"></div><div class="t-sub"></div><div class="t-sub2"></div>`,
+  watercolor: `<div class="t-wash"></div><div class="t-h1"></div><div class="t-h2"></div><div class="t-sub"></div><div class="t-sub2"></div>`,
+  split: `<div class="t-left"><div class="t-lh1"></div><div class="t-lh2"></div></div><div class="t-right"><div class="t-rh1"></div><div class="t-rh2"></div><div class="t-rh3"></div></div>`,
+  quote: `<div class="t-qmark">"</div><div class="t-ql1"></div><div class="t-ql2"></div><div class="t-ql3"></div><div class="t-qattr"></div>`,
+  stat:  `<div class="t-sbar"></div><div class="t-snum">87%</div><div class="t-sl1"></div><div class="t-sl2"></div>`,
+  photo: `<div class="t-photo"></div><div class="t-ptext"><div class="t-ph1"></div><div class="t-ph2"></div><div class="t-psub"></div></div>`,
+};
+
+function buildTemplateGrid() {
+  const grid = document.getElementById('templateGrid');
+  grid.innerHTML = '';
+  TEMPLATES.forEach(tmpl => {
+    const card = document.createElement('div');
+    card.className = `template-card ${tmpl.cls}${state.template === tmpl.id ? ' active' : ''}`;
+    card.innerHTML = `<div class="template-thumb">${THUMB_HTML[tmpl.id]}</div><div class="template-card-label">${tmpl.label}</div>`;
+    card.addEventListener('click', () => {
+      state.template = tmpl.id;
+      buildTemplateGrid();
+      document.getElementById('photoField').style.display = tmpl.id === 'photo' ? '' : 'none';
+      scheduleRedraw();
+    });
+    grid.appendChild(card);
+  });
+}
+
+// ── Build: color swatches ─────────────────────────────────────────────────
+
+function buildColorSwatches() {
+  const wrap = document.getElementById('colorSwatches');
+  wrap.innerHTML = '';
+  COLORS.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = `color-swatch${state.slides[state.activeSlide].colorId === c.id ? ' active' : ''}`;
+    btn.setAttribute('data-color', c.id);
+    btn.style.background = c.hex;
+    btn.title = c.label;
+    btn.addEventListener('click', () => {
+      state.slides[state.activeSlide].colorId = c.id;
+      buildColorSwatches();
+      scheduleRedraw();
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+// ── Build: spot grid ──────────────────────────────────────────────────────
+
+function buildSpotGrid() {
+  const grid = document.getElementById('spotGrid');
+  grid.innerHTML = '';
+  const slide = state.slides[state.activeSlide];
+
+  const noneBtn = document.createElement('button');
+  noneBtn.className = `spot-none-btn${slide.spot === null ? ' active' : ''}`;
+  noneBtn.textContent = 'None';
+  noneBtn.addEventListener('click', () => { slide.spot = null; buildSpotGrid(); scheduleRedraw(); });
+  grid.appendChild(noneBtn);
+
+  SPOTS.forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = `spot-btn${slide.spot === name ? ' active' : ''}`;
+    const img = document.createElement('img');
+    img.src = `assets/Illustrations/${name}.png`;
+    img.alt = name;
+    img.loading = 'lazy';
+    btn.appendChild(img);
+    btn.addEventListener('click', () => { slide.spot = name; buildSpotGrid(); scheduleRedraw(); });
+    grid.appendChild(btn);
+  });
+}
+
+// ── Build: scribble picker ────────────────────────────────────────────────
+
+function buildScribblePicker() {
+  const wrap  = document.getElementById('scribblePicker');
+  const slide = state.slides[state.activeSlide];
+  wrap.innerHTML = '';
+  if (!slide.scribbleOn) return;
+
+  const grid = document.createElement('div');
+  grid.className = 'scribble-subgrid';
+  SCRIBBLES.forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = `spot-btn${slide.scribble === name ? ' active' : ''}`;
+    const img = document.createElement('img');
+    img.src = `assets/Scribbles/${name}.png`;
+    img.alt = name;
+    img.loading = 'lazy';
+    btn.appendChild(img);
+    btn.addEventListener('click', () => { slide.scribble = name; buildScribblePicker(); scheduleRedraw(); });
+    grid.appendChild(btn);
+  });
+  wrap.appendChild(grid);
+}
+
+// ── Sync fields ↔ slide ───────────────────────────────────────────────────
+
+function syncFields() {
+  const slide = state.slides[state.activeSlide];
+  document.getElementById('fieldHeadline').value    = slide.headline;
+  document.getElementById('fieldSubhead').value     = slide.subhead;
+  document.getElementById('fieldAttribution').value = slide.attribution;
+
+  const wcToggle = document.getElementById('watercolorToggle');
+  wcToggle.classList.toggle('on', slide.watercolor);
+  wcToggle.setAttribute('aria-pressed', String(slide.watercolor));
+  document.getElementById('watercolorVariants').style.display = slide.watercolor ? '' : 'none';
+  document.querySelectorAll('.wc-variant-btn').forEach(b => {
+    b.classList.toggle('active', +b.dataset.variant === slide.wcVariant);
+  });
+
+  const scToggle = document.getElementById('scribbleToggle');
+  scToggle.classList.toggle('on', slide.scribbleOn);
+  scToggle.setAttribute('aria-pressed', String(slide.scribbleOn));
+  document.getElementById('scribblePicker').style.display = slide.scribbleOn ? '' : 'none';
+
+  const prevThumb = document.getElementById('photoPreviewThumb');
+  if (slide.photoUrl) { prevThumb.src = slide.photoUrl; prevThumb.style.display = ''; }
+  else { prevThumb.style.display = 'none'; }
+}
+
+// ── Carousel ──────────────────────────────────────────────────────────────
+
+function buildSlideStrip() {
+  const row = document.getElementById('slideStripRow');
+  row.innerHTML = '';
+  const fmt = FORMATS[state.format];
+  const THUMB_PX = 60;
+  const scale = THUMB_PX / Math.max(fmt.w, fmt.h);
+
+  state.slides.forEach((slide, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = `slide-thumb${i === state.activeSlide ? ' active' : ''}`;
+
+    const mc = document.createElement('canvas');
+    mc.width  = Math.round(fmt.w * scale);
+    mc.height = Math.round(fmt.h * scale);
+    mc.style.width  = mc.width  + 'px';
+    mc.style.height = mc.height + 'px';
+    thumb.appendChild(mc);
+
+    thumb.addEventListener('click', () => activateSlide(i));
+    row.appendChild(thumb);
+
+    drawThumbnail(mc.getContext('2d'), slide, fmt);
+  });
+
+  document.getElementById('slideCountLabel').textContent = `${state.activeSlide + 1} / ${state.slides.length}`;
+}
+
+function activateSlide(i) {
+  state.activeSlide = i;
+  buildSlideStrip();
+  buildColorSwatches();
+  buildSpotGrid();
+  buildScribblePicker();
+  syncFields();
+  scheduleRedraw();
+}
+
+function addSlide() {
+  const src = state.slides[state.activeSlide];
+  state.slides.push({ ...src, headline: '', subhead: '', photoUrl: null });
+  state.activeSlide = state.slides.length - 1;
+  buildSlideStrip();
+  buildColorSwatches();
+  buildSpotGrid();
+  buildScribblePicker();
+  syncFields();
+  scheduleRedraw();
+}
+
+function removeSlide() {
+  if (state.slides.length <= 1) return;
+  state.slides.splice(state.activeSlide, 1);
+  state.activeSlide = Math.min(state.activeSlide, state.slides.length - 1);
+  buildSlideStrip();
+  buildColorSwatches();
+  buildSpotGrid();
+  buildScribblePicker();
+  syncFields();
+  scheduleRedraw();
+}
+
+// ── Export ────────────────────────────────────────────────────────────────
+
+async function exportPng() {
+  const slide = state.slides[state.activeSlide];
+  const fmt   = FORMATS[state.format];
+  const ec    = document.createElement('canvas');
+  ec.width = fmt.w; ec.height = fmt.h;
+  await drawSlide(ec.getContext('2d'), slide, fmt);
+  const a = Object.assign(document.createElement('a'), {
+    download: `wbt-social-${state.format}.png`,
+    href: ec.toDataURL('image/png'),
+  });
+  a.click();
+}
+
+async function exportZip() {
+  if (typeof JSZip === 'undefined') {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+      s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+  const zip = new JSZip();
+  const fmt = FORMATS[state.format];
+  for (let i = 0; i < state.slides.length; i++) {
+    const ec = document.createElement('canvas');
+    ec.width = fmt.w; ec.height = fmt.h;
+    await drawSlide(ec.getContext('2d'), state.slides[i], fmt);
+    const b64 = ec.toDataURL('image/png').split(',')[1];
+    zip.file(`slide-${String(i+1).padStart(2,'0')}.png`, b64, { base64: true });
+  }
+  const blob = await zip.generateAsync({ type: 'blob' });
+  const a = Object.assign(document.createElement('a'), {
+    download: `wbt-social-carousel-${state.format}.zip`,
+    href: URL.createObjectURL(blob),
+  });
+  a.click();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+
+function init() {
+  // Format buttons
+  document.querySelectorAll('.format-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.format = btn.dataset.format;
+      document.querySelectorAll('.format-btn').forEach(b => b.classList.toggle('active', b === btn));
+      sizeCanvas();
+      if (state.carousel) buildSlideStrip();
+      scheduleRedraw();
+    });
+  });
+
+  // Carousel toggle
+  document.getElementById('carouselToggle').addEventListener('click', function() {
+    state.carousel = !state.carousel;
+    this.classList.toggle('active', state.carousel);
+    const strip   = document.getElementById('carouselStrip');
+    const zipBtn  = document.getElementById('btnExportZip');
+    strip.classList.toggle('visible', state.carousel);
+    zipBtn.classList.toggle('visible', state.carousel);
+    if (state.carousel) buildSlideStrip();
+    scheduleRedraw();
+  });
+
+  // Watercolor toggle
+  document.getElementById('watercolorToggle').addEventListener('click', function() {
+    const slide = state.slides[state.activeSlide];
+    slide.watercolor = !slide.watercolor;
+    this.classList.toggle('on', slide.watercolor);
+    this.setAttribute('aria-pressed', String(slide.watercolor));
+    document.getElementById('watercolorVariants').style.display = slide.watercolor ? '' : 'none';
+    scheduleRedraw();
+  });
+
+  // Watercolor variants
+  document.querySelectorAll('.wc-variant-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.slides[state.activeSlide].wcVariant = +btn.dataset.variant;
+      document.querySelectorAll('.wc-variant-btn').forEach(b => b.classList.toggle('active', b === btn));
+      scheduleRedraw();
+    });
+  });
+
+  // Scribble toggle
+  document.getElementById('scribbleToggle').addEventListener('click', function() {
+    const slide = state.slides[state.activeSlide];
+    slide.scribbleOn = !slide.scribbleOn;
+    this.classList.toggle('on', slide.scribbleOn);
+    this.setAttribute('aria-pressed', String(slide.scribbleOn));
+    document.getElementById('scribblePicker').style.display = slide.scribbleOn ? '' : 'none';
+    buildScribblePicker();
+    scheduleRedraw();
+  });
+
+  // Content fields
+  document.getElementById('fieldHeadline').addEventListener('input', function() {
+    state.slides[state.activeSlide].headline = this.value;
+    scheduleRedraw();
+  });
+  document.getElementById('fieldSubhead').addEventListener('input', function() {
+    state.slides[state.activeSlide].subhead = this.value;
+    scheduleRedraw();
+  });
+  document.getElementById('fieldAttribution').addEventListener('input', function() {
+    state.slides[state.activeSlide].attribution = this.value;
+    scheduleRedraw();
+  });
+
+  // Photo upload
+  document.getElementById('photoUploadBtn').addEventListener('click', () => {
+    document.getElementById('photoInput').click();
+  });
+  document.getElementById('photoInput').addEventListener('change', function() {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const url = ev.target.result;
+      state.slides[state.activeSlide].photoUrl = url;
+      // Eagerly cache so loadImg finds it immediately
+      imgCache[url] = new Promise(res => {
+        const img = new Image();
+        img.onload = () => res(img);
+        img.src = url;
+      });
+      const prev = document.getElementById('photoPreviewThumb');
+      prev.src = url; prev.style.display = '';
+      scheduleRedraw();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Carousel controls
+  document.getElementById('btnAddSlide').addEventListener('click', addSlide);
+  document.getElementById('btnRemoveSlide').addEventListener('click', removeSlide);
+
+  // Export
+  document.getElementById('btnExportPng').addEventListener('click', exportPng);
+  document.getElementById('btnExportZip').addEventListener('click', exportZip);
+
+  // Initial build
+  buildTemplateGrid();
+  buildColorSwatches();
+  buildSpotGrid();
+  buildScribblePicker();
+  syncFields();
+  sizeCanvas();
+  document.fonts.ready.then(doRedraw);
+}
+
+init();
+</script>
+</body>
+</html>

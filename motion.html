@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motion — Work Better Together</title>
+  <link rel="stylesheet" href="tokens/tokens.css">
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--surface-canvas); color: var(--ink-default); font-family: var(--font-body); line-height: 1.6; }
+    .page { max-width: var(--container-default); margin: 0 auto; padding: var(--page-padding-y) var(--page-padding-x) var(--space-24); }
+
+    .page-header { margin-bottom: var(--gap-section); padding-bottom: var(--space-8); border-bottom: 1px solid var(--border-subtle); }
+    .page-header .label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-brand); display: block; margin-bottom: 8px; }
+    .page-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1; color: var(--ink-default); margin-bottom: 12px; }
+    .page-header p { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--ink-default); max-width: 560px; }
+
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-default); padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
+    .section-intro { font-family: var(--font-body); font-size: 15px; color: var(--ink-default); max-width: 720px; margin-bottom: 28px; line-height: 1.65; }
+    .section-block { margin-bottom: 96px; }
+    .section-block h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin: 32px 0 14px; }
+
+    /* ── Principle cards ── */
+    .principles { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .principle {
+      background: var(--surface-default);
+      border: 1px solid var(--border-subtle);
+      padding: 28px;
+    }
+    .principle .p-num { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px; }
+    .principle h4 { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .principle p { font-family: var(--font-body); font-size: 14px; line-height: 1.65; }
+
+    /* ── Duration / easing demo card ── */
+    .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .demo {
+      background: var(--surface-default);
+      border: 1px solid var(--border-subtle);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .demo .d-eyebrow { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+    .demo h4 { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+    .demo code { font-family: var(--font-mono); font-size: 12px; color: var(--ink-action); }
+    .demo p { font-family: var(--font-body); font-size: 13px; color: var(--ink-default); line-height: 1.55; }
+
+    /* Animated puck demo */
+    .track {
+      height: 36px;
+      background: var(--c-slate-light);
+      border-radius: 999px;
+      position: relative;
+      overflow: hidden;
+    }
+    .puck {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--c-intentional-blue);
+    }
+    .track.run-quick    .puck { animation: runX 1.6s var(--motion-easing-standard) infinite; animation-duration: calc(120ms + 1500ms); }
+    .track.run-standard .puck { animation: runX 2.2s var(--motion-easing-standard) infinite; animation-duration: calc(200ms + 2000ms); }
+    .track.run-deliberate .puck { animation: runX 3s var(--motion-easing-standard) infinite; animation-duration: calc(320ms + 2500ms); }
+    .track.run-slow     .puck { animation: runX 4s var(--motion-easing-standard) infinite; animation-duration: calc(480ms + 3500ms); }
+    @keyframes runX {
+      0%, 8%   { transform: translateX(0); }
+      48%, 56% { transform: translateX(calc(100cqw - 36px)); }
+      96%,100% { transform: translateX(0); }
+    }
+    .track { container-type: inline-size; }
+
+    /* Easing visual */
+    .easing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .easing {
+      background: var(--surface-default);
+      border: 1px solid var(--border-subtle);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+    .easing svg { width: 100%; height: 80px; }
+    .easing .e-name { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+    .easing .e-token { font-family: var(--font-mono); font-size: 11px; color: var(--ink-action); display: block; margin-top: 4px; }
+    .easing .e-use { font-family: var(--font-body); font-size: 13px; color: var(--ink-default); margin-top: 4px; }
+
+    /* Named animation tiles */
+    .anim-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .anim {
+      background: var(--surface-default);
+      border: 1px solid var(--border-subtle);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .anim .a-stage {
+      height: 100px;
+      background: var(--surface-canvas);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .anim .a-name { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+    .anim .a-token { font-family: var(--font-mono); font-size: 11px; color: var(--ink-action); }
+    .anim .a-use { font-family: var(--font-body); font-size: 13px; color: var(--ink-default); line-height: 1.55; }
+
+    /* Animation specimens */
+    .spec-fade-in    { width: 80px; height: 28px; background: var(--c-clean-slate); animation: fadeIn 2s ease-out infinite; }
+    .spec-rise-in    { width: 80px; height: 28px; background: var(--c-intentional-blue); animation: riseIn 2s var(--motion-easing-entrance) infinite; }
+    .spec-slide-in   { width: 80px; height: 28px; background: var(--c-radiant-gold); animation: slideIn 2s var(--motion-easing-entrance) infinite; }
+    .spec-scale-in   { width: 80px; height: 28px; background: var(--c-honest-ochre); animation: scaleIn 2s var(--motion-easing-emphasized) infinite; }
+    .spec-pulse      { width: 28px; height: 28px; border-radius: 999px; background: var(--c-intentional-blue); animation: pulse 1.6s var(--motion-easing-standard) infinite; }
+    .spec-shimmer    { width: 120px; height: 16px; background: linear-gradient(90deg, var(--c-slate-light) 0%, rgba(30,77,92,0.4) 50%, var(--c-slate-light) 100%); background-size: 200% 100%; animation: shimmer 1.6s linear infinite; }
+
+    @keyframes fadeIn  { 0%,5% { opacity: 0; } 50%,55% { opacity: 1; } 95%,100% { opacity: 0; } }
+    @keyframes riseIn  { 0%,5% { opacity: 0; transform: translateY(12px); } 50%,55% { opacity: 1; transform: translateY(0); } 95%,100% { opacity: 0; transform: translateY(12px); } }
+    @keyframes slideIn { 0%,5% { opacity: 0; transform: translateX(-24px); } 50%,55% { opacity: 1; transform: translateX(0); } 95%,100% { opacity: 0; transform: translateX(-24px); } }
+    @keyframes scaleIn { 0%,5% { opacity: 0; transform: scale(0.96); } 50%,55% { opacity: 1; transform: scale(1); } 95%,100% { opacity: 0; transform: scale(0.96); } }
+    @keyframes pulse   { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0; } }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    .tokens-used { background: var(--surface-default); border: 1px solid var(--border-subtle); padding: 20px 28px; font-family: var(--font-body); font-size: 13px; color: var(--ink-default); margin-top: 24px; }
+    .tokens-used table { width: 100%; border-collapse: collapse; }
+    .tokens-used th, .tokens-used td { padding: 8px 0; border-bottom: 1px solid var(--border-subtle); text-align: left; }
+    .tokens-used th { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-default); }
+    .tokens-used tr:last-child td { border-bottom: none; }
+    .tokens-used code { font-family: var(--font-mono); font-size: 12px; color: var(--ink-action); background: var(--c-grounded-black-05); padding: 1px 6px; border-radius: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .puck, .spec-fade-in, .spec-rise-in, .spec-slide-in, .spec-scale-in, .spec-pulse, .spec-shimmer { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <span class="label">Work Better Together · Brand Guide</span>
+    <h1>Motion</h1>
+    <p>Movement should feel calm and intentional — like the brand itself. Confident without urgency. Considered, not flashy.</p>
+  </header>
+
+
+  <!-- ─── Principles ─── -->
+  <div class="section-block">
+    <div class="section-label">Principles</div>
+    <div class="principles">
+      <div class="principle">
+        <div class="p-num">01</div>
+        <h4>Confirm, don't perform.</h4>
+        <p>Motion exists to confirm a change happened — not to entertain. If the user can't tell what changed, the animation has failed. If the animation is the point, it's too much.</p>
+      </div>
+      <div class="principle">
+        <div class="p-num">02</div>
+        <h4>Calm under pressure.</h4>
+        <p>Quick on hovers (~120ms), considered on transitions (~200ms), deliberate on overlays (~320ms). Never rushed. Never showy.</p>
+      </div>
+      <div class="principle">
+        <div class="p-num">03</div>
+        <h4>Listen before moving.</h4>
+        <p>Always honor <code style="font-family:var(--font-mono);">prefers-reduced-motion</code>. Replace movement with a state change, not nothing — the user still needs to see the result.</p>
+      </div>
+      <div class="principle">
+        <div class="p-num">04</div>
+        <h4>Earn the gesture.</h4>
+        <p>Big moves (page transitions, hero reveals) should be rare and meaningful. If everything moves, nothing matters.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─── Durations ─── -->
+  <div class="section-block">
+    <div class="section-label">Durations</div>
+    <p class="section-intro">Four durations. Pick the smallest one that still reads as intentional.</p>
+    <div class="demo-grid">
+      <div class="demo">
+        <div class="d-eyebrow">Quick · 120ms</div>
+        <h4>Hover · micro state</h4>
+        <div class="track run-quick"><div class="puck"></div></div>
+        <code>--motion-duration-quick</code>
+        <p>Hover color shifts, focus rings, small toggles. Should feel imperceptible but confirmed.</p>
+      </div>
+      <div class="demo">
+        <div class="d-eyebrow">Standard · 200ms</div>
+        <h4>Default state change</h4>
+        <div class="track run-standard"><div class="puck"></div></div>
+        <code>--motion-duration-standard</code>
+        <p>Most component transitions. Tab switches, accordion expand, button pressed → released, card hover lift.</p>
+      </div>
+      <div class="demo">
+        <div class="d-eyebrow">Deliberate · 320ms</div>
+        <h4>Overlay · expressive</h4>
+        <div class="track run-deliberate"><div class="puck"></div></div>
+        <code>--motion-duration-deliberate</code>
+        <p>Modal entrance, drawer open, toast slide-in. Long enough to feel composed without dragging.</p>
+      </div>
+      <div class="demo">
+        <div class="d-eyebrow">Slow · 480ms</div>
+        <h4>Page · hero</h4>
+        <div class="track run-slow"><div class="puck"></div></div>
+        <code>--motion-duration-slow</code>
+        <p>Page transitions, hero reveals, large illustrative moments. Use sparingly.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─── Easings ─── -->
+  <div class="section-block">
+    <div class="section-label">Easing curves</div>
+    <p class="section-intro">Easing carries personality. Standard for nearly everything; entrance for elements appearing; exit for elements leaving; emphasized only when something needs to pull attention.</p>
+    <div class="easing-grid">
+      <div class="easing">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="0" y1="100" x2="100" y2="0" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="2,3"/>
+          <path d="M 0 100 C 20 100, 0 0, 100 0" stroke="var(--c-intentional-blue)" stroke-width="2" fill="none"/>
+        </svg>
+        <div>
+          <div class="e-name">Standard</div>
+          <code class="e-token">cubic-bezier(0.2, 0, 0, 1)</code>
+          <div class="e-use">Default. Use for most transitions.</div>
+        </div>
+      </div>
+      <div class="easing">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="0" y1="100" x2="100" y2="0" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="2,3"/>
+          <path d="M 0 100 C 0 100, 20 0, 100 0" stroke="var(--c-clean-slate)" stroke-width="2" fill="none"/>
+        </svg>
+        <div>
+          <div class="e-name">Entrance · ease-out</div>
+          <code class="e-token">cubic-bezier(0, 0, 0.2, 1)</code>
+          <div class="e-use">Elements arriving on screen.</div>
+        </div>
+      </div>
+      <div class="easing">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="0" y1="100" x2="100" y2="0" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="2,3"/>
+          <path d="M 0 100 C 40 100, 100 100, 100 0" stroke="var(--c-honest-ochre)" stroke-width="2" fill="none"/>
+        </svg>
+        <div>
+          <div class="e-name">Exit · ease-in</div>
+          <code class="e-token">cubic-bezier(0.4, 0, 1, 1)</code>
+          <div class="e-use">Elements leaving the screen.</div>
+        </div>
+      </div>
+      <div class="easing">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="0" y1="100" x2="100" y2="0" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="2,3"/>
+          <path d="M 0 100 C 20 100, 0 0, 100 0" stroke="var(--c-radiant-gold)" stroke-width="2" fill="none"/>
+        </svg>
+        <div>
+          <div class="e-name">Emphasized</div>
+          <code class="e-token">cubic-bezier(0.2, 0, 0, 1)</code>
+          <div class="e-use">Drawing attention. Use rarely.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─── Named animations ─── -->
+  <div class="section-block">
+    <div class="section-label">Named animations</div>
+    <p class="section-intro">Reusable patterns. Compose by combining a duration and an easing.</p>
+    <div class="anim-grid">
+      <div class="anim">
+        <div class="a-stage"><div class="spec-fade-in"></div></div>
+        <div class="a-name">fade-in</div>
+        <code class="a-token">opacity 0 → 1</code>
+        <div class="a-use">Standard · entrance ease. Use for content reveals where movement would be too much.</div>
+      </div>
+      <div class="anim">
+        <div class="a-stage"><div class="spec-rise-in"></div></div>
+        <div class="a-name">rise-in</div>
+        <code class="a-token">translateY(12px → 0) + opacity 0 → 1</code>
+        <div class="a-use">Standard · entrance ease. Toasts, dropdown menus, popovers.</div>
+      </div>
+      <div class="anim">
+        <div class="a-stage"><div class="spec-slide-in"></div></div>
+        <div class="a-name">slide-in</div>
+        <code class="a-token">translateX(−24px → 0) + opacity</code>
+        <div class="a-use">Deliberate · entrance ease. Drawer or sidebar reveals.</div>
+      </div>
+      <div class="anim">
+        <div class="a-stage"><div class="spec-scale-in"></div></div>
+        <div class="a-name">scale-in</div>
+        <code class="a-token">scale(0.96 → 1) + opacity</code>
+        <div class="a-use">Deliberate · emphasized ease. Modals, dialogs.</div>
+      </div>
+      <div class="anim">
+        <div class="a-stage"><div class="spec-pulse"></div></div>
+        <div class="a-name">pulse</div>
+        <code class="a-token">scale(1 → 1.4) + opacity 1 → 0</code>
+        <div class="a-use">Notification dots, "live" indicators. Loop only when active.</div>
+      </div>
+      <div class="anim">
+        <div class="a-stage"><div class="spec-shimmer"></div></div>
+        <div class="a-name">shimmer</div>
+        <code class="a-token">background-position scroll · linear</code>
+        <div class="a-use">Skeleton loaders. Calm, never aggressive.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─── Hover behaviors ─── -->
+  <div class="section-block">
+    <div class="section-label">Hover behaviors</div>
+    <p class="section-intro">Hover is the most-frequent motion in the system. Keep it small.</p>
+    <div class="tokens-used" style="margin-top:0;">
+      <table>
+        <thead><tr><th>Surface</th><th>Behavior</th><th>Tokens</th></tr></thead>
+        <tbody>
+          <tr><td>Button — primary</td><td>Background shifts darker (Intentional Blue → Steady Blue)</td><td><code>--btn-primary-bg</code> → <code>--btn-primary-bg-hover</code></td></tr>
+          <tr><td>Button — secondary</td><td>Background fills with ink, label inverts to cream</td><td><code>--btn-secondary-bg-hover</code></td></tr>
+          <tr><td>Card — default</td><td>Background lifts to <code>--surface-muted</code></td><td><code>--card-bg-hover</code></td></tr>
+          <tr><td>Card — themed (index)</td><td>Inverts to Grounded Black on Clear White</td><td>Used on Brand Guide Index</td></tr>
+          <tr><td>Link / nav</td><td>12% Clear White overlay (on dark) · color shift to brand ink (on light)</td><td><code>--state-hover-overlay-on-dark</code></td></tr>
+          <tr><td>Tag (interactive)</td><td>Border color shifts to <code>--ink-default</code>; background unchanged</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-family:var(--font-body); font-style:italic; font-size:13px; color:var(--ink-muted); margin-top:14px;">All hover transitions use <code style="font-family:var(--font-mono);">--motion-hover</code> (120ms standard easing).</p>
+  </div>
+
+
+  <!-- ─── Reduced motion ─── -->
+  <div class="section-block">
+    <div class="section-label">Reduced motion · The contract</div>
+    <p class="section-intro">Every component MUST honor <code>prefers-reduced-motion: reduce</code>. The state still has to change — just without the animation.</p>
+<pre style="background: var(--c-grounded-black); color: var(--c-clear-white); padding: 24px; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; overflow-x: auto; border-radius: 2px;"><span style="color:rgba(249,248,242,0.45);">/* Always wrap motion in a media query */</span>
+@media (prefers-reduced-motion: no-preference) {
+  .modal {
+    animation: <span style="color:var(--c-calm-blue);">scale-in var(--motion-overlay-in)</span>;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal {
+    animation: <span style="color:var(--c-calm-blue);">fade-in 0ms</span>; <span style="color:rgba(249,248,242,0.45);">/* state still flips */</span>
+  }
+  *, *::before, *::after {
+    animation-duration: <span style="color:var(--c-calm-blue);">0.01ms !important</span>;
+    transition-duration: <span style="color:var(--c-calm-blue);">0.01ms !important</span>;
+  }
+}</pre>
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPFA Research and Policy Team Retreat — Outline · Work Better Together</title>
+  <script src="../deck-stage.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('../fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('../fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('../fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('../fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Hand-drawn annotations on body copy ── */
+    /* .mark-circle — a hand-drawn oval around an emphasized phrase. Wraps inline. */
+    .mark-circle {
+      position: relative;
+      display: inline-block;
+      padding: 0.06em 0.24em 0.08em;
+      font-weight: 600;
+      color: var(--grounded-black);
+    }
+    .mark-circle::before {
+      content: '';
+      position: absolute;
+      inset: -0.2em -0.18em -0.18em -0.18em;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 100' preserveAspectRatio='none'><path d='M 22 52 Q 8 72 26 86 Q 56 100 116 96 Q 184 92 244 82 Q 286 76 290 56 Q 296 28 248 14 Q 192 4 130 6 Q 64 8 32 22 Q 14 30 16 44 Q 19 60 50 70' fill='none' stroke='%232531A5' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+
+    /* .mark-underline — a hand-drawn underline beneath an emphasized phrase. */
+    .mark-underline {
+      position: relative;
+      display: inline-block;
+      font-weight: 600;
+      color: var(--grounded-black);
+      padding-bottom: 0.06em;
+    }
+    .mark-underline::after {
+      content: '';
+      position: absolute;
+      left: -0.06em;
+      right: -0.06em;
+      bottom: -0.18em;
+      height: 0.32em;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30' preserveAspectRatio='none'><path d='M 4 18 Q 80 8 158 14 Q 232 20 296 12' fill='none' stroke='%232531A5' stroke-width='2.4' stroke-linecap='round'/></svg>");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+
+    /* Light variants for use on dark slides */
+    .dark-page .mark-circle, .divider .mark-circle, .thanks .mark-circle,
+    .dark-page .mark-underline, .divider .mark-underline, .thanks .mark-underline {
+      color: var(--clear-white);
+    }
+    .dark-page .mark-circle::before, .divider .mark-circle::before, .thanks .mark-circle::before {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 100' preserveAspectRatio='none'><path d='M 22 52 Q 8 72 26 86 Q 56 100 116 96 Q 184 92 244 82 Q 286 76 290 56 Q 296 28 248 14 Q 192 4 130 6 Q 64 8 32 22 Q 14 30 16 44 Q 19 60 50 70' fill='none' stroke='%23CD9F36' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    }
+    .dark-page .mark-underline::after, .divider .mark-underline::after, .thanks .mark-underline::after {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30' preserveAspectRatio='none'><path d='M 4 18 Q 80 8 158 14 Q 232 20 296 12' fill='none' stroke='%23CD9F36' stroke-width='2.4' stroke-linecap='round'/></svg>");
+    }
+
+    :root {
+      --steady-blue: #061A49;
+      --intentional-blue: #2531A5;
+      --clean-slate: #1E4D5C;
+      --calm-blue: #ACCDD9;
+      --gold: #CD9F36;
+      --ochre: #B55312;
+      --clear-white: #F9F8F2;
+      --grounded-black: #1F1E1E;
+      --rule: rgba(31,30,30,0.12);
+      --rule-light: rgba(249,248,242,0.18);
+
+      --display: 'League Spartan', sans-serif;
+      --body: 'Lora', serif;
+      --mono: 'Inconsolata', monospace;
+    }
+
+    html, body { background: #2a2a2a; }
+
+    /* ── Slide base ── */
+    section {
+      width: 1920px;
+      height: 1080px;
+      background: var(--clear-white);
+      color: var(--grounded-black);
+      font-family: var(--body);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Generic interior frame */
+    .frame {
+      position: absolute;
+      inset: 80px 96px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Monogram & wordmark ── */
+    .monogram-corner {
+      position: absolute;
+      top: 48px;
+      right: 48px;
+      width: 56px;
+      height: auto;
+      opacity: 1;
+      z-index: 5;
+    }
+    .monogram-corner.light { filter: invert(1) brightness(2); opacity: 1; }
+
+    .slide-num {
+      position: absolute;
+      bottom: 56px;
+      right: 56px;
+      font-family: var(--mono);
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grounded-black);
+      z-index: 5;
+    }
+    .slide-num.light { color: var(--clear-white); }
+
+    /* ── 01 · Cover ── */
+    .cover {
+      background: var(--clear-white);
+    }
+    .cover-watercolor {
+      position: absolute;
+      inset: 0;
+      background-image: url('../deck-assets/bg-calm-blue-2.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .cover-veil {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(249,248,242,0.0) 40%, rgba(172,205,217,0.4) 100%);
+    }
+    .cover-content {
+      position: absolute;
+      inset: 80px 96px 96px 96px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cover-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .cover-wordmark { height: 80px; width: auto; display: block; }
+    .cover-meta {
+      font-family: var(--mono);
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grounded-black);
+      text-align: right;
+      line-height: 1.7;
+    }
+    .cover-eyebrow {
+      font-family: var(--mono);
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      margin-bottom: 28px;
+    }
+    .cover-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 104px;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--grounded-black);
+      max-width: 1500px;
+      margin-bottom: 36px;
+    }
+    .cover-title em { font-style: normal; font-weight: inherit; color: inherit; }
+    .cover-client {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 32px;
+      color: var(--grounded-black);
+    }
+    .cover-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-family: var(--display); font-weight: 500;
+      font-size: 17px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grounded-black);
+    }
+    .cover-bottom .label-row { display: flex; flex-direction: column; gap: 6px; }
+    .cover-bottom .label { color: var(--clean-slate); }
+    .cover-bottom .value { font-family: var(--body); font-style: italic; font-size: 22px; letter-spacing: 0; text-transform: none; color: var(--grounded-black); }
+
+    /* ── 02 · Letter ── */
+    .letter {
+      background: var(--clear-white);
+      padding: 0;
+    }
+    .letter-spot {
+      position: absolute;
+      width: 620px;
+      height: 620px;
+      top: -120px;
+      right: -100px;
+      background-image: url('../deck-assets/spot-calm-blue-2.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 1;
+    }
+    .letter-content {
+      position: absolute;
+      top: 120px;
+      left: 220px;
+      width: 1080px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .letter-eyebrow {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 88px;
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--grounded-black);
+    }
+    .letter-greeting {
+      font-family: var(--body);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1.65;
+      color: var(--grounded-black);
+    }
+    .letter-body {
+      font-family: var(--body);
+      font-size: 30px;
+      line-height: 1.65;
+      color: var(--grounded-black);
+      max-width: 980px;
+    }
+    .letter-body p + p { margin-top: 22px; }
+    .letter-signoff {
+      margin-top: 20px;
+      font-family: var(--body);
+      font-style: normal;
+      font-size: 30px;
+      line-height: 1.65;
+      color: var(--grounded-black);
+    }
+    .letter-signoff strong { font-family: 'Dancing Script', cursive; font-style: normal; font-weight: 700; font-size: 52px; letter-spacing: 0.02em; color: var(--steady-blue); display: block; margin-top: 4px; }
+
+    /* ── 03 · Section divider — shared base ── */
+    .divider {
+      background: var(--steady-blue);
+      color: var(--clear-white);
+    }
+    .divider-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.7;
+    }
+    .divider-spot {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      bottom: -120px;
+      right: -120px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 1;
+    }
+    .divider-scribble {
+      position: absolute;
+      width: 1100px;
+      height: 750px;
+      bottom: -80px;
+      right: -380px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: bottom right;
+      opacity: 1;
+      pointer-events: none;
+    }
+    .divider-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 96px;
+    }
+    .divider-num {
+      text-transform: uppercase;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .divider-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 104px;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--clear-white);
+      max-width: 1400px;
+    }
+    .divider-title em { font-style: normal; font-weight: inherit; color: inherit; }
+    .divider-sub {
+      margin-top: 32px;
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 30px;
+      color: var(--calm-blue);
+      max-width: 900px;
+      line-height: 1.4;
+    }
+
+    /* ── 03 Colorway A — Steady Blue (default) ── */
+    .divider-a { background: var(--steady-blue); }
+    .divider-a .divider-bg { background-image: url('../deck-assets/bg-steady-blue-1.jpg'); }
+    .divider-a .divider-spot { background-image: url('../deck-assets/spot-gold-2.png'); }
+    .divider-a .divider-scribble { background-image: url('../deck-assets/scribble-cascading.png'); }
+    .divider-a .divider-num { color: var(--gold); }
+    .divider-a .divider-title { color: var(--clear-white); }
+    .divider-a .divider-sub { color: var(--calm-blue); }
+
+    /* ── 03 Colorway B — Clean Slate (dark teal) ── */
+    .divider-b { background: var(--clean-slate); }
+    .divider-b .divider-bg { background-image: url('../deck-assets/bg-clean-slate-1.jpg'); }
+    .divider-b .divider-spot { background-image: url('../deck-assets/spot-calm-blue-2.png'); }
+    .divider-b .divider-scribble { background-image: url('../deck-assets/scribble-loop-wave.png'); transform: scaleX(-1); }
+    .divider-b .divider-num { color: var(--calm-blue); }
+    .divider-b .divider-title { color: var(--clear-white); }
+    .divider-b .divider-sub { color: var(--calm-blue); }
+
+    /* ── 03 Colorway C — Calm Blue Light ── */
+    .divider-c { background: var(--clear-white); color: var(--grounded-black); }
+    .divider-c .divider-bg { background-image: url('../deck-assets/bg-calm-blue-1.jpg'); opacity: 0.55; }
+    .divider-c .divider-spot { background-image: url('../deck-assets/spot-gold-1.png'); }
+    .divider-c .divider-scribble { background-image: url('../deck-assets/scribble-sweep.png'); transform: rotate(-22deg); width: 1300px; height: 900px; right: -240px; bottom: -160px; }
+    .divider-c .divider-num { color: var(--ochre); }
+    .divider-c .divider-title { color: var(--grounded-black); }
+    .divider-c .divider-sub { color: var(--clean-slate); }
+
+    /* ── 03 Colorway D — Warm Cream ── */
+    .divider-d { background: var(--clear-white); color: var(--grounded-black); }
+    .divider-d .divider-bg { background-image: url('../deck-assets/bg-calm-blue-2.jpg'); opacity: 0.35; }
+    .divider-d .divider-spot { background-image: url('../deck-assets/spot-ochre-1.png'); }
+    .divider-d .divider-scribble { background-image: url('../deck-assets/scribble-cascading.png'); transform: scaleY(-1); }
+    .divider-d .divider-num { color: var(--ochre); }
+    .divider-d .divider-title { color: var(--grounded-black); }
+    .divider-d .divider-sub { color: var(--clean-slate); }
+
+    /* ── 03 Colorway E — Intentional Blue (solid) ── */
+    .divider-e { background: var(--intentional-blue); }
+    .divider-e .divider-bg { display: none; }
+    .divider-e .divider-spot { background-image: url('../deck-assets/spot-calm-blue-round-pool.png'); opacity: 1; transform: rotate(-30deg); }
+    .divider-e .divider-scribble { background-image: url('../deck-assets/scribble-loop-wave.png'); transform: rotate(12deg); }
+    .divider-e .divider-num { color: var(--calm-blue); }
+    .divider-e .divider-title { color: var(--clear-white); }
+
+    /* ── 03 Colorway F — Honest Ochre ── */
+    .divider-f { background: var(--clear-white); color: var(--grounded-black); }
+    .divider-f .divider-bg {
+      background-image: url('../deck-assets/bg-ochre-light.jpg');
+      opacity: 1;
+    }
+    .divider-f .divider-spot { background-image: url('../deck-assets/spot-gold-granular.png'); transform: rotate(-30deg); }
+    .divider-f .divider-scribble { background-image: url('../deck-assets/scribble-sweep.png'); transform: rotate(8deg); width: 1300px; height: 900px; right: -260px; bottom: -160px; }
+    .divider-f .divider-num { color: var(--steady-blue); }
+    .divider-f .divider-title { color: var(--grounded-black); }
+    .divider-f .divider-sub { color: var(--steady-blue); }
+
+    /* ── Ambient watercolor spots (behind content on grid slides) ── */
+    .ambient-spot {
+      position: absolute;
+      width: 1100px;
+      height: 1100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      pointer-events: none;
+      opacity: 0.85;
+      z-index: 0;
+    }
+    .ambient-spot.spot-br { bottom: -300px; right: -260px; }
+    .ambient-spot.spot-bl { bottom: -300px; left: -260px; }
+    section .frame { position: absolute; z-index: 1; }
+    section .monogram-corner, section .slide-num { z-index: 2; }
+    .divider-e .divider-sub { color: var(--calm-blue); }
+
+    /* ── 04 · About engagement (heading + body + checklist + structure) ── */
+    .about .frame { padding: 0; }
+    .about-eyebrow {
+      font-family: var(--display); font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      margin-bottom: 20px;
+    }
+    .about-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 88px;
+      line-height: 0.95;
+      letter-spacing: -0.025em;
+      color: var(--grounded-black);
+      margin-bottom: 28px;
+      max-width: 1400px;
+    }
+    .about-title em { font-style: normal; font-weight: inherit; color: inherit; }
+    .about-lede {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1.4;
+      color: var(--grounded-black);
+      max-width: 1100px;
+      margin-bottom: 56px;
+    }
+    .about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+    .about-col h3 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      padding-bottom: 14px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .check-list, .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+    .check-list li {
+      font-family: var(--body);
+      font-size: 26px;
+      line-height: 1.5;
+      color: var(--grounded-black);
+      padding-left: 38px;
+      position: relative;
+      max-width: 720px;
+    }
+    .check-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px;
+      width: 22px; height: 22px;
+      background: var(--gold);
+      border-radius: 50%;
+      mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center/14px no-repeat;
+      -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center/14px no-repeat;
+    }
+    .check-list li strong { font-family: var(--display); font-weight: 700; color: var(--steady-blue); display: inline; margin-right: 6px; }
+    .bullet-list li {
+      font-family: var(--body);
+      font-size: 26px;
+      line-height: 1.5;
+      color: var(--grounded-black);
+      padding-left: 26px;
+      position: relative;
+      max-width: 720px;
+    }
+    .bullet-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 14px;
+      width: 8px; height: 8px;
+      background: var(--ochre);
+      border-radius: 50%;
+    }
+
+    /* ── 05 · Two-column audience comparison ── */
+    .audience .frame { padding: 0; }
+    .audience-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      margin-top: 40px;
+      flex: 1;
+    }
+    .audience-col {
+      background: var(--clear-white);
+      border: 1px solid var(--rule);
+      padding: 56px 56px 64px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .audience-col.dark { background: var(--steady-blue); border-color: var(--steady-blue); color: var(--clear-white); }
+    .audience-tier {
+      font-family: var(--display); font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      margin-bottom: 14px;
+    }
+    .audience-col.dark .audience-tier { color: var(--gold); }
+    .audience-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--grounded-black);
+      margin-bottom: 12px;
+    }
+    .audience-col.dark .audience-name { color: var(--clear-white); }
+    .audience-meta {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--clean-slate);
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .audience-col.dark .audience-meta { color: var(--calm-blue); border-color: var(--rule-light); }
+    .audience-list { display: flex; flex-direction: column; gap: 18px; }
+    .audience-list li {
+      font-family: var(--body);
+      font-size: 25px;
+      line-height: 1.5;
+      list-style: none;
+      padding-left: 24px;
+      position: relative;
+    }
+    .audience-list li::before {
+      content: '';
+      position: absolute; left: 0; top: 14px;
+      width: 8px; height: 8px;
+      background: var(--ochre);
+      border-radius: 50%;
+    }
+    .audience-col.dark .audience-list li::before { background: var(--gold); }
+
+    /* ── 06 · Process arc (6-stage horizontal) ── */
+    .arc .frame { padding: 0; }
+    .arc-stages {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      margin-top: 56px;
+      flex: 1;
+    }
+    .arc-stage {
+      background: var(--clear-white);
+      border: 1px solid var(--rule);
+      padding: 36px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .arc-stage:nth-child(odd) { background: #fbfaf6; }
+    .arc-meta {
+      font-family: var(--display); font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      white-space: nowrap;
+      margin-bottom: 22px;
+    }
+    .arc-meta .arc-num { color: var(--ochre); }
+    .arc-q {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--grounded-black);
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+    .arc-q em { font-style: normal; font-weight: inherit; color: inherit; }
+    .arc-desc {
+      font-family: var(--body);
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--grounded-black);
+    }
+
+    /* ── 07 · Single-column body (How we'll work together / Confidentiality) ── */
+    .prose .frame { padding: 0; }
+    .prose-body {
+      font-family: var(--body);
+      font-size: 28px;
+      line-height: 1.65;
+      color: var(--grounded-black);
+      max-width: 1280px;
+      margin-top: 32px;
+    }
+    .prose-body p + p { margin-top: 20px; }
+    .prose-body strong { font-family: var(--display); font-weight: 700; color: var(--steady-blue); }
+    .prose-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 36px;
+      max-width: 1280px;
+    }
+    .prose-list li {
+      font-family: var(--body);
+      font-size: 26px;
+      line-height: 1.55;
+      color: var(--grounded-black);
+      padding-left: 26px;
+      position: relative;
+    }
+    .prose-list li::before {
+      content: '';
+      position: absolute; left: 0; top: 14px;
+      width: 8px; height: 8px;
+      background: var(--ochre);
+      border-radius: 50%;
+    }
+
+    /* ── 08 · Three-column process ── */
+    .process3 .frame { padding: 0; }
+    .process3-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      margin-top: 48px;
+      flex: 1;
+    }
+    .process3-col {
+      background: var(--clear-white);
+      border: 1px solid var(--rule);
+      padding: 48px 44px;
+      position: relative;
+    }
+    .process3-col:nth-child(2) { background: var(--calm-blue); border-color: var(--calm-blue); }
+    .process3-col:nth-child(3) { background: var(--steady-blue); border-color: var(--steady-blue); color: var(--clear-white); }
+    .process3-num {
+      text-transform: uppercase;
+      font-family: var(--display); font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      color: var(--ochre);
+      margin-bottom: 24px;
+    }
+    .process3-col:nth-child(2) .process3-num { color: var(--steady-blue); }
+    .process3-col:nth-child(3) .process3-num { color: var(--gold); }
+    .process3-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: -0.015em;
+      line-height: 1;
+      margin-bottom: 24px;
+      color: var(--grounded-black);
+    }
+    .process3-col:nth-child(3) .process3-title { color: var(--clear-white); }
+    .process3-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .process3-list li {
+      font-family: var(--body);
+      font-size: 23px;
+      line-height: 1.5;
+      padding-left: 22px;
+      position: relative;
+    }
+    .process3-list li::before {
+      content: '';
+      position: absolute; left: 0; top: 12px;
+      width: 7px; height: 7px;
+      background: var(--ochre);
+      border-radius: 50%;
+    }
+    .process3-col:nth-child(2) .process3-list li::before { background: var(--steady-blue); }
+    .process3-col:nth-child(3) .process3-list li::before { background: var(--gold); }
+
+    /* ── 09 · Pain-points / 6-card numbered grid ── */
+    .grid6 .frame { padding: 0; }
+    .grid6-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 1fr 1fr;
+      gap: 4px;
+      margin-top: 36px;
+      flex: 1;
+    }
+    .grid6-card {
+      background: var(--clear-white);
+      border: 1px solid var(--rule);
+      padding: 36px 36px 36px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .grid6-meta {
+      font-family: var(--display); font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      white-space: nowrap;
+      margin-bottom: 22px;
+    }
+    .grid6-meta .grid6-num { color: var(--ochre); }
+    .grid6-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--grounded-black);
+      margin-bottom: 14px;
+    }
+    .grid6-title em { font-style: normal; font-weight: inherit; color: inherit; }
+    .grid6-desc {
+      font-family: var(--body);
+      font-size: 21px;
+      line-height: 1.55;
+      color: var(--grounded-black);
+    }
+
+    /* ── 10 · Two-column "What we heard / What we planned" ── */
+    .heard-planned .frame { padding: 0; }
+    .hp-cols {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 0;
+      margin-top: 48px;
+      flex: 1;
+    }
+    .hp-col {
+      padding: 32px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .hp-col.left { padding-right: 56px; border-right: 1px solid var(--rule); }
+    .hp-col.right { padding-left: 56px; }
+    .hp-head {
+      font-family: var(--display); font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      margin-bottom: 8px;
+    }
+    .hp-head.r { color: var(--ochre); }
+    .hp-item {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--grounded-black);
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hp-col.right .hp-item {
+      font-family: var(--body);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--steady-blue);
+    }
+    .hp-col.right .hp-item strong { font-family: var(--display); font-weight: 700; font-style: normal; color: var(--grounded-black); display: block; margin-bottom: 4px; }
+    .hp-arrow {
+      align-self: center;
+      justify-self: center;
+      font-family: var(--mono);
+      font-size: 38px;
+      color: var(--ochre);
+    }
+
+    /* ── 11 · Big purpose statement ── */
+    .quote {
+      background: var(--clear-white);
+    }
+    .quote-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('../deck-assets/bg-calm-blue-1.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.55;
+    }
+    .quote-spot {
+      position: absolute;
+      width: 560px;
+      height: 560px;
+      top: -90px;
+      left: -120px;
+      background-image: url('../deck-assets/spot-gold-granular.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 1;
+      transform: rotate(160deg);
+    }
+    .quote-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 200px;
+    }
+    .quote-eyebrow {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      margin-bottom: 36px;
+    }
+    .quote-text {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 56px;
+      line-height: 1.25;
+      color: var(--grounded-black);
+      max-width: 1480px;
+      margin-bottom: 36px;
+      text-indent: -0.44em;
+      hanging-punctuation: first;
+    }
+    .quote-attr {
+      font-family: var(--mono);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      max-width: 1100px;
+      line-height: 1.6;
+    }
+
+    /* ── 12 · Numbered objectives list ── */
+    .objectives .frame { padding: 0; }
+    .obj-list {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .obj-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 56px;
+      align-items: start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .obj-row:last-child { border-bottom: none; }
+    .obj-id {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      min-width: 360px;
+    }
+    .obj-num {
+      text-transform: uppercase;
+      font-family: var(--display); font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      color: var(--ochre);
+    }
+    .obj-cat {
+      font-family: var(--display); font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+    }
+    .obj-stmt {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--grounded-black);
+    }
+    .obj-stmt em { font-style: normal; font-weight: inherit; color: inherit; }
+    .obj-stmt-desc {
+      font-family: var(--body);
+      font-size: 22px;
+      line-height: 1.55;
+      color: var(--grounded-black);
+      margin-top: 8px;
+      max-width: 980px;
+    }
+
+    /* ── 13 · Two-day arc ── */
+    .twoday .frame { padding: 0; }
+    .twoday-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-top: 48px;
+      flex: 1;
+    }
+    .twoday-col {
+      padding: 56px 56px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .twoday-col.day1 { background: var(--clear-white); border: 1px solid var(--rule); }
+    .twoday-col.day2 { background: var(--steady-blue); color: var(--clear-white); }
+    .twoday-day {
+      text-transform: uppercase;
+      font-family: var(--display); font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      color: var(--ochre);
+      margin-bottom: 18px;
+    }
+    .twoday-col.day2 .twoday-day { color: var(--gold); }
+    .twoday-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 52px;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--grounded-black);
+      margin-bottom: 24px;
+    }
+    .twoday-col.day2 .twoday-title { color: var(--clear-white); }
+    .twoday-lede {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 24px;
+      line-height: 1.55;
+      color: var(--clean-slate);
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rule);
+      max-width: 720px;
+    }
+    .twoday-col.day2 .twoday-lede { color: var(--calm-blue); border-color: var(--rule-light); }
+    .twoday-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .twoday-list li {
+      font-family: var(--body);
+      font-size: 24px;
+      line-height: 1.5;
+      padding-left: 22px;
+      position: relative;
+    }
+    .twoday-list li::before {
+      content: '';
+      position: absolute; left: 0; top: 13px;
+      width: 7px; height: 7px;
+      background: var(--ochre);
+      border-radius: 50%;
+    }
+    .twoday-col.day2 .twoday-list li::before { background: var(--gold); }
+
+    /* ── 14 · Detailed agenda with times ── */
+    .agenda .frame { padding: 0; }
+    .agenda-meta {
+      display: flex;
+      gap: 32px;
+      align-items: baseline;
+      margin-bottom: 28px;
+      font-family: var(--display); font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+    }
+    .agenda-meta strong { color: var(--ochre); }
+    .agenda-list {
+      list-style: none;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .agenda-row {
+      display: grid;
+      grid-template-columns: 130px 1fr 90px;
+      gap: 32px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: start;
+    }
+    .agenda-time {
+      text-transform: uppercase;
+      font-family: var(--display); font-weight: 500;
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--ochre);
+      letter-spacing: 0.02em;
+    }
+    .agenda-block { display: flex; flex-direction: column; gap: 4px; }
+    .agenda-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.005em;
+      color: var(--grounded-black);
+    }
+    .agenda-desc {
+      font-family: var(--body);
+      font-size: 21px;
+      line-height: 1.5;
+      color: var(--grounded-black);
+      max-width: 1100px;
+    }
+    .agenda-dur {
+      text-transform: uppercase;
+      font-family: var(--display); font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.16em;
+      color: var(--ochre);
+      text-align: right;
+      padding-top: 6px;
+    }
+    .agenda-row.break { background: rgba(172,205,217,0.18); padding: 14px 16px; border-bottom: none; margin: 4px -16px; }
+    .agenda-row.break .agenda-title { font-style: italic; font-weight: 500; color: var(--clean-slate); }
+
+    /* ── 15 · Fee summary ── */
+    .fees .frame { padding: 0; }
+    .fees-table {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      max-width: 1500px;
+    }
+    .fee-row {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 56px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: start;
+    }
+    .fee-row:has(+ .fee-row.total) { border-bottom: none; }
+    .fee-row.total {
+      border-bottom: none;
+      border-top: 2px solid var(--steady-blue);
+      margin-top: 8px;
+      padding-top: 22px;
+    }
+    .fee-label { display: flex; flex-direction: column; gap: 6px; }
+    .fee-label-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: -0.005em;
+      color: var(--grounded-black);
+    }
+    .fee-label-desc {
+      font-family: var(--body);
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--grounded-black);
+    }
+    .fee-amt {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--steady-blue);
+      text-align: right;
+      letter-spacing: -0.01em;
+    }
+    .fee-row.total .fee-label-title { font-size: 32px; color: var(--steady-blue); }
+    .fee-row.total .fee-amt { font-size: 48px; color: var(--ochre); }
+
+    .fees-terms {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--rule);
+      display: flex;
+      gap: 80px;
+    }
+    .fees-terms-block { flex: 1; }
+    .fees-terms-block h4 {
+      font-family: var(--display); font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      margin-bottom: 14px;
+    }
+    .fees-terms-block ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .fees-terms-block li {
+      font-family: var(--body);
+      font-size: 21px;
+      line-height: 1.5;
+      color: var(--grounded-black);
+      padding-left: 18px;
+      position: relative;
+    }
+    .fees-terms-block li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--ochre);
+    }
+
+    /* ── 16 · Bio (Meet Stacy / Meet Jenna) ── */
+    .bio .frame { padding: 0; }
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 580px 1fr;
+      gap: 100px;
+      margin-top: 32px;
+      flex: 1;
+    }
+    /* Wraps photo + decorations */
+    .bio-photo-frame {
+      position: relative;
+      width: 100%;
+      align-self: center;
+    }
+    .bio-spot {
+      position: absolute;
+      top: -120px;
+      left: -120px;
+      width: 760px;
+      height: 760px;
+      background-image: url('../deck-assets/spot-calm-blue-1.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+    /* Loose scribble looping off the bottom-left of the photo */
+    .bio-photo-frame::after {
+      content: '';
+      position: absolute;
+      bottom: -170px;
+      left: -80px;
+      width: 680px;
+      height: 360px;
+      background-image: url('../deck-assets/scribble-loop-wave.png');
+      background-size: 130% auto;
+      background-repeat: no-repeat;
+      background-position: -10% 30%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .bio-portrait {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background-color: #2c3a44;
+      background-image: url('../deck-assets/portrait-stacy.jpg');
+      background-size: cover;
+      background-position: center top;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 28px;
+      overflow: hidden;
+    }
+    .bio-portrait::after { display: none; }
+    .bio-portrait-cap { display: none; }
+    .bio-content { display: flex; flex-direction: column; justify-content: center; }
+    .bio-eyebrow {
+      font-family: var(--mono);
+      font-size: 16px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 18px;
+    }
+    .bio-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 88px;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      color: var(--grounded-black);
+      margin-bottom: 8px;
+    }
+    .bio-name em { font-style: normal; font-weight: inherit; color: inherit; }
+    .bio-role {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 26px;
+      color: var(--clean-slate);
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .bio-text {
+      font-family: var(--body);
+      font-size: 24px;
+      line-height: 1.65;
+      color: var(--grounded-black);
+      max-width: 1000px;
+    }
+    .bio-text p + p { margin-top: 18px; }
+
+    /* Jenna bio variant — different scribble */
+    .bio-jenna .bio-photo-frame::after {
+      background-image: url('../deck-assets/scribble-cascading.png');
+    }
+
+    /* ── 17 · About Us ── */
+    .about-us .frame { padding: 0; }
+    .about-us-grid {
+      display: grid;
+      grid-template-columns: 1fr 540px;
+      gap: 80px;
+      margin-top: 32px;
+      flex: 1;
+      align-items: center;
+    }
+    .about-us-text {
+      font-family: var(--body);
+      font-size: 28px;
+      line-height: 1.65;
+      color: var(--grounded-black);
+      max-width: 980px;
+    }
+    .about-us-text p + p { margin-top: 22px; }
+    .about-us-text strong { font-family: var(--display); font-weight: 700; color: var(--steady-blue); }
+    .about-us-spot {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      align-self: center;
+    }
+    .about-us-watercolor {
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 820px;
+      height: 867px;
+      background-image: url('../deck-assets/spot-ochre-vertical-splatter.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .about-us-spot::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -80px;
+      width: 680px;
+      height: 360px;
+      background-image: url('../deck-assets/scribble-cascading.png');
+      background-size: 130% auto;
+      background-repeat: no-repeat;
+      background-position: -10% 30%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .about-us-photo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background-image: url('../deck-assets/portrait-jenna-stacy-window.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* ── 18 · References / case studies ── */
+    .refs .frame { padding: 0; }
+    .refs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 4px;
+      margin-top: 36px;
+      flex: 1;
+    }
+    .ref-card {
+      background: var(--clear-white);
+      border: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .ref-thumb {
+      aspect-ratio: 16/9;
+      background: var(--calm-blue);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 48px;
+    }
+    .ref-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    .ref-card:nth-child(1) .ref-thumb { background: var(--calm-blue); }
+    .ref-card:nth-child(2) .ref-thumb { background: var(--gold); }
+    .ref-card:nth-child(3) .ref-thumb { background: var(--ochre); }
+    .ref-body { padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .ref-org {
+      font-family: var(--display); font-weight: 500;
+      font-size: 15px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ochre);
+    }
+    .ref-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: -0.005em;
+      line-height: 1.15;
+      color: var(--grounded-black);
+    }
+    .ref-meta {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 20px;
+      color: var(--clean-slate);
+    }
+    .ref-desc {
+      font-family: var(--body);
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--grounded-black);
+      margin-top: 6px;
+    }
+
+    /* ── 19 · What leaves the room ── */
+    /* uses grid6 + .leaves variant */
+    .leaves .grid6-card { background: #fbfaf6; }
+    .leaves .grid6-card:nth-child(odd) { background: var(--clear-white); }
+
+    /* ── 20 · Thank you ── */
+    .thanks {
+      background: var(--steady-blue);
+      color: var(--clear-white);
+    }
+    .thanks-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('../deck-assets/bg-steady-blue-1.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.6;
+    }
+    .thanks-spot {
+      position: absolute;
+      width: 720px;
+      height: 720px;
+      bottom: -100px;
+      right: -100px;
+      background-image: url('../deck-assets/spot-gold-2.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 1;
+    }
+    .thanks-content {
+      position: absolute;
+      inset: 80px 96px 96px 96px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .thanks-eyebrow {
+      font-family: var(--mono);
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+    }
+    .thanks-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 104px;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--clear-white);
+      margin-bottom: 36px;
+    }
+    .thanks-title em { font-style: normal; font-weight: inherit; color: inherit; }
+    .thanks-contact {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 64px;
+      align-items: end;
+      padding-top: 36px;
+      border-top: 1px solid var(--rule-light);
+    }
+    .thanks-contact-block { display: flex; flex-direction: column; gap: 6px; }
+    .thanks-contact-label {
+      font-family: var(--mono);
+      font-size: 16px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .thanks-contact-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: -0.005em;
+      color: var(--clear-white);
+    }
+    .thanks-contact-email {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--calm-blue);
+    }
+    .thanks-wordmark {
+      height: 80px;
+      width: auto;
+      filter: invert(1) brightness(2);
+      opacity: 0.95;
+      display: block;
+      align-self: flex-start;
+    }
+
+    /* ── Template index ── */
+    .index {
+      background: var(--clear-white);
+    }
+    .index .frame { padding: 0; }
+    .index-eyebrow {
+      font-family: var(--mono);
+      font-size: 16px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      margin-bottom: 18px;
+    }
+    .index-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 88px;
+      line-height: 0.95;
+      letter-spacing: -0.025em;
+      color: var(--grounded-black);
+      margin-bottom: 18px;
+    }
+    .index-title em { font-style: normal; font-weight: inherit; color: inherit; }
+    .index-lede {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--grounded-black);
+      max-width: 1200px;
+      margin-bottom: 48px;
+      line-height: 1.55;
+    }
+    .index-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 36px;
+      align-content: start;
+      flex: 1;
+      min-height: 0;
+    }
+    .index-row {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      column-gap: 12px;
+      align-items: baseline;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .index-row .num {
+      font-family: var(--display); font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      color: var(--ochre);
+    }
+    .index-row .text { display: flex; flex-direction: column; gap: 4px; }
+    .index-row .name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.005em;
+      color: var(--grounded-black);
+      line-height: 1.1;
+    }
+    .index-row .meta {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 16px;
+      color: var(--clean-slate);
+      line-height: 1.3;
+    }
+
+    /* Generic page header */
+    .page-eyebrow {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+      margin-bottom: 14px;
+    }
+    .page-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 72px;
+      line-height: 0.98;
+      letter-spacing: -0.025em;
+      color: var(--grounded-black);
+      margin-bottom: 16px;
+      max-width: 1500px;
+    }
+    .page-title em { font-style: normal; font-weight: inherit; color: inherit; }
+    .page-lede {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1.4;
+      color: var(--grounded-black);
+      max-width: 1200px;
+    }
+
+    /* dark page variant */
+    .dark-page { background: var(--steady-blue); color: var(--clear-white); }
+    .dark-page .page-eyebrow { color: var(--gold); }
+    .dark-page .page-title { color: var(--clear-white); }
+    .dark-page .page-title em { color: var(--calm-blue); }
+    .dark-page .page-lede { color: var(--calm-blue); }
+
+    /* ── 21 · Clients ── */
+    .clients .frame { padding: 0; gap: 28px; }
+    .clients-header { display: flex; flex-direction: column; gap: 16px; }
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-auto-rows: 130px;
+      gap: 24px;
+      align-items: center;
+      justify-items: center;
+      padding: 8px 0 4px;
+    }
+    .clients-grid .logo {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+    }
+    .clients-grid .logo img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: none;
+    }
+    .clients-cta {
+      margin-top: auto;
+      border-top: 1px solid var(--rule);
+      padding-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 56px;
+      align-items: center;
+    }
+    .clients-cta-body p {
+      font-family: var(--body);
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--grounded-black);
+      margin: 0;
+      max-width: 1100px;
+    }
+    .clients-cta-body a.inline-link {
+      color: var(--intentional-blue);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .clients-cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .clients-cta-actions .btn {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 26px 56px;
+      text-decoration: none;
+      display: inline-block;
+      line-height: 1;
+      border-radius: 10px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .clients-cta-actions .btn-primary {
+      background: var(--intentional-blue);
+      color: var(--clear-white);
+      border: 1px solid var(--intentional-blue);
+    }
+    .clients-cta-actions .btn-secondary {
+      background: transparent;
+      color: var(--grounded-black);
+      border: 1px solid var(--grounded-black);
+    }
+
+    /* ── 23 · What We Do ── */
+    .whatwedo .frame { padding: 0; }
+    .whatwedo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 64px;
+      flex: 1;
+      align-content: center;
+      margin-top: 24px;
+    }
+    .ww-col { display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 24px; }
+    .ww-collage {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ww-spot {
+      position: absolute;
+      inset: 30px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .ww-scribble {
+      position: absolute;
+      inset: -20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      pointer-events: none;
+    }
+    .ww-illus {
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      z-index: 2;
+    }
+    .ww-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      color: var(--grounded-black);
+      margin: 0;
+    }
+    .ww-desc {
+      font-family: var(--body);
+      font-size: 24px;
+      line-height: 1.45;
+      color: var(--grounded-black);
+      margin: 0;
+      max-width: 460px;
+    }
+    .ww-desc strong { font-weight: 700; }
+    .ww-cta {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--grounded-black);
+      text-decoration: underline;
+      text-underline-offset: 6px;
+      text-decoration-thickness: 1.5px;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    /* ── 22 · Impact of Coaching ── */
+    .impact .frame { padding: 0; }
+    .impact-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 56px;
+      flex: 1;
+      align-content: center;
+    }
+    .impact-stat { display: flex; flex-direction: column; gap: 24px; }
+    .impact-stat-num {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 220px;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--intentional-blue);
+    }
+    .impact-stat-body {
+      font-family: var(--body);
+      font-size: 24px;
+      line-height: 1.45;
+      color: var(--grounded-black);
+      max-width: 460px;
+    }
+    .impact-stat-body strong { font-weight: 700; }
+    .impact-source {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--clean-slate);
+    }
+  </style>
+</head>
+<body>
+
+<deck-stage>
+
+  <!-- ── 01 · Cover ── -->
+  <section class="cover" data-screen-label="01 Cover">
+    <div class="cover-watercolor"></div>
+    <div class="cover-veil"></div>
+    <div class="cover-content">
+      <div class="cover-top">
+        <img class="cover-wordmark" src="../deck-assets/wordmark-black.svg" alt="Work Better Together">
+      </div>
+      <div>
+        <div class="cover-eyebrow">A Retreat Outline For</div>
+        <h1 class="cover-title">PPFA<br>Research &amp; Policy<br><em>Team Retreat</em></h1>
+        <p class="cover-client">Prepared for the Planned Parenthood Federation of America Research &amp; Policy Team</p>
+      </div>
+      <div class="cover-bottom">
+        <div class="label-row">
+          <span class="label">Prepared by</span>
+          <span class="value">Stacy Berger &amp; Jenna Shapiro</span>
+        </div>
+        <div class="label-row" style="text-align:right">
+          <span class="label">Issued</span>
+          <span class="value">Spring · 2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 09 · Pain points 6-card grid ── -->
+  <section class="grid6" data-screen-label="09 Pain points">
+    <div class="frame">
+      <div class="page-eyebrow">Pain points · synthesized from the team survey</div>
+      <h2 class="page-title">Six pressure points that will be in the room <em>whether named or not</em>.</h2>
+      <div class="grid6-cards">
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">01</span> &middot; <span class="grid6-cat">Structural</span></div>
+          <h4 class="grid6-title">Change <em>imposed from above</em></h4>
+          <p class="grid6-desc">The reorganization felt done to the team, not with the team. No input. No co-design. Departures happening in silence breed anxiety.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">02</span> &middot; <span class="grid6-cat">Identity</span></div>
+          <h4 class="grid6-title">Not one team yet</h4>
+          <p class="grid6-desc">Almost no one identifies with the team. People don't know each other's names, roles, or daily realities. Remote staff feel invisible.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">03</span> &middot; <span class="grid6-cat">Vision</span></div>
+          <h4 class="grid6-title">Talking points <em>without meaning</em></h4>
+          <p class="grid6-desc">Nearly half can't say what the vision means for their day-to-day. Heard it. Can't live it. Some feel attempts to live it have been sidelined.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">04</span> &middot; <span class="grid6-cat">Leadership</span></div>
+          <h4 class="grid6-title">Unprocessed pain is present</h4>
+          <p class="grid6-desc">The interim VP situation, a key departure, favoritism, and perceived promotion inequity sit in the room, named or not.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">05</span> &middot; <span class="grid6-cat">Recognition</span></div>
+          <h4 class="grid6-title">Invisible labor, <em>stalled growth</em></h4>
+          <p class="grid6-desc">Directors carrying outsized workloads without title changes or recognition while watching others advance.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">06</span> &middot; <span class="grid6-cat">Collaboration</span></div>
+          <h4 class="grid6-title">Territorial across EA</h4>
+          <p class="grid6-desc">Cross-EA work feels like 'hunger games.' R&amp;P is routed around, not sought out. Ownership disputes block progress.</p>
+        </div>
+      </div>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">02 / 13</span>
+  </section>
+
+  <!-- ── 10 · Heard → Planned ── -->
+  <section class="heard-planned" data-screen-label="10 Heard to Planned">
+    <div class="frame">
+      <div class="page-eyebrow">From what we heard, to where we are</div>
+      <h2 class="page-title">A retreat designed in <em>response</em>.</h2>
+      <div class="hp-cols">
+        <div class="hp-col left">
+          <div class="hp-head">What we heard</div>
+          <div class="hp-item">The team doesn't yet know what it means to work together.</div>
+          <div class="hp-item">The vision exists but hasn't landed in day-to-day work.</div>
+          <div class="hp-item">Pain is present and will be in the room whether named or not.</div>
+          <div class="hp-item">People want connection, not just co-existence.</div>
+          <div class="hp-item">The team is ready — they just need a reason to cohere.</div>
+        </div>
+        <div class="hp-arrow">→</div>
+        <div class="hp-col right">
+          <div class="hp-head r">…so we designed a retreat that</div>
+          <div class="hp-item"><strong>Names the hard stuff.</strong>Acknowledgment comes first, without defensiveness.</div>
+          <div class="hp-item"><strong>Answers the question.</strong>What is our cumulative value, together?</div>
+          <div class="hp-item"><strong>Builds identity from the inside out.</strong>Not handed down — co-created in the room.</div>
+          <div class="hp-item"><strong>Creates real ways of working.</strong>Not a document that lives in a drawer.</div>
+        </div>
+      </div>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">03 / 13</span>
+  </section>
+
+  <!-- ── 11 · Purpose statement (full-bleed quote) ── -->
+  <section class="quote" data-screen-label="11 Purpose statement">
+    <div class="quote-bg"></div>
+    <div class="quote-spot"></div>
+    <div class="quote-content">
+      <div class="quote-eyebrow">Retreat Purpose Statement</div>
+      <p class="quote-text">“To answer, together for the first time, what our cumulative value is as research and data experts, federal and state policy experts and strategists, and sex education experts — and to build the identity and ways of working that let us deliver on it.”</p>
+      <p class="quote-attr">— Retreat Purpose Statement · Specific enough to be argued with, and that tension is the point.</p>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">04 / 13</span>
+  </section>
+
+  <!-- ── 12 · Numbered objectives ── -->
+  <section class="objectives" data-screen-label="12 Five objectives">
+    <div class="frame">
+      <div class="page-eyebrow">Five objectives</div>
+      <h2 class="page-title">Each names a step toward <em>the purpose</em>.</h2>
+      <div class="obj-list">
+        <div class="obj-row">
+          <div class="obj-id"><div class="obj-num">01</div><div class="obj-cat">Vision</div></div>
+          <div>
+            <div class="obj-stmt">Make the vision <em>real</em>.</div>
+            <p class="obj-stmt-desc">Close the gap between talking points and day-to-day meaning through concrete conversation and interaction.</p>
+          </div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-id"><div class="obj-num">02</div><div class="obj-cat">Ways of Working</div></div>
+          <div>
+            <div class="obj-stmt">Build shared agreements <em>and a plan to use them</em>.</div>
+            <p class="obj-stmt-desc">Commit to norms the team can hold each other to — not a document that lives in a drawer.</p>
+          </div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-id"><div class="obj-num">03</div><div class="obj-cat">Identity</div></div>
+          <div>
+            <div class="obj-stmt">Name <em>who you are</em> as R&amp;P and Education.</div>
+            <p class="obj-stmt-desc">Collective identity has to be discovered in the room. Build it together, not handed down from above.</p>
+          </div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-id"><div class="obj-num">04</div><div class="obj-cat">Collaboration</div></div>
+          <div>
+            <div class="obj-stmt">Strengthen the muscle to work <em>across workstreams</em>.</div>
+            <p class="obj-stmt-desc">Name and experiment with collaboration at two levels: within R&amp;P, and across External Affairs broadly.</p>
+          </div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-id"><div class="obj-num">05</div><div class="obj-cat">Acknowledgment</div></div>
+          <div>
+            <div class="obj-stmt">Acknowledge <em>what this team has been through</em>.</div>
+            <p class="obj-stmt-desc">Name the hard stuff, without defensiveness.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">05 / 13</span>
+  </section>
+
+  <!-- ── 13 · Design choices (6-card grid, lighter) ── -->
+  <section class="grid6 leaves" data-screen-label="13 Design choices">
+    <div class="frame">
+      <div class="page-eyebrow">Key design choices</div>
+      <h2 class="page-title">Principles that shape every <em>session</em>.</h2>
+      <div class="grid6-cards">
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">01</span> &middot; <span class="grid6-cat">Test of purpose</span></div>
+          <h4 class="grid6-title">Priya Parker's <em>disputable purpose</em></h4>
+          <p class="grid6-desc">Every design decision is tested against the retreat purpose. If a session doesn't serve it, it doesn't belong.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">02</span> &middot; <span class="grid6-cat">Method</span></div>
+          <h4 class="grid6-title">Gestalt / Cape Cod Method</h4>
+          <p class="grid6-desc">Awareness before action. Solo → pairs → small groups → full group. Day 1's relational ground makes Day 2 possible.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">03</span> &middot; <span class="grid6-cat">Artifact</span></div>
+          <h4 class="grid6-title">The Name Wall</h4>
+          <p class="grid6-desc">A shared physical space that accumulates across both days for observations, needs, offers, and 'I See You' statements.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">04</span> &middot; <span class="grid6-cat">Sequencing</span></div>
+          <h4 class="grid6-title">Two rounds of <em>vision articulations</em></h4>
+          <p class="grid6-desc">The leader shares once when the team is relationally warm, once when ready to do something with it. The second responds to what was heard.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">05</span> &middot; <span class="grid6-cat">Live work</span></div>
+          <h4 class="grid6-title">Collaboration ideas chart</h4>
+          <p class="grid6-desc">Open from Day 1, created by the team in real time, brought to life on Day 2 in an open fishbowl. Ideas belong to the team.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">06</span> &middot; <span class="grid6-cat">Pre-work</span></div>
+          <h4 class="grid6-title">Pairings <em>driven by data</em></h4>
+          <p class="grid6-desc">Each person identifies who they know least. We share back so people can prioritize the low-familiarity connections for walks and small groups.</p>
+        </div>
+      </div>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">06 / 13</span>
+  </section>
+
+  <!-- ── 14 · Two-day arc ── -->
+  <section class="twoday" data-screen-label="14 Two-day arc">
+    <div class="frame">
+      <div class="page-eyebrow">The two-day arc</div>
+      <h2 class="page-title">A purposeful sequence — <em>not a packed agenda</em>.</h2>
+      <div class="twoday-cols">
+        <div class="twoday-col day1">
+          <div class="twoday-day">Day One</div>
+          <h3 class="twoday-title">Arrival, Awareness &amp; Who We Are</h3>
+          <p class="twoday-lede">Day 1 is relational and awareness-building. Before the team can do substantive work together, they need to know each other — not just by role, but by what they carry, what they need, and how they're wired.</p>
+          <ul class="twoday-list">
+            <li>Name what's true about the moment this team is in.</li>
+            <li>Test the retreat purpose against their own experience.</li>
+            <li>Begin to see each other's actual work and actual needs.</li>
+            <li>Hear the leader's vision and respond to it honestly.</li>
+          </ul>
+        </div>
+        <div class="twoday-col day2">
+          <div class="twoday-day">Day Two</div>
+          <h3 class="twoday-title">Substance, Vision &amp; What We Build</h3>
+          <p class="twoday-lede">On Day 2, the team moves from knowing each other to building something concrete together — identity, agreements, and real collaboration ideas. This is possible because of the relational work built in Day 1.</p>
+          <ul class="twoday-list">
+            <li>Map what each workstream does and what it needs from the others.</li>
+            <li>Discover what only this team can do at the intersection.</li>
+            <li>Return to and wrestle with the retreat purpose statement.</li>
+            <li>Commit to real norms, routines &amp; rituals — and live collaboration ideas.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">07 / 13</span>
+  </section>
+
+  <!-- ── 15 · Detailed agenda ── -->
+  <section class="agenda" data-screen-label="15 Detailed agenda">
+    <div class="frame">
+      <div class="page-eyebrow">Day One · Morning · 09:30 – 12:30</div>
+      <h2 class="page-title">Arrival, awareness &amp; <em>who we are</em>.</h2>
+      <ul class="agenda-list">
+        <li class="agenda-row">
+          <div class="agenda-time">09:30</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Threshold opening</div>
+            <div class="agenda-desc">Two-word check-in: how you're arriving, how you hope to leave. Sets the tone. Introduce the Name Wall + Collaboration Ideas Chart.</div>
+          </div>
+          <div class="agenda-dur">30 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">10:00</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Stephanie opens</div>
+            <div class="agenda-desc">Acknowledges what the team has been through (without defending), then introduces the retreat purpose statement as the reason they're here.</div>
+          </div>
+          <div class="agenda-dur">20 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">10:20</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Purpose walk-and-talk</div>
+            <div class="agenda-desc">Cross-workstream pairs walk with two questions: honest reaction to the purpose; what would need to be true for it to feel real in six months.</div>
+          </div>
+          <div class="agenda-dur">40 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">11:00</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Purpose conversation (full group)</div>
+            <div class="agenda-desc">Open conversation about what surfaced from the walk-and-talks.</div>
+          </div>
+          <div class="agenda-dur">35 min</div>
+        </li>
+        <li class="agenda-row break">
+          <div class="agenda-time">11:35</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Break</div>
+          </div>
+          <div class="agenda-dur">15 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">11:50</div>
+          <div class="agenda-block">
+            <div class="agenda-title">The work I do, and want you to see</div>
+            <div class="agenda-desc">Individual writing, then small-group shares. Each group adds observations to others' Name Wall spots — first contributions to the wall.</div>
+          </div>
+          <div class="agenda-dur">40 min</div>
+        </li>
+        <li class="agenda-row break">
+          <div class="agenda-time">12:30</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Lunch</div>
+          </div>
+          <div class="agenda-dur">60 min</div>
+        </li>
+      </ul>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">08 / 13</span>
+  </section>
+
+  <!-- ── 15B · Day One · Afternoon ── -->
+  <section class="agenda" data-screen-label="15B Day One · Afternoon">
+    <div class="frame">
+      <div class="page-eyebrow">Day One · Afternoon · 13:30 – 15:40</div>
+      <h2 class="page-title">Arrival, awareness &amp; <em>who we are</em>.</h2>
+      <ul class="agenda-list">
+        <li class="agenda-row">
+          <div class="agenda-time">13:30</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Prism primer</div>
+            <div class="agenda-desc">Brief framework introduction for the full group. Goal: shared vocabulary, not a full debrief.</div>
+          </div>
+          <div class="agenda-dur">20 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">13:50</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Prism pairs walk outside</div>
+            <div class="agenda-desc">Walk prompts: how you work, where you're alive or depleted, what you need from this team.</div>
+          </div>
+          <div class="agenda-dur">35 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">14:25</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Prism constellation + What I Need / What I Offer</div>
+            <div class="agenda-desc">Human constellation mapping personalities and personalities under pressure. Each person writes two cards — needs and offers — and posts them to their Name Wall spot. Silent gallery walk, then full-group debrief.</div>
+          </div>
+          <div class="agenda-dur">40 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">15:05</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Stephanie's vision (first articulation)</div>
+            <div class="agenda-desc">Stephanie shares her vision for R&amp;P + facilitated discussion with the full team.</div>
+          </div>
+          <div class="agenda-dur">20 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">15:25</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Day 1 close</div>
+            <div class="agenda-desc">Popcorn round: "Something I learned about someone today I didn't know before." Reminder that the Name Wall and Collaboration Chart stay open. Preview of Day 2.</div>
+          </div>
+          <div class="agenda-dur">15 min</div>
+        </li>
+      </ul>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">09 / 13</span>
+  </section>
+
+  <!-- ── 15C · Day Two · Morning ── -->
+  <section class="agenda" data-screen-label="15C Day Two · Morning">
+    <div class="frame">
+      <div class="page-eyebrow">Day Two · Morning · 09:30 – 12:30</div>
+      <h2 class="page-title">Substance, vision &amp; <em>what we build together</em>.</h2>
+      <ul class="agenda-list">
+        <li class="agenda-row">
+          <div class="agenda-time">09:30</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Opening Day 2</div>
+            <div class="agenda-desc">Five minutes of individual writing before sharing as a whole.</div>
+          </div>
+          <div class="agenda-dur">15 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">09:45</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Stephanie's vision (second articulation)</div>
+            <div class="agenda-desc">Not a repeat, but a response shaped by everything heard on Day 1.</div>
+          </div>
+          <div class="agenda-dur">20 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">10:05</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Workstream mapping — what we do, what we need</div>
+            <div class="agenda-desc">Each workstream answers: what we actually do, what we need from others, what we offer. Presentations, cross-workstream responses, facilitators map interdependencies.</div>
+          </div>
+          <div class="agenda-dur">60 min</div>
+        </li>
+        <li class="agenda-row break">
+          <div class="agenda-time">11:05</div>
+          <div class="agenda-block"><div class="agenda-title">Break</div></div>
+          <div class="agenda-dur">10 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">11:15</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Only R&amp;P can… (what's possible at the intersections)</div>
+            <div class="agenda-desc">Mixed groups answer: what can this team do that no other team at PPFA can? Specific, concrete examples only. Stephanie responds last — connecting what she heard to her vision.</div>
+          </div>
+          <div class="agenda-dur">45 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">12:00</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Return to the purpose statement</div>
+            <div class="agenda-desc">With everything generated, return to the purpose. Does it feel true now? Has language shifted? Close: what do you understand about this team that you didn't 36 hours ago?</div>
+          </div>
+          <div class="agenda-dur">30 min</div>
+        </li>
+        <li class="agenda-row break">
+          <div class="agenda-time">12:30</div>
+          <div class="agenda-block"><div class="agenda-title">Lunch</div></div>
+          <div class="agenda-dur">60 min</div>
+        </li>
+      </ul>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">10 / 13</span>
+  </section>
+
+  <!-- ── 15D · Day Two · Afternoon ── -->
+  <section class="agenda" data-screen-label="15D Day Two · Afternoon">
+    <div class="frame">
+      <div class="page-eyebrow">Day Two · Afternoon · 13:30 – 15:40</div>
+      <h2 class="page-title">Substance, vision &amp; <em>what we build together</em>.</h2>
+      <ul class="agenda-list">
+        <li class="agenda-row">
+          <div class="agenda-time">13:30</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Ways of working — norms, routines &amp; rituals</div>
+            <div class="agenda-desc">Brief intro of WBT's Norms / Routines / Rituals framework. Small cross-functional groups identify specific norms, routines, and rituals that would support this team. Full group narrows to 2–3 real commitments across each. Stephanie and the team name what they'll hold each other to.</div>
+          </div>
+          <div class="agenda-dur">65 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">14:35</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Collaboration in action</div>
+            <div class="agenda-desc">Revisit the Collaboration Ideas Chart — open since Day 1. Whoever is energized by an idea self-selects into the center (open fishbowl). Each idea gets 10–12 minutes: what is it, who owns it, what's the first step, and what norms/routines/rituals does it need? Repeat with 2–3 ideas.</div>
+          </div>
+          <div class="agenda-dur">40 min</div>
+        </li>
+        <li class="agenda-row">
+          <div class="agenda-time">15:15</div>
+          <div class="agenda-block">
+            <div class="agenda-title">Closing</div>
+            <div class="agenda-desc">Time for reflection at the wall — folks read everything accumulated over two days. Popcorn round: "I'm walking away with ___." Stephanie closes last: names individual contributions she witnessed, needs she saw named, what becomes possible in the work together.</div>
+          </div>
+          <div class="agenda-dur">25 min</div>
+        </li>
+      </ul>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">11 / 13</span>
+  </section>
+
+  <!-- ── 16 · What leaves the room ── -->
+  <section class="grid6 leaves" data-screen-label="16 What leaves the room">
+    <div class="frame">
+      <div class="page-eyebrow">What leaves the room</div>
+      <h2 class="page-title">What the team carries <em>back to work</em>.</h2>
+      <div class="grid6-cards">
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">01</span> &middot; <span class="grid6-cat">Purpose</span></div>
+          <h4 class="grid6-title">An <em>answered</em> purpose</h4>
+          <p class="grid6-desc">A shared understanding of this team's cumulative value — what research, policy, and education can do together that none could do alone.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">02</span> &middot; <span class="grid6-cat">Identity</span></div>
+          <h4 class="grid6-title">Named identity</h4>
+          <p class="grid6-desc">A team that has begun to discover who it is — not just who its members were before they got here.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">03</span> &middot; <span class="grid6-cat">Agreements</span></div>
+          <h4 class="grid6-title">2–3 real <em>working agreements</em></h4>
+          <p class="grid6-desc">Specific norms, routines, and rituals organized by WBT's resilience framework. Typed and distributed within 48 hours.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">04</span> &middot; <span class="grid6-cat">Collaboration</span></div>
+          <h4 class="grid6-title">Live collaboration ideas</h4>
+          <p class="grid6-desc">2–3 cross-workstream collaboration ideas with named owners and first steps — developed in the open fishbowl on Day 2.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">05</span> &middot; <span class="grid6-cat">Artifact</span></div>
+          <h4 class="grid6-title">The Name Wall</h4>
+          <p class="grid6-desc">A physical artifact of being seen — observations, needs, offers, and 'I See You' statements that accumulated across both days.</p>
+        </div>
+        <div class="grid6-card">
+          <div class="grid6-meta"><span class="grid6-num">06</span> &middot; <span class="grid6-cat">Starting point</span></div>
+          <h4 class="grid6-title">A new <em>starting point</em></h4>
+          <p class="grid6-desc">The leader's vision — heard twice, wrestled with, and connected to what the team itself identified as possible.</p>
+        </div>
+      </div>
+    </div>
+    <img class="monogram-corner" src="../deck-assets/monogram-black.svg" alt="">
+    <span class="slide-num">12 / 13</span>
+  </section>
+
+  <!-- ── 25 · Thank you ── -->
+  <section class="thanks" data-screen-label="25 Thank you">
+    <div class="thanks-bg"></div>
+    <div class="thanks-spot"></div>
+    <div class="thanks-content">
+      <img class="thanks-wordmark" src="../deck-assets/wordmark-black.svg" alt="Work Better Together">
+      <div>
+        <div class="thanks-eyebrow">Closing &amp; Contacts</div>
+        <h2 class="thanks-title">Thank <em>you</em>.</h2>
+      </div>
+      <div class="thanks-contact">
+        <div class="thanks-contact-block">
+          <span class="thanks-contact-label">Partner</span>
+          <span class="thanks-contact-name">Stacy Berger</span>
+          <span class="thanks-contact-email">stacy@womensbraintrust.com</span>
+        </div>
+        <div class="thanks-contact-block">
+          <span class="thanks-contact-label">Partner</span>
+          <span class="thanks-contact-name">Jenna Shapiro</span>
+          <span class="thanks-contact-email">jenna@womensbraintrust.com</span>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">13 / 13</span>
+  </section>
+
+</deck-stage>
+
+</body>
+</html>

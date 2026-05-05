@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portrait Photography — Work Better Together</title>
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #c8c8c8;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --accent: #1e4d5c;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre: #B55312;
+      --ochre-light: #F5E8D8;
+
+      --steady-blue: #061A49;
+      --intentional-blue: #2531A5;
+      --clean-slate: #1E4D5C;
+      --calm-blue: #ACCDD9;
+      --gold: #CD9F36;
+      --ochre: #B55312;
+      --clear-white: #F9F8F2;
+      --grounded-black: #1F1E1E;
+
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6; }
+
+    .page { max-width: 960px; margin: 0 auto; padding: 64px 40px 120px; }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 56px;
+    }
+    .breadcrumb a { color: var(--ink); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--slate); }
+    .breadcrumb .sep { margin: 0 10px; color: var(--ink-faint); }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 80px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header .label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .page-header .lede {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--ink);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 96px; }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+    }
+    .section-head .meta {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .section-intro {
+      font-family: var(--font-body);
+      color: var(--ink);
+      font-size: 15px;
+      max-width: 720px;
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+
+    /* ── Hero portrait (full-bleed window photo) ── */
+    .hero-portrait {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      overflow: hidden;
+      margin-bottom: 2px;
+    }
+    .hero-portrait img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .hero-portrait-caption {
+      position: absolute;
+      left: 28px;
+      bottom: 24px;
+      background: rgba(31,30,30,0.78);
+      color: var(--clear-white);
+      padding: 10px 14px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+    }
+    .hero-portrait-caption .dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-right: 10px;
+      vertical-align: 2px;
+    }
+
+    /* ── Headshots row ── */
+    .headshots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+    .portrait-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .portrait-image {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: #f4f3ef;
+    }
+    .portrait-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .portrait-image.duo { aspect-ratio: 3 / 2; }
+    .portrait-image.duo img { object-position: center; }
+    .portrait-image.triptych { aspect-ratio: 2000 / 875; }
+    .portrait-image.triptych img { object-fit: contain; background: var(--bg-card); }
+
+    .portrait-body {
+      padding: 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .portrait-eyebrow {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .portrait-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1.05;
+    }
+    .portrait-role {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--ink);
+      margin-top: 2px;
+    }
+    .portrait-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+    .spec {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+      background: #f0efed;
+      color: var(--ink);
+    }
+    .spec.gold { background: rgba(205,159,54,0.15); color: var(--gold); }
+    .spec.blue { background: rgba(6,26,73,0.08); color: var(--steady-blue); }
+    .spec.slate { background: rgba(30,77,92,0.10); color: var(--clean-slate); }
+
+    /* ── Wide cards (full width) ── */
+    .wide-card {
+      grid-column: span 2;
+    }
+
+    /* ── Usage callout ── */
+    .callout {
+      background: var(--steady-blue);
+      color: var(--clear-white);
+      padding: 56px 56px;
+      margin: 0 0 96px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .callout-eyebrow {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .callout-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      color: var(--clear-white);
+    }
+    .callout-body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--clear-white);
+      max-width: 460px;
+      line-height: 1.7;
+    }
+    .callout-rules {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .rule-row {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(172,205,217,0.18);
+    }
+    .rule-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .rule-row .mark {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 1;
+      padding-top: 2px;
+    }
+    .rule-row.do .mark { color: var(--gold); }
+    .rule-row.dont .mark { color: var(--ochre); }
+    .rule-row .label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--clear-white);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .rule-row .text {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--clear-white);
+      line-height: 1.6;
+    }
+
+    /* ── Pairing strip ── */
+    .pair-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .pair-cell {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 28px 28px;
+    }
+    .pair-cell .num {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .pair-cell h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .pair-cell p {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ── Footer note ── */
+    .footer-note {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--ink);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 900px) {
+      .headshots { grid-template-columns: 1fr; }
+      .callout { grid-template-columns: 1fr; gap: 36px; padding: 40px 32px; }
+      .pair-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+
+    <!-- Breadcrumb -->
+<!-- Header -->
+    <header class="page-header">
+      <h1>The faces<br>behind the work.</h1>
+      <p class="lede">Approved portraits of Jenna and Stacy — for proposals, press, decks, and bios. Warm, candid, and unmistakably them.</p>
+    </header>
+
+    <!-- ── Hero portrait ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Lead image</h2>
+        <span class="meta">Hero · 1800 × 1200</span>
+      </div>
+      <p class="section-intro">The window portrait is the primary lead image — used at the top of the website, in proposal covers, and on press features. Soft natural light, candid posture, slight asymmetry. Use full-bleed wherever space allows.</p>
+
+      <div class="hero-portrait">
+        <img src="assets/Photography/WBT-jenna-and-stacy-at-window.jpg" alt="Jenna and Stacy by the studio window">
+        <div class="hero-portrait-caption"><span class="dot"></span>Hero · Window</div>
+      </div>
+    </section>
+
+    <!-- ── Together ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Together</h2>
+        <span class="meta">Duo portraits · approved</span>
+      </div>
+      <p class="section-intro">Use these for any context that introduces WBT as a partnership — about pages, founder bios, podcast features, conference intros. Always pair them; their dynamic <strong>is</strong> the brand.</p>
+
+      <div class="headshots">
+
+        <div class="portrait-card wide-card">
+          <div class="portrait-image duo">
+            <img src="assets/Photography/WBT-Jenna-and-Stacy-Floor.jpg" alt="Jenna and Stacy seated on the floor">
+          </div>
+          <div class="portrait-body">
+            <span class="portrait-eyebrow">02 · Floor</span>
+            <div class="portrait-name">On the floor</div>
+            <div class="portrait-role">Casual, warm, conversational. Ideal for editorial features and longer-form content.</div>
+            <div class="portrait-specs">
+              <span class="spec">2500 × 1746</span>
+              <span class="spec slate">Editorial</span>
+              <span class="spec gold">Approved</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portrait-card wide-card">
+          <div class="portrait-image triptych">
+            <img src="assets/Photography/WBT-Jenna-Stacy-Triptych.png" alt="Triptych of Jenna and Stacy in conversation">
+          </div>
+          <div class="portrait-body">
+            <span class="portrait-eyebrow">03 · Triptych</span>
+            <div class="portrait-name">Three frames</div>
+            <div class="portrait-role">A sequence — use as a horizontal banner, social header, or section divider. Always keep all three frames together.</div>
+            <div class="portrait-specs">
+              <span class="spec">2000 × 875</span>
+              <span class="spec slate">Banner</span>
+              <span class="spec blue">Web · Social</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Individuals ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Individuals</h2>
+        <span class="meta">Headshots · approved</span>
+      </div>
+      <p class="section-intro">Solo portraits for bios, byline photos, and speaker cards. Both shot against soft white — pair them visually as a set, even when used apart.</p>
+
+      <div class="headshots">
+
+        <div class="portrait-card">
+          <div class="portrait-image">
+            <img src="assets/Photography/WBT-Jenna-Headshot.jpg" alt="Jenna headshot">
+          </div>
+          <div class="portrait-body">
+            <span class="portrait-eyebrow">04 · Headshot</span>
+            <div class="portrait-name">Jenna</div>
+            <div class="portrait-role">Co-founder</div>
+            <div class="portrait-specs">
+              <span class="spec">1329 × 1500</span>
+              <span class="spec slate">Bio · Speaker</span>
+              <span class="spec gold">Approved</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portrait-card">
+          <div class="portrait-image">
+            <img src="assets/Photography/WBT-Stacy-Headshot.jpg" alt="Stacy headshot">
+          </div>
+          <div class="portrait-body">
+            <span class="portrait-eyebrow">05 · Headshot</span>
+            <div class="portrait-name">Stacy</div>
+            <div class="portrait-role">Co-founder</div>
+            <div class="portrait-specs">
+              <span class="spec">1329 × 1500</span>
+              <span class="spec slate">Bio · Speaker</span>
+              <span class="spec gold">Approved</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Usage rules ── -->
+    <section class="callout">
+      <div>
+        <div class="callout-eyebrow">Usage</div>
+        <h3 class="callout-title">Show up the way<br>we actually work.</h3>
+        <p class="callout-body">These photos earn the brand its warmth. Use them generously — but use them as shot. Don’t crop into one person from a duo image, don’t recolor, don’t overlay heavy filters.</p>
+      </div>
+
+      <div class="callout-rules">
+        <div class="rule-row do">
+          <div class="mark">+</div>
+          <div>
+            <span class="label">Do</span>
+            <p class="text">Use full-bleed where space allows. The compositions are intentional — let them breathe.</p>
+          </div>
+        </div>
+        <div class="rule-row do">
+          <div class="mark">+</div>
+          <div>
+            <span class="label">Do</span>
+            <p class="text">Pair duo images with brand watercolor backgrounds or Calm Blue fields for editorial layouts.</p>
+          </div>
+        </div>
+        <div class="rule-row dont">
+          <div class="mark">−</div>
+          <div>
+            <span class="label">Don't</span>
+            <p class="text">Crop a duo into a single person, flip horizontally, or apply duotone or heavy color treatments.</p>
+          </div>
+        </div>
+        <div class="rule-row dont">
+          <div class="mark">−</div>
+          <div>
+            <span class="label">Don't</span>
+            <p class="text">Use unapproved candids, Zoom screenshots, or older photography — request new shots if these don’t fit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── When to use which ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Picking the right portrait</h2>
+        <span class="meta">Quick reference</span>
+      </div>
+
+      <div class="pair-strip">
+        <div class="pair-cell">
+          <div class="num">A</div>
+          <h4>Hero & cover</h4>
+          <p>Window portrait. Lead image for proposals, site, and press kits — wherever WBT is being introduced.</p>
+        </div>
+        <div class="pair-cell">
+          <div class="num">B</div>
+          <h4>Editorial & long-form</h4>
+          <p>Floor portrait or triptych. For features, retrospectives, interviews, and any storytelling format.</p>
+        </div>
+        <div class="pair-cell">
+          <div class="num">C</div>
+          <h4>Bios & bylines</h4>
+          <p>Solo headshots. Speaker cards, author bios, LinkedIn, and contributor footers — paired as a set.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">All portraits shot 2026. Originals stored in the WBT brand drive. For new contexts not covered here — billboards, large-format print, video stills — check with Jenna or Stacy before using.</p>
+
+  </main>
+
+<script src="nav.js"></script>
+</body>
+</html>

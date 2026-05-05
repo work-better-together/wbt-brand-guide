@@ -1,0 +1,437 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   WORK BETTER TOGETHER — Design Tokens
+   Generated from the WBT Brand Guide · 2026
+
+   Three-tier token system:
+     1. PRIMITIVES   — raw brand values (the truth source)
+     2. SEMANTIC     — role-based tokens (use these in components)
+     3. COMPONENT    — component-specific overrides
+
+   Engineers/Claude Design: import this file and reference semantic tokens.
+   Never reference primitives directly in component code — semantics are the API.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     1 · PRIMITIVES
+     ────────────────────────────────────────────────────────────────────────── */
+
+  /* Brand palette — full ink */
+  --c-steady-blue:        #061A49;   /* leadership · authority · safety */
+  --c-intentional-blue:   #2531A5;   /* action · purpose · confidence */
+  --c-radiant-gold:       #CD9F36;   /* warmth · insight · emphasis */
+  --c-clean-slate:        #1E4D5C;   /* foundation · nuance · trust */
+  --c-calm-blue:          #ACCDD9;   /* listen · reflect · slow down */
+  --c-honest-ochre:       #B55312;   /* tension · truth · vulnerability */
+  --c-clear-white:        #F9F8F2;   /* open · transparent · neutral */
+  --c-grounded-black:     #1F1E1E;   /* solid · direct · stable */
+
+  /* Soft fills — derived companions */
+  --c-slate-light:        #E0E8EB;   /* slate at low strength · panels, callouts */
+  --c-ochre-light:        #F5E8D8;   /* ochre at low strength · don't blocks */
+  --c-success-light:      #E8F0EB;   /* slate-derived · do/affirm panels */
+  --c-warning-light:      #FDF0EA;   /* ochre-derived · don't/warn panels */
+
+  /* Brand color tints (alpha) — for hover, pressed, disabled, subtle fills */
+  --c-steady-blue-80:     rgba(6, 26, 73, 0.8);
+  --c-steady-blue-60:     rgba(6, 26, 73, 0.6);
+  --c-steady-blue-40:     rgba(6, 26, 73, 0.4);
+  --c-steady-blue-20:     rgba(6, 26, 73, 0.2);
+  --c-steady-blue-10:     rgba(6, 26, 73, 0.1);
+  --c-steady-blue-05:     rgba(6, 26, 73, 0.05);
+
+  --c-intentional-blue-80: rgba(37, 49, 165, 0.8);
+  --c-intentional-blue-60: rgba(37, 49, 165, 0.6);
+  --c-intentional-blue-40: rgba(37, 49, 165, 0.4);
+  --c-intentional-blue-20: rgba(37, 49, 165, 0.2);
+  --c-intentional-blue-10: rgba(37, 49, 165, 0.1);
+
+  --c-radiant-gold-80:    rgba(205, 159, 54, 0.8);
+  --c-radiant-gold-60:    rgba(205, 159, 54, 0.6);
+  --c-radiant-gold-40:    rgba(205, 159, 54, 0.4);
+  --c-radiant-gold-20:    rgba(205, 159, 54, 0.2);
+  --c-radiant-gold-10:    rgba(205, 159, 54, 0.1);
+
+  --c-clean-slate-80:     rgba(30, 77, 92, 0.8);
+  --c-clean-slate-60:     rgba(30, 77, 92, 0.6);
+  --c-clean-slate-40:     rgba(30, 77, 92, 0.4);
+  --c-clean-slate-20:     rgba(30, 77, 92, 0.2);
+  --c-clean-slate-10:     rgba(30, 77, 92, 0.1);
+
+  --c-calm-blue-80:       rgba(172, 205, 217, 0.8);
+  --c-calm-blue-60:       rgba(172, 205, 217, 0.6);
+  --c-calm-blue-40:       rgba(172, 205, 217, 0.4);
+  --c-calm-blue-20:       rgba(172, 205, 217, 0.2);
+
+  --c-honest-ochre-80:    rgba(181, 83, 18, 0.8);
+  --c-honest-ochre-60:    rgba(181, 83, 18, 0.6);
+  --c-honest-ochre-40:    rgba(181, 83, 18, 0.4);
+  --c-honest-ochre-20:    rgba(181, 83, 18, 0.2);
+
+  --c-grounded-black-80:  rgba(31, 30, 30, 0.8);
+  --c-grounded-black-60:  rgba(31, 30, 30, 0.6);
+  --c-grounded-black-40:  rgba(31, 30, 30, 0.4);
+  --c-grounded-black-20:  rgba(31, 30, 30, 0.2);
+  --c-grounded-black-10:  rgba(31, 30, 30, 0.1);
+  --c-grounded-black-05:  rgba(31, 30, 30, 0.05);
+
+  /* Spacing scale — 4px base */
+  --space-0:   0;
+  --space-05:  2px;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-14:  56px;
+  --space-16:  64px;
+  --space-18:  72px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+
+  /* Radius scale */
+  --radius-none:  0;
+  --radius-sm:    2px;          /* badges, pills, tight chrome */
+  --radius-md:    4px;          /* color strips, inputs */
+  --radius-lg:    8px;          /* cards (rare) */
+  --radius-xl:    16px;         /* hero containers */
+  --radius-pill:  999px;        /* fully rounded pills */
+
+  /* Border widths */
+  --border-0:   0;
+  --border-1:   1px;            /* default subtle line */
+  --border-2:   2px;            /* attribute table head, callout left */
+  --border-3:   3px;            /* element-note left accent */
+
+  /* Type primitives — families */
+  --font-display:  'League Spartan', system-ui, sans-serif;
+  --font-body:     'Lora', Georgia, serif;
+  --font-mono:     'Inconsolata', ui-monospace, monospace;
+
+  /* Type primitives — weights (only these are valid) */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-bold:     700;
+
+  /* Type primitives — size scale (px) */
+  --size-9:   9px;
+  --size-10:  10px;
+  --size-11:  11px;
+  --size-12:  12px;
+  --size-13:  13px;
+  --size-14:  14px;
+  --size-15:  15px;
+  --size-17:  17px;
+  --size-20:  20px;
+  --size-22:  22px;
+  --size-24:  24px;
+  --size-28:  28px;
+  --size-36:  36px;
+  --size-48:  48px;
+  --size-56:  56px;
+  --size-72:  72px;
+  --size-96:  96px;
+  --size-112: 112px;
+
+  /* Type primitives — line-heights */
+  --leading-tight:    1.0;      /* hero, display */
+  --leading-snug:     1.1;      /* H1–H3 */
+  --leading-normal:   1.5;      /* body, captions */
+  --leading-relaxed:  1.65;     /* lead paragraphs */
+  --leading-loose:    1.8;      /* personality block, long form */
+
+  /* Type primitives — tracking */
+  --track-tightest:  -0.03em;   /* hero/display */
+  --track-tight:     -0.02em;   /* H1 */
+  --track-snug:      -0.01em;   /* H2–H4, large UI */
+  --track-normal:    0;
+  --track-eyebrow:   0.18em;    /* eyebrows, page labels */
+  --track-meta:      0.14em;    /* small caps meta */
+  --track-caption:   0.1em;     /* caption labels */
+
+  /* Motion */
+  --motion-duration-instant:    80ms;
+  --motion-duration-quick:      150ms;     /* hovers, small state changes */
+  --motion-duration-standard:   240ms;     /* most transitions */
+  --motion-duration-deliberate: 320ms;     /* expressive, modal entrance */
+  --motion-duration-slow:       400ms;     /* page-level, hero */
+
+  --motion-easing-standard:   cubic-bezier(0.2, 0, 0, 1);   /* default */
+  --motion-easing-entrance:   cubic-bezier(0, 0, 0.2, 1);   /* enter */
+  --motion-easing-exit:       cubic-bezier(0.4, 0, 1, 1);   /* leave */
+  --motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);   /* attention */
+
+  /* Elevation — the brand is largely flat; reserve for system moments */
+  --elevation-none:    none;
+  --elevation-focus:   0 0 0 2px var(--c-clear-white), 0 0 0 4px var(--c-intentional-blue), 0 0 6px 3px rgba(37, 49, 165, 0.2);
+  --elevation-overlay: 0 8px 24px rgba(31, 30, 30, 0.10), 0 2px 6px rgba(31, 30, 30, 0.06);
+  --elevation-modal:   0 24px 64px rgba(31, 30, 30, 0.18), 0 8px 16px rgba(31, 30, 30, 0.08);
+
+  /* Iconography */
+  --icon-xs:        16px;       /* inline with body */
+  --icon-sm:        20px;       /* buttons, form chrome */
+  --icon-md:        24px;       /* default — standalone */
+  --icon-lg:        32px;       /* hero accents */
+  --icon-stroke:    1.5;        /* default stroke width at 24px */
+  --icon-stroke-sm: 1.75;       /* lift slightly at smaller sizes */
+
+  /* Layout */
+  --container-narrow:  640px;
+  --container-prose:   720px;   /* pull quotes, long-form */
+  --container-default: 960px;   /* standard guide pages */
+  --container-wide:    1200px;  /* hero / dashboard */
+  --container-full:    100%;
+
+  --breakpoint-sm:   640px;
+  --breakpoint-md:   900px;
+  --breakpoint-lg:   1200px;
+  --breakpoint-xl:   1440px;
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     2 · SEMANTIC TOKENS
+     Use these in component code. Never reference primitives directly.
+     ────────────────────────────────────────────────────────────────────────── */
+
+  /* Surface — backgrounds & containers */
+  --surface-canvas:        #FAF9F7;                       /* page background (warm off-white) */
+  --surface-default:       #FFFFFF;                       /* card / panel */
+  --surface-muted:         #F2F1EB;                       /* hover / faint elevation */
+  --surface-subtle:        var(--c-slate-light);          /* callouts, element-notes */
+  --surface-inverse:       var(--c-grounded-black);       /* dark surfaces */
+  --surface-inverse-soft:  var(--c-clean-slate);          /* dark-but-warmer */
+  --surface-brand-primary: var(--c-steady-blue);          /* hero, primary brand surface */
+  --surface-brand-action:  var(--c-intentional-blue);     /* CTA fills */
+  --surface-brand-accent:  var(--c-radiant-gold);         /* emphasis fills */
+  --surface-brand-cream:   var(--c-clear-white);          /* warm light surface */
+
+  /* Ink — text colors */
+  --ink-default:    var(--c-grounded-black);              /* body, headings */
+  --ink-muted:      #6B6B6B;                              /* meta, captions, disabled */
+  --ink-subtle:     #9A9A9A;                              /* placeholder, very-low emphasis */
+  --ink-inverse:    var(--c-clear-white);                 /* on dark surfaces */
+  --ink-brand:      var(--c-clean-slate);                 /* secondary brand ink */
+  --ink-accent:     var(--c-steady-blue);                 /* primary brand ink */
+  --ink-action:     var(--c-intentional-blue);            /* links, action labels */
+  --ink-action-hover: var(--c-steady-blue);
+  --ink-warning:    var(--c-honest-ochre);                /* challenge, friction */
+  --ink-emphasis:   var(--c-radiant-gold);                /* insight pull */
+
+  /* Border */
+  --border-subtle:   #E4E2DE;                             /* default rule line */
+  --border-default:  #CFCDC8;
+  --border-strong:   var(--c-grounded-black);
+  --border-focus:    var(--c-intentional-blue);
+  --border-brand:    var(--c-clean-slate);
+  --border-warning:  var(--c-honest-ochre);
+
+  /* Status / feedback */
+  --status-success-surface: var(--c-success-light);
+  --status-success-border:  #C5D9CB;
+  --status-success-ink:     var(--c-clean-slate);
+
+  --status-warning-surface: var(--c-warning-light);
+  --status-warning-border:  #E8C9B6;
+  --status-warning-ink:     var(--c-honest-ochre);
+
+  --status-info-surface:    var(--c-slate-light);
+  --status-info-border:     rgba(30, 77, 92, 0.25);
+  --status-info-ink:        var(--c-clean-slate);
+
+  --status-critical-surface: rgba(181, 83, 18, 0.08);
+  --status-critical-border:  var(--c-honest-ochre);
+  --status-critical-ink:     var(--c-honest-ochre);
+
+  /* Interactive states (semantic) */
+  --state-hover-overlay:    rgba(31, 30, 30, 0.04);       /* on light surfaces */
+  --state-hover-overlay-on-dark: rgba(249, 248, 242, 0.08);
+  --state-pressed-overlay:  rgba(31, 30, 30, 0.08);
+  --state-pressed-overlay-on-dark: rgba(249, 248, 242, 0.16);
+  --state-disabled-opacity: 0.4;
+  --state-focus-ring:       var(--c-intentional-blue);
+  --state-focus-ring-width: 2px;
+  --state-focus-ring-offset: 2px;
+  --state-selected-bg:      var(--c-intentional-blue-10);
+  --state-selected-ink:     var(--c-intentional-blue);
+
+  /* Type — semantic roles */
+  --type-display:        var(--weight-bold) clamp(56px, 8vw, 112px) / var(--leading-tight) var(--font-display);
+  --type-h1:             var(--weight-bold) clamp(36px, 5vw, 56px) / var(--leading-snug) var(--font-display);
+  --type-h2:             var(--weight-bold) var(--size-36) / var(--leading-snug) var(--font-display);
+  --type-h3:             var(--weight-bold) var(--size-28) / var(--leading-snug) var(--font-display);
+  --type-h4:             var(--weight-bold) var(--size-20) / var(--leading-snug) var(--font-display);
+  --type-h5:             var(--weight-medium) var(--size-15) / var(--leading-normal) var(--font-display);
+  --type-body-lg:        var(--weight-regular) var(--size-17) / var(--leading-relaxed) var(--font-body);
+  --type-body:           var(--weight-regular) var(--size-15) / var(--leading-relaxed) var(--font-body);
+  --type-body-sm:        var(--weight-regular) var(--size-13) / var(--leading-normal) var(--font-body);
+  --type-pull-quote:     italic var(--weight-regular) clamp(22px, 3vw, 30px) / 1.55 var(--font-body);
+  --type-eyebrow:        var(--weight-medium) var(--size-11) / var(--leading-normal) var(--font-display);
+  --type-label:          var(--weight-medium) var(--size-12) / var(--leading-normal) var(--font-display);
+  --type-meta:           var(--weight-medium) var(--size-10) / var(--leading-normal) var(--font-display);
+  --type-attribution:    var(--weight-medium) var(--size-11) / var(--leading-normal) var(--font-mono);   /* uppercase, +tracking */
+  --type-cta:            var(--weight-medium) var(--size-14) / 1 var(--font-mono);                      /* uppercase, +tracking */
+  --type-code:           var(--weight-regular) var(--size-13) / var(--leading-normal) var(--font-mono);
+
+  /* Layout — semantic */
+  --container:          var(--container-default);
+  --container-prose:    var(--container-prose);
+  --page-padding-x:     var(--space-10);   /* 40px */
+  --page-padding-y:     var(--space-16);   /* 64px */
+  --gap-tight:          var(--space-2);    /* 8px — within a component */
+  --gap-default:        var(--space-4);    /* 16px — between fields */
+  --gap-loose:          var(--space-8);    /* 32px — between sections */
+  --gap-section:        var(--space-18);   /* 72px — between major sections */
+
+  /* Motion — semantic */
+  --motion-hover:       var(--motion-duration-quick) var(--motion-easing-standard);
+  --motion-state:       var(--motion-duration-standard) var(--motion-easing-standard);
+  --motion-overlay-in:  var(--motion-duration-deliberate) var(--motion-easing-entrance);
+  --motion-overlay-out: var(--motion-duration-quick) var(--motion-easing-exit);
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     3 · COMPONENT TOKENS
+     Optional layer — override semantics for specific components.
+     ────────────────────────────────────────────────────────────────────────── */
+
+  /* Button */
+  --btn-radius:                7px;
+  --btn-padding-x:             var(--space-5);
+  --btn-padding-y:             var(--space-3);
+  --btn-font:                  var(--type-cta);
+  --btn-letter-spacing:        var(--track-eyebrow);
+  --btn-text-transform:        uppercase;
+  --btn-primary-bg:            var(--surface-brand-action);
+  --btn-primary-bg-hover:      var(--c-steady-blue);
+  --btn-primary-bg-pressed:    var(--c-steady-blue-80);
+  --btn-primary-ink:           var(--ink-inverse);
+  --btn-secondary-bg:          transparent;
+  --btn-secondary-border:      var(--border-strong);
+  --btn-secondary-ink:         var(--ink-default);
+  --btn-secondary-bg-hover:    var(--ink-default);
+  --btn-secondary-ink-hover:   var(--ink-inverse);
+  --btn-ghost-bg:              transparent;
+  --btn-ghost-ink:             var(--ink-action);
+  --btn-ghost-bg-hover:        var(--c-intentional-blue-10);
+  --btn-destructive-bg:        var(--c-honest-ochre);
+  --btn-destructive-ink:       var(--ink-inverse);
+
+  /* Input */
+  --input-radius:        var(--radius-sm);
+  --input-bg:            var(--surface-default);
+  --input-border:        var(--border-subtle);
+  --input-border-hover:  var(--border-default);
+  --input-border-focus:  var(--border-focus);
+  --input-ink:           var(--ink-default);
+  --input-ink-placeholder: var(--ink-subtle);
+  --input-padding-x:     var(--space-3);
+  --input-padding-y:     var(--space-3);
+  --input-font:          var(--type-body-sm);
+
+  /* Card */
+  --card-radius:        var(--radius-none);
+  --card-bg:            var(--surface-default);
+  --card-border:        var(--border-subtle);
+  --card-padding:       var(--space-8);
+  --card-bg-hover:      var(--surface-muted);
+  --card-hover-transform: scale(1.01);
+  --card-hover-shadow:  var(--elevation-overlay);
+
+  /* Tag / Pill */
+  --tag-radius:         var(--radius-sm);
+  --tag-bg:             var(--c-slate-light);
+  --tag-ink:            var(--c-clean-slate);
+  --tag-padding-x:      var(--space-2);
+  --tag-padding-y:      var(--space-05);
+  --tag-font:           var(--type-meta);
+  --tag-letter-spacing: var(--track-caption);
+  --tag-text-transform: uppercase;
+
+  /* Badge — accessibility & status */
+  --badge-aaa-bg:       rgba(255,255,255,0.20);
+  --badge-aa-bg:        rgba(255,255,255,0.12);
+  --badge-aaa-bg-on-light: rgba(0,0,0,0.12);
+  --badge-aa-bg-on-light:  rgba(0,0,0,0.08);
+  --badge-fail-bg:      rgba(181, 83, 18, 0.15);
+  --badge-fail-ink:     var(--c-honest-ochre);
+
+  /* Callout (element-note pattern) */
+  --callout-bg:           var(--c-slate-light);
+  --callout-border-left:  var(--border-3) solid var(--c-clean-slate);
+  --callout-padding:      var(--space-4) var(--space-5);
+  --callout-ink:          var(--c-clean-slate);
+  --callout-font:         italic var(--weight-regular) var(--size-13) / 1.55 var(--font-body);
+  --callout-eyebrow:      var(--type-eyebrow);
+
+  /* Modal / Overlay */
+  --modal-bg:           var(--surface-default);
+  --modal-radius:       var(--radius-md);
+  --modal-padding:      var(--space-8);
+  --modal-shadow:       var(--elevation-modal);
+  --modal-backdrop:     rgba(31, 30, 30, 0.6);
+
+  /* Tooltip */
+  --tooltip-bg:         var(--c-grounded-black);
+  --tooltip-ink:        var(--c-clear-white);
+  --tooltip-radius:     var(--radius-sm);
+  --tooltip-padding:    var(--space-2) var(--space-3);
+  --tooltip-font:       var(--type-meta);
+
+  /* Nav */
+  --nav-bg:             var(--c-grounded-black);
+  --nav-ink:            var(--c-clear-white);
+  --nav-ink-active:     var(--c-radiant-gold);
+  --nav-padding:        var(--space-3) var(--space-6);
+  --nav-font:           var(--type-meta);
+
+  /* Form chrome */
+  --label-font:         var(--type-label);
+  --label-ink:          var(--ink-default);
+  --helper-font:        var(--type-body-sm);
+  --helper-ink:         var(--ink-muted);
+  --error-ink:          var(--c-honest-ochre);
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Recipe utilities — opt-in classes that apply tokenized treatments.
+   Use sparingly; prefer per-component CSS that consumes tokens.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.t-eyebrow {
+  font: var(--type-eyebrow);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-default);
+}
+
+.t-meta {
+  font: var(--type-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--ink-default);
+}
+
+.t-attribution {
+  font: var(--type-attribution);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-default);
+}
+
+.t-cta {
+  font: var(--type-cta);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+}
+
+.focus-ring {
+  outline: var(--state-focus-ring-width) solid var(--state-focus-ring);
+  outline-offset: var(--state-focus-ring-offset);
+}

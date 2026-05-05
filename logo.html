@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo &amp; Mark — Work Better Together</title>
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #c8c8c8;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --accent: #1e4d5c;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre-light: #F5E8D8;
+
+      --steady-blue: #061A49;
+      --intentional-blue: #2531A5;
+      --clean-slate: #1E4D5C;
+      --calm-blue: #ACCDD9;
+      --gold: #CD9F36;
+      --ochre: #B55312;
+      --clear-white: #F9F8F2;
+      --grounded-black: #1F1E1E;
+
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6; }
+
+    .page { max-width: 960px; margin: 0 auto; padding: 64px 40px 120px; }
+
+    /* ── Top breadcrumb ── */
+    .breadcrumb {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 56px;
+    }
+    .breadcrumb a { color: var(--ink); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--slate); }
+    .breadcrumb .sep { margin: 0 10px; color: var(--ink-faint); }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 80px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header .label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .page-header .lede {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--ink);
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 96px; }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .section-head .meta {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    .section-intro {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--ink);
+      max-width: 640px;
+      margin-bottom: 32px;
+    }
+
+    /* ── Logo SVG sizing helpers ── */
+    .wm { display: block; }
+    .mn { display: block; }
+    /* Wordmark default sizes (height-driven) */
+    .wm-xl { height: 180px; width: auto; }
+    .wm-lg { height: 110px; width: auto; }
+    .wm-md { height: 72px;  width: auto; }
+    .wm-sm { height: 48px;  width: auto; }
+    .wm-xs { height: 32px;  width: auto; }
+    .wm-2xs{ height: 22px;  width: auto; }
+    /* Monogram sizes (width=height ratio is ~0.834) */
+    .mn-xl { height: 180px; width: auto; }
+    .mn-lg { height: 110px; width: auto; }
+    .mn-md { height: 72px;  width: auto; }
+    .mn-sm { height: 48px;  width: auto; }
+    .mn-xs { height: 32px;  width: auto; }
+    .mn-2xs{ height: 22px;  width: auto; }
+
+    /* ── Hero stage (the primary logo, large) ── */
+    .hero-stage {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 96px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 380px;
+    }
+    .stage-corner {
+      position: absolute;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+    .stage-corner.tl { top: 16px; left: 20px; }
+    .stage-corner.tr { top: 16px; right: 20px; }
+    .stage-corner.bl { bottom: 16px; left: 20px; }
+    .stage-corner.br { bottom: 16px; right: 20px; }
+
+    /* ── Two-up: primary + secondary side-by-side ── */
+    .two-up {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .two-up .cell {
+      background: var(--bg-card);
+      padding: 56px 36px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      position: relative;
+      min-height: 280px;
+    }
+    .two-up .cell .role {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+    .two-up .cell .role-meta {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    .two-up .cell .name {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--ink);
+      text-align: center;
+      max-width: 280px;
+      line-height: 1.55;
+    }
+    .two-up .cell .name strong {
+      font-family: var(--font-display);
+      font-style: normal;
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    /* ── Lockup grid (monogram + wordmark together) ── */
+    .lockup-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .lockup-grid .lk {
+      padding: 36px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      position: relative;
+      min-width: 0;
+      min-height: 150px;
+      overflow: hidden;
+    }
+    .lockup-grid .lk .l-meta {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.55;
+    }
+    .lockup-grid .lk .lk-mono { height: 52px; width: 44px; flex-shrink: 1; min-width: 0; }
+    .lockup-grid .lk .lk-word { height: 38px; width: 130px; flex-shrink: 1; min-width: 0; }
+    .lockup-grid .lk.cream  { background: var(--clear-white); grid-row: span 2; }
+    .lockup-grid .lk.cream .lk-mono { height: 78px; width: 65px; }
+    .lockup-grid .lk.cream .lk-word { height: 56px; width: 190px; }
+    .lockup-grid .lk.black  { background: var(--grounded-black); grid-row: span 1; }
+    .lockup-grid .lk.slate  { background: var(--clean-slate); }
+    .lockup-grid .lk.calm   { background: var(--calm-blue); }
+    .lockup-grid .lk.gold   { background: var(--gold); }
+    .lockup-grid .lk.ochre  { background: var(--ochre); }
+    .lockup-grid .lk.steady { background: var(--steady-blue); }
+    .lockup-grid .lk.intentional { background: var(--intentional-blue); }
+
+    /* ── Variant grid ── */
+    .variant-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .variant {
+      background: var(--bg-card);
+      padding: 60px 28px 36px;
+      min-width: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      min-height: 220px;
+      position: relative;
+    }
+    .variant.dark   { background: var(--steady-blue); }
+    .variant.steady { background: var(--steady-blue); }
+    .variant.slate  { background: var(--clean-slate); }
+    .variant.gold   { background: var(--gold); }
+    .variant.ochre  { background: var(--ochre); }
+    .variant.calm   { background: var(--calm-blue); }
+    .variant.black  { background: var(--grounded-black); }
+    .variant.cream  { background: var(--clear-white); }
+    .variant.intentional { background: var(--intentional-blue); }
+    .variant.calm-gold   { background: var(--calm-blue); }
+
+    /* ── Callout ── */
+    .callout {
+      background: var(--slate-light);
+      border-left: 2px solid var(--steady-blue);
+      padding: 18px 22px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--ink);
+      max-width: 760px;
+    }
+    .callout strong {
+      font-weight: 700;
+      font-style: italic;
+      color: var(--steady-blue);
+    }
+    .callout em {
+      font-style: italic;
+    }
+
+    .variant svg.wm { height: 56px; max-width: 100%; }
+    .variant svg.mn { height: 88px; max-width: 100%; }
+
+    .variant .v-label {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .variant.dark .v-label, .variant.steady .v-label, .variant.slate .v-label, .variant.black .v-label, .variant.ochre .v-label, .variant.intentional .v-label { color: rgba(249,248,242,0.6); }
+    .variant.gold .v-label, .variant.calm .v-label, .variant.calm-gold .v-label { color: rgba(31,30,30,0.65); }
+
+    .variant .v-spec {
+      position: absolute;
+      bottom: 12px;
+      right: 18px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .variant.dark .v-spec, .variant.steady .v-spec, .variant.slate .v-spec, .variant.black .v-spec, .variant.ochre .v-spec, .variant.intentional .v-spec { color: rgba(249,248,242,0.5); }
+    .variant.gold .v-spec, .variant.calm .v-spec, .variant.calm-gold .v-spec { color: rgba(31,30,30,0.55); }
+
+    /* ── Construction ── */
+    .construction {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 60px 40px;
+    }
+    .construction-flex {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .construction-stage {
+      position: relative;
+      display: inline-block;
+      padding: 56px;
+    }
+    .clearspace-frame {
+      position: absolute;
+      inset: 0;
+      border: 1px dashed rgba(30,77,92,0.4);
+    }
+    .clearspace-corner {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 1px solid var(--slate);
+    }
+    .clearspace-corner.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+    .clearspace-corner.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+    .clearspace-corner.bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+    .clearspace-corner.br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+    .x-marker {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background: rgba(205,159,54,0.12);
+      border: 1px dashed var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .x-marker.tl { top: 12px; left: 12px; }
+    .x-marker.br { bottom: 12px; right: 12px; }
+    .construction-notes {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--ink);
+      max-width: 300px;
+      line-height: 1.7;
+    }
+    .construction-notes strong {
+      font-family: var(--font-display);
+      font-weight: 500;
+      color: var(--ink);
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-style: normal;
+    }
+    .construction-notes p { margin-bottom: 18px; }
+    .construction-notes p:last-child { margin-bottom: 0; }
+
+    /* ── Sizing scale ── */
+    .sizing-row {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 40px 40px 32px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+    .sizing-item { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+    .sizing-spec {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--ink);
+      text-transform: uppercase;
+      max-width: 180px;
+    }
+    .sizing-spec strong {
+      display: block;
+      color: var(--ink);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+    .sizing-spec em {
+      font-style: normal;
+      font-family: var(--font-body);
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink);
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* ── Do / Don’t ── */
+    .dodonts { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .dodont-col h3 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dodont-col.do h3 { color: var(--slate); }
+    .dodont-col.dont h3 { color: var(--ochre); }
+    .dodont-col h3 .pill {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      padding: 2px 8px;
+      background: rgba(30,77,92,0.1);
+      border-radius: 2px;
+    }
+    .dodont-col.dont h3 .pill { background: rgba(181,83,18,0.1); color: var(--ochre); }
+    .dodont-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .dodont-cell {
+      background: var(--bg-card);
+      padding: 32px 18px 50px;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .dodont-cell .badge {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .dodont-cell .badge.ok { background: var(--slate); color: var(--clear-white); }
+    .dodont-cell .badge.no { background: var(--ochre); color: var(--clear-white); }
+    .dodont-cell .caption {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      right: 14px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      letter-spacing: 0;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .violation-stretched .wm, .violation-stretched .mn { transform: scaleX(1.6); transform-origin: center; }
+    .violation-rotated { transform: rotate(-8deg); }
+    .violation-shadow svg { filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.25)); }
+    .violation-recolor { color: #d54a4a !important; }
+
+    /* ── Files table ── */
+    .files-table {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+    }
+    .files-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px 120px 110px;
+      align-items: center;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--rule);
+      gap: 20px;
+    }
+    .files-row:last-child { border-bottom: none; }
+    .files-row.header {
+      background: #f3f1ed;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding: 14px 28px;
+    }
+    .files-row .f-num { font-family: var(--font-display); font-weight: 500; font-size: 11px; color: var(--ink); }
+    .files-row .f-name { font-family: var(--font-display); font-weight: 500; font-size: 15px; color: var(--ink); }
+    .files-row .f-name em { font-style: normal; font-family: var(--font-body); font-weight: 400; color: var(--ink); font-size: 13px; display: block; margin-top: 2px; }
+    .files-row .f-format { font-family: var(--font-display); font-weight: 500; font-size: 11px; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+    .files-row .f-status {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      background: rgba(30,77,92,0.1);
+      color: var(--slate);
+      border-radius: 2px;
+      justify-self: start;
+    }
+    .files-row .f-status.pending { background: rgba(205,159,54,0.12); color: #8a6a1f; }
+    .files-row a.f-name { text-decoration: none; }
+    .files-row a.f-name:hover { color: var(--slate); }
+
+
+    @media (max-width: 760px) {
+      .variant-grid { grid-template-columns: 1fr 1fr; }
+      .two-up { grid-template-columns: 1fr; }
+      .dodont-grid { grid-template-columns: 1fr; }
+      .files-row { grid-template-columns: 40px 1fr; }
+      .files-row .f-format, .files-row .f-status { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Reusable logo symbols (real assets, recolorable via currentColor) ── -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="wbt-wordmark" viewBox="0 0 1000 409.21">
+        <g>
+          <path d="M148.5,219.62c-15.48,0-20.05,10.38-23.22,19.7-1.23,3.69-2.99,4.75-4.92,4.75-2.11,0-3.52-1.23-3.52-3.52l.17-12.66-.35-14.07c0-3.87,2.11-5.27,6.51-5.27,8.44,0,26.73,2.11,48.54,2.11s41.51-2.11,48.37-2.11c4.4,0,6.51,1.41,6.51,5.27l-.35,14.07.17,12.66c0,2.28-1.06,3.52-3.17,3.52-1.94,0-3.69-1.05-4.92-4.75-3.17-9.32-8.09-19.7-23.57-19.7-5.45,0-7.74,2.82-7.74,7.92v114.49c0,7.39,5.98,9.15,10.55,10.2,2.29.53,3.34,1.94,3.34,3.87s-1.23,3.69-3.52,3.69c-2.46,0-11.78-1.05-25.68-1.05s-23.39,1.05-25.86,1.05c-2.28,0-3.52-1.58-3.52-3.69,0-1.94,1.05-3.34,3.34-3.87,4.93-1.05,10.55-2.81,10.55-10.2v-114.49c0-5.1-2.29-7.92-7.74-7.92Z" fill="currentColor"></path>
+          <path d="M215.46,301.09c0-35.18,19.88-58.22,50.48-58.22s50.48,23.04,50.48,58.22c0,36.93-19.88,60.85-50.48,60.85s-50.48-23.92-50.48-60.85ZM286.51,301.09c0-30.6-7.56-48.54-20.58-48.54s-20.58,17.94-20.58,48.54c0,32.36,7.56,51.18,20.58,51.18s20.58-18.82,20.58-51.18Z" fill="currentColor"></path>
+          <path d="M354.95,332.89c0,2.82,2.28,4.57,6.33,4.57,8.97,0,17.94-2.46,27.96-2.46,21.81,0,36.06,10.73,36.06,27.26,0,25.15-23.57,43.27-55.93,43.27-27.44,0-47.31-11.08-47.31-26.21,0-9.32,5.98-16.01,16.01-21.99,1.05-.7,1.05-1.41.35-2.46-4.04-4.75-7.56-10.55-7.56-14.6,0-10.73,10.73-15.83,20.93-18.47,1.23-.35,1.23-.7.18-1.23-14.42-6.69-23.39-19.88-23.39-36.23,0-23.74,19.52-40.8,46.61-40.8,4.93,0,9.5.53,13.72,1.58,8.62,2.46,8.97,4.22,13.9,4.22h18.47c3.17,0,4.75,2.11,4.75,4.75,0,2.82-1.41,5.1-5.1,5.1h-9.32c5.63,6.86,8.79,15.48,8.79,25.15,0,23.92-18.99,41.15-45.2,41.15h-.7c-5.81,0-19.52,1.05-19.52,7.39ZM376.41,392.68c16.88,0,27.97-6.86,27.97-17.58,0-9.85-7.56-14.42-23.74-14.42-8.79,0-21.46,1.76-29.2,2.11-.88,2.29-1.58,5.1-1.58,8.62,0,13.37,9.85,21.28,26.56,21.28ZM390.48,284.35c0-19.7-5.63-31.13-15.3-31.13-10.55,0-16.71,11.43-16.71,31.13s6.16,31.13,16.71,31.13c9.67,0,15.3-11.43,15.3-31.13Z" fill="currentColor"></path>
+          <path d="M483.76,243.54c22.51,0,37.28,16.88,37.28,42.74,0,6.68-2.64,9.85-6.68,9.85h-49.24c-1.06,0-1.59.53-1.59,1.23l-.17,5.98c0,30.78,10.03,46.96,29.2,46.96,8.62,0,14.6-3.69,20.93-9.32,1.41-1.23,3.17-1.58,4.92-.35,1.58,1.23,1.58,2.81.7,4.57-5.28,10.55-18.47,17.24-33.77,17.24-31.48,0-51.88-22.69-51.88-57.51,0-37.11,19.87-61.38,50.3-61.38ZM495.9,270.45c0-11.26-3.87-17.24-11.61-17.24-10.73,0-17.59,10.91-20.05,31.48-.17,1.23.35,1.76,1.41,1.76h16.71c10.03,0,13.54-5.27,13.54-16Z" fill="currentColor"></path>
+          <path d="M538.15,337.46v-78.97c0-1.58-.53-2.28-1.58-2.28l-4.57.35c-1.76,0-3.34-1.58-3.34-3.69,0-1.94.88-2.99,2.82-3.87,8.62-3.52,21.81-10.55,28.14-20.93.53-.88,1.23-1.59,3.17-1.59,2.11,0,3.52.88,3.52,2.64v14.07c0,2.29,1.41,3.17,4.05,3.17h10.73c3.34,0,5.1,1.76,5.1,4.75s-1.06,4.92-5.1,4.92h-10.9c-2.64,0-3.87,1.05-3.87,3.17v70.53c0,13.9,1.58,20.23,8.97,20.23,2.81,0,4.92-1.23,7.74-3.17,1.93-1.41,3.17-1.06,4.22-.18,1.41,1.23,1.23,3.34.17,4.92-4.93,7.21-12.31,11.08-21.63,11.08-16.36,0-27.61-9.33-27.61-25.15Z" fill="currentColor"></path>
+          <path d="M602.2,207.66c-1.93-.53-2.81-1.76-2.81-3.52,0-1.59.7-2.82,2.99-3.17,8.79-1.23,23.04-5.28,28.32-10.55,1.05-1.05,1.58-1.23,2.81-1.23,1.59,0,2.29.7,2.29,3.87v60.68c0,1.58.7,1.58,2.11.17,6.86-6.51,15.13-10.38,24.27-10.38,17.94,0,32.54,12.49,32.54,33.77v63.84c0,9.14,5.1,11.08,8.97,11.96,2.29.53,3.17,1.76,3.17,3.52,0,1.59-1.05,3.17-3.34,3.17-2.46,0-10.2-1.05-21.98-1.05-13.54,0-21.28,1.05-23.74,1.05-2.29,0-3.34-1.58-3.34-3.17,0-1.76.88-2.99,3.17-3.52,3.87-.88,8.97-2.82,8.97-11.96v-62.09c0-13.72-4.05-20.93-13.37-20.93-10.91,0-17.41,10.73-17.41,24.27v58.74c0,9.14,5.1,11.08,8.97,11.96,2.29.53,3.17,1.76,3.17,3.52,0,1.59-1.05,3.17-3.34,3.17-2.46,0-10.2-1.05-23.04-1.05s-20.23,1.05-22.69,1.05c-2.29,0-3.34-1.58-3.34-3.17,0-1.76.88-2.99,3.17-3.52,3.87-.88,8.97-2.82,8.97-11.96v-126.11c0-4.92-1.58-6.33-5.45-7.39Z" fill="currentColor"></path>
+          <path d="M758.29,243.54c22.51,0,37.28,16.88,37.28,42.74,0,6.68-2.64,9.85-6.68,9.85h-49.25c-1.06,0-1.58.53-1.58,1.23l-.18,5.98c0,30.78,10.03,46.96,29.2,46.96,8.62,0,14.6-3.69,20.93-9.32,1.41-1.23,3.17-1.58,4.92-.35,1.59,1.23,1.59,2.81.7,4.57-5.28,10.55-18.47,17.24-33.77,17.24-31.48,0-51.88-22.69-51.88-57.51,0-37.11,19.88-61.38,50.3-61.38ZM770.42,270.45c0-11.26-3.87-17.24-11.61-17.24-10.73,0-17.59,10.91-20.05,31.48-.18,1.23.35,1.76,1.41,1.76h16.71c10.03,0,13.54-5.27,13.54-16Z" fill="currentColor"></path>
+          <path d="M808.06,262.36c-1.94-.53-2.81-1.59-2.81-3.34,0-1.58.7-2.99,2.99-3.34,6.86-1.05,22.86-5.1,28.32-10.55,1.06-1.05,1.41-1.23,2.64-1.23,1.59,0,2.46.7,2.46,2.29v12.84c0,1.59.35,1.59,1.06.18,4.39-9.14,11.78-15.65,20.58-15.65,7.91,0,13.19,5.27,13.19,13.54,0,7.21-3.34,11.78-8.62,11.78-8.09,0-8.62-9.49-14.42-9.49-4.22,0-7.74,4.92-10.2,11.26-1.06,3.34-1.59,7.03-1.59,11.08v60.32c0,8.27,5.81,9.68,12.49,11.08,2.29.53,3.16,1.76,3.16,3.52,0,1.59-1.05,3.17-3.34,3.17-2.46,0-12.84-1.05-26.56-1.05-12.49,0-20.23,1.05-22.69,1.05-2.29,0-3.34-1.58-3.34-3.17,0-1.76.88-2.81,3.17-3.52,3.87-1.06,8.97-2.82,8.97-11.08v-72.28c0-4.92-1.58-6.33-5.45-7.39Z" fill="currentColor"></path>
+        </g>
+        <g>
+          <path d="M72.89,31.29c-2.28-.53-3.52-1.59-3.52-4.4,0-2.46,1.58-3.87,3.34-3.87,3.52,0,8.18.88,22.95.88,17.06,0,26.91-.88,29.72-.88,2.28,0,3.69,1.58,3.69,4.04s-1.05,3.87-3.17,4.22c-10.55,1.76-12.84,4.57-10.73,11.61l23.74,81.25c.53,1.59.88,1.41,1.41,0l21.81-79.32c2.29-8.44-1.05-11.96-11.08-13.54-2.29-.35-3.69-1.94-3.69-4.22,0-2.46,1.58-4.04,3.69-4.04,2.99,0,9.67.7,21.63.7,12.66,0,19.52-.88,21.99-.88,2.11,0,3.69,1.76,3.69,4.22s-1.05,3.7-3.34,4.22c-10.38,2.63-14.25,4.57-16.88,14.25l-32.89,120.3c-1.58,5.45-4.57,8.44-10.73,8.44s-9.5-2.99-11.26-8.44l-18.29-56.11c-.53-1.58-.88-1.58-1.41-.17l-17.59,56.28c-1.76,5.45-4.57,8.44-11.61,8.44s-10.38-2.99-12.31-8.44L18.98,41.14c-2.11-6.33-4.92-8.09-11.96-9.85-2.28-.53-3.69-1.94-3.69-4.4s1.58-3.87,3.52-3.87c2.81,0,12.49.88,25.68.88,15.65,0,22.16-.8,25.85-.8,2.29,0,3.7,1.58,3.7,4.04,0,2.64-1.41,3.87-3.52,4.22-10.55,1.58-9.14,4.14-6.86,11.35l28.14,85.12c.53,1.59,1.05,1.41,1.41,0l14.42-40.8c.7-2.29.7-4.05.17-5.81l-13.01-40.1c-2.11-6.33-3.25-8.27-9.94-9.85Z" fill="currentColor"></path>
+          <path d="M178.41,116.24c0-35.18,19.88-58.22,50.48-58.22s50.48,23.04,50.48,58.22c0,36.93-19.87,60.85-50.48,60.85s-50.48-23.92-50.48-60.85ZM249.46,116.24c0-30.6-7.56-48.54-20.58-48.54s-20.58,17.94-20.58,48.54c0,32.36,7.56,51.18,20.58,51.18s20.58-18.82,20.58-51.18Z" fill="currentColor"></path>
+          <path d="M290.39,76.84c-1.94-.53-2.81-1.59-2.81-3.34,0-1.58.7-2.99,2.99-3.34,6.86-1.05,22.86-5.1,28.32-10.55,1.06-1.05,1.41-1.23,2.64-1.23,1.59,0,2.46.7,2.46,2.29v12.84c0,1.59.35,1.59,1.06.18,4.39-9.14,11.78-15.65,20.58-15.65,7.91,0,13.19,5.27,13.19,13.54,0,7.21-3.34,11.78-8.62,11.78-8.09,0-8.62-9.49-14.42-9.49-4.22,0-7.74,4.92-10.2,11.26-1.06,3.34-1.59,7.03-1.59,11.08v60.32c0,8.27,5.81,9.68,12.49,11.08,2.29.53,3.16,1.76,3.16,3.52,0,1.59-1.05,3.17-3.34,3.17-2.46,0-12.84-1.05-26.56-1.05-12.49,0-20.23,1.05-22.69,1.05-2.29,0-3.34-1.58-3.34-3.17,0-1.76.88-2.81,3.17-3.52,3.87-1.06,8.97-2.82,8.97-11.08v-72.28c0-4.92-1.58-6.33-5.45-7.39Z" fill="currentColor"></path>
+          <path d="M420.36,170.76c0-1.94,1.41-3.17,3.34-3.69,4.75-1.23,5.1-4.05,2.64-8.09l-22.34-35.88c-1.06-1.94-1.94-2.28-2.82-1.41l.35-.35c-.7.7-1.06,1.76-1.06,3.17v30.25c0,9.15,5.1,11.08,8.97,11.96,2.29.53,3.17,1.94,3.17,3.87,0,1.76-1.05,3.69-3.34,3.69-1.94,0-10.2-1.05-23.04-1.05s-20.75,1.05-22.69,1.05c-2.29,0-3.34-1.94-3.34-3.69,0-1.94.88-3.34,3.17-3.87,3.87-.88,8.97-2.81,8.97-11.96V30.41c0-4.92-1.58-6.33-5.45-7.39-1.94-.53-2.81-1.94-2.81-3.87,0-1.76.7-3.34,2.99-3.69,10.38-1.59,23.57-5.81,28.32-10.55,1.06-1.05,1.58-1.23,2.81-1.23s2.29.53,2.29,2.11v94.1c0,1.58.53,1.76,1.58.7l20.4-20.58c6.16-6.16,4.4-8.79-3.52-11.43-1.58-.53-2.99-1.76-2.99-4.04,0-2.11,1.58-3.7,3.34-3.7,3.17,0,9.15.88,21.81.88,11.43,0,17.59-.88,20.75-.88,1.94,0,3.34,1.23,3.34,3.34s-1.23,3.34-3.17,3.87c-10.73,3.17-14.25,4.57-20.58,11.08l-18.82,19.87c-.7.7-.7,1.59-.18,2.46l35.35,55.23c4.22,6.68,8.97,8.44,13.54,10.03,2.11.7,3.52,1.94,3.52,4.05s-1.58,3.52-3.87,3.52c-3.87,0-10.73-1.05-23.22-1.05s-19.88,1.05-23.92,1.05c-1.94,0-3.52-1.41-3.52-3.52Z" fill="currentColor"></path>
+          <path d="M494.26,30.77c-2.81-.53-3.69-2.11-3.69-4.05s1.06-3.69,3.87-3.69c4.05,0,12.14.7,27.44.7,11.26,0,21.99-.7,28.32-.7,27.26,0,45.02,14.07,45.02,35.53,0,16.88-10.38,29.19-28.14,34.3,20.05,4.75,34.12,20.4,34.12,39.05,0,25.68-19.52,42.39-49.6,42.39l-29.73-.35c-14.95,0-23.39.35-27.44.35-2.81,0-3.87-1.76-3.87-3.69s.88-3.52,3.69-4.05c4.57-.88,10.38-2.63,10.38-8.26V39.03c0-5.63-5.81-7.39-10.38-8.26ZM562.67,59.61c0-17.76-6.33-26.91-18.47-26.91-6.86,0-8.79,1.94-8.79,8.97v39.22c0,6.51,2.64,8.27,9.14,8.27,11.96,0,18.12-10.2,18.12-29.55ZM546.67,164.6c14.42,0,21.98-10.9,21.98-32.01s-8.09-32.89-23.39-32.89c-7.04,0-9.85,1.23-9.85,8.62v45.2c0,7.74,2.81,11.08,11.26,11.08Z" fill="currentColor"></path>
+          <path d="M663.51,58.02c22.51,0,37.28,16.88,37.28,42.74,0,6.68-2.64,9.85-6.68,9.85h-49.24c-1.06,0-1.59.53-1.59,1.23l-.17,5.98c0,30.78,10.03,46.96,29.2,46.96,8.62,0,14.6-3.69,20.93-9.32,1.41-1.23,3.17-1.58,4.92-.35,1.58,1.23,1.58,2.81.7,4.57-5.28,10.55-18.47,17.24-33.77,17.24-31.48,0-51.88-22.69-51.88-57.51,0-37.11,19.87-61.38,50.3-61.38ZM675.64,84.93c0-11.26-3.87-17.24-11.61-17.24-10.73,0-17.59,10.91-20.05,31.48-.17,1.23.35,1.76,1.41,1.76h16.71c10.03,0,13.54-5.27,13.54-16Z" fill="currentColor"></path>
+          <path d="M879.03,58.02c22.51,0,37.29,16.88,37.29,42.74,0,6.68-2.64,9.85-6.68,9.85h-49.24c-1.05,0-1.58.53-1.58,1.23l-.17,5.98c0,30.78,10.03,46.96,29.19,46.96,8.62,0,14.6-3.69,20.93-9.32,1.41-1.23,3.16-1.58,4.92-.35,1.58,1.23,1.58,2.81.7,4.57-5.28,10.55-18.47,17.24-33.77,17.24-31.48,0-51.88-22.69-51.88-57.51,0-37.11,19.87-61.38,50.3-61.38ZM891.17,84.93c0-11.26-3.87-17.24-11.61-17.24-10.73,0-17.59,10.91-20.05,31.48-.17,1.23.35,1.76,1.41,1.76h16.71c10.03,0,13.54-5.27,13.54-16Z" fill="currentColor"></path>
+          <path d="M928.25,76.84c-1.93-.53-2.81-1.59-2.81-3.34,0-1.58.7-2.99,2.99-3.34,6.86-1.05,22.86-5.1,28.32-10.55,1.05-1.05,1.41-1.23,2.64-1.23,1.58,0,2.46.7,2.46,2.29v12.84c0,1.59.35,1.59,1.06.18,4.4-9.14,11.78-15.65,20.58-15.65,7.91,0,13.19,5.27,13.19,13.54,0,7.21-3.34,11.78-8.62,11.78-8.09,0-8.62-9.49-14.42-9.49-4.22,0-7.74,4.92-10.2,11.26-1.05,3.34-1.58,7.03-1.58,11.08v60.32c0,8.27,5.8,9.68,12.49,11.08,2.29.53,3.17,1.76,3.17,3.52,0,1.59-1.06,3.17-3.34,3.17-2.46,0-12.84-1.05-26.56-1.05-12.49,0-20.23,1.05-22.69,1.05-2.29,0-3.34-1.58-3.34-3.17,0-1.76.88-2.81,3.17-3.52,3.87-1.06,8.97-2.82,8.97-11.08v-72.28c0-4.92-1.58-6.33-5.45-7.39Z" fill="currentColor"></path>
+          <path d="M825.96,161.09c-1.06-.88-2.29-1.23-4.22.18-2.82,1.94-4.93,3.17-7.74,3.17-7.39,0-8.97-6.33-8.97-20.23v-70.53c0-2.11,1.23-3.17,3.87-3.17h10.91c4.04,0,5.1-1.94,5.1-4.92s-1.76-4.75-5.1-4.75h-10.73c-2.64,0-4.05-.88-4.05-3.17v-14.07c0-1.76-1.41-2.64-3.52-2.64-1.94,0-2.64.7-3.17,1.59-.71,1.16-1.53,2.26-2.39,3.33-3.36,4.31-10.09,14.96-31.94,14.96h-14.56c-2.64,0-4.05-.88-4.05-3.17v-14.07c0-1.76-1.41-2.64-3.52-2.64-1.94,0-2.64.7-3.17,1.59-6.33,10.38-19.52,17.41-28.14,20.93-1.94.88-2.82,1.94-2.82,3.87,0,2.11,1.59,3.69,3.34,3.69l4.57-.35c1.05,0,1.58.7,1.58,2.28v78.97c0,15.83,11.26,25.15,27.61,25.15,9.32,0,16.71-3.87,21.63-11.08,1.06-1.58,1.23-3.69-.17-4.92-1.06-.88-2.29-1.23-4.22.18-2.81,1.94-4.93,3.17-7.74,3.17-7.39,0-8.97-6.33-8.97-20.23v-70.53c0-1.91,1.06-2.9,3.2-3.09h5.34l7.71.04h11.69s1.36,0,1.36,0c0,0,.63-.01,1.14.18.11.04.21.1.3.16.06.04.13.09.17.14.36.36.56.95.56,1.87v78.97c0,15.83,11.26,25.15,27.61,25.15,9.32,0,16.71-3.87,21.64-11.08,1.05-1.58,1.23-3.69-.18-4.92Z" fill="currentColor"></path>
+        </g>
+      </symbol>
+      <symbol id="wbt-monogram" viewBox="0 0 341.64 409.21">
+        <path d="M339.54,188.36c-2.66-44.12-15.24-90.73-27.08-114.95C294,32.09,247.69,5.65,187.5,1.47c-5.57-.39-12.55-.58-17.1-.58s-11.77.2-17.45.6C92.92,5.76,46.75,32.17,28.34,73.41,16.49,97.62,3.92,144.21,1.26,188.32c-.33,5.52-.51,14.41-.51,16.42s.18,10.92.51,16.45c2.66,44.1,15.24,90.68,27.08,114.89,18.43,41.26,64.65,67.69,124.74,71.92,5.64.4,14.78.6,17.27.6s11.61-.2,17.19-.59c60.18-4.19,106.46-30.63,124.91-71.93,11.84-24.21,24.41-70.78,27.08-114.88.33-5.54.51-12.58.51-16.44s-.18-10.89-.51-16.41ZM318.46,220.22c-2.33,41.46-13.34,85.24-23.7,108-16.15,38.83-56.67,63.68-109.35,67.62-4.89.37-12.88.55-15.05.55s-10.18-.19-15.12-.56c-52.61-3.98-93.07-28.82-109.2-67.61-10.36-22.76-21.37-66.55-23.7-108.01-.29-5.2-.45-13.57-.45-15.47s.16-10.25.45-15.44c2.33-41.47,13.34-85.26,23.7-108.03C62.16,42.51,102.57,17.67,155.12,13.67c4.97-.38,11.29-.57,15.27-.57s10.09.18,14.97.55c52.7,3.93,93.24,28.79,109.39,67.63,10.37,22.77,21.38,66.59,23.71,108.07.29,5.18.45,11.79.45,15.42s-.16,10.25-.45,15.46Z" fill="currentColor"></path>
+        <g>
+          <path d="M245.75,148.05c11.46-3.57,18.92-12.87,18.92-24.84,0-15.53-12.39-25.73-31.44-25.73-4.8,0-12.92.51-21.45.51-5.71.04-23.36.04-27.26,0-7.06,0-13.19-.51-14.66-.51-1.6,0-2.53.76-2.53,2.16,0,1.27.8,2.3,2.53,2.55,7.6,1.15,10.66,3.44,9.06,9.56l-18.12,70.68c-.27,1.03-.53,1.15-.93,0l-22.12-72.22c-1.6-5.09.93-6.75,8.93-8.02,1.6-.25,2.13-1.28,2.13-2.42,0-1.4-.8-2.3-2.53-2.3-2.13,0-9.86.64-17.45.64-10.53,0-14.2-.64-16.87-.64-1.33,0-2.26.76-2.26,2.16s.67,2.16,2.4,2.55c5.06,1.15,5.81,2.67,7.27,7.26l11.33,35.03c.4,1.27.4,2.55-.13,4.21l-12.26,35.92c-.4,1.02-.66,1.14-1.06,0l-25.58-74.4c-1.74-5.22-2.26-6.87,5.73-8.02,1.6-.25,2.4-.9,2.4-2.42,0-1.4-.8-2.3-2.53-2.3-2.14,0-7.73.64-16.26.64-7.32,0-15.05-.64-17.05-.64-1.46,0-2.4.76-2.4,2.16s.8,2.16,2.53,2.55c5.33,1.27,7.2,2.67,8.93,7.26l33.71,93.24c1.07,3.06,3.2,4.33,6.53,4.33s4.93-1.27,5.99-4.33l15.32-43.31c.4-1.02.67-1.02,1.07.13l13.99,43.18c.94,3.06,3.07,4.33,6.4,4.33s5.06-1.27,5.86-4.33l24.92-91.84c1.13-4.13,3.47-5.92,7.11-7.19,1.85-.59,4.52-.25,5.2.19,1.35.88,2.31,2.11,2.31,3.94v88.91c0,4.08-4.67,5.35-8.13,5.99-2.13.39-2.53,1.27-2.53,2.29,0,.9.53,2.04,2.67,2.04,3.06,0,9.72-.25,18.38-.25l22.51.25c21.19,0,34.91-12.09,34.91-30.7,0-14.01-9.46-24.96-23.45-28.28ZM218.7,108.44c0-4.72,2.53-5.87,8.66-5.87,11.72,0,18.65,7.9,18.65,21.41s-8.39,22.67-21.45,22.67c-4.53,0-5.86-1.15-5.86-4.71v-33.5ZM230.42,201.93c-7.86,0-11.72-2.67-11.72-9.55v-35.67c0-4.2,1.33-4.97,6.92-4.97,15.06,0,24.92,9.94,24.92,25.1s-7.73,25.1-20.12,25.1Z" fill="currentColor"></path>
+          <path d="M243.55,231.12c0-2.81-1.6-3.82-4.93-3.82-6.4,0-49.52,3.26-66.04,3.26h-.04c-16.52,0-59.59-3.26-65.99-3.26-3.33,0-4.93,1.02-4.93,3.82l.27,10.2-.13,9.54c0,1.4.8,2.16,2.13,2.16s1.54-.74,2.93-3.18c9.33-18,51.19-13.3,51.19-13.3,4.13,0,5.86,2.04,5.86,5.73v83.44c0,6.63-4.66,7.9-8.39,8.66-1.73.39-2.13,1.15-2.13,2.16,0,.9.53,2.04,2.26,2.04,1.46,0,9.33-.76,16.92-.76h0s.01,0,.02,0h.02s0,0,0,0c7.6,0,15.46.76,16.92.76,1.73,0,2.26-1.15,2.26-2.04,0-1.02-.4-1.78-2.13-2.16-3.73-.76-8.39-2.03-8.39-8.66v-83.44c0-3.69,1.73-5.73,5.86-5.73,0,0,41.92-4.71,51.25,13.3,1.39,2.44,1.6,3.18,2.93,3.18s2.13-.76,2.13-2.16l-.13-9.54.27-10.2Z" fill="currentColor"></path>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <main class="page">
+
+<header class="page-header">
+      <h1>Wordmark &amp; Monogram</h1>
+      <p class="lede">A custom-drawn wordmark — confident, slightly playful, and rooted in the brand’s editorial voice. The monogram in its rounded square stands in when the full name can’t.</p>
+    </header>
+
+    <!-- ── 01 · Primary lockup ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>01 · Primary &amp; Secondary</h2>
+        <span class="meta">Wordmark · Monogram</span>
+      </div>
+      <p class="section-intro">The wordmark is the primary expression — use it wherever space allows. The monogram is the secondary, reserved for tight or square contexts.</p>
+
+      <div class="two-up">
+        <div class="cell" style="color: var(--steady-blue);">
+          <span class="role">Primary</span>
+          <span class="role-meta">Wordmark</span>
+          <svg class="wm wm-xl"><use href="#wbt-wordmark"/></svg>
+          <p class="name"><strong>Wordmark</strong>The full name in custom letterforms — the default identity.</p>
+        </div>
+        <div class="cell" style="color: var(--steady-blue);">
+          <span class="role">Secondary</span>
+          <span class="role-meta">Monogram</span>
+          <svg class="mn mn-xl"><use href="#wbt-monogram"/></svg>
+          <p class="name"><strong>Monogram</strong>“WBT” inside a rounded square. Avatars, app icons, watermarks.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 02 · Wordmark · Color variants ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>02 · Wordmark · Color variants</h2>
+        <span class="meta">9 approved backgrounds</span>
+      </div>
+      <p class="section-intro">The wordmark lives across the brand palette. These are the eight approved color pairings — never invent new combinations or apply gradients.</p>
+
+      <div class="variant-grid">
+        <div class="variant cream" style="color: var(--grounded-black);">
+          <span class="v-label">Clear White</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Clear White / Black</span>
+        </div>
+        <div class="variant slate" style="color: var(--calm-blue);">
+          <span class="v-label">Clean Slate</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Clean Slate / Calm Blue</span>
+        </div>
+        <div class="variant calm" style="color: var(--clean-slate);">
+          <span class="v-label">Calm Blue</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Calm Blue / Clean Slate</span>
+        </div>
+        <div class="variant gold" style="color: var(--steady-blue);">
+          <span class="v-label">Radiant Gold</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Radiant Gold / Steady Blue</span>
+        </div>
+        <div class="variant ochre" style="color: var(--clear-white);">
+          <span class="v-label">Honest Ochre</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Honest Ochre / Clear White</span>
+        </div>
+        <div class="variant black" style="color: var(--clear-white);">
+          <span class="v-label">Grounded Black</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Grounded Black / Clear White</span>
+        </div>
+        <div class="variant steady" style="color: var(--gold);">
+          <span class="v-label">Steady Blue</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Steady Blue / Radiant Gold</span>
+        </div>
+        <div class="variant intentional" style="color: var(--clear-white);">
+          <span class="v-label">Intentional Blue</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Intentional Blue / Clear White</span>
+        </div>
+        <div class="variant cream" style="color: var(--intentional-blue);">
+          <span class="v-label">Clear White · Intentional</span>
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <span class="v-spec">Clear White / Intentional Blue</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 03 · Color variants — Monogram ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>03 · Monogram · Color variants</h2>
+        <span class="meta">9 approved treatments</span>
+      </div>
+      <p class="section-intro">The monogram uses the same eight approved color pairings as the wordmark — calm in calm contexts, bold where it counts.</p>
+
+      <div class="callout" style="margin-bottom: 28px;">
+        <strong>About the mark.</strong> The “T” stretches across the width of the rounded square — visually carrying the “W” and “B” beneath it. The shape is a quiet metaphor for <strong>Together</strong>: a single beam holding the rest in place. The rounded outline is also intended to suggest a mirror — because this work is about self-reflection.
+      </div>
+
+      <div class="variant-grid">
+        <div class="variant cream" style="color: var(--grounded-black);">
+          <span class="v-label">Clear White</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Clear White / Black</span>
+        </div>
+        <div class="variant slate" style="color: var(--calm-blue);">
+          <span class="v-label">Clean Slate</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Clean Slate / Calm Blue</span>
+        </div>
+        <div class="variant calm" style="color: var(--clean-slate);">
+          <span class="v-label">Calm Blue</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Calm Blue / Clean Slate</span>
+        </div>
+        <div class="variant gold" style="color: var(--steady-blue);">
+          <span class="v-label">Radiant Gold</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Radiant Gold / Steady Blue</span>
+        </div>
+        <div class="variant ochre" style="color: var(--clear-white);">
+          <span class="v-label">Honest Ochre</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Honest Ochre / Clear White</span>
+        </div>
+        <div class="variant black" style="color: var(--clear-white);">
+          <span class="v-label">Grounded Black</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Grounded Black / Clear White</span>
+        </div>
+        <div class="variant steady" style="color: var(--gold);">
+          <span class="v-label">Steady Blue</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Steady Blue / Radiant Gold</span>
+        </div>
+        <div class="variant intentional" style="color: var(--clear-white);">
+          <span class="v-label">Intentional Blue</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Intentional Blue / Clear White</span>
+        </div>
+        <div class="variant cream" style="color: var(--intentional-blue);">
+          <span class="v-label">Clear White · Intentional</span>
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <span class="v-spec">Clear White / Intentional Blue</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 04 · Construction & clearspace ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>04 · Clearspace</h2>
+        <span class="meta">x = cap height of “W”</span>
+      </div>
+      <p class="section-intro">Clearspace protects the wordmark from competing elements. The minimum exclusion zone on every side equals <em>x</em> — the cap height of the “W”. When in doubt, give it more.</p>
+
+      <div class="construction">
+        <div class="construction-flex">
+          <div class="construction-stage" style="color: var(--steady-blue);">
+            <div class="clearspace-frame"></div>
+            <div class="clearspace-corner tl"></div>
+            <div class="clearspace-corner tr"></div>
+            <div class="clearspace-corner bl"></div>
+            <div class="clearspace-corner br"></div>
+            <div class="x-marker tl">x</div>
+            <div class="x-marker br">x</div>
+            <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          </div>
+
+          <div class="construction-notes">
+            <p><strong>The unit</strong>One <em>x</em> equals the cap height of the W. Use it as a measure — never eyeball.</p>
+            <p><strong>Exclusion</strong>Keep <em>x</em> of empty space on every side. Type, photos, edges, and other logos must stay outside.</p>
+            <p><strong>Fixed form</strong>The wordmark is a single optical drawing. Don’t separate the words, recompose, or substitute live type.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 05 · Sizing ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>05 · Sizing &amp; minimums</h2>
+        <span class="meta">Print · Digital</span>
+      </div>
+      <p class="section-intro">Below the minimum sizes, the custom letterforms lose fidelity. When you need to go smaller, switch to the monogram — that’s what it’s for.</p>
+
+      <div class="sizing-row" style="color: var(--steady-blue);">
+        <div class="sizing-item">
+          <svg class="wm wm-lg"><use href="#wbt-wordmark"/></svg>
+          <div class="sizing-spec">
+            <strong>Hero</strong>
+            ≥ 360 px digital · ≥ 80 mm print
+            <em>Covers, headers, presentation title slides.</em>
+          </div>
+        </div>
+        <div class="sizing-item">
+          <svg class="wm wm-md"><use href="#wbt-wordmark"/></svg>
+          <div class="sizing-spec">
+            <strong>Default</strong>
+            ≥ 220 px digital · ≥ 50 mm print
+            <em>Most surfaces — most of the time.</em>
+          </div>
+        </div>
+        <div class="sizing-item">
+          <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
+          <div class="sizing-spec">
+            <strong>Compact</strong>
+            ≥ 140 px digital · ≥ 32 mm print
+            <em>Footers, sigs, business cards.</em>
+          </div>
+        </div>
+        <div class="sizing-item">
+          <svg class="wm wm-xs"><use href="#wbt-wordmark"/></svg>
+          <div class="sizing-spec">
+            <strong>Minimum</strong>
+            ≥ 96 px digital · ≥ 22 mm print
+            <em>Hard floor — use the monogram below this.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="sizing-row" style="color: var(--steady-blue); margin-top: 2px;">
+        <div class="sizing-item">
+          <svg class="mn mn-lg"><use href="#wbt-monogram"/></svg>
+          <div class="sizing-spec">
+            <strong>Monogram · Hero</strong>
+            ≥ 96 px<em>App icons, splash screens.</em>
+          </div>
+        </div>
+        <div class="sizing-item">
+          <svg class="mn mn-md"><use href="#wbt-monogram"/></svg>
+          <div class="sizing-spec">
+            <strong>Monogram · Default</strong>
+            ≥ 48 px<em>Avatars, seals, watermarks.</em>
+          </div>
+        </div>
+        <div class="sizing-item">
+          <svg class="mn mn-sm"><use href="#wbt-monogram"/></svg>
+          <div class="sizing-spec">
+            <strong>Monogram · Compact</strong>
+            ≥ 32 px<em>Inline next to text, mini-avatars.</em>
+          </div>
+        </div>
+        <div class="sizing-item">
+          <svg class="mn mn-2xs"><use href="#wbt-monogram"/></svg>
+          <div class="sizing-spec">
+            <strong>Monogram · Minimum</strong>
+            ≥ 16 px<em>Favicons. Stay vector — never raster below 32 px.</em>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 06 · Do / Don’t ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>06 · Do &amp; Don’t</h2>
+        <span class="meta">Common violations</span>
+      </div>
+      <p class="section-intro">The system is designed to feel calm and consistent. The fastest way to break that feeling is by stretching, recoloring, or decorating.</p>
+
+      <div class="dodonts" style="grid-template-columns: 1fr;">
+        <div class="dodont-col dont">
+          <h3 style="display:none;">Don’t <span class="pill">Avoid</span></h3>
+          <div class="dodont-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="dodont-cell" style="color: var(--steady-blue);">
+              <span class="badge no">✕</span>
+              <div class="violation-stretched">
+                <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
+              </div>
+              <span class="caption">Don’t stretch, squeeze, or distort.</span>
+            </div>
+            <div class="dodont-cell" style="color: var(--steady-blue);">
+              <span class="badge no">✕</span>
+              <div class="violation-rotated">
+                <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
+              </div>
+              <span class="caption">Don’t rotate or angle the wordmark.</span>
+            </div>
+            <div class="dodont-cell violation-recolor">
+              <span class="badge no">✕</span>
+              <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
+              <span class="caption" style="color: var(--ink);">Don’t introduce off-palette colors.</span>
+            </div>
+            <div class="dodont-cell violation-shadow" style="color: var(--steady-blue);">
+              <span class="badge no">✕</span>
+              <svg class="wm wm-sm"><use href="#wbt-wordmark"/></svg>
+              <span class="caption">Don’t add shadows, glows, or effects.</span>
+            </div>
+            <div class="dodont-cell" style="color: var(--steady-blue);">
+              <span class="badge no">✕</span>
+              <div style="display: inline-flex; align-items: center; gap: 0; margin-left: 30px;">
+                <svg class="mn" style="height: 56px; width: 47px; flex: 0 0 auto; margin-right: -33px;"><use href="#wbt-monogram"/></svg>
+                <svg class="wm" style="height: 36px; width: 205px; flex: 0 0 auto;"><use href="#wbt-wordmark"/></svg>
+              </div>
+              <span class="caption">Don’t pair the monogram and wordmark side by side.</span>
+            </div>
+            <div class="dodont-cell" style="color: var(--steady-blue);">
+              <span class="badge no">✕</span>
+              <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 8px;">
+                <svg class="mn" style="height: 52px; width: 43px; flex: 0 0 auto;"><use href="#wbt-monogram"/></svg>
+                <svg class="wm" style="height: 26px; width: 148px; flex: 0 0 auto;"><use href="#wbt-wordmark"/></svg>
+              </div>
+              <span class="caption">Don’t stack the monogram above the wordmark.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 07 · Files ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>07 · Files &amp; downloads</h2>
+        <span class="meta">Master vector assets</span>
+      </div>
+      <p class="section-intro">Vector files are the master. Use the SVGs for digital and the PDFs for print. Color variants can be derived from the black master.</p>
+
+      <div class="files-table">
+        <div class="files-row header">
+          <span>—</span>
+          <span>File</span>
+          <span>Format</span>
+          <span>Use</span>
+          <span>Status</span>
+        </div>
+        <div class="files-row">
+          <span class="f-num">01</span>
+          <a class="f-name" href="assets/Logos/WBT-20260502-Work-Better-Together-Wordmark-Black.svg" download>WBT-Wordmark-Black.svg<em>Primary wordmark — black master</em></a>
+          <span class="f-format">.svg</span>
+          <span class="f-format">Vector</span>
+          <span class="f-status">Available</span>
+        </div>
+        <div class="files-row">
+          <span class="f-num">02</span>
+          <a class="f-name" href="assets/Logos/WBT-20260502-WBT-Monogram-Black.svg" download>WBT-Monogram-Black.svg<em>Secondary monogram — black master</em></a>
+          <span class="f-format">.svg</span>
+          <span class="f-format">Vector</span>
+          <span class="f-status">Available</span>
+        </div>
+        <div class="files-row">
+          <span class="f-num">03</span>
+          <span class="f-name">WBT-Wordmark-Color-Pack<em>Steady Blue, Slate, Gold, White on each background</em></span>
+          <span class="f-format">.zip</span>
+          <span class="f-format">Bundle</span>
+          <span class="f-status pending">Pending</span>
+        </div>
+        <div class="files-row">
+          <span class="f-num">04</span>
+          <span class="f-name">WBT-Monogram-Color-Pack<em>All approved fills + knockouts</em></span>
+          <span class="f-format">.zip</span>
+          <span class="f-format">Bundle</span>
+          <span class="f-status pending">Pending</span>
+        </div>
+        <div class="files-row">
+          <span class="f-num">05</span>
+          <span class="f-name">WBT-Favicon-set<em>16, 32, 48, 180 px PNG + .ico</em></span>
+          <span class="f-format">.png / .ico</span>
+          <span class="f-format">Raster</span>
+          <span class="f-status pending">Pending</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Footer nav ── -->
+
+  </main>
+
+<script src="nav.js"></script>
+</body>
+</html>

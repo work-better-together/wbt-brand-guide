@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice & Tone — Work Better Together</title>
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #c8c8c8;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --accent: #1e4d5c;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre-light: #F5E8D8;
+      --steady: #061A49;
+      --calm: #ACCDD9;
+      --gold: #CD9F36;
+      --ochre: #B55312;
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6; }
+    .page { max-width: 960px; margin: 0 auto; padding: 64px 40px 120px; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 72px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+    .page-header .label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); display: block; margin-bottom: 8px; }
+    .page-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1; color: var(--ink); margin-bottom: 12px; }
+    .page-header p { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--ink); max-width: 520px; }
+
+    /* ── Section label ── */
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 32px; }
+
+    /* ── Section divider ── */
+    .section-divider { height: 1px; background: var(--rule); margin: 72px 0; }
+
+    /* ── Purpose / Mission / Vision ── */
+    .pmv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 0; }
+    .pmv-card { background: var(--bg-card); border: 1px solid var(--rule); padding: 28px 24px; }
+    .pmv-card.dark { background: var(--steady); border-color: var(--steady); }
+    .pmv-label { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+    .pmv-label.light { color: var(--calm); }
+    .pmv-label.muted { color: var(--ink); }
+    .pmv-text { font-family: var(--font-body); font-size: 15px; line-height: 1.7; color: var(--ink); }
+    .pmv-text.light { color: #F9F8F2; }
+
+    /* ── Large pull quote ── */
+    .pull-quote {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0;
+    }
+    .pull-quote p {
+      font-family: var(--font-body);
+      font-size: clamp(22px, 3vw, 30px);
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--ink);
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+      text-wrap: pretty;
+    }
+    .pull-quote em { font-style: normal; color: var(--slate); }
+
+    /* ── Values grid ── */
+    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .value-cell {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .value-word { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: -0.01em; color: var(--ink); }
+    .value-def { font-family: var(--font-body); font-size: 12px; color: var(--ink); line-height: 1.5; }
+
+    /* ── Personality block ── */
+    .personality-block {
+      background: var(--slate);
+      padding: 48px 52px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2px;
+    }
+    .personality-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/Watercolor Textures/Backgrounds/Clean Slate/WBT-20260403-Clean-Slate-Watercolor-Background-1.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.2;
+    }
+    .personality-block .pb-label { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--calm); margin-bottom: 20px; position: relative; }
+    .personality-block p { font-family: var(--font-body); font-size: 17px; line-height: 1.8; color: #F9F8F2; max-width: 680px; position: relative; text-wrap: pretty; }
+    .personality-block p strong { font-weight: 700; color: #F9F8F2; }
+
+    /* ── Voice attributes ── */
+    .voice-attrs { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 2px; }
+    .voice-attr { background: var(--bg-card); border: 1px solid var(--rule); padding: 28px 28px; }
+    .voice-attr h4 { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 8px; }
+    .voice-attr p { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--ink); }
+    .voice-attr p em { font-style: italic; color: var(--ink); }
+
+    /* ── Tone list ── */
+    .tone-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .tone-cell { background: var(--bg-card); border: 1px solid var(--rule); padding: 24px 20px; }
+    .tone-word { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 6px; }
+    .tone-slash { color: var(--ink-faint); font-weight: 400; margin: 0 2px; }
+    .tone-desc { font-family: var(--font-body); font-size: 12px; color: var(--ink); line-height: 1.5; }
+
+    /* ── Do / Don’t ── */
+    .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .do-card { background: #e8f0eb; border: 1px solid #c5d9cb; padding: 28px 28px; }
+    .dont-card { background: #fdf0ea; border: 1px solid #e8c9b6; padding: 28px 28px; }
+    .dd-label { font-family: var(--font-display); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; font-weight: 500; }
+    .do-card .dd-label { color: var(--slate); }
+    .dont-card .dd-label { color: var(--ochre); }
+    .dd-example { font-family: var(--font-body); font-size: 15px; line-height: 1.7; color: var(--ink); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .dd-example:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .dd-example em { font-style: italic; }
+
+    /* ── Writing examples ── */
+    .writing-example { background: var(--bg-card); border: 1px solid var(--rule); padding: 36px 40px; margin-bottom: 2px; }
+    .we-context { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 16px; }
+    .we-text { font-family: var(--font-body); font-size: 17px; line-height: 1.75; color: var(--ink); max-width: 600px; text-wrap: pretty; }
+    .we-text em { font-style: italic; color: var(--ink); }
+    .we-headline { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <h1>Voice &amp; Tone</h1>
+    <p>How WBT speaks — the language, personality, and principles behind every word we write.</p>
+  </header>
+
+  <!-- ── Core Brand Language ── -->
+  <div class="section-label">Core Brand Language</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;">
+
+    <div style="background:var(--steady);padding:40px 40px;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-family:var(--font-display);font-weight:500;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--calm)">Tagline</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:36px;letter-spacing:-0.02em;line-height:1.05;color:#F9F8F2">Leadership is hard.<br>Let’s work on it.</div>
+      <div style="font-family:var(--font-body);font-size:13px;font-style:italic;color:#F9F8F2;line-height:1.6">The primary expression of the WBT brand. Use in hero contexts, presentations, and anywhere a single line needs to do the most work.</div>
+    </div>
+
+    <div style="background:var(--bg-card);border:1px solid var(--rule);padding:40px 40px;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-family:var(--font-display);font-weight:500;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--slate)">Value Proposition</div>
+      <div style="font-family:var(--font-body);font-size:18px;line-height:1.75;color:var(--ink);text-wrap:pretty"><strong>In the social impact space, transformation takes time.</strong> We coach leaders and their teams to build the mindset and capacity they need to get things done and create lasting change.</div>
+      <div style="font-family:var(--font-body);font-size:13px;font-style:italic;color:var(--ink);line-height:1.6">Use for website introductions, pitch decks, email footers, and any context where you need to explain what WBT does in one paragraph.</div>
+    </div>
+
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Purpose / Mission / Vision ── -->
+  <div class="section-label">Brand DNA · Purpose, Promise &amp; Goals</div>
+  <div class="pmv-grid">
+    <div class="pmv-card dark">
+      <div class="pmv-label light">Purpose</div>
+      <div class="pmv-text light">We help leaders and organizations operate with greater ease, cohesion, and effectiveness — supporting them in their mission to drive social change and create a powerful, positive impact on society.</div>
+    </div>
+    <div class="pmv-card">
+      <div class="pmv-label muted">Promise</div>
+      <div class="pmv-text">We coach leaders to grow their capacity to lead, and we challenge teams to work better together.</div>
+    </div>
+    <div class="pmv-card">
+      <div class="pmv-label muted">Goals</div>
+      <div class="pmv-text">A profitable, stable business with a strong public presence — known for coaching leaders who drive change, and trusted as a clear, credible voice in the leadership and team development field.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Values ── -->
+  <div class="section-label">Values · WBT is…</div>
+  <div class="values-grid">
+    <div class="value-cell">
+      <div class="value-word">Strategic</div>
+      <div class="value-def">Sees the whole board. Connects actions to outcomes.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Supportive</div>
+      <div class="value-def">Shows up for the person, not just the problem.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Sincere</div>
+      <div class="value-def">Says what it means. No spin, no performance.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Confident</div>
+      <div class="value-def">Grounded authority. Doesn’t need to prove itself.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Approachable</div>
+      <div class="value-def">Warm and accessible. Never intimidating or gatekeeping.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Thorough</div>
+      <div class="value-def">Does the work. Thinks things through.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Trustworthy</div>
+      <div class="value-def">Consistent, reliable, and honest — especially under pressure.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Candid</div>
+      <div class="value-def">Names what others are circling around.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Thoughtful</div>
+      <div class="value-def">Pauses before reacting. Considers multiple perspectives.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Agile</div>
+      <div class="value-def">Moves fluidly with complexity. Doesn’t get stuck.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Curious</div>
+      <div class="value-def">Asks more than it tells. Genuinely interested.</div>
+    </div>
+    <div class="value-cell">
+      <div class="value-word">Connection</div>
+      <div class="value-def">Listens first. Builds trust before building strategy.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Brand personality ── -->
+  <div class="section-label">Brand Personality</div>
+  <div class="personality-block">
+    <div class="pb-label">If WBT were a person…</div>
+    <p>A <strong>trusted guide on a difficult stretch of terrain</strong> — nimble and confident, attuned to both the landscape and the people walking it. They blend head and heart. They hold systems, power, and strategy alongside human emotion, identity, and lived experience without privileging one over the other. They <strong>listen first</strong>, name what others are circling around, and bring steadiness in moments of complexity or uncertainty. They invite pause and perspective as a bridge to personal insight and wiser action. They are an authority on coaching and facilitation — adding a powerful voice to the current conversation around leadership, team development, and what it takes to drive change.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Brand voice ── -->
+  <div class="section-label">Brand Voice · How we sound</div>
+
+  <div class="pull-quote" style="margin-bottom:32px">
+    <p>Encouraging, steady, insightful, and attuned. <strong>Calm under pressure</strong> and confident without urgency.</p>
+  </div>
+
+  <div class="voice-attrs">
+    <div class="voice-attr">
+      <h4>Strategic + Human</h4>
+      <p>WBT speaks fluently about <strong>systems, power, and organizational dynamics</strong> while always honoring lived experience. We don’t separate the strategic from the personal — they’re the same conversation.</p>
+    </div>
+    <div class="voice-attr">
+      <h4>Guiding, not directing</h4>
+      <p>Our authority is grounded. We <strong>invite perspective-building and possibility</strong> rather than prescribing answers. We ask more than we tell — and we trust our audience to arrive at their own insight.</p>
+    </div>
+    <div class="voice-attr">
+      <h4>Listens before naming</h4>
+      <p>We connect first, then speak. When we name patterns, tensions, and truths, it’s because we’ve <strong>already listened closely enough to earn that clarity.</strong></p>
+    </div>
+    <div class="voice-attr">
+      <h4>Anchored, not trendy</h4>
+      <p>WBT engages complexity — power, identity, culture, change — without trend-chasing or abstraction. The voice feels <strong>timely, relevant, and grounded</strong>, not reactive.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Tone ── -->
+  <div class="section-label">Brand Tone · The feeling behind the words</div>
+  <div class="tone-list">
+    <div class="tone-cell">
+      <div class="tone-word">Honest<span class="tone-slash">/</span>Genuine</div>
+      <div class="tone-desc">No performance. No polish for polish’s sake. Say the real thing.</div>
+    </div>
+    <div class="tone-cell">
+      <div class="tone-word">Grounded</div>
+      <div class="tone-desc">Rooted in experience. Calm in the face of difficulty. Steady.</div>
+    </div>
+    <div class="tone-cell">
+      <div class="tone-word">Encouraging</div>
+      <div class="tone-desc">Believes in the person. Points toward possibility without toxic positivity.</div>
+    </div>
+    <div class="tone-cell">
+      <div class="tone-word">Conversational</div>
+      <div class="tone-desc">Sounds like a real person talking — not a press release or a deck.</div>
+    </div>
+    <div class="tone-cell">
+      <div class="tone-word">Good-Humored</div>
+      <div class="tone-desc">Light when the moment allows. Never forced, never at anyone’s expense.</div>
+    </div>
+    <div class="tone-cell">
+      <div class="tone-word">Easygoing</div>
+      <div class="tone-desc">Doesn’t over-explain. Comfortable with silence and space.</div>
+    </div>
+    <div class="tone-cell" style="grid-column: span 2">
+      <div class="tone-word">Optimistic</div>
+      <div class="tone-desc">Believes that things can be better — and that the work of getting there is worth it. Not naive. Not performative. Just genuinely hopeful.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Do / Don’t ── -->
+  <div class="section-label">Do / Don’t · Writing principles</div>
+  <div class="do-dont">
+    <div class="do-card">
+      <div class="dd-label">✓ Write like this</div>
+      <div class="dd-example">Leadership is hard. <em>Let’s work on it.</em></div>
+      <div class="dd-example">Name what’s actually happening — even when it’s uncomfortable.</div>
+      <div class="dd-example">Ask a question that opens something up rather than closes it down.</div>
+      <div class="dd-example">Write in full sentences. Short, clear, direct ones.</div>
+      <div class="dd-example">Use “we” and “you” — this is a conversation, not a broadcast.</div>
+      <div class="dd-example">Say the hard thing gently. Don’t soften it into meaninglessness.</div>
+    </div>
+    <div class="dont-card">
+      <div class="dd-label">✗ Not like this</div>
+      <div class="dd-example">Leverage synergistic frameworks to unlock team potential.</div>
+      <div class="dd-example">Vague motivational language that doesn’t mean anything.</div>
+      <div class="dd-example">Urgency language: “Don’t miss out,” “Last chance,” “Act now.”</div>
+      <div class="dd-example">Jargon without grounding: “high-trust ecosystems,” “radical candor protocols.”</div>
+      <div class="dd-example">Over-explaining. Say it once, clearly. Trust the reader.</div>
+      <div class="dd-example">Performative warmth: “We’re SO excited to share…”</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Writing examples ── -->
+  <div class="section-label">Voice in practice</div>
+
+  <div class="writing-example">
+    <div class="we-context">Website · Hero</div>
+    <div class="we-headline">Leadership is hard.<br>Let’s work on it.</div>
+    <div class="we-text">We coach leaders and challenge teams — so the people driving <strong>social change</strong> can do it with more ease, more cohesion, and more impact.</div>
+  </div>
+
+  <div class="writing-example">
+    <div class="we-context">About · Brand Voice</div>
+    <div class="we-text">We’re not here to hand you a playbook. We’re here to sit with you in the complexity — to ask the questions that open things up, and to stay steady while you figure out what comes next.</div>
+  </div>
+
+  <div class="writing-example">
+    <div class="we-context">Email · Outreach</div>
+    <div class="we-text">Most leadership challenges aren’t about skill. They’re about the dynamics that build up quietly — between people, across teams, inside systems. That’s where we work. <em>Want to talk about what’s actually going on?</em></div>
+  </div>
+
+  <div class="writing-example">
+    <div class="we-context">Social · Reflection</div>
+    <div class="we-text">The best teams we’ve worked with share one thing: they know how to <strong>tell each other the truth</strong>. Not harshly. Not perfectly. But honestly — and with care for the relationship.</div>
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

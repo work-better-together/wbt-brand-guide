@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Tokens — Work Better Together</title>
+  <link rel="stylesheet" href="tokens/tokens.css">
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--surface-canvas);
+      color: var(--ink-default);
+      font-family: var(--font-body);
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: var(--container-default);
+      margin: 0 auto;
+      padding: var(--page-padding-y) var(--page-padding-x) var(--space-24);
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: var(--gap-section);
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .page-header .label {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--size-11);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      color: var(--ink-brand);
+      display: block;
+      margin-bottom: var(--space-2);
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-weight: var(--weight-bold);
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: var(--track-tight);
+      line-height: var(--leading-tight);
+      color: var(--ink-default);
+      margin-bottom: var(--space-3);
+    }
+    .page-header p {
+      font-family: var(--font-display);
+      font-weight: var(--weight-regular);
+      font-size: var(--size-17);
+      color: var(--ink-default);
+      max-width: 560px;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--size-11);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      color: var(--ink-default);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: var(--space-6);
+    }
+    .section-intro {
+      font-family: var(--font-body);
+      font-size: var(--size-15);
+      color: var(--ink-default);
+      max-width: 720px;
+      margin-bottom: var(--space-8);
+      line-height: var(--leading-relaxed);
+    }
+    .section-block { margin-bottom: 96px; }
+
+    /* ── Tier label ── */
+    .tier-label {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--size-11);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      color: var(--ink-default);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* ── Token table ── */
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var(--space-12);
+    }
+    .token-table th, .token-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+      vertical-align: middle;
+    }
+    .token-table th {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--size-10);
+      letter-spacing: var(--track-meta);
+      text-transform: uppercase;
+      color: var(--ink-default);
+      border-bottom-width: 2px;
+      border-bottom-color: var(--ink-default);
+      padding-bottom: var(--space-2);
+    }
+    .token-table td {
+      font-family: var(--font-body);
+      font-size: var(--size-13);
+      color: var(--ink-default);
+    }
+    .token-table .preview-col { width: 88px; }
+    .token-table .name-col code,
+    .token-table .value-col code {
+      font-family: var(--font-mono);
+      font-size: var(--size-12);
+      background: var(--c-grounded-black-05);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--ink-default);
+    }
+    .token-table .name-col code { color: var(--ink-action); }
+    .token-table .role-col {
+      font-family: var(--font-body);
+      font-size: var(--size-13);
+      color: var(--ink-default);
+    }
+
+    /* ── Color preview chips ── */
+    .swatch-chip {
+      width: 64px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .swatch-chip.checker {
+      background-image:
+        linear-gradient(45deg, #d8d6d2 25%, transparent 25%),
+        linear-gradient(-45deg, #d8d6d2 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #d8d6d2 75%),
+        linear-gradient(-45deg, transparent 75%, #d8d6d2 75%);
+      background-size: 8px 8px;
+      background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+    }
+
+    /* ── Spacing scale visual ── */
+    .scale-row {
+      display: grid;
+      grid-template-columns: 80px 80px 1fr;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .scale-row:last-child { border-bottom: none; }
+    .scale-row code {
+      font-family: var(--font-mono);
+      font-size: var(--size-12);
+      color: var(--ink-action);
+    }
+    .scale-row .scale-bar {
+      height: 14px;
+      background: var(--c-clean-slate);
+      border-radius: var(--radius-sm);
+    }
+
+    /* ── Radius preview ── */
+    .radius-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: var(--space-2);
+    }
+    .radius-tile {
+      aspect-ratio: 1;
+      background: var(--c-slate-light);
+      border: 1px solid var(--c-clean-slate-20);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: var(--space-3);
+    }
+    .radius-tile .r-name {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--size-10);
+      letter-spacing: var(--track-meta);
+      text-transform: uppercase;
+      color: var(--ink-default);
+    }
+    .radius-tile .r-value {
+      font-family: var(--font-mono);
+      font-size: var(--size-10);
+      color: var(--ink-muted);
+    }
+
+    /* ── Border preview ── */
+    .border-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 80px;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .border-row:last-child { border-bottom: none; }
+    .border-row code { font-family: var(--font-mono); font-size: var(--size-12); color: var(--ink-action); }
+    .border-row .border-line { width: 100%; }
+
+    /* ── Type preview ── */
+    .type-row {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      align-items: baseline;
+      gap: var(--space-6);
+      padding: var(--space-5) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-row .role {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--size-10);
+      letter-spacing: var(--track-meta);
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: var(--space-1);
+    }
+    .type-row code {
+      font-family: var(--font-mono);
+      font-size: var(--size-12);
+      color: var(--ink-action);
+    }
+
+    /* ── Motion preview ── */
+    .motion-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    .motion-card {
+      background: var(--surface-default);
+      border: 1px solid var(--border-subtle);
+      padding: var(--space-5);
+    }
+    .motion-card .mc-eyebrow {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--size-10);
+      letter-spacing: var(--track-meta);
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: var(--space-2);
+    }
+    .motion-card h4 {
+      font-family: var(--font-display);
+      font-weight: var(--weight-bold);
+      font-size: var(--size-17);
+      margin-bottom: var(--space-3);
+    }
+    .motion-card .mc-track {
+      height: 6px;
+      background: var(--c-slate-light);
+      border-radius: var(--radius-pill);
+      position: relative;
+      overflow: hidden;
+      margin: var(--space-3) 0;
+    }
+    .motion-card .mc-pulse {
+      position: absolute;
+      inset: 0;
+      background: var(--c-intentional-blue);
+      transform-origin: left;
+      animation: pulseBar 3s infinite;
+      border-radius: var(--radius-pill);
+    }
+    .motion-card .mc-quick    .mc-pulse { animation-duration: 1s;   }
+    .motion-card .mc-standard .mc-pulse { animation-duration: 1.6s; }
+    .motion-card .mc-deliberate .mc-pulse { animation-duration: 2.4s; }
+    .motion-card .mc-slow     .mc-pulse { animation-duration: 3.6s; }
+    @keyframes pulseBar {
+      0%, 10%   { transform: scaleX(0); }
+      55%, 70%  { transform: scaleX(1); }
+      100%      { transform: scaleX(0); }
+    }
+    .motion-card code {
+      font-family: var(--font-mono);
+      font-size: var(--size-12);
+      color: var(--ink-action);
+    }
+
+    /* ── Container scale visual ── */
+    .container-row {
+      display: grid;
+      grid-template-columns: 140px 1fr 100px;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .container-row:last-child { border-bottom: none; }
+    .container-bar {
+      height: 14px;
+      background: var(--c-clean-slate);
+      border-radius: var(--radius-sm);
+      max-width: 100%;
+    }
+    .container-row code { font-family: var(--font-mono); font-size: var(--size-12); color: var(--ink-action); }
+
+    /* ── Status grid ── */
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-2);
+    }
+    .status-card {
+      padding: var(--space-5);
+      border-left: var(--border-3) solid;
+    }
+    .status-card .status-tag {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--size-10);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      margin-bottom: var(--space-2);
+    }
+    .status-card p {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: var(--size-13);
+      line-height: 1.55;
+    }
+    .status-success { background: var(--status-success-surface); border-color: var(--status-success-ink); color: var(--status-success-ink); }
+    .status-warning { background: var(--status-warning-surface); border-color: var(--status-warning-ink); color: var(--status-warning-ink); }
+    .status-info    { background: var(--status-info-surface); border-color: var(--status-info-ink); color: var(--status-info-ink); }
+    .status-critical { background: var(--status-critical-surface); border-color: var(--status-critical-ink); color: var(--status-critical-ink); }
+
+    /* ── Focus ring demo ── */
+    .focus-demo {
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: var(--space-4);
+    }
+    .focus-demo button {
+      font: var(--type-cta);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      padding: var(--space-3) var(--space-5);
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-ink);
+      border: none;
+      border-radius: var(--btn-radius);
+      cursor: pointer;
+      transition: background var(--motion-state);
+    }
+    .focus-demo button:hover { background: var(--btn-primary-bg-hover); }
+    .focus-demo button:focus-visible {
+      outline: var(--state-focus-ring-width) solid var(--state-focus-ring);
+      outline-offset: var(--state-focus-ring-offset);
+    }
+
+    /* ── Subnote ── */
+    .subnote {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: var(--size-13);
+      color: var(--ink-muted);
+      margin-top: var(--space-3);
+      max-width: 720px;
+    }
+
+    /* ── Grid utility ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); }
+
+    /* ── Code block ── */
+    .code-block {
+      background: var(--c-grounded-black);
+      color: var(--c-clear-white);
+      padding: var(--space-5) var(--space-6);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: var(--size-12);
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: var(--space-4) 0;
+    }
+    .code-block .c-key { color: var(--c-radiant-gold); }
+    .code-block .c-val { color: var(--c-calm-blue); }
+    .code-block .c-comment { color: rgba(249,248,242,0.45); }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Page header -->
+  <header class="page-header">
+    <span class="label">Work Better Together · Brand Guide</span>
+    <h1>Design tokens</h1>
+    <p>The system layer beneath the brand. Three tiers — primitives, semantic, component — that translate brand expression into reusable, role-based values.</p>
+  </header>
+
+
+  <!-- ─── How this works ─── -->
+  <div class="section-block">
+    <div class="section-label">How this works</div>
+    <p class="section-intro">
+      Engineers and design tools consume <code style="font-family:var(--font-mono);font-size:13px;background:var(--c-grounded-black-05);padding:2px 6px;border-radius:2px;">tokens/tokens.css</code> — a single CSS variables file. Three tiers organize the values:
+    </p>
+    <div class="grid-3">
+      <div style="background:var(--surface-default); border:1px solid var(--border-subtle); padding:var(--space-5);">
+        <div style="font:var(--type-meta); letter-spacing:var(--track-meta); text-transform:uppercase; color:var(--ink-muted); margin-bottom:var(--space-2);">Tier 1</div>
+        <h4 style="font:var(--type-h4); margin-bottom:var(--space-2);">Primitives</h4>
+        <p style="font:var(--type-body-sm);">Raw brand values: hex codes, spacing pixels, font sizes. The truth source. <strong>Never reference directly in components.</strong></p>
+      </div>
+      <div style="background:var(--surface-default); border:1px solid var(--border-subtle); padding:var(--space-5);">
+        <div style="font:var(--type-meta); letter-spacing:var(--track-meta); text-transform:uppercase; color:var(--ink-muted); margin-bottom:var(--space-2);">Tier 2</div>
+        <h4 style="font:var(--type-h4); margin-bottom:var(--space-2);">Semantic</h4>
+        <p style="font:var(--type-body-sm);">Role-based: <code style="font-family:var(--font-mono);">surface.canvas</code>, <code style="font-family:var(--font-mono);">ink.default</code>, <code style="font-family:var(--font-mono);">border.focus</code>. <strong>This is the API.</strong></p>
+      </div>
+      <div style="background:var(--surface-default); border:1px solid var(--border-subtle); padding:var(--space-5);">
+        <div style="font:var(--type-meta); letter-spacing:var(--track-meta); text-transform:uppercase; color:var(--ink-muted); margin-bottom:var(--space-2);">Tier 3</div>
+        <h4 style="font:var(--type-h4); margin-bottom:var(--space-2);">Component</h4>
+        <p style="font:var(--type-body-sm);">Per-component overrides: <code style="font-family:var(--font-mono);">btn.radius</code>, <code style="font-family:var(--font-mono);">input.padding</code>. Optional layer.</p>
+      </div>
+    </div>
+
+<pre class="code-block"><span class="c-comment">/* In a component, always reference semantic tokens */</span>
+.button {
+  background: <span class="c-val">var(--btn-primary-bg)</span>;
+  color:      <span class="c-val">var(--btn-primary-ink)</span>;
+  padding:    <span class="c-val">var(--btn-padding-y) var(--btn-padding-x)</span>;
+  border-radius: <span class="c-val">var(--btn-radius)</span>;
+  transition: background <span class="c-val">var(--motion-state)</span>;
+}
+.button:focus-visible {
+  outline: <span class="c-val">var(--state-focus-ring-width)</span> solid <span class="c-val">var(--state-focus-ring)</span>;
+  outline-offset: <span class="c-val">var(--state-focus-ring-offset)</span>;
+}</pre>
+  </div>
+
+
+  <!-- ─── Color · Surfaces ─── -->
+  <div class="section-block">
+    <div class="section-label">Color · Surface</div>
+    <p class="section-intro">Backgrounds and container fills. Use <code>surface.*</code> wherever a component needs a fill. The page itself sits on <code>surface.canvas</code>; cards on <code>surface.default</code>.</p>
+    <table class="token-table">
+      <thead><tr><th class="preview-col">Preview</th><th class="name-col">Token</th><th class="value-col">Value</th><th class="role-col">Role</th></tr></thead>
+      <tbody>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-canvas)"></div></td><td class="name-col"><code>--surface-canvas</code></td><td class="value-col"><code>#FAF9F7</code></td><td class="role-col">Page background — warm off-white</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-default)"></div></td><td class="name-col"><code>--surface-default</code></td><td class="value-col"><code>#FFFFFF</code></td><td class="role-col">Cards, panels, form fields</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-muted)"></div></td><td class="name-col"><code>--surface-muted</code></td><td class="value-col"><code>#F2F1EB</code></td><td class="role-col">Hover state on light surfaces</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-subtle)"></div></td><td class="name-col"><code>--surface-subtle</code></td><td class="value-col"><code>#E0E8EB</code></td><td class="role-col">Callouts, info panels, element-notes</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-inverse)"></div></td><td class="name-col"><code>--surface-inverse</code></td><td class="value-col"><code>#1F1E1E</code></td><td class="role-col">Dark sections, navigation chrome</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-inverse-soft)"></div></td><td class="name-col"><code>--surface-inverse-soft</code></td><td class="value-col"><code>#1E4D5C</code></td><td class="role-col">Dark-but-warmer dark sections</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-brand-primary)"></div></td><td class="name-col"><code>--surface-brand-primary</code></td><td class="value-col"><code>#061A49</code></td><td class="role-col">Hero, primary brand surface</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-brand-action)"></div></td><td class="name-col"><code>--surface-brand-action</code></td><td class="value-col"><code>#2531A5</code></td><td class="role-col">CTA fills, action buttons</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-brand-accent)"></div></td><td class="name-col"><code>--surface-brand-accent</code></td><td class="value-col"><code>#CD9F36</code></td><td class="role-col">Emphasis, insight pulls</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-brand-cream); border:1px solid var(--border-subtle);"></div></td><td class="name-col"><code>--surface-brand-cream</code></td><td class="value-col"><code>#F9F8F2</code></td><td class="role-col">Warm neutral surfaces</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── Color · Ink ─── -->
+  <div class="section-block">
+    <div class="section-label">Color · Ink</div>
+    <p class="section-intro">Text colors. <code>ink.default</code> is full Grounded Black at 100%. <code>ink.muted</code> only for meta/captions — never body. <code>ink.action</code> is the link / interactive label color.</p>
+    <table class="token-table">
+      <thead><tr><th class="preview-col">Preview</th><th class="name-col">Token</th><th class="value-col">Value</th><th class="role-col">Role</th></tr></thead>
+      <tbody>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-default)"></div></td><td class="name-col"><code>--ink-default</code></td><td class="value-col"><code>#1F1E1E</code></td><td class="role-col">Body, headings, default text</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-muted)"></div></td><td class="name-col"><code>--ink-muted</code></td><td class="value-col"><code>#6B6B6B</code></td><td class="role-col">Meta, captions, low emphasis (NOT body)</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-subtle)"></div></td><td class="name-col"><code>--ink-subtle</code></td><td class="value-col"><code>#9A9A9A</code></td><td class="role-col">Placeholder, very-low emphasis</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-inverse)"></div></td><td class="name-col"><code>--ink-inverse</code></td><td class="value-col"><code>#F9F8F2</code></td><td class="role-col">Text on dark surfaces</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-brand)"></div></td><td class="name-col"><code>--ink-brand</code></td><td class="value-col"><code>#1E4D5C</code></td><td class="role-col">Eyebrows, secondary brand ink</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-accent)"></div></td><td class="name-col"><code>--ink-accent</code></td><td class="value-col"><code>#061A49</code></td><td class="role-col">Primary brand text emphasis</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-action)"></div></td><td class="name-col"><code>--ink-action</code></td><td class="value-col"><code>#2531A5</code></td><td class="role-col">Links, action labels</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-warning)"></div></td><td class="name-col"><code>--ink-warning</code></td><td class="value-col"><code>#B55312</code></td><td class="role-col">Friction, challenge, errors</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--ink-emphasis)"></div></td><td class="name-col"><code>--ink-emphasis</code></td><td class="value-col"><code>#CD9F36</code></td><td class="role-col">Insight pulls (use sparingly)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── Color · Border ─── -->
+  <div class="section-block">
+    <div class="section-label">Color · Border</div>
+    <table class="token-table">
+      <thead><tr><th class="preview-col">Preview</th><th class="name-col">Token</th><th class="value-col">Value</th><th class="role-col">Role</th></tr></thead>
+      <tbody>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-default); border:2px solid var(--border-subtle);"></div></td><td class="name-col"><code>--border-subtle</code></td><td class="value-col"><code>#E4E2DE</code></td><td class="role-col">Default rule line, card borders</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-default); border:2px solid var(--border-default);"></div></td><td class="name-col"><code>--border-default</code></td><td class="value-col"><code>#CFCDC8</code></td><td class="role-col">Hover state on inputs</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-default); border:2px solid var(--border-strong);"></div></td><td class="name-col"><code>--border-strong</code></td><td class="value-col"><code>#1F1E1E</code></td><td class="role-col">Secondary buttons, attribute-table head</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-default); border:2px solid var(--border-focus);"></div></td><td class="name-col"><code>--border-focus</code></td><td class="value-col"><code>#2531A5</code></td><td class="role-col">Focus ring, active inputs</td></tr>
+        <tr><td><div class="swatch-chip" style="background:var(--surface-default); border:2px solid var(--border-brand);"></div></td><td class="name-col"><code>--border-brand</code></td><td class="value-col"><code>#1E4D5C</code></td><td class="role-col">Callout left accent</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── Color · Status ─── -->
+  <div class="section-block">
+    <div class="section-label">Color · Status &amp; feedback</div>
+    <p class="section-intro">Semantic mappings derived from the brand: Slate for affirmative/info, Ochre for warning/critical. Each set comes with a soft surface, a stronger border, and a high-contrast ink for body copy.</p>
+    <div class="status-grid">
+      <div class="status-card status-success">
+        <div class="status-tag">Success / Do</div>
+        <p>Use for affirmative confirmation, "do" guidance, and positive state messaging. Slate-derived.</p>
+      </div>
+      <div class="status-card status-info">
+        <div class="status-tag">Info</div>
+        <p>Use for neutral context, callouts, and informational annotations. Identical visual language to the type-page element-note.</p>
+      </div>
+      <div class="status-card status-warning">
+        <div class="status-tag">Warning / Don't</div>
+        <p>Use for caution, "don't" guidance, and friction states. Ochre-derived.</p>
+      </div>
+      <div class="status-card status-critical">
+        <div class="status-tag">Critical / Error</div>
+        <p>Use for blocking errors, destructive confirmations, and high-stakes warnings. Stronger ochre treatment.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─── Spacing scale ─── -->
+  <div class="section-block">
+    <div class="section-label">Spacing</div>
+    <p class="section-intro">4px base. Use semantic tokens (<code>gap.tight</code>, <code>gap.default</code>, <code>gap.loose</code>, <code>gap.section</code>) in components — primitives only when a specific pixel value is required.</p>
+    <div>
+      <div class="scale-row"><code>--space-05</code><span>2px</span><div class="scale-bar" style="width:2px"></div></div>
+      <div class="scale-row"><code>--space-1</code><span>4px</span><div class="scale-bar" style="width:4px"></div></div>
+      <div class="scale-row"><code>--space-2</code><span>8px</span><div class="scale-bar" style="width:8px"></div></div>
+      <div class="scale-row"><code>--space-3</code><span>12px</span><div class="scale-bar" style="width:12px"></div></div>
+      <div class="scale-row"><code>--space-4</code><span>16px</span><div class="scale-bar" style="width:16px"></div></div>
+      <div class="scale-row"><code>--space-5</code><span>20px</span><div class="scale-bar" style="width:20px"></div></div>
+      <div class="scale-row"><code>--space-6</code><span>24px</span><div class="scale-bar" style="width:24px"></div></div>
+      <div class="scale-row"><code>--space-8</code><span>32px</span><div class="scale-bar" style="width:32px"></div></div>
+      <div class="scale-row"><code>--space-10</code><span>40px</span><div class="scale-bar" style="width:40px"></div></div>
+      <div class="scale-row"><code>--space-12</code><span>48px</span><div class="scale-bar" style="width:48px"></div></div>
+      <div class="scale-row"><code>--space-14</code><span>56px</span><div class="scale-bar" style="width:56px"></div></div>
+      <div class="scale-row"><code>--space-16</code><span>64px</span><div class="scale-bar" style="width:64px"></div></div>
+      <div class="scale-row"><code>--space-18</code><span>72px</span><div class="scale-bar" style="width:72px"></div></div>
+      <div class="scale-row"><code>--space-20</code><span>80px</span><div class="scale-bar" style="width:80px"></div></div>
+      <div class="scale-row"><code>--space-24</code><span>96px</span><div class="scale-bar" style="width:96px"></div></div>
+    </div>
+
+    <h3 style="font:var(--type-h4); margin: var(--space-8) 0 var(--space-3);">Semantic gap roles</h3>
+    <table class="token-table">
+      <thead><tr><th class="name-col">Token</th><th class="value-col">Resolves to</th><th class="role-col">Use for</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gap-tight</code></td><td><code>8px</code></td><td>Within a component (button label ↔ icon)</td></tr>
+        <tr><td><code>--gap-default</code></td><td><code>16px</code></td><td>Between fields in a form</td></tr>
+        <tr><td><code>--gap-loose</code></td><td><code>32px</code></td><td>Between content blocks</td></tr>
+        <tr><td><code>--gap-section</code></td><td><code>72px</code></td><td>Between major page sections</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── Radius ─── -->
+  <div class="section-block">
+    <div class="section-label">Radius</div>
+    <p class="section-intro">The brand favors editorial precision over softness. Default to <code>radius.none</code>; use <code>radius.sm</code> for chrome (badges, tags, inputs); use <code>radius.pill</code> only for filter pills and toggles.</p>
+    <div class="radius-grid">
+      <div class="radius-tile" style="border-radius:var(--radius-none)"><span class="r-name">None</span><span class="r-value">0</span></div>
+      <div class="radius-tile" style="border-radius:var(--radius-sm)"><span class="r-name">SM</span><span class="r-value">2px</span></div>
+      <div class="radius-tile" style="border-radius:var(--radius-md)"><span class="r-name">MD</span><span class="r-value">4px</span></div>
+      <div class="radius-tile" style="border-radius:var(--radius-lg)"><span class="r-name">LG</span><span class="r-value">8px</span></div>
+      <div class="radius-tile" style="border-radius:var(--radius-xl)"><span class="r-name">XL</span><span class="r-value">16px</span></div>
+      <div class="radius-tile" style="border-radius:var(--radius-pill)"><span class="r-name">Pill</span><span class="r-value">999px</span></div>
+    </div>
+  </div>
+
+
+  <!-- ─── Border widths ─── -->
+  <div class="section-block">
+    <div class="section-label">Border width</div>
+    <div>
+      <div class="border-row"><code>--border-1</code><div class="border-line" style="border-bottom:1px solid var(--ink-default)"></div><span>1px · subtle</span></div>
+      <div class="border-row"><code>--border-2</code><div class="border-line" style="border-bottom:2px solid var(--ink-default)"></div><span>2px · strong</span></div>
+      <div class="border-row"><code>--border-3</code><div class="border-line" style="border-bottom:3px solid var(--ink-default)"></div><span>3px · accent</span></div>
+    </div>
+  </div>
+
+
+  <!-- ─── Type tokens ─── -->
+  <div class="section-block">
+    <div class="section-label">Type · Roles</div>
+    <p class="section-intro">Composite tokens — each maps to family + weight + size + line-height + tracking. See <a href="type-scale.html" style="color:var(--ink-action);">Type Scale</a> and <a href="type.html" style="color:var(--ink-action);">Brand Fonts</a> for design rationale.</p>
+    <div>
+      <div class="type-row">
+        <div>
+          <div class="role">Display</div>
+          <div style="font:var(--type-display); letter-spacing:var(--track-tightest);">Leadership.</div>
+        </div>
+        <div>
+          <code>--type-display</code><br>
+          <span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">League Spartan 700 · clamp(56–112px) · LH 1.0</span>
+        </div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">H1</div>
+          <div style="font:var(--type-h1); letter-spacing:var(--track-tight);">Page heading.</div>
+        </div>
+        <div><code>--type-h1</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">League Spartan 700 · clamp(36–56px) · LH 1.1</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">H2</div>
+          <div style="font:var(--type-h2); letter-spacing:var(--track-snug);">Section title.</div>
+        </div>
+        <div><code>--type-h2</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">League Spartan 700 · 36px · LH 1.1</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">H3</div>
+          <div style="font:var(--type-h3); letter-spacing:var(--track-snug);">Subsection.</div>
+        </div>
+        <div><code>--type-h3</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">League Spartan 700 · 28px · LH 1.1</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">H4</div>
+          <div style="font:var(--type-h4);">Block heading.</div>
+        </div>
+        <div><code>--type-h4</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">League Spartan 700 · 20px · LH 1.1</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">Body lg</div>
+          <div style="font:var(--type-body-lg);">Lora 400, the lead paragraph or long-form body. Calm, readable, generous in line-height.</div>
+        </div>
+        <div><code>--type-body-lg</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">Lora 400 · 17px · LH 1.65</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">Body</div>
+          <div style="font:var(--type-body);">Default body text. Most page copy lives here.</div>
+        </div>
+        <div><code>--type-body</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">Lora 400 · 15px · LH 1.65</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">Body sm</div>
+          <div style="font:var(--type-body-sm);">Captions, small body, helper text.</div>
+        </div>
+        <div><code>--type-body-sm</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">Lora 400 · 13px · LH 1.5</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">Pull quote</div>
+          <div style="font:var(--type-pull-quote); color:var(--ink-default);">Encouraging, steady, insightful.</div>
+        </div>
+        <div><code>--type-pull-quote</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">Lora italic · clamp(22–30px) · LH 1.55</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">Eyebrow</div>
+          <div style="font:var(--type-eyebrow); letter-spacing:var(--track-eyebrow); text-transform:uppercase; color:var(--ink-brand);">Brand voice · How we sound</div>
+        </div>
+        <div><code>--type-eyebrow</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">League Spartan 500 · 11px · +0.18em</span></div>
+      </div>
+      <div class="type-row">
+        <div>
+          <div class="role">Attribution / CTA</div>
+          <div style="font:var(--type-cta); letter-spacing:var(--track-eyebrow); text-transform:uppercase;">Schedule a discovery call</div>
+        </div>
+        <div><code>--type-cta</code><br><span style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">Inconsolata 700 · 13px · +0.18em (uppercase)</span></div>
+      </div>
+    </div>
+    <p class="subnote"><strong>Inconsolata is reserved.</strong> Use only for attributions and CTAs — never for eyebrows, labels, or general meta.</p>
+  </div>
+
+
+  <!-- ─── Motion ─── -->
+  <div class="section-block">
+    <div class="section-label">Motion</div>
+    <p class="section-intro">Four durations, three easings. Default to <code>--motion-state</code> for component state changes. Hover should feel imperceptible-but-confirmed; modal transitions should feel deliberate.</p>
+    <div class="motion-grid">
+      <div class="motion-card mc-quick">
+        <div class="mc-eyebrow">Duration · Quick</div>
+        <h4>120ms</h4>
+        <div class="mc-track"><div class="mc-pulse"></div></div>
+        <code>--motion-duration-quick</code>
+        <p style="font:var(--type-body-sm); color:var(--ink-muted); margin-top:8px;">Hovers, micro state changes.</p>
+      </div>
+      <div class="motion-card mc-standard">
+        <div class="mc-eyebrow">Duration · Standard</div>
+        <h4>200ms</h4>
+        <div class="mc-track"><div class="mc-pulse"></div></div>
+        <code>--motion-duration-standard</code>
+        <p style="font:var(--type-body-sm); color:var(--ink-muted); margin-top:8px;">Default for most state transitions.</p>
+      </div>
+      <div class="motion-card mc-deliberate">
+        <div class="mc-eyebrow">Duration · Deliberate</div>
+        <h4>320ms</h4>
+        <div class="mc-track"><div class="mc-pulse"></div></div>
+        <code>--motion-duration-deliberate</code>
+        <p style="font:var(--type-body-sm); color:var(--ink-muted); margin-top:8px;">Modal entrance, expressive moments.</p>
+      </div>
+      <div class="motion-card mc-slow">
+        <div class="mc-eyebrow">Duration · Slow</div>
+        <h4>480ms</h4>
+        <div class="mc-track"><div class="mc-pulse"></div></div>
+        <code>--motion-duration-slow</code>
+        <p style="font:var(--type-body-sm); color:var(--ink-muted); margin-top:8px;">Page-level, hero choreography.</p>
+      </div>
+    </div>
+
+    <h3 style="font:var(--type-h4); margin: var(--space-8) 0 var(--space-3);">Easing curves</h3>
+    <table class="token-table">
+      <thead><tr><th class="name-col">Token</th><th class="value-col">Curve</th><th class="role-col">Role</th></tr></thead>
+      <tbody>
+        <tr><td><code>--motion-easing-standard</code></td><td><code>cubic-bezier(0.2, 0, 0, 1)</code></td><td>Default — for most transitions</td></tr>
+        <tr><td><code>--motion-easing-entrance</code></td><td><code>cubic-bezier(0, 0, 0.2, 1)</code></td><td>Elements entering the screen</td></tr>
+        <tr><td><code>--motion-easing-exit</code></td><td><code>cubic-bezier(0.4, 0, 1, 1)</code></td><td>Elements leaving the screen</td></tr>
+        <tr><td><code>--motion-easing-emphasized</code></td><td><code>cubic-bezier(0.2, 0, 0, 1)</code></td><td>Drawing attention; key moments</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── Elevation ─── -->
+  <div class="section-block">
+    <div class="section-label">Elevation &amp; focus</div>
+    <p class="section-intro">The brand is largely flat. Reserve elevation for system moments — focus indication, overlays, modals.</p>
+    <div class="grid-3">
+      <div style="background:var(--surface-default); border:1px solid var(--border-subtle); padding:var(--space-6); text-align:center;">
+        <div class="mc-eyebrow" style="font:var(--type-meta); letter-spacing:var(--track-meta); text-transform:uppercase; color:var(--ink-muted); margin-bottom:var(--space-3);">Flat</div>
+        <div style="height:60px; background:var(--surface-canvas); border:1px solid var(--border-subtle); margin:0 auto;"></div>
+        <code style="display:block; margin-top:var(--space-3); font-family:var(--font-mono); font-size:11px; color:var(--ink-action);">--elevation-none</code>
+      </div>
+      <div style="background:var(--surface-default); border:1px solid var(--border-subtle); padding:var(--space-6); text-align:center;">
+        <div class="mc-eyebrow" style="font:var(--type-meta); letter-spacing:var(--track-meta); text-transform:uppercase; color:var(--ink-muted); margin-bottom:var(--space-3);">Overlay</div>
+        <div style="height:60px; background:var(--surface-default); box-shadow:var(--elevation-overlay); margin:0 auto;"></div>
+        <code style="display:block; margin-top:var(--space-3); font-family:var(--font-mono); font-size:11px; color:var(--ink-action);">--elevation-overlay</code>
+      </div>
+      <div style="background:var(--surface-default); border:1px solid var(--border-subtle); padding:var(--space-6); text-align:center;">
+        <div class="mc-eyebrow" style="font:var(--type-meta); letter-spacing:var(--track-meta); text-transform:uppercase; color:var(--ink-muted); margin-bottom:var(--space-3);">Modal</div>
+        <div style="height:60px; background:var(--surface-default); box-shadow:var(--elevation-modal); margin:0 auto;"></div>
+        <code style="display:block; margin-top:var(--space-3); font-family:var(--font-mono); font-size:11px; color:var(--ink-action);">--elevation-modal</code>
+      </div>
+    </div>
+
+    <h3 style="font:var(--type-h4); margin: var(--space-8) 0 var(--space-3);">Focus ring</h3>
+    <p class="section-intro" style="margin-bottom:var(--space-3);">2px Intentional Blue, 2px offset. <strong>Always visible</strong> on keyboard focus — never <code>outline:none</code> without a replacement.</p>
+    <div class="focus-demo">
+      <button>Tab to me, then focus</button>
+      <span style="font:var(--type-body-sm); color:var(--ink-muted);">↑ Use keyboard to see the focus ring.</span>
+    </div>
+  </div>
+
+
+  <!-- ─── Layout ─── -->
+  <div class="section-block">
+    <div class="section-label">Layout · Containers &amp; breakpoints</div>
+    <div>
+      <div class="container-row"><code>--container-narrow</code><div class="container-bar" style="width:640px"></div><span>640px</span></div>
+      <div class="container-row"><code>--container-prose</code><div class="container-bar" style="width:720px"></div><span>720px</span></div>
+      <div class="container-row"><code>--container-default</code><div class="container-bar" style="width:880px"></div><span>960px</span></div>
+      <div class="container-row"><code>--container-wide</code><div class="container-bar" style="width:880px"></div><span>1200px</span></div>
+    </div>
+
+    <h3 style="font:var(--type-h4); margin: var(--space-8) 0 var(--space-3);">Breakpoints</h3>
+    <table class="token-table">
+      <thead><tr><th class="name-col">Token</th><th class="value-col">Min width</th><th class="role-col">Surface</th></tr></thead>
+      <tbody>
+        <tr><td><code>--breakpoint-sm</code></td><td><code>640px</code></td><td>Large phone / small tablet</td></tr>
+        <tr><td><code>--breakpoint-md</code></td><td><code>900px</code></td><td>Tablet · most desktop content kicks in</td></tr>
+        <tr><td><code>--breakpoint-lg</code></td><td><code>1200px</code></td><td>Standard desktop</td></tr>
+        <tr><td><code>--breakpoint-xl</code></td><td><code>1440px</code></td><td>Large desktop / dashboard</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── Accessibility floor ─── -->
+  <div class="section-block">
+    <div class="section-label">Accessibility floor</div>
+    <p class="section-intro">Non-negotiable rules baked into the system. Components inherit these — don't override.</p>
+    <table class="token-table">
+      <thead><tr><th class="name-col">Rule</th><th class="role-col">Why</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Body text contrast ≥ 4.5:1</strong></td><td>WCAG AA for body. See <a href="color.html" style="color:var(--ink-action);">Color → Accessible combinations</a>.</td></tr>
+        <tr><td><strong>Large text contrast ≥ 3:1</strong></td><td>WCAG AA for ≥18pt or ≥14pt bold.</td></tr>
+        <tr><td><strong>Focus ring always visible</strong></td><td>Keyboard users must always see what's focused.</td></tr>
+        <tr><td><strong>Min touch target 44×44px</strong></td><td>iOS HIG / WCAG 2.5.5 minimum.</td></tr>
+        <tr><td><strong>Motion respects <code>prefers-reduced-motion</code></strong></td><td>Components must collapse animation when set.</td></tr>
+        <tr><td><strong>No color-only signaling</strong></td><td>Always pair color with icon, label, or pattern.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── What's next ─── -->
+  <div class="section-block">
+    <div class="section-label">What's next</div>
+    <p class="section-intro">This token layer is the foundation. The remaining design system pieces hang off it:</p>
+    <table class="token-table">
+      <thead><tr><th class="name-col">Layer</th><th class="role-col">Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Components</strong> — Button, Input, Card, Tag, Modal, Tooltip, Nav, Toast, Table</td><td>Pending</td></tr>
+        <tr><td><strong>Iconography</strong> — Library, sizes, stroke discipline</td><td>Pending</td></tr>
+        <tr><td><strong>Data viz palette</strong> — Categorical + sequential, colorblind-safe</td><td>Pending</td></tr>
+        <tr><td><strong>Microcopy patterns</strong> — Errors, empty states, button labels</td><td>Pending</td></tr>
+        <tr><td><strong>Motion library</strong> — Named animations beyond duration/easing tokens</td><td>Pending</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

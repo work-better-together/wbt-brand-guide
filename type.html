@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typography — Work Better Together</title>
+  <style>
+    @font-face {
+      font-family: 'League Spartan';
+      src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Lora';
+      src: url('assets/Fonts/Lora-Variable.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Lora';
+      src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Inconsolata';
+      src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype');
+      font-weight: 200 900;
+      font-style: normal;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #c8c8c8;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --accent: #2d5a3d;
+      --accent-light: #e8f0eb;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre: #B55312;
+      --ochre-light: #F5E8D8;
+      --rule: #e4e2de;
+
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.6;
+    }
+
+    /* ── Page shell ── */
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 40px 120px;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 72px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header .label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .page-header p {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 17px;
+      color: var(--ink);
+      max-width: 480px;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* ── Font block ── */
+    .font-block {
+      margin-bottom: 80px;
+    }
+
+    .font-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .font-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .font-role {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      color: var(--slate);
+      background: var(--slate-light);
+      padding: 2px 8px;
+      border-radius: 3px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .font-var {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-left: auto;
+    }
+
+    /* Hero specimen */
+    .specimen-hero {
+      padding: 40px 0 32px;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 28px;
+    }
+
+    /* Weight row grid */
+    .weight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-bottom: 28px;
+    }
+    .weight-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .weight-cell {
+      background: var(--bg-card);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .weight-sample {
+      font-size: 22px;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .weight-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    .weight-note {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-style: italic;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--slate);
+      margin-top: 4px;
+    }
+    .specimen-note {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-style: italic;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--slate);
+      margin-top: 14px;
+      max-width: 560px;
+    }
+    /* Inline annotation callout — placed next to a real example */
+    .element-note {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--slate);
+      margin: 18px 0 0;
+      padding: 14px 18px;
+      background: var(--slate-light);
+      border-left: 3px solid var(--slate);
+      max-width: 720px;
+    }
+    .element-note .note-tag {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 4px;
+      font-style: normal;
+    }
+    /* Don'ts list — anti-rules consolidated at the bottom of a font section */
+    .donts {
+      margin-top: 28px;
+      padding: 18px 22px;
+      background: var(--ochre-light);
+      border-left: 3px solid var(--ochre);
+      max-width: 720px;
+    }
+    .donts h4 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 10px;
+    }
+    .donts ul { list-style: none; padding: 0; margin: 0; }
+    .donts li {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ochre);
+      padding: 6px 0 6px 18px;
+      position: relative;
+    }
+    .donts li::before {
+      content: "✕";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      color: var(--ochre);
+      font-size: 11px;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    /* Alphabet strip */
+    .alphabet-strip {
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      line-height: 2;
+      word-break: break-all;
+      padding: 16px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* Usage note */
+    .usage-note {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 16px 0 0;
+    }
+    .usage-note .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--slate);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .usage-note p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    /* ── League Spartan specifics ── */
+    .ls-hero {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(40px, 6.5vw, 72px);
+      letter-spacing: -0.025em;
+      line-height: 1;
+      color: var(--ink);
+      text-wrap: pretty;
+    }
+    .ls-sub {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(18px, 3vw, 28px);
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin-top: 12px;
+    }
+
+    /* ── Lora specifics ── */
+    .lora-hero {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: clamp(32px, 5vw, 60px);
+      line-height: 1.25;
+      color: var(--ink);
+      text-wrap: pretty;
+    }
+    .lora-italic {
+      font-style: italic;
+    }
+    .lora-para {
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--ink);
+      max-width: 560px;
+      margin-top: 20px;
+    }
+
+    /* ── Inconsolata specifics ── */
+    .mono-hero {
+      font-family: var(--font-mono);
+      font-weight: 400;
+      font-size: clamp(20px, 3.5vw, 36px);
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .mono-hero .comment { color: var(--ink-faint); }
+    .mono-hero .key     { color: var(--slate); }
+    .mono-hero .val     { color: #7a4f2e; }
+
+    /* ── Pairing section ── */
+    .pairing-section {
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 2px solid var(--ink);
+    }
+    .pairing-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 40px;
+    }
+    .pairing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 40px 44px;
+      margin-bottom: 20px;
+    }
+    .pairing-card .eyebrow {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--slate);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .pairing-card h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .pairing-card p {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink);
+      max-width: 520px;
+    }
+    .pairing-card p em { font-style: italic; }
+    .pairing-card .code-snip {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 14px 18px;
+      margin-top: 20px;
+      border-left: 2px solid var(--slate);
+      line-height: 1.8;
+    }
+
+    /* Usage rules */
+    .usage-rules {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 24px;
+      border-top: 1px solid var(--rule);
+    }
+    .usage-rule {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    .usage-rule em { font-style: italic; }
+    .rule-tag {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    /* divider between font blocks */
+    .font-divider {
+      height: 1px;
+      background: var(--rule);
+      margin: 80px 0;
+    }
+
+    /* ══════════════════════════════════════════════════
+       Type Scale section
+    ══════════════════════════════════════════════════ */
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 0; }
+
+    .type-row { display: grid; grid-template-columns: 1fr 200px; gap: 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .type-sample { padding: 28px 0 24px; }
+    .type-specs { padding: 28px 0 24px 32px; border-left: 1px solid var(--rule); display: flex; flex-direction: column; gap: 6px; justify-content: flex-start; }
+    .spec-item { display: flex; flex-direction: column; }
+    .spec-label { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
+    .spec-value { font-family: var(--font-display); font-weight: 500; font-size: 13px; color: var(--ink); }
+    .type-role-tag { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); background: var(--slate-light); padding: 2px 7px; border-radius: 2px; display: inline-block; margin-bottom: 8px; }
+
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: 80px; letter-spacing: -0.03em; line-height: 0.95; color: var(--ink); }
+    .t-h1      { font-family: var(--font-display); font-weight: 700; font-size: 56px; letter-spacing: -0.025em; line-height: 1; color: var(--ink); }
+    .t-h2      { font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); }
+    .t-h3      { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.01em; line-height: 1.1; color: var(--ink); }
+    .t-h4      { font-family: var(--font-display); font-weight: 500; font-size: 20px; letter-spacing: 0; line-height: 1.2; color: var(--ink); }
+    .t-h5      { font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: 0.01em; line-height: 1.3; color: var(--ink); }
+    .t-body-lg { font-family: var(--font-body); font-weight: 400; font-size: 19px; line-height: 1.75; color: var(--ink); }
+    .t-body    { font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.75; color: var(--ink); }
+    .t-body-sm { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.65; color: var(--ink); }
+    .t-quote   { font-family: var(--font-body); font-weight: 400; font-size: 22px; font-style: italic; line-height: 1.55; color: var(--ink); }
+    .t-label   { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); }
+    .t-caption { font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: 0; color: var(--ink); }
+    .t-code    { font-family: var(--font-mono); font-weight: 400; font-size: 14px; letter-spacing: 0.02em; color: var(--ink); line-height: 1.7; }
+
+    .scale-divider { height: 1px; background: var(--rule); margin: 56px 0 0; }
+    .scale-divider + .section-label { margin-top: 0; }
+
+    /* In-context demos */
+    .demo-section { margin-top: 72px; }
+    .demo-card { background: var(--bg-card); border: 1px solid var(--rule); padding: 48px 52px; margin-bottom: 2px; }
+    .demo-card.dark { background: #061A49; border-color: #061A49; }
+    .demo-card.teal { background: #1E4D5C; border-color: #1E4D5C; }
+    .demo-eyebrow { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); margin-bottom: 10px; }
+    .demo-eyebrow.light { color: #ACCDD9; }
+    .demo-eyebrow.gold  { color: #CD9F36; }
+    .demo-h { font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); margin-bottom: 16px; }
+    .demo-h.light { color: #F9F8F2; }
+    .demo-body { font-family: var(--font-body); font-size: 16px; line-height: 1.75; color: var(--ink); max-width: 520px; }
+    .demo-body.light { color: #F9F8F2; }
+    .demo-body em { font-style: italic; }
+    .demo-body.light em { font-style: italic; }
+
+    /* ── CTAs + inline links ── */
+    .cta-button {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #F9F8F2;
+      background: #2531A5;
+      padding: 18px 36px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+    .cta-button:hover { background: #1B257D; }
+
+    .cta-text {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 4px;
+      transition: color 0.15s ease;
+    }
+    .cta-text:hover { color: #2531A5; }
+
+    .body-link {
+      font-family: inherit;
+      font-weight: 700;
+      color: #2531A5;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .body-link:hover { text-decoration-thickness: 2px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Page header -->
+  <header class="page-header">
+    <h1>Typography</h1>
+    <p>Three typefaces and a defined scale. Each typeface has a distinct voice; together with sizes, weights, and roles for every level of the hierarchy, they form a coherent, expressive system.</p>
+    <div class="element-note">
+      <span class="note-tag">This page-header is the example</span>
+      Eyebrow: League Spartan 500, uppercase, positive tracking. Lead paragraph: League Spartan 400, roman, full ink. Supporting text under a page-level headline stays in the same family — Lora picks up at the next body level.
+    </div>
+  </header>
+
+
+  <!-- ── 01 League Spartan ── -->
+  <section class="font-block">
+    <div class="font-meta">
+      <span class="font-name">League Spartan</span>
+      <span class="font-role">Display · Headlines</span>
+      <span class="font-var">Variable · wght 100–900</span>
+    </div>
+
+    <div class="specimen-hero">
+      <div class="ls-hero">Leadership is hard.<br>Let’s work on it.</div>
+      <div class="ls-sub">Leadership Coaching • Team Coaching • Facilitation + Training</div>
+      <div class="element-note">
+        <span class="note-tag">Hero pattern</span>
+        700 Bold headline (tight tracking) over a 500 Medium subhead. Both League Spartan, both full ink — supporting text under a headline stays in the same family.
+      </div>
+    </div>
+
+    <div class="weight-grid">
+      <div class="weight-cell">
+        <div class="weight-sample" style="font-family:'League Spartan';font-weight:500;">Medium</div>
+        <div class="weight-label">500 · Medium</div>
+        <div class="weight-note">Eyebrows, section labels, agenda times, page metadata, supporting text under headlines, button/nav labels.</div>
+      </div>
+      <div class="weight-cell">
+        <div class="weight-sample" style="font-family:'League Spartan';font-weight:700;">Bold</div>
+        <div class="weight-label">700 · Bold</div>
+        <div class="weight-note">Hero headlines, section titles, and big numbers (stats). Tight tracking at large size.</div>
+      </div>
+    </div>
+
+    <div class="alphabet-strip" style="font-family:'League Spartan';font-weight:400;">
+      A B C D E F G H I J K L M N O P Q R S T U V W X Y Z &nbsp;·&nbsp; a b c d e f g h i j k l m n o p q r s t u v w x y z &nbsp;·&nbsp; 0 1 2 3 4 5 6 7 8 9 &nbsp;·&nbsp; ! @ # $ % &amp; ( ) ?
+    </div>
+
+    <div class="donts">
+      <h4>Don’ts · League Spartan</h4>
+      <ul>
+        <li>No third weight beyond 500 and 700 — no 300, 400, 600, 800, or 900.</li>
+        <li>Never use Inconsolata for eyebrows or section labels — those are League Spartan 500.</li>
+        <li>Never set Lora for the lead paragraph under a page-level headline — that supporting text is League Spartan.</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <div class="font-divider"></div>
+
+
+  <!-- ── 02 Lora ── -->
+  <section class="font-block">
+    <div class="font-meta">
+      <span class="font-name">Lora</span>
+      <span class="font-role">Body · Editorial</span>
+      <span class="font-var">Variable · wght 400–700 · italic axis</span>
+    </div>
+
+    <div class="specimen-hero">
+      <div class="lora-hero">The best teams don’t just<br>work hard — they work<br>intentionally.</div>
+      <div class="lora-para">Lora brings warmth and readability to long-form content. Its bracketed serifs and optical balance make it ideal for body copy, pull quotes, and editorial prose where sustained reading is expected.</div>
+    </div>
+
+    <div class="weight-grid weight-grid--4">
+      <div class="weight-cell">
+        <div class="weight-sample" style="font-family:'Lora';font-weight:400;">Regular</div>
+        <div class="weight-label">400 · Regular</div>
+        <div class="weight-note">Default body voice. All paragraph text, descriptions, prose.</div>
+      </div>
+      <div class="weight-cell">
+        <div class="weight-sample" style="font-family:'Lora';font-weight:700;">Bold</div>
+        <div class="weight-label">700 · Bold</div>
+        <div class="weight-note">Body emphasis. The phrase that matters in a paragraph — pair with intentional-blue scribble for extra weight.</div>
+      </div>
+      <div class="weight-cell">
+        <div class="weight-sample" style="font-family:'Lora';font-weight:400;font-style:italic;">Italic</div>
+        <div class="weight-label">400i · Italic</div>
+        <div class="weight-note">Quotes, paraphrasing, special callouts. Never general emphasis.</div>
+      </div>
+      <div class="weight-cell">
+        <div class="weight-sample" style="font-family:'Lora';font-weight:700;font-style:italic;">Bold Italic</div>
+        <div class="weight-label">700i · Bold Italic</div>
+        <div class="weight-note">Emphasis inside an already-italic block — e.g. an emphasized phrase within a pull quote.</div>
+      </div>
+    </div>
+
+    <div class="alphabet-strip" style="font-family:'Lora';font-weight:400;">
+      A B C D E F G H I J K L M N O P Q R S T U V W X Y Z &nbsp;·&nbsp; a b c d e f g h i j k l m n o p q r s t u v w x y z &nbsp;·&nbsp; 0 1 2 3 4 5 6 7 8 9 &nbsp;·&nbsp; ! @ # $ % &amp; ( ) ?
+    </div>
+    <div class="alphabet-strip" style="font-family:'Lora';font-weight:400;font-style:italic;">
+      A B C D E F G H I J K L M N O P Q R S T U V W X Y Z &nbsp;·&nbsp; a b c d e f g h i j k l m n o p q r s t u v w x y z
+    </div>
+
+    <div class="donts">
+      <h4>Don’ts · Lora</h4>
+      <ul>
+        <li>Never use italic for general emphasis inside a normal sentence — emphasis is bold, optionally with an intentional-blue scribble.</li>
+        <li>Never combine italic with color shift on the same span — pick one treatment.</li>
+        <li>Never use Lora for headlines (League Spartan) or attributions (Inconsolata).</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <div class="font-divider"></div>
+
+
+  <!-- ── 03 Inconsolata ── -->
+  <section class="font-block">
+    <div class="font-meta">
+      <span class="font-name">Inconsolata</span>
+      <span class="font-role">Attributions · CTAs</span>
+      <span class="font-var">Variable · wdth + wght axes</span>
+    </div>
+
+    <div class="specimen-hero">
+      <div style="font-family:var(--font-body);font-style:italic;font-size:32px;line-height:1.3;color:var(--ink);max-width:720px;hanging-punctuation:first;text-indent:-0.44em;margin-bottom:24px">“To answer, together for the first time, what our cumulative value is as research and data experts, federal and state policy experts, and sex education experts.”</div>
+      <div style="font-family:var(--font-mono);font-weight:500;font-size:14px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink)">— Maya Carrington, Executive Director, Center for Reproductive Equity</div>
+      <div class="element-note">
+        <span class="note-tag">Attribution pattern</span>
+        Lora italic for the quote, Inconsolata 500 uppercase for the attribution. The attribution sits smaller than the quote and tracks positive — this is the primary Inconsolata role.
+      </div>
+    </div>
+
+    <div class="weight-grid">
+      <div class="weight-cell">
+        <div class="weight-sample" style="font-family:'Inconsolata';font-weight:500;">Medium</div>
+        <div class="weight-label">500 · Medium</div>
+        <div class="weight-note">Quote attributions and CTAs. Uppercase, tracked, smaller than body. Never eyebrows — those are League Spartan.</div>
+      </div>
+    </div>
+
+    <div class="alphabet-strip" style="font-family:'Inconsolata';font-weight:500;text-transform:uppercase;letter-spacing:0.08em;">
+      A B C D E F G H I J K L M N O P Q R S T U V W X Y Z &nbsp;·&nbsp; 0 1 2 3 4 5 6 7 8 9 &nbsp;·&nbsp; ! @ # $ % &amp; ( ) ?
+    </div>
+
+    <div class="donts">
+      <h4>Don’ts · Inconsolata</h4>
+      <ul>
+        <li>Not for eyebrows, section labels, or page metadata — those are League Spartan 500.</li>
+        <li>Never paragraph-shape — no mixed-case prose, no multi-line bodies.</li>
+        <li>Never at large size — Inconsolata stays small (10–14px) and uppercase.</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ── Pairing examples ── -->
+  <section class="pairing-section">
+    <div class="pairing-label">Type in context · Pairings</div>
+
+    <div class="pairing-card">
+      <div class="eyebrow">Article · Long-form</div>
+      <h2>Building psychological safety<br>in distributed teams</h2>
+      <p>Psychological safety isn’t a soft goal — it’s the foundation of high performance. <strong>Teams that feel safe to speak up, disagree, and experiment</strong> consistently outperform those that don’t. Here’s how to build it intentionally.</p>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════
+       TYPE SCALE
+  ══════════════════════════════════════════════════ -->
+
+  <div class="font-divider"></div>
+
+  <!-- ── Display & Headings ── -->
+  <div class="section-label">Display &amp; Headings · League Spartan</div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Display</div>
+      <div class="t-display">Leadership.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">80px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">700 Bold</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">−0.03em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">0.95</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Hero text, covers</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H1</div>
+      <div class="t-h1">Work Better Together</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">56px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">700 Bold</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">−0.025em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.0</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Page titles</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H2</div>
+      <div class="t-h2">Leadership is hard.<br>Let’s work on it.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">40px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">700 Bold</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">−0.02em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.05</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Section headers</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H3</div>
+      <div class="t-h3">What We Do</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">28px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">700 Bold</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">−0.01em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.1</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Sub-sections</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H4</div>
+      <div class="t-h4">Team Coaching</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">20px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">500 Medium</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">0</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.2</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Cards, panels</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H5</div>
+      <div class="t-h5">The Impact Coaches</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">16px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">500 Medium</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">+0.01em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.3</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">List titles, UI labels</span></div>
+    </div>
+  </div>
+
+  <!-- ── Body copy ── -->
+  <div class="scale-divider"></div>
+  <div class="section-label" style="margin-top:56px">Body Copy · Lora</div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Body Large</div>
+      <div class="t-body-lg">Psychological safety isn’t a soft goal — it’s the foundation of every high-performing team.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">19px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.75</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Intro paragraphs</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Body</div>
+      <div class="t-body">Teams that feel safe to speak up, disagree, and experiment consistently outperform those that don’t. Here’s how to build it — intentionally, sustainably, and at scale.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">16px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.75</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">General body copy</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Body Small</div>
+      <div class="t-body-sm">Updated weekly. Data reflects responses from 240 participants across 18 organizations in the 2025–2026 cohort.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">14px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.65</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Footnotes, captions</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Pull Quote</div>
+      <div class="t-quote">"The best teams don’t just work hard — they work <strong>intentionally</strong>."</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">22px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Italic</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.55</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Testimonials, callouts</span></div>
+    </div>
+  </div>
+
+  <!-- ── Labels & Mono ── -->
+  <div class="scale-divider"></div>
+  <div class="section-label" style="margin-top:56px">Attributions &amp; CTAs · Inconsolata</div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Attribution</div>
+      <div class="t-label">— Maya Carrington, Executive Director, Center for Reproductive Equity</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">11px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">500 Medium</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">+0.18em</span></div>
+      <div class="spec-item"><span class="spec-label">Case</span><span class="spec-value">All caps</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Quote attributions, CTAs</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Caption</div>
+      <div class="t-caption">Updated weekly &nbsp;·&nbsp; Cohort 2025–2026 &nbsp;·&nbsp; 240 respondents</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">12px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">+0.04em</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Data, metadata</span></div>
+    </div>
+  </div>
+
+  <!-- ── In-context demos ── -->
+  <div class="demo-section">
+    <div class="section-label">Type in context</div>
+
+    <div class="demo-card" style="margin-top:0">
+      <div class="demo-eyebrow">Services · Leadership Coaching</div>
+      <div class="demo-h">Building teams that<br>last.</div>
+      <div class="demo-body">High-performing teams aren’t built by accident. They’re built with <strong>intention, practice, and honest feedback.</strong> We help leaders create the conditions for that to happen.</div>
+    </div>
+
+    <div class="demo-card dark">
+      <div class="demo-eyebrow gold">The Impact Coaches · Results</div>
+      <div class="demo-h light" style="font-size:56px;letter-spacing:-0.025em">80%</div>
+      <div class="demo-body light">of leaders report measurable improvement in team trust within the first 90 days.</div>
+    </div>
+
+    <div class="demo-card teal">
+      <div class="demo-eyebrow light">About Us</div>
+      <div class="demo-h light" style="font-size:32px;letter-spacing:-0.01em;font-weight:700;hanging-punctuation:first;text-indent:-0.44em">“Leadership is hard.<br>Let’s work on it.”</div>
+      <div class="demo-body light">We are coaches, facilitators, and strategists who believe that <strong>better teams make a better world.</strong></div>
+    </div>
+
+    <!-- ── Bold stat (dark on light) ── -->
+    <div class="demo-card">
+      <div class="demo-eyebrow">The Impact Coaches · Results</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:200px;letter-spacing:-0.04em;line-height:0.8;color:#2531A5;margin:32px 0 0">80%</div>
+      <div class="demo-body"><strong>of people</strong> who receive coaching report increased self-confidence.</div>
+    </div>
+
+    <!-- ── CTAs (button + text) ── -->
+    <div class="demo-card">
+      <div class="demo-eyebrow">CTAs · Primary &amp; secondary</div>
+      <div style="display:flex;gap:32px;align-items:center;flex-wrap:wrap;margin-top:8px">
+        <a href="#" class="cta-button">Let’s get to work</a>
+        <a href="#" class="cta-text">Learn more</a>
+      </div>
+      <div class="demo-body" style="margin-top:24px">Filled Intentional Blue button for primary actions. Text CTA with thin underline as the secondary — hover shifts the text from black to Intentional Blue.</div>
+    </div>
+
+    <!-- ── Inline link in body ── -->
+    <div class="demo-card">
+      <div class="demo-eyebrow">Inline link · in Lora body</div>
+      <div class="demo-body">Not sure what you need? Take our <a href="#" class="body-link">Leadership Reflection Survey</a> to determine if coaching with us is the right next step, or book a chemistry call. We’ll help you reflect on readiness, goals, and alignment, and then put together a package tailored to your specific needs.</div>
+    </div>
+
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="x-apple-disable-message-reformatting">
+<title>Field Notes No. 03 — Emotional Intelligence and Leadership</title>
+<!--[if mso]>
+<noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+<![endif]-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Inconsolata:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* ---------- RESET ---------- */
+  body, table, td, p, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; }
+  img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; display: block; }
+  body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+  /* ---------- BRAND TOKENS ---------- */
+  :root {
+    --clean-slate: #1E4D5C;
+    --calm-blue: #ACCDD9;
+    --clear-white: #F9F8F2;
+    --grounded-black: #1F1E1E;
+    --radiant-gold: #CD9F36;
+    --honest-ochre: #B55312;
+    --steady-blue: #061A49;
+    --intentional-blue: #2531A5;
+    --slate-light: #E0E8EB;
+    --ochre-light: #F5E8D8;
+    --ink: #1a1a1a;
+    --ink-muted: #6b6b6b;
+    --rule: #d8d4cb;
+
+    --font-display: 'League Spartan', Helvetica, Arial, sans-serif;
+    --font-body: 'Lora', Georgia, 'Times New Roman', serif;
+    --font-mono: 'Inconsolata', Menlo, Consolas, monospace;
+  }
+
+  /* ---------- FRAME ---------- */
+  body {
+    background-color: var(--clear-white);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .wrap { width: 100%; padding: 32px 16px 64px; }
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--clear-white);
+  }
+
+  /* ---------- MASTHEAD ---------- */
+  /* Approved logo pairing: Clear White / Black */
+  .masthead {
+    background: var(--clear-white);
+    color: var(--grounded-black);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .masthead .wordmark {
+    display: inline-block;
+    line-height: 0;
+  }
+  .masthead .wordmark img {
+    height: 42px; /* +50% from default — comfortably above hero minimum */
+    width: auto;
+    display: block;
+  }
+  .masthead .meta {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--grounded-black);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 56px 56px 44px;
+    background: var(--clear-white);
+    border-bottom: 1px solid var(--rule);
+  }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--clean-slate);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--steady-blue);
+    margin: 0 0 20px;
+  }
+  .dek {
+    /* Deck / subhead — League Spartan 500 per brand guide */
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--grounded-black);
+    max-width: 32em;
+  }
+  .hero-meta {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    /* Page metadata = League Spartan 500, never Inconsolata */
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clean-slate);
+  }
+
+  /* ---------- EDITOR'S NOTE ---------- */
+  .editors-note {
+    padding: 36px 56px;
+    background: var(--clear-white);
+    border-bottom: 1px solid var(--rule);
+  }
+  .editors-note .label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clean-slate);
+    margin-bottom: 14px;
+  }
+  .editors-note p {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0;
+  }
+  .editors-note .signature {
+    margin-top: 18px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-muted);
+  }
+
+  /* ---------- ARTICLE ---------- */
+  .article { padding: 48px 56px 32px; }
+  .article p {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin: 0 0 22px;
+  }
+  /* Lora Body Large — intro paragraph */
+  .article p.lead {
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--grounded-black);
+    margin-bottom: 32px;
+  }
+  /* H2 per type scale: League Spartan 700, 28px, -0.01em, 1.1 */
+  .article h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--steady-blue);
+    margin: 44px 0 18px;
+  }
+  /* Article feature image — collage composition: heart + brain on shared blue spot */
+  .article-image {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 16 / 7;
+    background: var(--clear-white);
+    overflow: hidden;
+  }
+  .article-image .heart,
+  .article-image .brain {
+    position: absolute;
+    display: block;
+  }
+  .article-image .heart {
+    /* Brushy black heart, left side */
+    width: 38%;
+    left: 8%;
+    top: 18%;
+    transform: rotate(-6deg);
+  }
+  .article-image .brain {
+    /* Brain collage already includes blue spot + black squiggle */
+    width: 56%;
+    right: 4%;
+    top: 8%;
+  }
+  .article-image .caption {
+    position: absolute;
+    bottom: 0; left: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* Sub-heading inside an article section — uses H4 scale (20px / 500 / 1.2) */
+  .article h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.2;
+    color: var(--steady-blue);
+    margin: 32px 0 12px;
+  }
+  .article strong { font-weight: 700; color: var(--steady-blue); }
+  .article em { font-style: italic; color: var(--ink); }
+  .article a {
+    color: var(--honest-ochre);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(181, 83, 18, 0.3);
+    padding-bottom: 1px;
+  }
+  .article a:hover {
+    border-bottom-color: var(--honest-ochre);
+  }
+  .article ul {
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+  }
+  .article ul li {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    padding-left: 28px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .article ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 13px;
+    width: 14px; height: 2px;
+    background: var(--honest-ochre);
+  }
+  .article ul li strong { color: var(--steady-blue); }
+
+  /* ---------- PULL QUOTE ---------- */
+  .pullquote {
+    margin: 40px -16px;
+    padding: 36px 40px 32px;
+    background: var(--slate-light);
+    border-left: 4px solid var(--clean-slate);
+  }
+  .pullquote p {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--steady-blue);
+    margin: 0 0 16px;
+  }
+  .pullquote .attribution {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clean-slate);
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-block {
+    margin: 48px 56px;
+    padding: 44px 40px;
+    background-color: var(--steady-blue);
+    color: var(--clear-white);
+    text-align: center;
+    position: relative;
+  }
+  /* Eyebrow on dark surface — League Spartan 500 uppercase */
+  .cta-block .label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--radiant-gold);
+    margin-bottom: 14px;
+  }
+  .cta-block h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--clear-white);
+    margin: 0 0 14px;
+  }
+  .cta-block p {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--calm-blue);
+    margin: 0 0 26px;
+    max-width: 28em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta-button {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--steady-blue);
+    background: var(--radiant-gold);
+    padding: 16px 28px;
+    text-decoration: none;
+    border: 0;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    padding: 44px 56px 40px;
+    background: var(--clear-white);
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer .monogram {
+    margin-bottom: 20px;
+  }
+  .footer .monogram img {
+    width: 56px;
+    height: auto;
+    display: block;
+  }
+  .footer .tagline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--grounded-black);
+    margin-bottom: 8px;
+  }
+  .footer .value-prop {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--grounded-black);
+    margin: 0 0 24px;
+    max-width: 36em;
+  }
+  .footer hr {
+    border: 0; height: 1px; background: var(--rule); margin: 0 0 18px;
+  }
+  /* UI labels = League Spartan 500 */
+  .footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grounded-black);
+  }
+  .footer-meta a { color: var(--grounded-black); text-decoration: none; }
+  .footer-meta a:hover { color: var(--honest-ochre); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media only screen and (max-width: 600px) {
+    .wrap { padding: 16px 0 32px; }
+    .masthead, .hero, .editors-note, .article, .footer { padding-left: 24px; padding-right: 24px; }
+    .hero { padding-top: 40px; padding-bottom: 32px; }
+    .hero h1 { font-size: 34px; }
+    .article p.lead { font-size: 19px; }
+    .article p.lead::first-letter { font-size: 52px; }
+    .article h2 { font-size: 24px; }
+    .pullquote { margin: 32px 0; padding: 28px 24px; }
+    .pullquote p { font-size: 19px; }
+    .cta-block { margin: 36px 24px; padding: 32px 24px; }
+    .cta-block h2 { font-size: 26px; }
+    .footer-meta { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    /* Email clients vary widely — keeping light-mode brand integrity */
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <table role="presentation" class="container" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td>
+
+        <!-- ============ MASTHEAD ============ -->
+        <div class="masthead">
+          <a href="#" class="wordmark" aria-label="Work Better Together">
+            <img src="/deck-assets/wordmark-black.svg" alt="Work Better Together">
+          </a>
+          <span class="meta">May 2026</span>
+        </div>
+
+        <!-- ============ FEATURE IMAGE ============ -->
+        <figure class="article-image" aria-label="Heart and brain illustration representing emotional intelligence">
+          <img class="heart" src="/deck-assets/illus-heart-black.png" alt="">
+          <img class="brain" src="/deck-assets/illus-brain-blue.png" alt="">
+        </figure>
+
+        <!-- ============ HERO ============ -->
+        <div class="hero">
+          <div class="eyebrow">Leadership Coaching</div>
+          <h1>Emotional intelligence isn&rsquo;t the soft stuff. It&rsquo;s the work.</h1>
+          <p class="dek">
+            The leaders we coach want to maximize their impact. Most of them have also internalized the idea that talking about feelings is weak. The research — and our experience — says the opposite.
+          </p>
+          <div class="hero-meta">
+            <span>7 min read</span>
+            <span>·</span>
+            <span>From the WBT team</span>
+          </div>
+        </div>
+
+        <!-- ============ EDITOR'S NOTE ============ -->
+        <div class="editors-note">
+          <div class="label">A note before you read</div>
+          <p>
+            We hear a version of the same thing from almost every leader who walks into a coaching engagement: <em>I&rsquo;m supposed to have this figured out by now.</em> They don&rsquo;t. None of us do. This issue is about the practice — slow, ordinary, repeatable — of building the inner capacity to lead through hard moments without losing yourself or your team.
+          </p>
+          <p class="signature">— The WBT team</p>
+        </div>
+
+        <!-- ============ ARTICLE ============ -->
+        <div class="article">
+
+          <p class="lead">
+            The leaders we work with aspire to maximize their impact, be successful, and guide their teams effectively. But they&rsquo;ve internalized the idea that showing emotions or talking about feelings — at all — is weak or unstable or unproductive.
+          </p>
+
+          <p>
+            Yet studies have shown the opposite to be true. <strong>Vulnerability</strong> — defined by Bren&eacute; Brown as emotional exposure and risk-taking — is a trait of strong, respected leaders. We find that leaders who are aware of their emotions, who can articulate them and manage their stress responses, more effectively build connections, demonstrate empathy, and manage conflict.
+          </p>
+
+          <p>
+            In our work as coaches and with teams, we see what happens when leaders don&rsquo;t confidently allow emotions to surface, welcome them in, and explicitly work with and manage them. One — or both — of two things happen: we retreat from others and avoid conflict, or we become volatile and react in the moment in ways we come to regret, feel guilty about, and don&rsquo;t know how to recover from.
+          </p>
+
+          <h2>Why emotional intelligence matters</h2>
+
+          <p>
+            What if we showed up to work — and to the most stressful moments we experience — with the capacity to identify our feelings and a deep bench of strategies to manage through stress? How might we lead differently, be perceived differently, achieve success differently?
+          </p>
+
+          <p>
+            You&rsquo;re probably familiar with EI (or EQ, as it&rsquo;s sometimes called). Psychologist <strong>Daniel Goleman</strong>, who coined the term, found that emotional intelligence is twice as important as other competencies in determining outstanding leadership. We learned about the relationship between EQ and leadership from our mentor <strong>Fran Johnston</strong>, whose work — alongside Annie McKee and Richard Boyatzis — makes the case that EQ is vital for effective leadership because it enhances the self-regulation necessary to navigate high-pressure moments and the social awareness necessary to build resonant relationships.
+          </p>
+
+          <div class="pullquote">
+            <p>&ldquo;Leaders with high EQ inspire, motivate, and manage conflict — resulting in more cohesive and productive teams.&rdquo;</p>
+          </div>
+
+          <h2>The four pillars we coach to</h2>
+
+          <ul>
+            <li><strong>Self-awareness.</strong> Identifying, naming, and acknowledging our emotions. Knowing your strengths, weaknesses, values, and impact. The foundation of every other competency.</li>
+            <li><strong>Self-management.</strong> Managing change with positivity. Controlling disruptive impulses and moods. Critical to managing relationships and fostering belonging.</li>
+            <li><strong>Social awareness.</strong> The ability to have empathy — to see and understand what others are feeling and how your actions impact them. Moving beyond your own ego into a space of responsibility-taking.</li>
+            <li><strong>Relationship management.</strong> Skillfully using social awareness to build strong relationships, influence and inspire, and manage conflict.</li>
+          </ul>
+
+          <p>
+            On top of Goleman&rsquo;s four principles, we layer an emphasis on identity, equity, and practices of inclusion that foster belonging. We are all operating within systems of power designed to oppress folks who hold marginalized identities. Working with the EI model can only happen in a space that simultaneously insists on awareness-building <em>and</em> equitable, inclusive practices.
+          </p>
+
+          <h2>It&rsquo;s more than just awareness</h2>
+
+          <p>
+            EQ is one of those concepts that gets thrown around without much substance behind it. Folks think, &ldquo;Yeah, I&rsquo;m good at talking and thinking about my feelings, so I&rsquo;ve got that dimension covered.&rdquo; In fact, EQ spreads beyond feelings into harder questions:
+          </p>
+
+          <ul>
+            <li>How well do you know yourself? For real?</li>
+            <li>How effectively do you manage yourself when you&rsquo;re stressed?</li>
+            <li>Can you anticipate, manage, and resolve conflict?</li>
+            <li>Can you admit when you&rsquo;re wrong — and own the impact you have when others feel hurt?</li>
+            <li>Can you give and receive feedback?</li>
+            <li>Can you create an atmosphere of trust where people share ideas, ask questions, and make mistakes without embarrassment, rejection, or punishment?</li>
+          </ul>
+
+          <p>
+            People think they know how to identify, express, and respond to their emotions. They often don&rsquo;t — not because they&rsquo;re not capable, but because the nature of work and group dynamics raise barriers. And whatever capacity we do have for managing with EQ goes right out the window when we face stress at work.
+          </p>
+
+          <h2>How to tap into your emotional intelligence</h2>
+
+          <p>
+            Building emotional awareness and management takes patience, time, and intentionality. Some people are naturally gifted; others need to work on developing awareness, or management, or both. These are habits of mind and action that anyone can develop — like playing the guitar or meditating — with practice.
+          </p>
+
+          <p>
+            We help coach our clients into a state of awareness. We ask them to slow down, quiet their busy minds, and pay attention to the physical signs. Then we help them name the emotion and talk about how it makes them feel. Often, people don&rsquo;t understand the difference: <em>emotions rise from sensations in the body, while feelings are the stories our minds tell us about the experience.</em> The emotion of anticipation might trigger feelings of happiness and longing — or anxiousness and dread.
+          </p>
+
+          <h3>A simple practice</h3>
+
+          <ul>
+            <li><strong>Awareness.</strong> &ldquo;I am feeling something.&rdquo; (Exasperated. Burned out.)</li>
+            <li><strong>Identification.</strong> &ldquo;I am experiencing an emotion.&rdquo; (Anger. Discontent.)</li>
+            <li><strong>Separation.</strong> &ldquo;I am experiencing anger, but I am not the anger.&rdquo;</li>
+            <li><strong>Inquiry.</strong> What is this telling me? How have I responded in the past? What do I want the outcome to be?</li>
+          </ul>
+
+          <p>
+            From there, the action becomes almost self-evident.
+          </p>
+
+          <p>
+            EQ is foundational to how we coach individuals and teams. It&rsquo;s not extra, nice-to-have, or bonus work — it&rsquo;s what unlocks a leader&rsquo;s fullest potential. The investment of time and energy ends up <strong>saving</strong> leaders time and energy when things go awry. It models a culture where emotional safety and health are centered for the full team to see, which makes everyone happier and more productive.
+          </p>
+
+        </div>
+
+        <!-- ============ CTA ============ -->
+        <div class="cta-block">
+          <div class="label">Ready to get to work?</div>
+          <h2>Let&rsquo;s build this on your team.</h2>
+          <p>We bring the tools, strategies, and the safe space to do the work — so you can lead with the steadiness your team needs.</p>
+          <a href="#" class="cta-button">Book a call &rarr;</a>
+        </div>
+
+        <!-- ============ FOOTER ============ -->
+        <div class="footer">
+          <div class="monogram">
+            <img src="/deck-assets/monogram-black.svg" alt="WBT monogram">
+          </div>
+          <div style="width:100%">
+            <div class="tagline">Leadership is hard. Let&rsquo;s work on it.</div>
+            <p class="value-prop">
+              In the social impact space, transformation takes time. We coach leaders and their teams to build the mindset and capacity they need to get things done and create lasting change.
+            </p>
+            <hr>
+            <div class="footer-meta">
+              <a href="#">Website</a>
+              <span>&middot;</span>
+              <a href="#">LinkedIn</a>
+              <span>&middot;</span>
+              <a href="#">Unsubscribe</a>
+            </div>
+          </div>
+        </div>
+
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

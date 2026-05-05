@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collage Elements — Work Better Together</title>
+  <style>
+    @font-face {
+      font-family: 'League Spartan';
+      src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype');
+      font-weight: 100 900;
+    }
+    @font-face {
+      font-family: 'Lora';
+      src: url('assets/Fonts/Lora-Variable.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Lora';
+      src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Inconsolata';
+      src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype');
+      font-weight: 200 900;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #c8c8c8;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --accent: #1e4d5c;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre: #B55312;
+      --ochre-light: #F5E8D8;
+
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 40px 120px;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 72px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header .label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .page-header p {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 17px;
+      color: var(--ink);
+      max-width: 560px;
+    }
+
+    /* ── Library nav ── */
+    .library-nav {
+      display: flex;
+      gap: 0;
+      margin-bottom: 64px;
+      border: 1px solid var(--rule);
+      overflow: hidden;
+    }
+    .library-nav-item {
+      flex: 1;
+      padding: 16px 20px;
+      border-right: 1px solid var(--rule);
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.15s ease;
+    }
+    .library-nav-item:hover { background: var(--slate-light); }
+    .library-nav-item:hover .nav-count,
+    .library-nav-item:hover .nav-name { color: var(--slate); }
+    .library-nav-item:last-child { border-right: none; }
+    .library-nav-item .nav-count {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .library-nav-item .nav-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .library-nav-item .nav-status {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .status-active { color: var(--slate); }
+    .status-coming { color: var(--ink); }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 32px;
+    }
+
+    /* ── Sub-section header ── */
+    .subsection {
+      margin-bottom: 64px;
+    }
+    .subsection-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .subsection-header h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .color-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .file-tag {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-left: auto;
+    }
+
+    /* ── Background grid ── */
+    .bg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 8px;
+    }
+    .bg-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #eee;
+    }
+    .bg-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .bg-thumb .thumb-label {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.75);
+      color: #1a1a1a;
+      padding: 2px 6px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Color toggle bar ── */
+    .color-toggle {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+    .color-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px 5px 7px;
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      white-space: nowrap;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .color-pill:hover { border-color: var(--ink); color: var(--ink); }
+    .color-pill.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+    .color-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    /* ── Spots grid ── */
+    .spots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 8px;
+    }
+    .spot-thumb {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      position: relative;
+    }
+    .spot-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .spot-variant-label {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    /* ── Usage note ── */
+    .usage-block {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 24px 28px;
+      margin-bottom: 12px;
+    }
+    .usage-block .usage-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .usage-rules-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .usage-rule-row {
+      display: block;
+      padding: 14px 18px;
+      background: var(--slate-light);
+      border-left: 3px solid var(--slate);
+    }
+    .rule-tag {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 4px;
+      font-style: normal;
+    }
+    .usage-rule-row p {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--slate);
+      line-height: 1.55;
+    }
+
+    /* ── Divider ── */
+    .section-divider {
+      height: 1px;
+      background: var(--rule);
+      margin: 72px 0;
+    }
+
+    /* ── Coming soon ── */
+    .coming-soon-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .coming-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 140px;
+      transition: background 0.15s ease;
+    }
+    .coming-card:hover { background: var(--slate-light); }
+    .coming-card:hover h4 { color: var(--slate); }
+    .coming-card .coming-tag {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: #f0efed;
+      padding: 2px 7px;
+      border-radius: 2px;
+      align-self: flex-start;
+    }
+    .coming-card h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--ink);
+    }
+    .coming-card p {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    /* ── Loading state ── */
+    .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 0; gap: 16px; }
+    .loading-spinner { width: 32px; height: 32px; border: 2px solid var(--rule); border-top-color: var(--slate); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-family: var(--font-display); font-weight: 500; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); }
+    .stats-bar { display: flex; gap: 0; margin-bottom: 48px; border: 1px solid var(--rule); }
+    .stat-cell { flex: 1; padding: 16px 20px; border-right: 1px solid var(--rule); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.02em; color: var(--ink); }
+    .stat-label { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-top: 2px; }
+    .concept-group { margin-bottom: 56px; }
+    .concept-name { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 4px; }
+    .concept-icon { font-family: var(--font-body); font-size: 13px; font-style: italic; color: var(--ink); margin-bottom: 16px; }
+    .concept-meta { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .meta-tag { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
+    .tag-type { background: var(--slate-light); color: var(--slate); }
+    .tag-where { background: #f0efed; color: var(--ink); }
+    .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 2px; }
+    .image-cell { background: var(--bg-card); border: 1px solid var(--rule); aspect-ratio: 1; position: relative; overflow: hidden; cursor: pointer; }
+    .image-cell img { width: 100%; height: 100%; object-fit: contain; display: block; padding: 8px; transition: transform 0.2s ease; }
+    .image-cell:hover img { transform: scale(1.04); }
+    .image-filename { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(249,248,242,0.92); padding: 6px 8px; font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.06em; color: var(--ink); opacity: 0; transition: opacity 0.15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .image-cell:hover .image-filename { opacity: 1; }
+    .no-image { background: var(--bg-card); border: 1px solid var(--rule); border-style: dashed; padding: 20px; display: flex; align-items: center; gap: 12px; }
+    .no-image-icon { font-size: 24px; opacity: 0.3; }
+    .no-image-text { font-family: var(--font-body); font-size: 13px; font-style: italic; color: var(--ink); }
+    .group-divider { height: 1px; background: var(--rule); margin: 48px 0; }
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(31,30,30,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 40px; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 85vh; object-fit: contain; }
+    .lightbox-close { position: absolute; top: 20px; right: 28px; font-family: var(--font-mono); font-weight: 500; font-size: 13px; letter-spacing: 0.1em; color: #F9F8F2; cursor: pointer; text-transform: uppercase; }
+    .lightbox-close:hover { color: #ACCDD9; }
+    .lightbox-caption { position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F9F8F2; }
+    .error-state { background: var(--bg-card); border: 1px solid var(--rule); padding: 32px; text-align: center; }
+    .error-state p { font-family: var(--font-body); font-size: 15px; color: var(--ink); font-style: italic; }
+    .static-section { margin-bottom: 80px; padding-bottom: 64px; border-bottom: 1px solid var(--rule); }
+    .static-section-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 36px; padding: 24px 0; }
+    .static-section-intro h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); }
+    .static-section-intro h2 strong { font-family: var(--font-display); font-weight: 700; }
+    .static-section-intro p { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--ink); }
+    .static-section-intro p + p { margin-top: 10px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Page header -->
+  <header class="page-header">
+    <h1>Collage Elements</h1>
+    <p>Hand-crafted assets that bring warmth and texture to every surface — backgrounds, spots, scribbles, and photographic illustrations used in collage and composition.</p>
+  </header>
+
+  <!-- Library nav -->
+  <div class="library-nav">
+    <a class="library-nav-item" href="#watercolor-textures" style="text-decoration:none;">
+      <div class="nav-count">01</div>
+      <div class="nav-name">Watercolor Textures</div>
+      <div class="nav-status status-active">● Active · 48 assets</div>
+    </a>
+    <a class="library-nav-item" href="#scribbles" style="text-decoration:none;">
+      <div class="nav-count">02</div>
+      <div class="nav-name">Scribbles</div>
+      <div class="nav-status status-active">● Active · 11 assets</div>
+    </a>
+    <a class="library-nav-item" href="#images" style="text-decoration:none;">
+      <div class="nav-count">03</div>
+      <div class="nav-name">Images</div>
+      <div class="nav-status status-active">● Active · Live library</div>
+    </a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       WATERCOLOR TEXTURES
+  ══════════════════════════════════════ -->
+
+  <div id="watercolor-textures" class="section-label">Watercolor Textures · Backgrounds</div>
+
+  <div style="margin-bottom:20px">
+    <div style="font-family:var(--font-body);font-size:15px;color:var(--ink);max-width:600px;line-height:1.75;">
+      Full-bleed JPG textures for use as section backgrounds, slide backdrops, and large-format print surfaces. Each color comes in two densities — heavy (1) and light (2).
+    </div>
+  </div>
+
+  <!-- Color toggle bar (backgrounds) -->
+  <div class="color-toggle" id="bg-toggle" role="tablist" aria-label="Background color">
+    <button type="button" class="color-pill active" data-folder="Grounded Black" data-prefix="Grounded-Black" data-color="#1F1E1E" data-label="Grounded Black">
+      <span class="color-pill-dot" style="background:#1F1E1E"></span>
+      <span class="color-pill-label">Grounded Black</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Steady Blue" data-prefix="Steady-Blue" data-color="#061A49" data-label="Steady Blue">
+      <span class="color-pill-dot" style="background:#061A49"></span>
+      <span class="color-pill-label">Steady Blue</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Intentional Blue" data-prefix="Intentional-Blue" data-color="#2531A5" data-label="Intentional Blue">
+      <span class="color-pill-dot" style="background:#2531A5"></span>
+      <span class="color-pill-label">Intentional Blue</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Clean Slate" data-prefix="Clean-Slate" data-color="#1E4D5C" data-label="Clean Slate">
+      <span class="color-pill-dot" style="background:#1E4D5C"></span>
+      <span class="color-pill-label">Clean Slate</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Calm Blue" data-prefix="Calm-Blue" data-color="#ACCDD9" data-label="Calm Blue">
+      <span class="color-pill-dot" style="background:#ACCDD9"></span>
+      <span class="color-pill-label">Calm Blue</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Radiant Gold" data-prefix="Gold" data-color="#CD9F36" data-label="Radiant Gold">
+      <span class="color-pill-dot" style="background:#CD9F36"></span>
+      <span class="color-pill-label">Radiant Gold</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Honest Ochre" data-prefix="Honest-Ochre" data-color="#B55312" data-label="Honest Ochre">
+      <span class="color-pill-dot" style="background:#B55312"></span>
+      <span class="color-pill-label">Honest Ochre</span>
+    </button>
+  </div>
+
+  <!-- Backgrounds grid (color-swappable) -->
+  <div class="subsection">
+    <div class="subsection-header">
+      <span class="color-dot" id="bg-dot" style="background:#1F1E1E"></span>
+      <h3 id="bg-title">Grounded Black</h3>
+      <span class="file-tag" id="bg-tag">Backgrounds/Grounded Black/ · JPG · 2 files</span>
+    </div>
+    <div class="bg-grid" id="bg-grid">
+      <div class="bg-thumb">
+        <img data-variant="1" src="assets/Watercolor Textures/Backgrounds/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Background-1.jpg" alt="Background -1 · Heavy">
+        <span class="thumb-label">Heavy</span>
+      </div>
+      <div class="bg-thumb">
+        <img data-variant="2" src="assets/Watercolor Textures/Backgrounds/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Background-2.jpg" alt="Background -2 · Light">
+        <span class="thumb-label">Light</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const toggle = document.getElementById('bg-toggle');
+      const pills = toggle.querySelectorAll('.color-pill');
+      const grid = document.getElementById('bg-grid');
+      const dot = document.getElementById('bg-dot');
+      const title = document.getElementById('bg-title');
+      const tag = document.getElementById('bg-tag');
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const folder = pill.dataset.folder;
+          const prefix = pill.dataset.prefix;
+          const color = pill.dataset.color;
+          const label = pill.dataset.label;
+
+          pills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+
+          grid.querySelectorAll('img[data-variant]').forEach(img => {
+            const v = img.dataset.variant;
+            img.src = `assets/Watercolor Textures/Backgrounds/${folder}/WBT-20260403-${prefix}-Watercolor-Background-${v}.jpg`;
+          });
+
+          dot.style.background = color;
+          title.textContent = label;
+          tag.textContent = `Backgrounds/${folder}/ · JPG · 2 files`;
+        });
+      });
+    })();
+  </script>
+
+  <!-- Background usage -->
+  <div class="usage-block">
+    <div class="usage-title">Background usage rules</div>
+    <div class="usage-rules-list">
+      <div class="usage-rule-row">
+        <span class="rule-tag">Slide backgrounds &amp; web sections</span>
+        <p>Use full-bleed as presentation slide backgrounds or as CSS background-image on section containers. The -1 (heavy) variant suits white or gold text; the -2 (light) variant works best with dark text. Center-crop vertically. Do not tile.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Print</span>
+        <p>JPG format is suitable for print at standard screen resolution contexts. For large-format print, request source files.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SPOTS
+  ══════════════════════════════════════ -->
+
+  <div class="section-label">Watercolor Textures · Spots &amp; Brushstrokes</div>
+
+  <div style="margin-bottom:20px">
+    <div style="font-family:var(--font-body);font-size:15px;color:var(--ink);max-width:600px;line-height:1.75;">
+      Transparent PNG elements for collage, overlay, and composition — organized by color. Spots are round or organic shapes; brushstrokes are gestural, directional marks.
+    </div>
+  </div>
+
+
+  <!-- Color toggle bar -->
+  <div class="color-toggle" role="tablist" aria-label="Spot color">
+    <button type="button" class="color-pill active" data-folder="Grounded Black" data-prefix="Grounded-Black" data-color="#1F1E1E" data-label="Grounded Black">
+      <span class="color-pill-dot" style="background:#1F1E1E"></span>
+      <span class="color-pill-label">Grounded Black</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Steady Blue" data-prefix="Steady-Blue" data-color="#061A49" data-label="Steady Blue">
+      <span class="color-pill-dot" style="background:#061A49"></span>
+      <span class="color-pill-label">Steady Blue</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Intentional Blue" data-prefix="Intentional-Blue" data-color="#2531A5" data-label="Intentional Blue">
+      <span class="color-pill-dot" style="background:#2531A5"></span>
+      <span class="color-pill-label">Intentional Blue</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Clean Slate" data-prefix="Clean-Slate" data-color="#1E4D5C" data-label="Clean Slate">
+      <span class="color-pill-dot" style="background:#1E4D5C"></span>
+      <span class="color-pill-label">Clean Slate</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Calm Blue" data-prefix="Calm-Blue" data-color="#ACCDD9" data-label="Calm Blue">
+      <span class="color-pill-dot" style="background:#ACCDD9"></span>
+      <span class="color-pill-label">Calm Blue</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Radiant Gold" data-prefix="Gold" data-color="#CD9F36" data-label="Radiant Gold">
+      <span class="color-pill-dot" style="background:#CD9F36"></span>
+      <span class="color-pill-label">Radiant Gold</span>
+    </button>
+    <button type="button" class="color-pill" data-folder="Honest Ochre" data-prefix="Honest-Ochre" data-color="#B55312" data-label="Honest Ochre">
+      <span class="color-pill-dot" style="background:#B55312"></span>
+      <span class="color-pill-label">Honest Ochre</span>
+    </button>
+  </div>
+
+  <!-- Spots grid (color-swappable) -->
+  <div class="subsection">
+    <div class="subsection-header">
+      <span class="color-dot" id="spots-dot" style="background:#1F1E1E"></span>
+      <h3 id="spots-title">Grounded Black</h3>
+      <span class="file-tag" id="spots-tag">Spots/Grounded Black/ · PNG · 9 files</span>
+    </div>
+    <div class="spots-grid" id="spots-grid">
+      <div class="spot-thumb">
+        <img data-variant="1" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-1.png" alt="Spot -1 · Granular">
+        <span class="spot-variant-label">-1 · Granular</span>
+      </div>
+      <div class="spot-thumb">
+        <img data-variant="2" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-2.png" alt="Spot -2 · Soft cloud">
+        <span class="spot-variant-label">-2 · Soft cloud</span>
+      </div>
+      <div class="spot-thumb">
+        <img data-variant="3" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-3.png" alt="Spot -3 · Sheer blob">
+        <span class="spot-variant-label">-3 · Sheer blob</span>
+      </div>
+      <div class="spot-thumb">
+        <img data-variant="4" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-4.png" alt="Spot -4 · Wide field">
+        <span class="spot-variant-label">-4 · Wide field</span>
+      </div>
+      <div class="spot-thumb">
+        <img data-variant="5" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-5.png" alt="Spot -5 · Stacked drips">
+        <span class="spot-variant-label">-5 · Stacked drips</span>
+      </div>
+      <div class="spot-thumb">
+        <img data-variant="6" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-6.png" alt="Spot -6 · Round pool">
+        <span class="spot-variant-label">-6 · Round pool</span>
+      </div>
+      <div class="spot-thumb">
+        <img data-variant="7" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-7.png" alt="Spot -7 · Layered strokes">
+        <span class="spot-variant-label">-7 · Layered strokes</span>
+      </div>
+      <div class="spot-thumb">
+        <img data-variant="8" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-8.png" alt="Spot -8 · Saturated wash">
+        <span class="spot-variant-label">-8 · Saturated wash</span>
+      </div>
+      <div class="spot-thumb">
+        <img data-variant="9" src="assets/Watercolor Textures/Spots/Grounded Black/WBT-20260403-Grounded-Black-Watercolor-Spots-9.png" alt="Spot -9 · Vertical splatter">
+        <span class="spot-variant-label">-9 · Vertical splatter</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const pills = document.querySelectorAll('.color-pill');
+      const grid = document.getElementById('spots-grid');
+      const dot = document.getElementById('spots-dot');
+      const title = document.getElementById('spots-title');
+      const tag = document.getElementById('spots-tag');
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const folder = pill.dataset.folder;
+          const prefix = pill.dataset.prefix;
+          const color = pill.dataset.color;
+          const label = pill.dataset.label;
+
+          pills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+
+          grid.querySelectorAll('img[data-variant]').forEach(img => {
+            const v = img.dataset.variant;
+            img.src = `assets/Watercolor Textures/Spots/${folder}/WBT-20260403-${prefix}-Watercolor-Spots-${v}.png`;
+          });
+
+          dot.style.background = color;
+          title.textContent = label;
+          tag.textContent = `Spots/${folder}/ · PNG · 9 files`;
+        });
+      });
+    })();
+  </script>
+
+  <!-- Combined usage -->
+  <div class="usage-block">
+    <div class="usage-title">Spots &amp; brushstroke usage rules</div>
+    <div class="usage-rules-list">
+      <div class="usage-rule-row">
+        <span class="rule-tag">Collage</span>
+        <p>Layer multiple elements at varying scales and opacities to build textured collage compositions. PNG transparency allows free stacking.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Photo framing</span>
+        <p>Place a Round or Blob spot behind a cutout photograph to create a soft color field. The feathered edge integrates naturally with cutout imagery.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Energy &amp; motion</span>
+        <p>Use brushstrokes when a layout needs dynamism — diagonal placement, overlapping, or as a frame for photography and text.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Scale freely</span>
+        <p>All assets are high-resolution and can be scaled up or down without quality loss at typical print and screen sizes.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Color discipline</span>
+        <p>Stick to brand colors. Do not recolor or hue-shift — the specific pigment quality of each is intentional.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCRIBBLES
+  ══════════════════════════════════════ -->
+
+  <div id="scribbles" class="section-label">Scribbles</div>
+
+  <div style="margin-bottom:20px">
+    <div style="font-family:var(--font-body);font-size:15px;color:var(--ink);max-width:600px;line-height:1.75;">
+      Hand-drawn line marks, loops, sweeps, and gestural shapes. Transparent PNG. Use to add energy, warmth, and a human touch to layouts — as overlays, dividers, or accent elements in collage.
+    </div>
+  </div>
+
+  <div class="spots-grid" style="grid-template-columns:repeat(4,1fr)">
+
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-cascading-ovals.png" alt="Cascading ovals" loading="lazy">
+      <span class="spot-variant-label">Cascading Ovals</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-loop-wavy-tail.png" alt="Loop wavy tail" loading="lazy">
+      <span class="spot-variant-label">Loop Wavy Tail</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-s-curve-loop.png" alt="S curve loop" loading="lazy">
+      <span class="spot-variant-label">S-Curve Loop</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-double-oval-tail.png" alt="Double oval tail" loading="lazy">
+      <span class="spot-variant-label">Double Oval Tail</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-long-sweep-spiral.png" alt="Long sweep spiral" loading="lazy">
+      <span class="spot-variant-label">Long Sweep Spiral</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-sweep-with-leaves.png" alt="Sweep with leaves" loading="lazy">
+      <span class="spot-variant-label">Sweep with Leaves</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-overlapping-ovals.png" alt="Overlapping ovals" loading="lazy">
+      <span class="spot-variant-label">Overlapping Ovals</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-looping-wave.png" alt="Looping wave" loading="lazy">
+      <span class="spot-variant-label">Looping Wave</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-swooping-line-leaves.png" alt="Swooping line leaves" loading="lazy">
+      <span class="spot-variant-label">Swooping Line Leaves</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-heart-black.png" alt="Heart black" loading="lazy">
+      <span class="spot-variant-label">Heart · Painted</span>
+    </div>
+    <div class="spot-thumb">
+      <img src="assets/Scribbles/WBT-scribble-heart-black-converted.png" alt="Heart outline black" loading="lazy">
+      <span class="spot-variant-label">Heart · Outline</span>
+    </div>
+    <div class="spot-thumb" style="background:transparent;border-color:transparent"></div>
+
+  </div>
+
+  <div class="usage-block" style="margin-top:2px">
+    <div class="usage-title">Scribble usage rules</div>
+    <div class="usage-rules-list">
+      <div class="usage-rule-row">
+        <span class="rule-tag">Overlays</span>
+        <p>Layer scribbles over photography, watercolor textures, or solid color fields to add a handmade, human quality.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Dividers</span>
+        <p>Sweeping line scribbles (Loop Wavy Tail, Long Sweep Spiral) work well as organic section dividers in editorial layouts.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Accents</span>
+        <p>Use the hearts sparingly as warmth signals — in testimonial sections, closing slides, or social posts about connection and values.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Color</span>
+        <p>All scribbles are black on transparent. On dark backgrounds, use CSS <code>filter: invert(1)</code> to render them in white.</p>
+      </div>
+      <div class="usage-rule-row">
+        <span class="rule-tag">Scale</span>
+        <p>Scale freely. Scribbles work at both large (full-bleed overlays) and small (inline accent) sizes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       VINTAGE ETCHED ILLUSTRATION SET
+       Static, hand-classified library of
+       symbolic / etched illustrations.
+  ══════════════════════════════════════ -->
+
+  <section id="images" class="static-section">
+    <div class="static-section-intro">
+      <div>
+        <h2>Vintage Etched <strong>Illustration Set</strong></h2>
+      </div>
+      <div>
+        <p>A collected library of symbolic, etched, and watercolor illustrations — eyes, hands, hearts, doors, suns, roots, keys. They live alongside our photographic concepts as moodier, more allegorical alternatives.</p>
+        <p>Use them when a layout calls for warmth, mystery, or a literary register — book covers, opening slides, journal-style spreads, hero composition with a single anchor object.</p>
+      </div>
+    </div>
+
+    <!-- ── Perception & Reflection ── -->
+    <div class="section-label">Perception &amp; Reflection · 6 illustrations</div>
+
+    <div class="concept-group">
+      <div class="concept-name">Perception &amp; Bias</div>
+      <div class="concept-icon">Use for: Assessment · Perception &amp; Bias · Reflection</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Content Focus</span>
+        <span class="meta-tag tag-where">Etched / Watercolor</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Eye.png','Eye.png')">
+          <img src="assets/Illustrations/Eye.png" alt="Etched eye" loading="lazy">
+          <div class="image-filename">Eye.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Eye-Rays.png','Eye-Rays.png')">
+          <img src="assets/Illustrations/Eye-Rays.png" alt="Eye with radiating rays" loading="lazy">
+          <div class="image-filename">Eye-Rays.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Gold-Blue-Eye.png','Gold-Blue-Eye.png')">
+          <img src="assets/Illustrations/Gold-Blue-Eye.png" alt="Gold and blue eye" loading="lazy">
+          <div class="image-filename">Gold-Blue-Eye.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Hands-With-Eyes.png','Hands-With-Eyes.png')">
+          <img src="assets/Illustrations/Hands-With-Eyes.png" alt="Hands with eyes — collage" loading="lazy">
+          <div class="image-filename">Hands-With-Eyes.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Mirror.png','Mirror.png')">
+          <img src="assets/Illustrations/Mirror.png" alt="Standing mirror" loading="lazy">
+          <div class="image-filename">Mirror.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-divider"></div>
+
+    <!-- ── Emotional Intelligence ── -->
+    <div class="concept-group">
+      <div class="concept-name">Emotional Intelligence</div>
+      <div class="concept-icon">Use for: Emotional Intelligence · Feedback / Contact</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Content Focus</span>
+        <span class="meta-tag tag-where">Etched / Newsprint</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Heart.png','Heart.png')">
+          <img src="assets/Illustrations/Heart.png" alt="Etched heart" loading="lazy">
+          <div class="image-filename">Heart.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Heart-Tablet.png','Heart-Tablet.png')">
+          <img src="assets/Illustrations/Heart-Tablet.png" alt="Heart tablet, anatomical" loading="lazy">
+          <div class="image-filename">Heart-Tablet.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Heart-Tablet-2.png','Heart-Tablet-2.png')">
+          <img src="assets/Illustrations/Heart-Tablet-2.png" alt="Heart tablet, music sheet" loading="lazy">
+          <div class="image-filename">Heart-Tablet-2.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-divider"></div>
+
+    <!-- ── Time, Stress, Assessment ── -->
+    <div class="section-label">Time, Stress, Assessment · 2 illustrations</div>
+
+    <div class="concept-group">
+      <div class="concept-name">Time &amp; Pacing</div>
+      <div class="concept-icon">Use for: Assessment (stopwatch) · Stress · Agenda</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Content Focus</span>
+        <span class="meta-tag tag-where">Watercolor / Etched</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Hourglass.png','Hourglass.png')">
+          <img src="assets/Illustrations/Hourglass.png" alt="Watercolor hourglass" loading="lazy">
+          <div class="image-filename">Hourglass.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Watch.png','Watch.png')">
+          <img src="assets/Illustrations/Watch.png" alt="Antique pocket watch / clock" loading="lazy">
+          <div class="image-filename">Watch.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-divider"></div>
+
+    <!-- ── Growth, Renewal, Resilience ── -->
+    <div class="section-label">Growth · Renewal · Resilience · 8 illustrations</div>
+
+    <div class="concept-group">
+      <div class="concept-name">Growth &amp; Development</div>
+      <div class="concept-icon">Use for: Growth and Development (antique key) · Leadership</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Content Focus</span>
+        <span class="meta-tag tag-where">Etched</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Key.png','Key.png')">
+          <img src="assets/Illustrations/Key.png" alt="Antique skeleton key" loading="lazy">
+          <div class="image-filename">Key.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Open-Doors.png','Open-Doors.png')">
+          <img src="assets/Illustrations/Open-Doors.png" alt="Open double doors" loading="lazy">
+          <div class="image-filename">Open-Doors.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Map.png','Map.png')">
+          <img src="assets/Illustrations/Map.png" alt="Antique world map" loading="lazy">
+          <div class="image-filename">Map.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-group">
+      <div class="concept-name">Renewal &amp; Resilience</div>
+      <div class="concept-icon">Use for: Renewal · Resilience (Individual) · Psychological Safety (nest)</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Content Focus</span>
+        <span class="meta-tag tag-where">Etched</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Roots.png','Roots.png')">
+          <img src="assets/Illustrations/Roots.png" alt="Tree with roots — circular vignette" loading="lazy">
+          <div class="image-filename">Roots.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Tree-Roots.png','Tree-Roots.png')">
+          <img src="assets/Illustrations/Tree-Roots.png" alt="Tree with exposed roots" loading="lazy">
+          <div class="image-filename">Tree-Roots.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Nest.png','Nest.png')">
+          <img src="assets/Illustrations/Nest.png" alt="Empty bird nest" loading="lazy">
+          <div class="image-filename">Nest.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Nest-Bird.png','Nest-Bird.png')">
+          <img src="assets/Illustrations/Nest-Bird.png" alt="Bird in nest" loading="lazy">
+          <div class="image-filename">Nest-Bird.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Red-Butterfly.png','Red-Butterfly.png')">
+          <img src="assets/Illustrations/Red-Butterfly.png" alt="Butterfly with newsprint wings" loading="lazy">
+          <div class="image-filename">Red-Butterfly.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-divider"></div>
+
+    <!-- ── Energy, Motivation, Spotlight ── -->
+    <div class="section-label">Energy · Motivation · Spotlight · 5 illustrations</div>
+
+    <div class="concept-group">
+      <div class="concept-name">Light, Energy &amp; Spotlight</div>
+      <div class="concept-icon">Use for: Motivation · Brainstorming · Team Spotlight · Renewal</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Content Focus</span>
+        <span class="meta-tag tag-where">Watercolor / Etched</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Sun.png','Sun.png')">
+          <img src="assets/Illustrations/Sun.png" alt="Sun with face — round rays" loading="lazy">
+          <div class="image-filename">Sun.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Sun2.png','Sun2.png')">
+          <img src="assets/Illustrations/Sun2.png" alt="Sun with face — long rays" loading="lazy">
+          <div class="image-filename">Sun2.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Rays.png','Rays.png')">
+          <img src="assets/Illustrations/Rays.png" alt="Pointed rays / beam" loading="lazy">
+          <div class="image-filename">Rays.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Star.png','Star.png')">
+          <img src="assets/Illustrations/Star.png" alt="Star with linear texture" loading="lazy">
+          <div class="image-filename">Star.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Star-Colors.png','Star-Colors.png')">
+          <img src="assets/Illustrations/Star-Colors.png" alt="Star with watercolor texture" loading="lazy">
+          <div class="image-filename">Star-Colors.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-divider"></div>
+
+    <!-- ── Collage / Layout Elements ── -->
+    <div class="section-label">Collage &amp; Layout Elements · 4 pieces</div>
+
+    <div class="concept-group">
+      <div class="concept-name">Decorative Shapes &amp; Torn Paper</div>
+      <div class="concept-icon">Use for: backgrounds, collage moments, behind-text accents — not as primary subjects</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Extras</span>
+        <span class="meta-tag tag-where">Watercolor / Paper</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Blue-Blob.png','Blue-Blob.png')" style="background:#f0efed">
+          <img src="assets/Illustrations/Blue-Blob.png" alt="Soft blue blob shape" loading="lazy">
+          <div class="image-filename">Blue-Blob.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Pink-Blob.png','Pink-Blob.png')" style="background:#f0efed">
+          <img src="assets/Illustrations/Pink-Blob.png" alt="Soft pink blob shape" loading="lazy">
+          <div class="image-filename">Pink-Blob.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Pink-Torn-Paper-1.png','Pink-Torn-Paper-1.png')" style="background:#f0efed">
+          <img src="assets/Illustrations/Pink-Torn-Paper-1.png" alt="Torn paper strip 1" loading="lazy">
+          <div class="image-filename">Pink-Torn-Paper-1.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Pink-Torn-Paper-2.png','Pink-Torn-Paper-2.png')" style="background:#f0efed">
+          <img src="assets/Illustrations/Pink-Torn-Paper-2.png" alt="Torn paper strip 2" loading="lazy">
+          <div class="image-filename">Pink-Torn-Paper-2.png</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       LIVE FROM AIRTABLE
+  ══════════════════════════════════════ -->
+
+  <div style="font-family:var(--font-display);font-weight:700;font-size:28px;letter-spacing:-0.02em;color:var(--ink);margin-bottom:8px;">
+    Concept Library <span style="font-family:var(--font-body);font-style:italic;font-weight:400;color:var(--slate);font-size:22px;">— synced from Airtable</span>
+  </div>
+  <p style="font-family:var(--font-body);font-size:14px;color:var(--ink);font-style:italic;margin-bottom:32px;max-width:600px;">Photographic illustrations organized by concept, pulled live from the team's working library.</p>
+
+  <div id="app">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading from Airtable…</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="coming-soon-grid">
+    <a class="coming-card" href="collages.html" style="text-decoration:none;color:inherit;">
+      <span class="coming-tag" style="background:var(--slate-light);color:var(--slate);">Active</span>
+      <h4>Finished Collages →</h4>
+      <p>Full compositions showing the system in practice — cutout photography, watercolor textures, spots, and scribbles working together.</p>
+    </a>
+    <a class="coming-card" href="collage-maker.html" style="text-decoration:none;color:inherit;">
+      <span class="coming-tag" style="background:var(--slate-light);color:var(--slate);">Active</span>
+      <h4>Collage Maker →</h4>
+      <p>Build new collages in the browser using concept library images. Save directly to the Finished Collages gallery.</p>
+    </a>
+  </div>
+
+</div>
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><span class="lightbox-close" onclick="closeLightbox()">ESC · CLOSE</span><img id="lightbox-img" alt=""><div class="lightbox-caption" id="lightbox-caption"></div></div>
+
+<script>
+  const TOKEN   = 'patfBEWJ2bJaznYk6.f5416b66a6ff5858152a5c903efd5e6f820046aa8aaa5c41575fe9b7ef2ef1ae';
+  const BASE_ID = 'appXa8GBjPJJnztSd';
+  const TABLE   = 'tblXQBLJF6MmzA3qW';
+  const VIEW    = 'viw3oCcP67Iv2td3V';
+
+  async function fetchAll() {
+    let records = [], offset = null;
+    do {
+      const params = new URLSearchParams({ view: VIEW, pageSize: 100 });
+      if (offset) params.set('offset', offset);
+      const res = await fetch(
+        `https://api.airtable.com/v0/${BASE_ID}/${TABLE}?${params}`,
+        { headers: { Authorization: `Bearer ${TOKEN}` } }
+      );
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      records = records.concat(data.records);
+      offset = data.offset;
+    } while (offset);
+    return records;
+  }
+
+  function groupBy(records, key) {
+    const groups = {};
+    records.forEach(r => {
+      const val = r.fields[key] || 'Other';
+      if (!groups[val]) groups[val] = [];
+      groups[val].push(r);
+    });
+    return groups;
+  }
+
+  function openLightbox(url, caption) {
+    document.getElementById('lightbox-img').src = url;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').src = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  async function render() {
+    const app = document.getElementById('app');
+    try {
+      const records = await fetchAll();
+      const groups  = groupBy(records, 'Type of Concept');
+
+      const typeOrder = ['Services', 'Content Focus', 'Facilitation'];
+      const sortedTypes = Object.keys(groups).sort((a, b) => {
+        const ai = typeOrder.indexOf(a), bi = typeOrder.indexOf(b);
+        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+      });
+
+      // Count stats
+      let totalImages = 0;
+      records.forEach(r => { if (r.fields['Image(s)']) totalImages += r.fields['Image(s)'].length; });
+
+      let html = `
+        <div class="stats-bar">
+          <div class="stat-cell">
+            <div class="stat-num">${records.length}</div>
+            <div class="stat-label">Concepts</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">${totalImages}</div>
+            <div class="stat-label">Illustrations</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">${sortedTypes.length}</div>
+            <div class="stat-label">Categories</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">Live</div>
+            <div class="stat-label">Synced from Airtable</div>
+          </div>
+        </div>
+      `;
+
+      sortedTypes.forEach((type, ti) => {
+        html += `<div class="section-label">${type} · ${groups[type].length} concepts</div>`;
+
+        groups[type].forEach((record, ri) => {
+          const f = record.fields;
+          const images = f['Image(s)'] || [];
+          const whereArr = f['Where does it live?'] || [];
+
+          html += `<div class="concept-group">`;
+          html += `<div class="concept-name">${f['Concept'] || 'Untitled'}</div>`;
+          if (f['Icon']) html += `<div class="concept-icon">Icon suggestion: ${f['Icon']}</div>`;
+
+          html += `<div class="concept-meta">`;
+          html += `<span class="meta-tag tag-type">${type}</span>`;
+          whereArr.forEach(w => { html += `<span class="meta-tag tag-where">${w}</span>`; });
+          html += `</div>`;
+
+          if (images.length > 0) {
+            html += `<div class="image-grid">`;
+            images.forEach(img => {
+              const thumb = img.thumbnails?.large?.url || img.url;
+              const full  = img.url;
+              const name  = img.filename || '';
+              html += `
+                <div class="image-cell" onclick="openLightbox('${full}', '${name.replace(/'/g,"\\'")}')">
+                  <img src="${thumb}" alt="${name}" loading="lazy">
+                  <div class="image-filename">${name}</div>
+                </div>`;
+            });
+            html += `</div>`;
+          } else {
+            html += `
+              <div class="no-image">
+                <div class="no-image-icon">◌</div>
+                <div class="no-image-text">No illustrations uploaded yet for this concept.</div>
+              </div>`;
+          }
+
+          html += `</div>`;
+
+          // divider between concepts (not after last)
+          if (ri < groups[type].length - 1) html += `<div class="group-divider"></div>`;
+        });
+
+        if (ti < sortedTypes.length - 1) {
+          html += `<div style="height:48px"></div>`;
+        }
+      });
+
+      app.innerHTML = html;
+
+    } catch (err) {
+      app.innerHTML = `
+        <div class="error-state">
+          <p>Could not load illustrations: ${err.message}</p>
+        </div>`;
+    }
+  }
+
+  render();
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

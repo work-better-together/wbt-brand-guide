@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brand Colors — Work Better Together</title>
+  <style>
+    @font-face {
+      font-family: 'League Spartan';
+      src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype');
+      font-weight: 100 900;
+    }
+    @font-face {
+      font-family: 'Lora';
+      src: url('assets/Fonts/Lora-Variable.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Lora';
+      src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Inconsolata';
+      src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype');
+      font-weight: 200 900;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre: #B55312;
+      --ochre-light: #F5E8D8;
+
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+
+      /* Brand colors */
+      --clean-slate:      #1E4D5C;
+      --calm-blue:        #ACCDD9;
+      --clear-white:      #F9F8F2;
+      --grounded-black:   #1F1E1E;
+      --radiant-gold:     #CD9F36;
+      --honest-ochre:     #B55312;
+      --steady-blue:      #061A49;
+      --intentional-blue: #2531A5;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 40px 120px;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 72px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header .label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .page-header p {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 17px;
+      color: var(--ink);
+      max-width: 520px;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ── Palette strip ── */
+    .palette-strip {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      height: 80px;
+      margin-bottom: 0;
+      border-radius: 4px 4px 0 0;
+      overflow: hidden;
+    }
+    .palette-strip-swatch { height: 100%; }
+
+    /* ── Color grid ── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .color-grid.tier-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .color-tier { margin-bottom: 56px; }
+    .color-tier:last-of-type { margin-bottom: 72px; }
+    .color-tier-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .color-card {
+      display: flex;
+      flex-direction: column;
+    }
+    .color-card.full-width {
+      grid-column: span 2;
+    }
+
+    /* Stack meta groups vertically on the narrower 3-col tier cards */
+    .color-grid.tier-3 .color-meta {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 14px 22px 16px;
+    }
+    .color-grid.tier-3 .meta-group {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .color-grid.tier-3 .meta-group .meta-label {
+      margin-bottom: 0;
+      min-width: 38px;
+    }
+    .color-grid.tier-3 .swatch-hex { font-size: 22px; }
+
+    /* Tints row */
+    .color-tints {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-top: none;
+      padding: 14px 28px 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .color-grid.tier-3 .color-tints { padding: 12px 22px 14px; }
+    .tint-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tint-swatch {
+      height: 28px;
+      border-radius: 2px;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .tint-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .swatch {
+      height: 220px;
+      position: relative;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .swatch-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+    .swatch-attrs {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-style: italic;
+    }
+    .swatch-hex {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      align-self: flex-end;
+    }
+
+    /* swatch text colors */
+    .on-dark  { color: #F9F8F2; }
+    .on-light { color: #1F1E1E; }
+    .on-gold  { color: #061A49; }
+
+    .color-meta {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-top: none;
+      padding: 20px 28px;
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 24px;
+    }
+    .meta-group {}
+    .meta-group .meta-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .meta-group .meta-value {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ── Accessible pairs ── */
+    .pairs-section {
+      margin-bottom: 72px;
+    }
+    .pairs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .pair-card {
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pair-sample-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 1.1;
+    }
+    .pair-sample-body {
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .pair-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .pair-ratings {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .pair-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .pair-rating .r-size { opacity: 0.7; font-weight: 500; }
+    .pair-rating .r-grade { font-weight: 700; letter-spacing: 0.1em; }
+    .pair-names {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+    }
+    .rating-on-light { background: rgba(0,0,0,0.08); }
+    .rating-on-dark  { background: rgba(255,255,255,0.15); }
+
+    /* ── Attributes section ── */
+    .attributes-section {
+      margin-bottom: 72px;
+    }
+    .attr-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .attr-table thead tr {
+      border-bottom: 2px solid var(--ink);
+    }
+    .attr-table th {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding: 10px 0;
+      text-align: left;
+    }
+    .attr-table th:first-child { width: 28px; }
+    .attr-table td {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+    .attr-swatch-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-top: 2px;
+    }
+    .attr-name {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 15px;
+      padding-right: 20px;
+    }
+    .attr-emotion {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-style: italic;
+      color: var(--ink);
+      padding-right: 20px;
+    }
+    .attr-use {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    /* ── Moodboard note ── */
+    .moodboard-note {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-top: none;
+      padding: 32px 36px;
+      margin-bottom: 40px;
+      border-radius: 0 0 4px 4px;
+    }
+    .moodboard-note .note-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 12px;
+    }
+    .moodboard-note p {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--ink);
+      max-width: 640px;
+    }
+    .moodboard-note p em { font-style: italic; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Page header -->
+  <header class="page-header">
+    <h1>Color</h1>
+    <p>Eight colors. Each chosen to carry a specific emotional weight — grounded in real places, real moments, and real intention.</p>
+  </header>
+
+  <!-- Palette strip -->
+  <div class="palette-strip">
+    <div class="palette-strip-swatch" style="background:var(--clean-slate)"></div>
+    <div class="palette-strip-swatch" style="background:var(--calm-blue)"></div>
+    <div class="palette-strip-swatch" style="background:var(--clear-white);border:1px solid #e4e2de"></div>
+    <div class="palette-strip-swatch" style="background:var(--grounded-black)"></div>
+    <div class="palette-strip-swatch" style="background:var(--radiant-gold)"></div>
+    <div class="palette-strip-swatch" style="background:var(--honest-ochre)"></div>
+    <div class="palette-strip-swatch" style="background:var(--steady-blue)"></div>
+    <div class="palette-strip-swatch" style="background:var(--intentional-blue)"></div>
+  </div>
+
+  <!-- Moodboard origin -->
+  <div class="moodboard-note">
+    <div class="note-label">Origin · How these colors were chosen</div>
+    <img src="assets/Reference/IMG_5049.png" alt="Brand mood board" style="width:100%;display:block;margin-bottom:24px;border-radius:2px;">
+    <p>
+      The palette was derived from a mood board rooted in <strong>real environments and real people</strong> — Jenna and Stacy's daily lives.
+    </p>
+  </div>
+
+  <!-- Color cards -->
+  <div class="section-label">Color values</div>
+
+  <div class="color-tier">
+    <div class="color-tier-label">Neutrals</div>
+    <div class="color-grid tier-2">
+      <!-- Clear White -->
+      <div class="color-card">
+        <div class="swatch on-light" style="background:var(--clear-white);border:1px solid #e4e2de">
+          <div>
+            <div class="swatch-name">Clear White</div>
+            <div class="swatch-attrs">open, transparent, neutral</div>
+          </div>
+          <div class="swatch-hex">#F9F8F2</div>
+        </div>
+        <div class="color-meta">
+          <div class="meta-group">
+            <div class="meta-label">HEX</div>
+            <div class="meta-value">#F9F8F2</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">RGB</div>
+            <div class="meta-value">R 249 · G 248 · B 242</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">CMYK</div>
+            <div class="meta-value">C 0 · M 0 · Y 3 · K 2</div>
+          </div>
+        </div>
+              <div class="color-tints">
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(249,248,242,0.8)"></div>
+              <div class="tint-label">80%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(249,248,242,0.6)"></div>
+              <div class="tint-label">60%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(249,248,242,0.4)"></div>
+              <div class="tint-label">40%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(249,248,242,0.2)"></div>
+              <div class="tint-label">20%</div>
+            </div>
+          </div>
+        </div>
+      <!-- Grounded Black -->
+      <div class="color-card">
+        <div class="swatch on-dark" style="background:var(--grounded-black)">
+          <div>
+            <div class="swatch-name">Grounded Black</div>
+            <div class="swatch-attrs">solid, direct, stable</div>
+          </div>
+          <div class="swatch-hex">#1F1E1E</div>
+        </div>
+        <div class="color-meta">
+          <div class="meta-group">
+            <div class="meta-label">HEX</div>
+            <div class="meta-value">#1F1E1E</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">RGB</div>
+            <div class="meta-value">R 31 · G 30 · B 30</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">CMYK</div>
+            <div class="meta-value">C 0 · M 3 · Y 3 · K 88</div>
+          </div>
+        </div>
+              <div class="color-tints">
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(31,30,30,0.8)"></div>
+              <div class="tint-label">80%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(31,30,30,0.6)"></div>
+              <div class="tint-label">60%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(31,30,30,0.4)"></div>
+              <div class="tint-label">40%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(31,30,30,0.2)"></div>
+              <div class="tint-label">20%</div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="color-tier">
+    <div class="color-tier-label">Primary</div>
+    <div class="color-grid tier-3">
+      <!-- Radiant Gold -->
+      <div class="color-card">
+        <div class="swatch on-gold" style="background:var(--radiant-gold)">
+          <div>
+            <div class="swatch-name">Radiant Gold</div>
+            <div class="swatch-attrs">warm, insight, emphasis</div>
+          </div>
+          <div class="swatch-hex">#CD9F36</div>
+        </div>
+        <div class="color-meta">
+          <div class="meta-group">
+            <div class="meta-label">HEX</div>
+            <div class="meta-value">#CD9F36</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">RGB</div>
+            <div class="meta-value">R 205 · G 159 · B 54</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">CMYK</div>
+            <div class="meta-value">C 0 · M 22 · Y 74 · K 20</div>
+          </div>
+        </div>
+              <div class="color-tints">
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(205,159,54,0.8)"></div>
+              <div class="tint-label">80%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(205,159,54,0.6)"></div>
+              <div class="tint-label">60%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(205,159,54,0.4)"></div>
+              <div class="tint-label">40%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(205,159,54,0.2)"></div>
+              <div class="tint-label">20%</div>
+            </div>
+          </div>
+        </div>
+      <!-- Intentional Blue -->
+      <div class="color-card">
+        <div class="swatch on-dark" style="background:var(--intentional-blue)">
+          <div>
+            <div class="swatch-name">Intentional Blue</div>
+            <div class="swatch-attrs">action, purpose, confidence</div>
+          </div>
+          <div class="swatch-hex">#2531A5</div>
+        </div>
+        <div class="color-meta">
+          <div class="meta-group">
+            <div class="meta-label">HEX</div>
+            <div class="meta-value">#2531A5</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">RGB</div>
+            <div class="meta-value">R 37 · G 49 · B 165</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">CMYK</div>
+            <div class="meta-value">C 78 · M 70 · Y 0 · K 35</div>
+          </div>
+        </div>
+              <div class="color-tints">
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(37,49,165,0.8)"></div>
+              <div class="tint-label">80%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(37,49,165,0.6)"></div>
+              <div class="tint-label">60%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(37,49,165,0.4)"></div>
+              <div class="tint-label">40%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(37,49,165,0.2)"></div>
+              <div class="tint-label">20%</div>
+            </div>
+          </div>
+        </div>
+      <!-- Steady Blue -->
+      <div class="color-card">
+        <div class="swatch on-dark" style="background:var(--steady-blue)">
+          <div>
+            <div class="swatch-name">Steady Blue</div>
+            <div class="swatch-attrs">leadership, authority, safety</div>
+          </div>
+          <div class="swatch-hex">#061A49</div>
+        </div>
+        <div class="color-meta">
+          <div class="meta-group">
+            <div class="meta-label">HEX</div>
+            <div class="meta-value">#061A49</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">RGB</div>
+            <div class="meta-value">R 6 · G 26 · B 73</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">CMYK</div>
+            <div class="meta-value">C 92 · M 64 · Y 0 · K 71</div>
+          </div>
+        </div>
+              <div class="color-tints">
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(6,26,73,0.8)"></div>
+              <div class="tint-label">80%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(6,26,73,0.6)"></div>
+              <div class="tint-label">60%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(6,26,73,0.4)"></div>
+              <div class="tint-label">40%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(6,26,73,0.2)"></div>
+              <div class="tint-label">20%</div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="color-tier">
+    <div class="color-tier-label">Secondary</div>
+    <div class="color-grid tier-3">
+      <!-- Calm Blue -->
+      <div class="color-card">
+        <div class="swatch on-dark" style="background:var(--calm-blue)">
+          <div>
+            <div class="swatch-name" style="color:#1F1E1E">Calm Blue</div>
+            <div class="swatch-attrs" style="color:#1F1E1E">listen, reflect, slow down</div>
+          </div>
+          <div class="swatch-hex" style="color:#1F1E1E">#ACCDD9</div>
+        </div>
+        <div class="color-meta">
+          <div class="meta-group">
+            <div class="meta-label">HEX</div>
+            <div class="meta-value">#ACCDD9</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">RGB</div>
+            <div class="meta-value">R 172 · G 205 · B 217</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">CMYK</div>
+            <div class="meta-value">C 21 · M 6 · Y 0 · K 15</div>
+          </div>
+        </div>
+              <div class="color-tints">
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(172,205,217,0.8)"></div>
+              <div class="tint-label">80%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(172,205,217,0.6)"></div>
+              <div class="tint-label">60%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(172,205,217,0.4)"></div>
+              <div class="tint-label">40%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(172,205,217,0.2)"></div>
+              <div class="tint-label">20%</div>
+            </div>
+          </div>
+        </div>
+      <!-- Clean Slate -->
+      <div class="color-card">
+        <div class="swatch on-dark" style="background:var(--clean-slate)">
+          <div>
+            <div class="swatch-name">Clean Slate</div>
+            <div class="swatch-attrs">foundation, nuance, trust</div>
+          </div>
+          <div class="swatch-hex">#1E4D5C</div>
+        </div>
+        <div class="color-meta">
+          <div class="meta-group">
+            <div class="meta-label">HEX</div>
+            <div class="meta-value">#1E4D5C</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">RGB</div>
+            <div class="meta-value">R 30 · G 77 · B 92</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">CMYK</div>
+            <div class="meta-value">C 67 · M 16 · Y 0 · K 64</div>
+          </div>
+        </div>
+              <div class="color-tints">
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(30,77,92,0.8)"></div>
+              <div class="tint-label">80%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(30,77,92,0.6)"></div>
+              <div class="tint-label">60%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(30,77,92,0.4)"></div>
+              <div class="tint-label">40%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(30,77,92,0.2)"></div>
+              <div class="tint-label">20%</div>
+            </div>
+          </div>
+        </div>
+      <!-- Honest Ochre -->
+      <div class="color-card">
+        <div class="swatch on-dark" style="background:var(--honest-ochre)">
+          <div>
+            <div class="swatch-name">Honest Ochre</div>
+            <div class="swatch-attrs">tension, truth, vulnerability</div>
+          </div>
+          <div class="swatch-hex">#B55312</div>
+        </div>
+        <div class="color-meta">
+          <div class="meta-group">
+            <div class="meta-label">HEX</div>
+            <div class="meta-value">#B55312</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">RGB</div>
+            <div class="meta-value">R 181 · G 83 · B 18</div>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">CMYK</div>
+            <div class="meta-value">C 0 · M 54 · Y 90 · K 29</div>
+          </div>
+        </div>
+              <div class="color-tints">
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(181,83,18,0.8)"></div>
+              <div class="tint-label">80%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(181,83,18,0.6)"></div>
+              <div class="tint-label">60%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(181,83,18,0.4)"></div>
+              <div class="tint-label">40%</div>
+            </div>
+            <div class="tint-cell">
+              <div class="tint-swatch" style="background:rgba(181,83,18,0.2)"></div>
+              <div class="tint-label">20%</div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+
+  <!-- Accessible pairs -->
+  <div class="pairs-section">
+    <div class="section-label">Accessible color combinations</div>
+    <div class="pairs-grid">
+
+      <div class="pair-card" style="background:var(--steady-blue)">
+        <div class="pair-sample-text" style="color:#F9F8F2">Leadership starts here.</div>
+        <div class="pair-sample-body" style="color:#F9F8F2">Clear White on Steady Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:#F9F8F2">#F9F8F2 · #061A49</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--steady-blue)">
+        <div class="pair-sample-text" style="color:var(--calm-blue)">Leadership starts here.</div>
+        <div class="pair-sample-body" style="color:var(--calm-blue)">Calm Blue on Steady Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--calm-blue)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--calm-blue)"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--calm-blue)">#ACCDD9 · #061A49</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--steady-blue)">
+        <div class="pair-sample-text" style="color:var(--radiant-gold)">Leadership starts here.</div>
+        <div class="pair-sample-body" style="color:var(--radiant-gold)">Radiant Gold on Steady Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--radiant-gold)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--radiant-gold)"><span class="r-size">Sm</span><span class="r-grade">AA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--radiant-gold)">#CD9F36 · #061A49</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--clean-slate)">
+        <div class="pair-sample-text" style="color:#F9F8F2">Let’s work on it.</div>
+        <div class="pair-sample-body" style="color:#F9F8F2">Clear White on Clean Slate</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:#F9F8F2">#F9F8F2 · #1E4D5C</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--clean-slate)">
+        <div class="pair-sample-text" style="color:var(--calm-blue)">Let’s work on it.</div>
+        <div class="pair-sample-body" style="color:var(--calm-blue)">Calm Blue on Clean Slate</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--calm-blue)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--calm-blue)"><span class="r-size">Sm</span><span class="r-grade">AA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--calm-blue)">#ACCDD9 · #1E4D5C</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--clean-slate)">
+        <div class="pair-sample-text" style="color:var(--radiant-gold)">Let’s work on it.</div>
+        <div class="pair-sample-body" style="color:var(--radiant-gold)">Radiant Gold on Clean Slate</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--radiant-gold)"><span class="r-size">Lg</span><span class="r-grade">AA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--radiant-gold)"><span class="r-size">Sm</span><span class="r-grade">FAIL</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--radiant-gold)">#CD9F36 · #1E4D5C</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--intentional-blue)">
+        <div class="pair-sample-text" style="color:#F9F8F2">Take the next step.</div>
+        <div class="pair-sample-body" style="color:#F9F8F2">Clear White on Intentional Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:#F9F8F2">#F9F8F2 · #2531A5</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--intentional-blue)">
+        <div class="pair-sample-text" style="color:var(--calm-blue)">Take the next step.</div>
+        <div class="pair-sample-body" style="color:var(--calm-blue)">Calm Blue on Intentional Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--calm-blue)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--calm-blue)"><span class="r-size">Sm</span><span class="r-grade">AA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--calm-blue)">#ACCDD9 · #2531A5</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--intentional-blue)">
+        <div class="pair-sample-text" style="color:var(--radiant-gold)">Take the next step.</div>
+        <div class="pair-sample-body" style="color:var(--radiant-gold)">Radiant Gold on Intentional Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--radiant-gold)"><span class="r-size">Lg</span><span class="r-grade">AA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--radiant-gold)"><span class="r-size">Sm</span><span class="r-grade">FAIL</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--radiant-gold)">#CD9F36 · #2531A5</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--grounded-black)">
+        <div class="pair-sample-text" style="color:#F9F8F2">Real, direct, grounded.</div>
+        <div class="pair-sample-body" style="color:#F9F8F2">Clear White on Grounded Black</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:#F9F8F2">#F9F8F2 · #1F1E1E</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--grounded-black)">
+        <div class="pair-sample-text" style="color:var(--calm-blue)">Real, direct, grounded.</div>
+        <div class="pair-sample-body" style="color:var(--calm-blue)">Calm Blue on Grounded Black</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--calm-blue)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--calm-blue)"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--calm-blue)">#ACCDD9 · #1F1E1E</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--grounded-black)">
+        <div class="pair-sample-text" style="color:var(--radiant-gold)">Real, direct, grounded.</div>
+        <div class="pair-sample-body" style="color:var(--radiant-gold)">Radiant Gold on Grounded Black</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--radiant-gold)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--radiant-gold)"><span class="r-size">Sm</span><span class="r-grade">AA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--radiant-gold)">#CD9F36 · #1F1E1E</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--honest-ochre)">
+        <div class="pair-sample-text" style="color:#F9F8F2">Name what’s true.</div>
+        <div class="pair-sample-body" style="color:#F9F8F2">Clear White on Honest Ochre</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:#F9F8F2"><span class="r-size">Sm</span><span class="r-grade">AA</span></span>
+          </div>
+          <span class="pair-names" style="color:#F9F8F2">#F9F8F2 · #B55312</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--honest-ochre)">
+        <div class="pair-sample-text" style="color:var(--steady-blue)">Name what’s true.</div>
+        <div class="pair-sample-body" style="color:var(--steady-blue)">Steady Blue on Honest Ochre</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--steady-blue)"><span class="r-size">Lg</span><span class="r-grade">AA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--steady-blue)"><span class="r-size">Sm</span><span class="r-grade">FAIL</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--steady-blue)">#061A49 · #B55312</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--honest-ochre)">
+        <div class="pair-sample-text" style="color:var(--grounded-black)">Name what’s true.</div>
+        <div class="pair-sample-body" style="color:var(--grounded-black)">Grounded Black on Honest Ochre</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-dark" style="color:var(--grounded-black)"><span class="r-size">Lg</span><span class="r-grade">AA</span></span>
+            <span class="pair-rating rating-on-dark" style="color:var(--grounded-black)"><span class="r-size">Sm</span><span class="r-grade">FAIL</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--grounded-black)">#1F1E1E · #B55312</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--radiant-gold)">
+        <div class="pair-sample-text" style="color:var(--steady-blue)">This is the moment.</div>
+        <div class="pair-sample-body" style="color:var(--steady-blue)">Steady Blue on Radiant Gold</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--steady-blue)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--steady-blue)"><span class="r-size">Sm</span><span class="r-grade">AA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--steady-blue)">#061A49 · #CD9F36</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--radiant-gold)">
+        <div class="pair-sample-text" style="color:var(--clean-slate)">This is the moment.</div>
+        <div class="pair-sample-body" style="color:var(--clean-slate)">Clean Slate on Radiant Gold</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--clean-slate)"><span class="r-size">Lg</span><span class="r-grade">AA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--clean-slate)"><span class="r-size">Sm</span><span class="r-grade">FAIL</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--clean-slate)">#1E4D5C · #CD9F36</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--radiant-gold)">
+        <div class="pair-sample-text" style="color:var(--grounded-black)">This is the moment.</div>
+        <div class="pair-sample-body" style="color:var(--grounded-black)">Grounded Black on Radiant Gold</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--grounded-black)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--grounded-black)"><span class="r-size">Sm</span><span class="r-grade">AA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--grounded-black)">#1F1E1E · #CD9F36</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--calm-blue)">
+        <div class="pair-sample-text" style="color:var(--steady-blue)">Slow down to listen.</div>
+        <div class="pair-sample-body" style="color:var(--steady-blue)">Steady Blue on Calm Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--steady-blue)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--steady-blue)"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--steady-blue)">#061A49 · #ACCDD9</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--calm-blue)">
+        <div class="pair-sample-text" style="color:var(--clean-slate)">Slow down to listen.</div>
+        <div class="pair-sample-body" style="color:var(--clean-slate)">Clean Slate on Calm Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--clean-slate)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--clean-slate)"><span class="r-size">Sm</span><span class="r-grade">AA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--clean-slate)">#1E4D5C · #ACCDD9</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--calm-blue)">
+        <div class="pair-sample-text" style="color:var(--grounded-black)">Slow down to listen.</div>
+        <div class="pair-sample-body" style="color:var(--grounded-black)">Grounded Black on Calm Blue</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--grounded-black)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--grounded-black)"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--grounded-black)">#1F1E1E · #ACCDD9</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--clear-white);border:1px solid var(--rule)">
+        <div class="pair-sample-text" style="color:var(--steady-blue)">Space to think clearly.</div>
+        <div class="pair-sample-body" style="color:var(--steady-blue)">Steady Blue on Clear White</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--steady-blue)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--steady-blue)"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--steady-blue)">#061A49 · #F9F8F2</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--clear-white);border:1px solid var(--rule)">
+        <div class="pair-sample-text" style="color:var(--clean-slate)">Space to think clearly.</div>
+        <div class="pair-sample-body" style="color:var(--clean-slate)">Clean Slate on Clear White</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--clean-slate)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--clean-slate)"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--clean-slate)">#1E4D5C · #F9F8F2</span>
+        </div>
+      </div>
+      <div class="pair-card" style="background:var(--clear-white);border:1px solid var(--rule)">
+        <div class="pair-sample-text" style="color:var(--grounded-black)">Space to think clearly.</div>
+        <div class="pair-sample-body" style="color:var(--grounded-black)">Grounded Black on Clear White</div>
+        <div class="pair-meta">
+          <div class="pair-ratings">
+            <span class="pair-rating rating-on-light" style="color:var(--grounded-black)"><span class="r-size">Lg</span><span class="r-grade">AAA</span></span>
+            <span class="pair-rating rating-on-light" style="color:var(--grounded-black)"><span class="r-size">Sm</span><span class="r-grade">AAA</span></span>
+          </div>
+          <span class="pair-names" style="color:var(--grounded-black)">#1F1E1E · #F9F8F2</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Attributes table -->
+  <div class="attributes-section">
+    <div class="section-label">Color attributes &amp; intended use</div>
+    <table class="attr-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th style="padding-left:14px">Name</th>
+          <th>Attributes</th>
+          <th>When to use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="attr-swatch-dot" style="background:var(--steady-blue)"></div></td>
+          <td style="padding-left:14px"><div class="attr-name">Steady Blue</div></td>
+          <td><div class="attr-emotion">leadership, authority, safety</div></td>
+          <td><div class="attr-use">Primary brand color. Use for hero backgrounds, key headlines, navigation, and any context that should feel authoritative and trustworthy.</div></td>
+        </tr>
+        <tr>
+          <td><div class="attr-swatch-dot" style="background:var(--intentional-blue)"></div></td>
+          <td style="padding-left:14px"><div class="attr-name">Intentional Blue</div></td>
+          <td><div class="attr-emotion">action, purpose, confidence</div></td>
+          <td><div class="attr-use">Calls to action, buttons, interactive elements. Signals something is clickable, decisive, or action-oriented.</div></td>
+        </tr>
+        <tr>
+          <td><div class="attr-swatch-dot" style="background:var(--radiant-gold)"></div></td>
+          <td style="padding-left:14px"><div class="attr-name">Radiant Gold</div></td>
+          <td><div class="attr-emotion">warm, insight, emphasis</div></td>
+          <td><div class="attr-use">Accent and emphasis. Use sparingly for pull quotes, key stats, highlights, and moments of insight. Pairs strongly with all three blues.</div></td>
+        </tr>
+        <tr>
+          <td><div class="attr-swatch-dot" style="background:var(--clean-slate)"></div></td>
+          <td style="padding-left:14px"><div class="attr-name">Clean Slate</div></td>
+          <td><div class="attr-emotion">foundation, nuance, trust</div></td>
+          <td><div class="attr-use">Section backgrounds, supporting panels, and secondary containers. Conveys depth and groundedness without the authority of Steady Blue.</div></td>
+        </tr>
+        <tr>
+          <td><div class="attr-swatch-dot" style="background:var(--calm-blue)"></div></td>
+          <td style="padding-left:14px"><div class="attr-name">Calm Blue</div></td>
+          <td><div class="attr-emotion">listen, reflect, slow down</div></td>
+          <td><div class="attr-use">Backgrounds for reflective or editorial content — testimonials, coach bios, breathing room. Also used as a text color on dark backgrounds at AAA.</div></td>
+        </tr>
+        <tr>
+          <td><div class="attr-swatch-dot" style="background:var(--honest-ochre)"></div></td>
+          <td style="padding-left:14px"><div class="attr-name">Honest Ochre</div></td>
+          <td><div class="attr-emotion">tension, truth, vulnerability</div></td>
+          <td><div class="attr-use">Use with intention — for moments of challenge, honesty, or disruption. Not a background at scale; works well as a bold accent or illustration tone.</div></td>
+        </tr>
+        <tr>
+          <td><div class="attr-swatch-dot" style="background:var(--clear-white);border:1px solid #ccc"></div></td>
+          <td style="padding-left:14px"><div class="attr-name">Clear White</div></td>
+          <td><div class="attr-emotion">open, transparent, neutral</div></td>
+          <td><div class="attr-use">Primary page background and text on dark surfaces. The slight warmth (vs. pure white) keeps the brand from feeling clinical or cold.</div></td>
+        </tr>
+        <tr>
+          <td><div class="attr-swatch-dot" style="background:var(--grounded-black)"></div></td>
+          <td style="padding-left:14px"><div class="attr-name">Grounded Black</div></td>
+          <td><div class="attr-emotion">solid, direct, stable</div></td>
+          <td><div class="attr-use">Body text, footers, high-contrast contexts. Use instead of pure black to maintain warmth. Avoid as large background areas — reserve for direct, emphatic moments.</div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

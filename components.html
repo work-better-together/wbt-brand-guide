@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Components — Work Better Together</title>
+  <link rel="stylesheet" href="tokens/tokens.css">
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--surface-canvas); color: var(--ink-default); font-family: var(--font-body); line-height: 1.6; }
+    .page { max-width: var(--container-default); margin: 0 auto; padding: var(--page-padding-y) var(--page-padding-x) var(--space-24); }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: var(--gap-section); padding-bottom: var(--space-8); border-bottom: 1px solid var(--border-subtle); }
+    .page-header .label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-brand); display: block; margin-bottom: 8px; }
+    .page-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1; color: var(--ink-default); margin-bottom: 12px; }
+    .page-header p { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--ink-default); max-width: 560px; }
+
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-default); padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
+    .section-intro { font-family: var(--font-body); font-size: 15px; color: var(--ink-default); max-width: 720px; margin-bottom: 28px; line-height: 1.65; }
+    .section-block { margin-bottom: 96px; }
+    .section-block h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin: 32px 0 14px; }
+
+    /* ── Stage / preview frame ── */
+    .stage {
+      background: var(--surface-default);
+      border: 1px solid var(--border-subtle);
+      padding: 36px 40px;
+      margin-bottom: 8px;
+    }
+    .stage.canvas { background: var(--surface-canvas); }
+    .stage.dark { background: var(--surface-inverse); color: var(--ink-inverse); }
+    .stage-grid { display: grid; gap: 20px; align-items: start; }
+    .stage-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .stage-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .stage-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .stage-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+
+    .state-cell { display: flex; flex-direction: column; gap: 10px; }
+    .state-label { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+    .stage.dark .state-label { color: rgba(249,248,242,0.55); }
+
+    /* ── Token mapping table ── */
+    .tokens-used {
+      background: var(--surface-default);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      padding: 20px 28px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink-default);
+    }
+    .tokens-used table { width: 100%; border-collapse: collapse; }
+    .tokens-used th, .tokens-used td { padding: 8px 0; border-bottom: 1px solid var(--border-subtle); text-align: left; vertical-align: top; }
+    .tokens-used th { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-default); }
+    .tokens-used tr:last-child td { border-bottom: none; }
+    .tokens-used code { font-family: var(--font-mono); font-size: 12px; color: var(--ink-action); background: var(--c-grounded-black-05); padding: 1px 6px; border-radius: 2px; }
+
+    /* ════════════════════════════════════════════════════════════
+       BUTTON — variants + states
+       ════════════════════════════════════════════════════════════ */
+    .btn {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      border: 1px solid transparent;
+      border-radius: var(--btn-radius);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      transition: background var(--motion-state), border-color var(--motion-state), color var(--motion-state);
+      text-decoration: none;
+    }
+    .btn:focus-visible { outline: var(--state-focus-ring-width) solid var(--state-focus-ring); outline-offset: var(--state-focus-ring-offset); }
+
+    .btn-primary { background: var(--btn-primary-bg); color: var(--btn-primary-ink); }
+    .btn-primary.is-hover, .btn-primary:hover { background: var(--btn-primary-bg-hover); }
+    .btn-primary.is-active, .btn-primary:active { background: var(--btn-primary-bg-pressed); }
+    .btn-primary.is-disabled, .btn-primary[disabled] { background: var(--btn-primary-bg); opacity: var(--state-disabled-opacity); cursor: not-allowed; }
+
+    .btn-secondary { background: transparent; color: var(--ink-default); border-color: var(--border-strong); }
+    .btn-secondary.is-hover, .btn-secondary:hover { background: var(--ink-default); color: var(--ink-inverse); }
+    .btn-secondary.is-active, .btn-secondary:active { background: var(--c-grounded-black-80); }
+    .btn-secondary.is-disabled { opacity: var(--state-disabled-opacity); cursor: not-allowed; }
+
+    .btn-ghost { background: transparent; color: var(--ink-action); }
+    .btn-ghost.is-hover, .btn-ghost:hover { background: var(--c-intentional-blue-10); }
+    .btn-ghost.is-active, .btn-ghost:active { background: var(--c-intentional-blue-20); }
+    .btn-ghost.is-disabled { opacity: var(--state-disabled-opacity); cursor: not-allowed; }
+
+    .btn-destructive { background: var(--c-honest-ochre); color: var(--ink-inverse); }
+    .btn-destructive.is-hover, .btn-destructive:hover { background: rgba(181,83,18,0.85); }
+    .btn-destructive.is-active, .btn-destructive:active { background: rgba(181,83,18,0.7); }
+    .btn-destructive.is-disabled { opacity: var(--state-disabled-opacity); cursor: not-allowed; }
+
+    .btn-focus-faux {
+      outline: var(--state-focus-ring-width) solid var(--state-focus-ring);
+      outline-offset: var(--state-focus-ring-offset);
+    }
+
+    .btn-sm { padding: 8px 14px; font-size: 11px; min-height: 36px; }
+    .btn-lg { padding: 16px 28px; font-size: 14px; min-height: 52px; }
+
+    /* ════════════════════════════════════════════════════════════
+       INPUT
+       ════════════════════════════════════════════════════════════ */
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field-label { font-family: var(--font-display); font-weight: 500; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-default); }
+    .field-required { color: var(--ink-warning); margin-left: 2px; }
+    .field-helper { font-family: var(--font-body); font-size: 13px; color: var(--ink-muted); line-height: 1.5; }
+    .field-error { font-family: var(--font-body); font-size: 13px; color: var(--ink-warning); line-height: 1.5; font-style: italic; }
+
+    .input {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.5;
+      padding: 12px 14px;
+      background: var(--input-bg);
+      color: var(--input-ink);
+      border: 1px solid var(--input-border);
+      border-radius: var(--input-radius);
+      width: 100%;
+      transition: border-color var(--motion-state), background var(--motion-state);
+      min-height: 44px;
+    }
+    .input::placeholder { color: var(--input-ink-placeholder); }
+    .input.is-hover, .input:hover { border-color: var(--input-border-hover); }
+    .input.is-focus, .input:focus-visible {
+      outline: var(--state-focus-ring-width) solid var(--state-focus-ring);
+      outline-offset: var(--state-focus-ring-offset);
+      border-color: var(--input-border-focus);
+    }
+    .input.is-error { border-color: var(--ink-warning); }
+    .input.is-disabled { opacity: var(--state-disabled-opacity); background: var(--surface-muted); cursor: not-allowed; }
+
+    .textarea { min-height: 96px; padding: 12px 14px; resize: vertical; font-family: var(--font-body); }
+
+    /* Select */
+    .select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%231F1E1E' stroke-width='1.5' fill='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+    }
+
+    /* Checkbox / Radio */
+    .checkable { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body); font-size: 14px; color: var(--ink-default); }
+    .checkable input { position: absolute; opacity: 0; pointer-events: none; }
+    .checkable-box {
+      width: 18px; height: 18px;
+      border: 1.5px solid var(--border-strong);
+      background: var(--surface-default);
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background var(--motion-state), border-color var(--motion-state);
+    }
+    .checkable-box.radio { border-radius: 999px; }
+    .checkable.is-checked .checkable-box { background: var(--c-intentional-blue); border-color: var(--c-intentional-blue); }
+    .checkable.is-checked .checkable-box::after {
+      content: ''; width: 10px; height: 10px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><path d='M1.5 5l2.5 2.5L8.5 2.5' stroke='%23F9F8F2' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/contain no-repeat;
+    }
+    .checkable.is-checked .checkable-box.radio::after {
+      content: ''; width: 8px; height: 8px; border-radius: 999px; background: var(--c-clear-white);
+    }
+    .checkable input:focus-visible + .checkable-box { outline: var(--state-focus-ring-width) solid var(--state-focus-ring); outline-offset: var(--state-focus-ring-offset); }
+
+    /* ════════════════════════════════════════════════════════════
+       CARD
+       ════════════════════════════════════════════════════════════ */
+    .card-component {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 28px;
+      transition: background var(--motion-state), border-color var(--motion-state);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 160px;
+    }
+    .card-component:hover { background: var(--card-bg-hover); }
+    .card-component:focus-visible { outline: var(--state-focus-ring-width) solid var(--state-focus-ring); outline-offset: var(--state-focus-ring-offset); }
+    .card-component.is-selected { border-color: var(--c-intentional-blue); background: var(--c-intentional-blue-10); }
+    .card-eyebrow { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+    .card-title { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--ink-default); }
+    .card-body { font-family: var(--font-body); font-size: 13px; color: var(--ink-default); line-height: 1.55; }
+
+    /* ════════════════════════════════════════════════════════════
+       TAG / BADGE
+       ════════════════════════════════════════════════════════════ */
+    .tag {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--tag-radius);
+      background: var(--tag-bg);
+      color: var(--tag-ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tag-success { background: var(--status-success-surface); color: var(--status-success-ink); }
+    .tag-warning { background: var(--status-warning-surface); color: var(--status-warning-ink); }
+    .tag-info    { background: var(--status-info-surface); color: var(--status-info-ink); }
+    .tag-critical{ background: var(--status-critical-surface); color: var(--status-critical-ink); }
+    .tag-neutral { background: var(--c-grounded-black-05); color: var(--ink-default); }
+
+    .badge {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 3px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--c-honest-ochre);
+      color: var(--ink-inverse);
+      display: inline-flex;
+      align-items: center;
+      min-width: 18px;
+      justify-content: center;
+    }
+    .badge-dot { width: 8px; height: 8px; border-radius: 999px; padding: 0; min-width: 0; }
+
+    /* ════════════════════════════════════════════════════════════
+       CALLOUT
+       ════════════════════════════════════════════════════════════ */
+    .callout-component {
+      padding: 18px 22px;
+      border-left: 3px solid;
+      max-width: 720px;
+      margin-bottom: 12px;
+    }
+    .callout-component .ce-tag { display: block; font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 6px; font-style: normal; }
+    .callout-component p { font-family: var(--font-body); font-style: italic; font-size: 14px; line-height: 1.55; }
+    .callout-component p strong { font-weight: 700; }
+
+    .callout-info     { background: var(--status-info-surface); border-color: var(--status-info-ink); color: var(--status-info-ink); }
+    .callout-success  { background: var(--status-success-surface); border-color: var(--status-success-ink); color: var(--status-success-ink); }
+    .callout-warning  { background: var(--status-warning-surface); border-color: var(--status-warning-ink); color: var(--status-warning-ink); }
+    .callout-critical { background: var(--status-critical-surface); border-color: var(--status-critical-ink); color: var(--status-critical-ink); }
+
+    /* ════════════════════════════════════════════════════════════
+       MODAL
+       ════════════════════════════════════════════════════════════ */
+    .modal-stage { position: relative; height: 360px; background: rgba(31,30,30,0.6); display: flex; align-items: center; justify-content: center; padding: 24px; overflow: hidden; }
+    .modal {
+      background: var(--modal-bg);
+      border-radius: var(--modal-radius);
+      padding: var(--modal-padding);
+      max-width: 480px;
+      width: 100%;
+      box-shadow: var(--modal-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .modal-eyebrow { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-brand); }
+    .modal h2 { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+    .modal p { font-family: var(--font-body); font-size: 14px; line-height: 1.65; color: var(--ink-default); }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+
+    /* ════════════════════════════════════════════════════════════
+       TOOLTIP
+       ════════════════════════════════════════════════════════════ */
+    .tooltip-trigger { position: relative; display: inline-block; }
+    .tooltip {
+      background: var(--tooltip-bg);
+      color: var(--tooltip-ink);
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      padding: 6px 10px;
+      border-radius: var(--tooltip-radius);
+      position: relative;
+      white-space: nowrap;
+    }
+    .tooltip::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--tooltip-bg);
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       TOAST
+       ════════════════════════════════════════════════════════════ */
+    .toast {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 18px;
+      background: var(--surface-default);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--ink-brand);
+      max-width: 420px;
+      box-shadow: var(--elevation-overlay);
+    }
+    .toast-icon { width: 18px; height: 18px; border-radius: 999px; background: var(--ink-brand); flex-shrink: 0; margin-top: 2px; }
+    .toast-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+    .toast-title { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--ink-default); }
+    .toast-msg { font-family: var(--font-body); font-size: 13px; color: var(--ink-default); line-height: 1.5; }
+    .toast.success { border-left-color: var(--status-success-ink); }
+    .toast.success .toast-icon { background: var(--status-success-ink); }
+    .toast.warning { border-left-color: var(--status-warning-ink); }
+    .toast.warning .toast-icon { background: var(--status-warning-ink); }
+    .toast.critical { border-left-color: var(--status-critical-ink); }
+    .toast.critical .toast-icon { background: var(--status-critical-ink); }
+
+    /* ════════════════════════════════════════════════════════════
+       NAV / HEADER
+       ════════════════════════════════════════════════════════════ */
+    .nav-component {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: var(--nav-bg);
+      color: var(--nav-ink);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 14px; font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--nav-ink); }
+    .nav-brand .b-mark { width: 28px; height: 28px; border-radius: 999px; border: 1.5px solid var(--c-clear-white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-link { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--nav-ink); padding: 8px 14px; border-radius: 2px; text-decoration: none; transition: background var(--motion-state); }
+    .nav-link:hover { background: rgba(249,248,242,0.12); }
+    .nav-link.is-active { color: var(--c-radiant-gold); }
+
+    /* ════════════════════════════════════════════════════════════
+       TABS
+       ════════════════════════════════════════════════════════════ */
+    .tabs { display: flex; gap: 28px; border-bottom: 1px solid var(--border-subtle); }
+    .tab { font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: 0.06em; padding: 10px 0; color: var(--ink-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .tab:hover { color: var(--ink-default); }
+    .tab.is-active { color: var(--ink-default); border-bottom-color: var(--ink-default); }
+
+    /* ════════════════════════════════════════════════════════════
+       Misc
+       ════════════════════════════════════════════════════════════ */
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .stack { display: flex; flex-direction: column; gap: 12px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Page header -->
+  <header class="page-header">
+    <span class="label">Work Better Together · Brand Guide</span>
+    <h1>Components</h1>
+    <p>The component layer. Each component reads from the semantic and component tokens — change a token, every consumer updates.</p>
+  </header>
+
+  <!-- ═══════ BUTTON ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Button</div>
+    <p class="section-intro">Four variants: <strong>primary</strong> for the page's main action; <strong>secondary</strong> for the alternative; <strong>ghost</strong> for low-stakes / inline actions; <strong>destructive</strong> for irreversible operations. All buttons share the same min-height (44px) for touch targets.</p>
+
+    <h3>Variants</h3>
+    <div class="stage">
+      <div class="row">
+        <button class="btn btn-primary">Primary action</button>
+        <button class="btn btn-secondary">Secondary action</button>
+        <button class="btn btn-ghost">Ghost action</button>
+        <button class="btn btn-destructive">Delete forever</button>
+      </div>
+    </div>
+
+    <h3>Primary · States</h3>
+    <div class="stage">
+      <div class="stage-grid cols-5">
+        <div class="state-cell"><span class="state-label">Default</span><button class="btn btn-primary">Get started</button></div>
+        <div class="state-cell"><span class="state-label">Hover</span><button class="btn btn-primary is-hover">Get started</button></div>
+        <div class="state-cell"><span class="state-label">Focus</span><button class="btn btn-primary btn-focus-faux">Get started</button></div>
+        <div class="state-cell"><span class="state-label">Active</span><button class="btn btn-primary is-active">Get started</button></div>
+        <div class="state-cell"><span class="state-label">Disabled</span><button class="btn btn-primary is-disabled" disabled>Get started</button></div>
+      </div>
+    </div>
+
+    <h3>Secondary · States</h3>
+    <div class="stage">
+      <div class="stage-grid cols-5">
+        <div class="state-cell"><span class="state-label">Default</span><button class="btn btn-secondary">Learn more</button></div>
+        <div class="state-cell"><span class="state-label">Hover</span><button class="btn btn-secondary is-hover">Learn more</button></div>
+        <div class="state-cell"><span class="state-label">Focus</span><button class="btn btn-secondary btn-focus-faux">Learn more</button></div>
+        <div class="state-cell"><span class="state-label">Active</span><button class="btn btn-secondary is-active">Learn more</button></div>
+        <div class="state-cell"><span class="state-label">Disabled</span><button class="btn btn-secondary is-disabled" disabled>Learn more</button></div>
+      </div>
+    </div>
+
+    <h3>Ghost · States</h3>
+    <div class="stage">
+      <div class="stage-grid cols-5">
+        <div class="state-cell"><span class="state-label">Default</span><button class="btn btn-ghost">View details →</button></div>
+        <div class="state-cell"><span class="state-label">Hover</span><button class="btn btn-ghost is-hover">View details →</button></div>
+        <div class="state-cell"><span class="state-label">Focus</span><button class="btn btn-ghost btn-focus-faux">View details →</button></div>
+        <div class="state-cell"><span class="state-label">Active</span><button class="btn btn-ghost is-active">View details →</button></div>
+        <div class="state-cell"><span class="state-label">Disabled</span><button class="btn btn-ghost is-disabled" disabled>View details →</button></div>
+      </div>
+    </div>
+
+    <h3>Destructive · States</h3>
+    <div class="stage">
+      <div class="stage-grid cols-5">
+        <div class="state-cell"><span class="state-label">Default</span><button class="btn btn-destructive">Delete account</button></div>
+        <div class="state-cell"><span class="state-label">Hover</span><button class="btn btn-destructive is-hover">Delete account</button></div>
+        <div class="state-cell"><span class="state-label">Focus</span><button class="btn btn-destructive btn-focus-faux">Delete account</button></div>
+        <div class="state-cell"><span class="state-label">Active</span><button class="btn btn-destructive is-active">Delete account</button></div>
+        <div class="state-cell"><span class="state-label">Disabled</span><button class="btn btn-destructive is-disabled" disabled>Delete account</button></div>
+      </div>
+    </div>
+
+    <h3>Sizes</h3>
+    <div class="stage">
+      <div class="row">
+        <button class="btn btn-primary btn-sm">Small · 36px</button>
+        <button class="btn btn-primary">Default · 44px</button>
+        <button class="btn btn-primary btn-lg">Large · 52px</button>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Background — primary</td><td><code>--btn-primary-bg</code> → <code>--surface-brand-action</code></td></tr>
+          <tr><td>Background — primary hover</td><td><code>--btn-primary-bg-hover</code> → <code>--c-steady-blue</code></td></tr>
+          <tr><td>Ink — primary</td><td><code>--btn-primary-ink</code> → <code>--ink-inverse</code></td></tr>
+          <tr><td>Border — secondary</td><td><code>--btn-secondary-border</code> → <code>--border-strong</code></td></tr>
+          <tr><td>Radius</td><td><code>--btn-radius</code> → <code>--radius-sm</code> (2px)</td></tr>
+          <tr><td>Padding</td><td><code>--btn-padding-y</code> · <code>--btn-padding-x</code></td></tr>
+          <tr><td>Type</td><td><code>--btn-font</code> → Inconsolata 700, uppercase, +0.18em tracking</td></tr>
+          <tr><td>Min-height</td><td>44px (accessibility floor)</td></tr>
+          <tr><td>Focus ring</td><td><code>--state-focus-ring</code> · 2px · 2px offset</td></tr>
+          <tr><td>Transition</td><td><code>--motion-state</code> (200ms standard easing)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ INPUT / FORM ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Form fields</div>
+    <p class="section-intro">Inputs read from <code>--input-*</code> component tokens. Required fields signal with the warning ink (Honest Ochre) on the label asterisk. Helper and error text both use 13px Lora; error text is italic and warning-colored.</p>
+
+    <h3>Text input · States</h3>
+    <div class="stage">
+      <div class="stage-grid cols-3">
+        <div class="field">
+          <label class="field-label">Default</label>
+          <input class="input" placeholder="your.name@company.com">
+          <span class="field-helper">We'll only use this for project updates.</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Filled</label>
+          <input class="input" value="deroy@hyperakt.com">
+          <span class="field-helper">We'll only use this for project updates.</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Hover</label>
+          <input class="input is-hover" placeholder="your.name@company.com">
+          <span class="field-helper">We'll only use this for project updates.</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Focus</label>
+          <input class="input is-focus" value="deroy">
+          <span class="field-helper">We'll only use this for project updates.</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Error</label>
+          <input class="input is-error" value="not-an-email">
+          <span class="field-error">Please enter a valid email address.</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Disabled</label>
+          <input class="input is-disabled" value="deroy@hyperakt.com" disabled>
+          <span class="field-helper">Locked while your team admin reviews.</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Required, with optional</h3>
+    <div class="stage">
+      <div class="stage-grid cols-2">
+        <div class="field">
+          <label class="field-label">Email <span class="field-required">*</span></label>
+          <input class="input" placeholder="your.name@company.com">
+        </div>
+        <div class="field">
+          <label class="field-label">Phone <span style="color:var(--ink-muted); font-weight:400;">(optional)</span></label>
+          <input class="input" placeholder="555-123-4567">
+        </div>
+      </div>
+    </div>
+
+    <h3>Textarea · Select</h3>
+    <div class="stage">
+      <div class="stage-grid cols-2">
+        <div class="field">
+          <label class="field-label">What are you trying to figure out?</label>
+          <textarea class="input textarea" placeholder="A few sentences is plenty."></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label">Engagement type</label>
+          <select class="input select">
+            <option>Brand strategy</option>
+            <option>Brand identity</option>
+            <option>Website design</option>
+            <option>Coaching engagement</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <h3>Checkbox · Radio</h3>
+    <div class="stage">
+      <div class="stage-grid cols-2">
+        <div class="stack">
+          <label class="checkable is-checked"><input type="checkbox" checked><span class="checkable-box"></span><span>I'd like a follow-up call</span></label>
+          <label class="checkable"><input type="checkbox"><span class="checkable-box"></span><span>Add me to the newsletter</span></label>
+          <label class="checkable"><input type="checkbox" disabled><span class="checkable-box" style="opacity:0.4"></span><span style="color:var(--ink-muted)">Disabled option</span></label>
+        </div>
+        <div class="stack">
+          <label class="checkable is-checked"><input type="radio" name="r1" checked><span class="checkable-box radio"></span><span>Within 2 weeks</span></label>
+          <label class="checkable"><input type="radio" name="r1"><span class="checkable-box radio"></span><span>Within a month</span></label>
+          <label class="checkable"><input type="radio" name="r1"><span class="checkable-box radio"></span><span>Just exploring</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Background</td><td><code>--input-bg</code> → <code>--surface-default</code></td></tr>
+          <tr><td>Border (default / hover / focus)</td><td><code>--input-border</code> · <code>--input-border-hover</code> · <code>--input-border-focus</code></td></tr>
+          <tr><td>Ink</td><td><code>--input-ink</code> → <code>--ink-default</code></td></tr>
+          <tr><td>Placeholder</td><td><code>--input-ink-placeholder</code> → <code>--ink-subtle</code></td></tr>
+          <tr><td>Padding</td><td>12px 14px (44px effective height)</td></tr>
+          <tr><td>Type</td><td><code>--type-body</code> · 15px Lora 400</td></tr>
+          <tr><td>Error border</td><td><code>--ink-warning</code> (Honest Ochre)</td></tr>
+          <tr><td>Label type</td><td><code>--type-label</code> · 12px League Spartan 500, +0.06em tracking</td></tr>
+          <tr><td>Helper / error type</td><td>13px Lora · error is italic</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ CARD ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Card</div>
+    <p class="section-intro">A neutral container. <strong>Default</strong> reads as a passive panel. <strong>Selectable</strong> is interactive (use when the whole card links somewhere). <strong>Selected</strong> is the chosen-state of a selectable.</p>
+
+    <div class="stage canvas">
+      <div class="stage-grid cols-3">
+        <div class="card-component" tabindex="-1">
+          <span class="card-eyebrow">Default</span>
+          <h4 class="card-title">Brand Strategy</h4>
+          <p class="card-body">A 6-week engagement to clarify positioning, audience, and message before identity work begins.</p>
+        </div>
+        <div class="card-component">
+          <span class="card-eyebrow">Hover</span>
+          <h4 class="card-title">Brand Identity</h4>
+          <p class="card-body">Logo, type, color, and the rules for how they live together — built from the strategy outward.</p>
+        </div>
+        <div class="card-component is-selected">
+          <span class="card-eyebrow">Selected</span>
+          <h4 class="card-title">Website Design</h4>
+          <p class="card-body">From sitemap to launch, with a focus on the editorial shape of the brand on the web.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Background</td><td><code>--card-bg</code> → <code>--surface-default</code></td></tr>
+          <tr><td>Border</td><td><code>--card-border</code> → <code>--border-subtle</code></td></tr>
+          <tr><td>Hover background</td><td><code>--card-bg-hover</code> → <code>--surface-muted</code></td></tr>
+          <tr><td>Selected border</td><td><code>--c-intentional-blue</code></td></tr>
+          <tr><td>Selected background</td><td><code>--c-intentional-blue-10</code> (10% tint)</td></tr>
+          <tr><td>Padding</td><td><code>--card-padding</code> → 32px</td></tr>
+          <tr><td>Radius</td><td><code>--card-radius</code> → <code>--radius-none</code> (the brand favors sharp edges)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ TAG / BADGE ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Tag · Badge · Status pill</div>
+    <p class="section-intro">Tags categorize. Badges count. Status pills signal state.</p>
+
+    <h3>Tag — neutral by default; status variants for affirm/warn/info/critical</h3>
+    <div class="stage">
+      <div class="row">
+        <span class="tag">Brand strategy</span>
+        <span class="tag tag-info">Discovery</span>
+        <span class="tag tag-success">Approved</span>
+        <span class="tag tag-warning">Needs review</span>
+        <span class="tag tag-critical">Blocked</span>
+        <span class="tag tag-neutral">Internal</span>
+      </div>
+    </div>
+
+    <h3>Badge — counts and dots</h3>
+    <div class="stage">
+      <div class="row">
+        <span class="badge">3</span>
+        <span class="badge">12</span>
+        <span class="badge">99+</span>
+        <span class="badge badge-dot"></span>
+        <span class="row" style="gap:6px">Inbox <span class="badge">7</span></span>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Tag bg / ink</td><td><code>--tag-bg</code> · <code>--tag-ink</code> (slate-light + Clean Slate)</td></tr>
+          <tr><td>Tag radius</td><td><code>--tag-radius</code> → 2px</td></tr>
+          <tr><td>Tag type</td><td><code>--tag-font</code> · 10px League Spartan 500, +0.1em tracking, uppercase</td></tr>
+          <tr><td>Status variants</td><td><code>--status-{success|warning|info|critical}-{surface,ink}</code></td></tr>
+          <tr><td>Badge bg</td><td><code>--c-honest-ochre</code> (default; signals "attention")</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ CALLOUT ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Callout</div>
+    <p class="section-intro">The annotation pattern from the type page, generalized. Eyebrow tag stacked over italic body, left-bordered with the variant color.</p>
+
+    <div class="stage">
+      <div class="callout-component callout-info">
+        <span class="ce-tag">Info</span>
+        <p>Background usage rules. Use full-bleed as presentation slide backgrounds. The –1 variant suits white or gold text; the –2 variant works best when overlaying dark text.</p>
+      </div>
+      <div class="callout-component callout-success">
+        <span class="ce-tag">Do</span>
+        <p>Use Lora roman for body. Reserve italic for actual quotes, paraphrasing, special callouts, and annotations.</p>
+      </div>
+      <div class="callout-component callout-warning">
+        <span class="ce-tag">Don't</span>
+        <p>Don't use Inconsolata for eyebrows or labels. It's reserved for attributions and CTAs only.</p>
+      </div>
+      <div class="callout-component callout-critical">
+        <span class="ce-tag">Critical</span>
+        <p>Honest Ochre body text on Calm Blue or Radiant Gold backgrounds fails contrast at every size. Don't pair these.</p>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Background</td><td><code>--status-{variant}-surface</code></td></tr>
+          <tr><td>Border-left (3px)</td><td><code>--status-{variant}-ink</code></td></tr>
+          <tr><td>Body type</td><td>Lora italic 14px / 1.55</td></tr>
+          <tr><td>Tag type</td><td>League Spartan 500 · 10px · +0.18em</td></tr>
+          <tr><td>Padding</td><td>18px 22px</td></tr>
+          <tr><td>Max-width</td><td>720px (prose container)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ MODAL ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Modal</div>
+    <p class="section-intro">For confirmations and focused tasks. Backdrop is Grounded Black at 60%. Modal sits on white surface with deliberate elevation. Always include a clear primary action and a way to cancel.</p>
+
+    <div class="stage" style="padding:0;">
+      <div class="modal-stage">
+        <div class="modal">
+          <span class="modal-eyebrow">Confirm</span>
+          <h2>Delete this engagement?</h2>
+          <p>This will remove "Pivotal Ventures · Brand Refresh" and all attached files. This action cannot be undone.</p>
+          <div class="modal-actions">
+            <button class="btn btn-secondary btn-sm">Cancel</button>
+            <button class="btn btn-destructive btn-sm">Delete forever</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Backdrop</td><td><code>--modal-backdrop</code> → rgba(31,30,30,0.6)</td></tr>
+          <tr><td>Background</td><td><code>--modal-bg</code> → <code>--surface-default</code></td></tr>
+          <tr><td>Padding</td><td><code>--modal-padding</code> → 32px</td></tr>
+          <tr><td>Radius</td><td><code>--modal-radius</code> → 4px</td></tr>
+          <tr><td>Shadow</td><td><code>--elevation-modal</code></td></tr>
+          <tr><td>Entrance motion</td><td><code>--motion-overlay-in</code> · 320ms entrance easing · fade + 8px translate-up</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ TOOLTIP ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Tooltip</div>
+    <p class="section-intro">Brief context on hover or focus. Always supplemental — never the only place a piece of information lives.</p>
+    <div class="stage" style="padding-top:60px;">
+      <div class="row" style="justify-content:center; gap:60px; align-items:flex-end;">
+        <div class="stack" style="align-items:center; gap:6px;">
+          <div class="tooltip">Press ⌘K to open</div>
+          <button class="btn btn-secondary btn-sm">Search</button>
+        </div>
+        <div class="stack" style="align-items:center; gap:6px;">
+          <div class="tooltip" style="background:var(--c-clean-slate)"><span style="color:var(--ink-inverse)">Saved 2 minutes ago</span></div>
+          <button class="btn btn-ghost btn-sm">Last saved</button>
+        </div>
+      </div>
+    </div>
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Background</td><td><code>--tooltip-bg</code> → <code>--c-grounded-black</code></td></tr>
+          <tr><td>Ink</td><td><code>--tooltip-ink</code> → <code>--c-clear-white</code></td></tr>
+          <tr><td>Padding</td><td>6px 10px</td></tr>
+          <tr><td>Type</td><td>League Spartan 500 · 11px</td></tr>
+          <tr><td>Radius</td><td><code>--tooltip-radius</code> → 2px</td></tr>
+          <tr><td>Trigger</td><td>hover OR keyboard focus (always reachable)</td></tr>
+          <tr><td>Delay</td><td>200ms in · 0ms out</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ TOAST ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Toast / Notification</div>
+    <p class="section-intro">Transient feedback for system events. Stacks bottom-right. Auto-dismiss after 5s for info/success; persist for warning/critical until acknowledged.</p>
+
+    <div class="stage canvas">
+      <div class="stack" style="gap:14px;">
+        <div class="toast">
+          <div class="toast-icon"></div>
+          <div class="toast-body">
+            <div class="toast-title">Saved</div>
+            <div class="toast-msg">Your changes are synced. We'll keep working on this in the background.</div>
+          </div>
+        </div>
+        <div class="toast success">
+          <div class="toast-icon"></div>
+          <div class="toast-body">
+            <div class="toast-title">Brief approved</div>
+            <div class="toast-msg">Sara approved the Pivotal Ventures brief. Kicking off discovery.</div>
+          </div>
+        </div>
+        <div class="toast warning">
+          <div class="toast-icon"></div>
+          <div class="toast-body">
+            <div class="toast-title">Needs your attention</div>
+            <div class="toast-msg">Two reviews are still pending. Nudge them?</div>
+          </div>
+        </div>
+        <div class="toast critical">
+          <div class="toast-icon"></div>
+          <div class="toast-body">
+            <div class="toast-title">Couldn't save</div>
+            <div class="toast-msg">We lost connection mid-save. Try again — your work is held locally.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Surface</td><td><code>--surface-default</code></td></tr>
+          <tr><td>Border-left</td><td><code>--ink-brand</code> (info default), <code>--status-{variant}-ink</code> for variants</td></tr>
+          <tr><td>Shadow</td><td><code>--elevation-overlay</code></td></tr>
+          <tr><td>Title type</td><td>League Spartan 700 · 14px</td></tr>
+          <tr><td>Body type</td><td>Lora 400 · 13px</td></tr>
+          <tr><td>Auto-dismiss</td><td>5s for info / success · persist for warning / critical</td></tr>
+          <tr><td>Entrance motion</td><td>standard easing, 200ms, slide-up + fade</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ NAV ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Nav · Header</div>
+    <p class="section-intro">Top-level site navigation. Active link uses Radiant Gold. Hover lifts a subtle Clear White overlay (12% alpha).</p>
+
+    <div class="stage" style="padding:0;">
+      <div class="nav-component">
+        <div class="nav-brand">
+          <div class="b-mark">W</div>
+          <span>Brand Guide · 2026</span>
+        </div>
+        <div class="nav-links">
+          <a class="nav-link" href="#">Voice</a>
+          <a class="nav-link" href="#">Logo</a>
+          <a class="nav-link" href="#">Type</a>
+          <a class="nav-link is-active" href="#">Color</a>
+          <a class="nav-link" href="#">Elements</a>
+          <a class="nav-link" href="#">Tokens</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Background</td><td><code>--nav-bg</code> → <code>--c-grounded-black</code></td></tr>
+          <tr><td>Ink</td><td><code>--nav-ink</code> → <code>--c-clear-white</code></td></tr>
+          <tr><td>Active ink</td><td><code>--nav-ink-active</code> → <code>--c-radiant-gold</code></td></tr>
+          <tr><td>Hover overlay</td><td>rgba(249,248,242,0.12)</td></tr>
+          <tr><td>Type</td><td>League Spartan 500 · 11px · +0.12em · uppercase</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ TABS ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Tabs</div>
+    <p class="section-intro">Section switcher. Active tab signals with a 2px underline in <code>--ink-default</code>. Inactive tabs sit in <code>--ink-muted</code>; hover lifts to default ink.</p>
+    <div class="stage">
+      <div class="tabs">
+        <span class="tab is-active">Overview</span>
+        <span class="tab">Strategy</span>
+        <span class="tab">Identity</span>
+        <span class="tab">Web</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════ DO / DON'T ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Component patterns · Do / Don't</div>
+    <div class="stage-grid cols-2" style="gap:2px;">
+      <div class="callout-component callout-success">
+        <span class="ce-tag">Do — buttons</span>
+        <p>Pair every primary button with a clear secondary or cancel path. Never show three primaries in the same scope.</p>
+      </div>
+      <div class="callout-component callout-warning">
+        <span class="ce-tag">Don't — buttons</span>
+        <p>Don't use destructive styling for "Cancel" or "Close". Reserve Honest Ochre for actions that genuinely can't be undone.</p>
+      </div>
+      <div class="callout-component callout-success">
+        <span class="ce-tag">Do — focus</span>
+        <p>Always show the focus ring on keyboard focus. If you're styling a custom element, replicate the 2px Intentional Blue ring with 2px offset.</p>
+      </div>
+      <div class="callout-component callout-warning">
+        <span class="ce-tag">Don't — focus</span>
+        <p>Don't <code>outline:none</code> without a replacement focus indicator. This breaks accessibility for keyboard-only users.</p>
+      </div>
+      <div class="callout-component callout-success">
+        <span class="ce-tag">Do — color signaling</span>
+        <p>Pair color with an icon, label, or position. A red border alone is not enough — add an error message, an icon, or both.</p>
+      </div>
+      <div class="callout-component callout-warning">
+        <span class="ce-tag">Don't — color signaling</span>
+        <p>Don't rely on color alone to convey state. ~8% of users have color vision differences.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════ Whats next ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Not yet documented</div>
+    <p class="section-intro">Components below exist in the brand expression but haven't been formalized as DS components. Add when first needed:</p>
+    <ul style="font-family:var(--font-body); font-size:14px; line-height:1.8; padding-left:22px;">
+      <li><strong>Table</strong> — sort, sticky header, dense vs comfortable density</li>
+      <li><strong>Pagination</strong></li>
+      <li><strong>Breadcrumb</strong></li>
+      <li><strong>Avatar / People row</strong> — leverage portrait photography styling</li>
+      <li><strong>File upload / drop zone</strong></li>
+      <li><strong>Date picker</strong></li>
+      <li><strong>Slider / range</strong></li>
+      <li><strong>Progress · Stepper</strong></li>
+      <li><strong>Empty state</strong> — pattern using collage spots + CTA</li>
+      <li><strong>Skeleton loader</strong></li>
+    </ul>
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

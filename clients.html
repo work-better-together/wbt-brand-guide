@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Logos — Work Better Together</title>
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre: #B55312;
+      --ochre-light: #F5E8D8;
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6; }
+    .page { max-width: 960px; margin: 0 auto; padding: 64px 40px 120px; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 56px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+    .page-header .label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); display: block; margin-bottom: 8px; }
+    .page-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1; color: var(--ink); margin-bottom: 12px; }
+    .page-header p { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--ink); max-width: 560px; }
+
+    /* ── Intro ── */
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 36px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .intro h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+    .intro h2 strong {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .intro p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+    .intro p + p { margin-top: 10px; }
+
+    /* ── Stats bar ── */
+    .stats-bar { display: flex; gap: 0; margin-bottom: 48px; border: 1px solid var(--rule); }
+    .stat-cell { flex: 1; padding: 16px 20px; border-right: 1px solid var(--rule); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.02em; color: var(--ink); }
+    .stat-label { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-top: 2px; }
+
+    /* ── Section label ── */
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 28px; }
+
+    /* ── Logo grid ── */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 8px;
+    }
+    .logo-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+    }
+    .logo-thumb {
+      aspect-ratio: 4 / 3;
+      background: #ffffff;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-thumb img {
+      max-width: 78%;
+      max-height: 70%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      transition: transform 0.25s ease;
+    }
+    .logo-thumb:hover img { transform: scale(1.04); }
+    .logo-body { padding: 14px 18px 16px; }
+    .logo-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .logo-filename {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      word-break: break-all;
+    }
+
+    @media (max-width: 900px) { .logo-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .logo-grid { grid-template-columns: 1fr; } }
+
+    /* ── Lightbox ── */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(31,30,30,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 40px; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 85vh; object-fit: contain; background: #fff; padding: 40px; }
+    .lightbox-close { position: absolute; top: 20px; right: 28px; font-family: var(--font-mono); font-weight: 500; font-size: 13px; letter-spacing: 0.1em; color: #F9F8F2; cursor: pointer; text-transform: uppercase; }
+    .lightbox-close:hover { color: var(--calm-blue, #ACCDD9); }
+    .lightbox-caption { position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F9F8F2; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <h1>Client Logos</h1>
+    <p>The organizations Work Better Together has partnered with — for use on case studies, capabilities decks, and credibility surfaces.</p>
+  </header>
+
+  <div class="intro">
+    <div>
+      <h2>Roster of <strong>partners</strong></h2>
+    </div>
+    <div>
+      <p>A growing roster of clients across foundations, political and civic organizations, education systems, and mission-driven companies. Each logo here is the version cleared for proposal and deck use.</p>
+      <p>Click any tile to view the logo at full size. Add new clients to the <code style="font-family:var(--font-mono);font-size:12px;background:#f0efed;padding:1px 5px;border-radius:2px;">assets/Client Logos/</code> folder following the <code style="font-family:var(--font-mono);font-size:12px;background:#f0efed;padding:1px 5px;border-radius:2px;">WBT-client-logo-{slug}.png</code> naming pattern.</p>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="stat-num">19</div>
+      <div class="stat-label">Clients</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">PNG</div>
+      <div class="stat-label">Format · transparent</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">2026</div>
+      <div class="stat-label">Last updated</div>
+    </div>
+  </div>
+
+  <div class="section-label">Roster · A → Z</div>
+
+  <div class="logo-grid">
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-adoptions-together.png','Adoptions Together')">
+        <img src="assets/Client Logos/WBT-client-logo-adoptions-together.png" alt="Adoptions Together" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Adoptions Together</div>
+        <div class="logo-filename">WBT-client-logo-adoptions-together.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-allied-for-progress.png','Allied for Progress')">
+        <img src="assets/Client Logos/WBT-client-logo-allied-for-progress.png" alt="Allied for Progress" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Allied for Progress</div>
+        <div class="logo-filename">WBT-client-logo-allied-for-progress.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-august.png','August')">
+        <img src="assets/Client Logos/WBT-client-logo-august.png" alt="August" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">August</div>
+        <div class="logo-filename">WBT-client-logo-august.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-basic.png','Basic')">
+        <img src="assets/Client Logos/WBT-client-logo-basic.png" alt="Basic" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Basic</div>
+        <div class="logo-filename">WBT-client-logo-basic.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-casey-foundation.png','Casey Foundation')">
+        <img src="assets/Client Logos/WBT-client-logo-casey-foundation.png" alt="Casey Foundation" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Casey Foundation</div>
+        <div class="logo-filename">WBT-client-logo-casey-foundation.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-centennial-state-prosperity.png','Centennial State Prosperity')">
+        <img src="assets/Client Logos/WBT-client-logo-centennial-state-prosperity.png" alt="Centennial State Prosperity" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Centennial State Prosperity</div>
+        <div class="logo-filename">WBT-client-logo-centennial-state-prosperity.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-champ.png','Champ')">
+        <img src="assets/Client Logos/WBT-client-logo-champ.png" alt="Champ" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Champ</div>
+        <div class="logo-filename">WBT-client-logo-champ.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-climateworks.png','ClimateWorks')">
+        <img src="assets/Client Logos/WBT-client-logo-climateworks.png" alt="ClimateWorks" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">ClimateWorks</div>
+        <div class="logo-filename">WBT-client-logo-climateworks.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-dnc.png','DNC')">
+        <img src="assets/Client Logos/WBT-client-logo-dnc.png" alt="DNC" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">DNC</div>
+        <div class="logo-filename">WBT-client-logo-dnc.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-emilys-list.png','EMILY&apos;s List')">
+        <img src="assets/Client Logos/WBT-client-logo-emilys-list.png" alt="EMILY's List" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">EMILY&rsquo;s List</div>
+        <div class="logo-filename">WBT-client-logo-emilys-list.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-empower-project.png','Empower Project')">
+        <img src="assets/Client Logos/WBT-client-logo-empower-project.png" alt="Empower Project" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Empower Project</div>
+        <div class="logo-filename">WBT-client-logo-empower-project.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-maryland-childcare-network.png','Maryland Childcare Network')">
+        <img src="assets/Client Logos/WBT-client-logo-maryland-childcare-network.png" alt="Maryland Childcare Network" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Maryland Childcare Network</div>
+        <div class="logo-filename">WBT-client-logo-maryland-childcare-network.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-maryland-family-network.png','Maryland Family Network')">
+        <img src="assets/Client Logos/WBT-client-logo-maryland-family-network.png" alt="Maryland Family Network" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Maryland Family Network</div>
+        <div class="logo-filename">WBT-client-logo-maryland-family-network.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-mtrny.png','MTRNY')">
+        <img src="assets/Client Logos/WBT-client-logo-mtrny.png" alt="MTRNY" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">MTRNY</div>
+        <div class="logo-filename">WBT-client-logo-mtrny.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-nyc-community-schools.png','NYC Community Schools')">
+        <img src="assets/Client Logos/WBT-client-logo-nyc-community-schools.png" alt="NYC Community Schools" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">NYC Community Schools</div>
+        <div class="logo-filename">WBT-client-logo-nyc-community-schools.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-nyc-doe-oswp.png','NYC DOE OSWP')">
+        <img src="assets/Client Logos/WBT-client-logo-nyc-doe-oswp.png" alt="NYC DOE OSWP" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">NYC DOE OSWP</div>
+        <div class="logo-filename">WBT-client-logo-nyc-doe-oswp.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-pivot.png','Pivot')">
+        <img src="assets/Client Logos/WBT-client-logo-pivot.png" alt="Pivot" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Pivot</div>
+        <div class="logo-filename">WBT-client-logo-pivot.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-pivotal.png','Pivotal')">
+        <img src="assets/Client Logos/WBT-client-logo-pivotal.png" alt="Pivotal" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Pivotal</div>
+        <div class="logo-filename">WBT-client-logo-pivotal.png</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-thumb" onclick="openLightbox('assets/Client Logos/WBT-client-logo-planned-parenthood-for-america.png','Planned Parenthood for America')">
+        <img src="assets/Client Logos/WBT-client-logo-planned-parenthood-for-america.png" alt="Planned Parenthood for America" loading="lazy">
+      </div>
+      <div class="logo-body">
+        <div class="logo-name">Planned Parenthood for America</div>
+        <div class="logo-filename">WBT-client-logo-planned-parenthood-for-america.png</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">ESC · CLOSE</span>
+  <img id="lightbox-img" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script>
+  function openLightbox(url, caption) {
+    document.getElementById('lightbox-img').src = url;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').src = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swag — Work Better Together</title>
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #c8c8c8;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --accent: #1e4d5c;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre-light: #F5E8D8;
+
+      --steady-blue: #061A49;
+      --intentional-blue: #2531A5;
+      --clean-slate: #1E4D5C;
+      --calm-blue: #ACCDD9;
+      --gold: #CD9F36;
+      --ochre: #B55312;
+      --clear-white: #F9F8F2;
+      --grounded-black: #1F1E1E;
+
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6; }
+
+    .page { max-width: 960px; margin: 0 auto; padding: 64px 40px 120px; }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 56px;
+    }
+    .breadcrumb a { color: var(--ink); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--slate); }
+    .breadcrumb .sep { margin: 0 10px; color: var(--ink-faint); }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 80px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header .label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .page-header .lede {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--ink);
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 96px; }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+    }
+    .section-head .meta {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .section-intro {
+      font-family: var(--font-body);
+      color: var(--ink);
+      font-size: 15px;
+      max-width: 720px;
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+
+    /* ── Item grid ── */
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    .item-grid.three { grid-template-columns: repeat(3, 1fr); }
+
+    .item {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .item-image {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .item-image.tall { aspect-ratio: 4 / 5; }
+    .item-image.wide { aspect-ratio: 4 / 3; }
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .item-image.contain img { object-fit: contain; padding: 18px; }
+
+    .item-body {
+      padding: 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .item-eyebrow {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .item-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .item-desc {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+      margin-top: 4px;
+    }
+    .item-specs {
+      display: none;
+    }
+    .spec {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+      background: #f0efed;
+      color: var(--ink);
+    }
+    .spec.gold { background: rgba(205,159,54,0.15); color: var(--gold); }
+    .spec.blue { background: rgba(6,26,73,0.08); color: var(--steady-blue); }
+    .spec.ochre { background: rgba(181,83,18,0.12); color: var(--ochre); }
+
+    /* ── Hero feature ── */
+    .feature {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      overflow: hidden;
+    }
+    .feature .item-image { aspect-ratio: auto; height: 100%; min-height: 480px; }
+    .feature .item-body { padding: 48px 56px; justify-content: center; }
+    .feature .item-eyebrow { margin-bottom: 4px; }
+    .feature .item-title { font-size: 38px; line-height: 1; margin-bottom: 14px; }
+    .feature .item-desc { font-size: 16px; max-width: 420px; }
+
+    /* ── Concept callout ── */
+    .callout {
+      background: var(--steady-blue);
+      color: var(--clear-white);
+      padding: 64px 56px;
+      margin: 0 0 96px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .callout-eyebrow {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .callout-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      color: var(--clear-white);
+    }
+    .callout-body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--clear-white);
+      max-width: 480px;
+      line-height: 1.65;
+    }
+    .callout-mono {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--calm-blue);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      align-self: stretch;
+      padding: 8px 0;
+      border-left: 1px solid rgba(172,205,217,0.3);
+      padding-left: 18px;
+    }
+
+    /* ── Ideas list ── */
+    .ideas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .idea {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-style: dashed;
+      padding: 28px 28px 32px;
+    }
+    .idea .num {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .idea h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .idea p {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ── Footer note ── */
+    .footer-note {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--ink);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 900px) {
+      .item-grid, .item-grid.three, .ideas { grid-template-columns: 1fr; }
+      .feature { grid-template-columns: 1fr; }
+      .feature .item-image { min-height: 320px; }
+      .callout { grid-template-columns: 1fr; padding: 40px 32px; }
+      .callout-mono { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <!-- Breadcrumb -->
+<!-- Page header -->
+    <header class="page-header">
+      <h1>Tactile Reminders</h1>
+      <p class="lede">Apparel, swag, and physical applications of the brand. Quiet, considered, and built to last — the kind of objects people actually want to keep on their desk or pull out of a drawer for years.</p>
+    </header>
+
+    <!-- ── 01 · Caps ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>01 · Caps</h2>
+        <span class="meta">3 colorways · Embroidered</span>
+      </div>
+      <p class="section-intro">A relaxed unstructured dad cap with the wordmark embroidered across the front. The serifed letterforms read as quietly editorial — not loud, not corporate. Cotton twill, brass eyelets, curved brim.</p>
+
+      <div class="item-grid three">
+
+        <div class="item">
+          <div class="item-image"><img src="assets/Swag/WBT-Blue-Cap.png" alt="Steady Blue cap with white wordmark"></div>
+          <div class="item-body">
+            <div class="item-eyebrow">Cap · 01</div>
+            <div class="item-title">Steady Blue / Clear White</div>
+            <div class="item-desc">The hero. Deep navy crown with the wordmark embroidered in clear white.</div>
+            <div class="item-specs">
+              <span class="spec blue">#061A49</span>
+              <span class="spec">Cotton twill</span>
+              <span class="spec">Embroidered</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-image"><img src="assets/Swag/WBT-White-Hat.png" alt="Clear White cap with grounded black wordmark"></div>
+          <div class="item-body">
+            <div class="item-eyebrow">Cap · 02</div>
+            <div class="item-title">Clear White / Grounded Black</div>
+            <div class="item-desc">A softer, summer-weight take — natural cotton with the wordmark in deep black.</div>
+            <div class="item-specs">
+              <span class="spec">#F9F8F2</span>
+              <span class="spec">Cotton twill</span>
+              <span class="spec">Embroidered</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-image"><img src="assets/Swag/WBT-White-Black-Hat.png" alt="Clear White cap with black brim"></div>
+          <div class="item-body">
+            <div class="item-eyebrow">Cap · 03</div>
+            <div class="item-title">Two-tone · Cream &amp; Black</div>
+            <div class="item-desc">Contrast brim. The collector’s piece — limited run, gifted at retreats and milestones.</div>
+            <div class="item-specs">
+              <span class="spec">Two-tone</span>
+              <span class="spec gold">Limited</span>
+              <span class="spec">Embroidered</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Concept callout ── -->
+    <div class="callout">
+      <div class="callout-mono">Object · Reminder · Ritual</div>
+      <div>
+        <div class="callout-eyebrow">On the philosophy</div>
+        <div class="callout-title">A piece of merch should feel <strong>earned</strong>, not branded.</div>
+        <p class="callout-body">Our merch isn’t marketing. It’s a tactile artifact of the work — given to clients after long engagements, worn by facilitators in the room, kept by the team as a reminder of why this matters. Quality over volume. Restraint over reach.</p>
+      </div>
+    </div>
+
+    <!-- ── 02 · Beanies ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>02 · Beanies</h2>
+        <span class="meta">Cuffed knit · Monogram</span>
+      </div>
+      <p class="section-intro">Heavyweight ribbed knit with the monogram embroidered on the cuff. Wear it to the off-site, the morning walk, or the airport. The monogram lets the form do the talking when the wordmark would be too much.</p>
+
+      <div class="item-grid">
+
+        <div class="item">
+          <div class="item-image"><img src="assets/Swag/WBT-Blue-Beanie.png" alt="Intentional Blue beanie with white monogram"></div>
+          <div class="item-body">
+            <div class="item-eyebrow">Beanie · 01</div>
+            <div class="item-title">Intentional Blue</div>
+            <div class="item-desc">Saturated cobalt knit with the monogram in clear white on the cuff.</div>
+            <div class="item-specs">
+              <span class="spec blue">#2531A5</span>
+              <span class="spec">Ribbed knit</span>
+              <span class="spec">Embroidered cuff</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-image"><img src="assets/Swag/WBT-Blue-Beanie-Closeup.png" alt="Beanie cuff closeup"></div>
+          <div class="item-body">
+            <div class="item-eyebrow">Detail</div>
+            <div class="item-title">Monogram on the cuff</div>
+            <div class="item-desc">Embroidered to scale — the monogram sits about 22mm tall, optically centered on the folded cuff.</div>
+            <div class="item-specs">
+              <span class="spec">22mm mark</span>
+              <span class="spec">Tone-on-tone option</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 03 · Pins ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>03 · Enamel pins</h2>
+        <span class="meta">5 colorways · Hard enamel</span>
+      </div>
+      <p class="section-intro">Hard enamel monogram pins in the brand's full palette range. Given as recognition tokens — for clients who finish an engagement, facilitators who ship a milestone, anyone who shows up and does the work.</p>
+
+      <div class="item-grid">
+
+        <div class="feature">
+          <div class="item-image contain">
+            <img src="assets/Swag/WBT-Pins.png" alt="Three pin colorways">
+          </div>
+          <div class="item-body">
+            <div class="item-eyebrow">Pin · Set</div>
+            <div class="item-title">The collection</div>
+            <div class="item-desc">Three colorways in soft and saturated tones — Calm Blue with Clean Slate, Honest Ochre with Clear White, and Intentional Blue with Clear White. Each numbered and presented on a kraft card.</div>
+            <div class="item-specs">
+              <span class="spec">28mm tall</span>
+              <span class="spec">Hard enamel</span>
+              <span class="spec">Butterfly clutch</span>
+              <span class="spec gold">Numbered</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-image contain">
+            <img src="assets/Swag/WBT-Blue-Gold-Pin.png" alt="Gold pin on Steady Blue">
+          </div>
+          <div class="item-body">
+            <div class="item-eyebrow">Pin · Premium</div>
+            <div class="item-title">Steady Blue / Radiant Gold</div>
+            <div class="item-desc">The flagship pin. Polished gold plating against deep navy enamel — given at year-end and on completion of major engagements.</div>
+            <div class="item-specs">
+              <span class="spec gold">Gold-plated</span>
+              <span class="spec blue">#061A49</span>
+              <span class="spec">Hard enamel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-image contain">
+            <img src="assets/Swag/WBT-Black-Pin.png" alt="Silver pin on Grounded Black">
+          </div>
+          <div class="item-body">
+            <div class="item-eyebrow">Pin · Quiet</div>
+            <div class="item-title">Grounded Black / Silver</div>
+            <div class="item-desc">A more reserved counterpart. Polished silver plating against deep black enamel — for the lapel, the bag strap, the desk tray.</div>
+            <div class="item-specs">
+              <span class="spec">Silver-plated</span>
+              <span class="spec">#1F1E1E</span>
+              <span class="spec">Hard enamel</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 04 · Future ideas ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>04 · On the horizon</h2>
+        <span class="meta">Concepts · Not yet produced</span>
+      </div>
+      <p class="section-intro">Items being explored. Each one held to the same standard — useful objects with a long life, made well, given with intention.</p>
+
+      <div class="ideas">
+        <div class="idea">
+          <div class="num">01</div>
+          <h4>Field notebook</h4>
+          <p>Pocket-size, lay-flat binding. Calm Blue cover, monogram debossed. For coaching sessions, off-sites, and the in-between moments.</p>
+        </div>
+        <div class="idea">
+          <div class="num">02</div>
+          <h4>Heavyweight tote</h4>
+          <p>14oz natural canvas, gusseted. Wordmark on the front in Grounded Black; monogram tag on the inside seam.</p>
+        </div>
+        <div class="idea">
+          <div class="num">03</div>
+          <h4>Crewneck sweatshirt</h4>
+          <p>Mid-weight French terry. Cream with grounded-black wordmark on the chest, or steady-blue with tone-on-tone.</p>
+        </div>
+        <div class="idea">
+          <div class="num">04</div>
+          <h4>Ceramic mug</h4>
+          <p>Stoneware, thrown-feel handle. Monogram glazed on one side. Clear white body, calm-blue interior.</p>
+        </div>
+        <div class="idea">
+          <div class="num">05</div>
+          <h4>Embroidered patch</h4>
+          <p>Iron-on or sew-on monogram patch in the full color range. For jackets, bags, the back of a chair you love.</p>
+        </div>
+        <div class="idea">
+          <div class="num">06</div>
+          <h4>Coaching deck</h4>
+          <p>A boxed set of prompt cards in heavy stock. Used in session, gifted as a takeaway. The wordmark on the case, illustrations on the cards.</p>
+        </div>
+      </div>
+
+      <p class="footer-note">If you’re producing merch under the WBT name, talk to brand first. Quality, fit, and finish matter as much as the embroidery — every object that leaves with the wordmark on it has to be worth keeping.</p>
+    </section>
+
+  </main>
+<script src="nav.js"></script>
+</body>
+</html>

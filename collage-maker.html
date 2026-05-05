@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collage Builder — Work Better Together</title>
+<style>
+  @font-face {
+    font-family: 'League Spartan';
+    src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype');
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: 'Lora';
+    src: url('assets/Fonts/Lora-Variable.ttf') format('truetype');
+    font-weight: 400 700;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Lora';
+    src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype');
+    font-weight: 400 700;
+    font-style: italic;
+  }
+  @font-face {
+    font-family: 'Inconsolata';
+    src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype');
+    font-weight: 200 900;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1F1E1E;
+    --ink-muted: #6b6b6b;
+    --ink-faint: #c8c8c8;
+    --bg: #faf9f7;
+    --bg-card: #ffffff;
+    --rule: #e4e2de;
+    --accent: #1E4D5C;
+    --accent-light: #E0E8EB;
+    --accent-deep: #061A49;
+    --slate: #1E4D5C;
+    --slate-light: #E0E8EB;
+    --gold: #CD9F36;
+    --ochre: #B55312;
+    --ochre-light: #F5E8D8;
+    --calm: #ACCDD9;
+    --intentional: #2531A5;
+    --paper: #F9F8F2;
+    --black: #1F1E1E;
+
+    --font-display: 'League Spartan', sans-serif;
+    --font-body: 'Lora', serif;
+    --font-mono: 'Inconsolata', monospace;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    height: 100vh;
+    overflow: hidden;
+  }
+  /* Body becomes a flex column so the brand-guide nav (injected by nav.js) sits
+     above the .layout, and the layout consumes the remaining viewport height. */
+  body { display: flex; flex-direction: column; }
+  .layout { flex: 1; min-height: 0; }
+
+  /* Buttons — canonical from Components.html */
+  .btn {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    text-decoration: none;
+  }
+  .btn:focus-visible { outline: 2px solid var(--intentional); outline-offset: 2px; }
+
+  .btn-primary { background: var(--intentional); color: var(--paper); border-color: var(--intentional); }
+  .btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+  .btn-primary[disabled] { background: var(--intentional); opacity: 0.4; cursor: not-allowed; }
+
+  .btn-secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+  .btn-secondary[disabled] { opacity: 0.4; cursor: not-allowed; }
+
+  .btn-sm { padding: 8px 14px; font-size: 11px; min-height: 36px; letter-spacing: 0.14em; }
+
+  /* ── Layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+  }
+
+  /* ── Rail toolbar (concept + shuffle + export) ── */
+  .rail-toolbar {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .toolbar-field { display: flex; flex-direction: column; gap: 6px; }
+  .toolbar-field label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .toolbar-field select,
+  .toolbar-field input[type="text"] {
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 9px 12px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    appearance: none;
+    color: var(--ink);
+    width: 100%;
+  }
+  .toolbar-field input[type="text"]:focus {
+    outline: none;
+    border-color: var(--ink);
+  }
+
+  /* Combobox popover (concept search) */
+  .combobox { position: relative; }
+  .combobox-popover {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--ink);
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 50;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .combobox-suggestion {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 13px;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.3;
+  }
+  .combobox-suggestion:last-child { border-bottom: none; }
+  .combobox-suggestion:hover,
+  .combobox-suggestion.active { background: var(--bg); }
+  .combobox-suggestion .meta {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+  .combobox-suggestion mark {
+    background: rgba(205, 159, 54, 0.25);
+    color: var(--ink);
+    padding: 0 1px;
+  }
+  .combobox-empty {
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink);
+  }
+  .toolbar-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .toolbar-buttons .btn { width: 100%; }
+  /* Concept input + inline shuffle icon button */
+  .combobox-row {
+    display: flex;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .combobox-row input[type="text"] { flex: 1; min-width: 0; }
+  .btn-icon {
+    flex: 0 0 auto;
+    width: 36px;
+    padding: 0;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .btn-icon:hover { background: var(--ink); border-color: var(--ink); color: var(--bg-card); }
+  .btn-icon:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+  /* Toast confirmation for saves */
+  .toast {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    background: var(--paper);
+    border: 1px solid var(--slate);
+    color: var(--slate);
+  }
+  .toast.toast--error {
+    border-color: var(--ochre);
+    color: var(--ochre);
+  }
+
+  /* ── Left rail ── */
+  .rail {
+    background: var(--bg-card);
+    border-right: 1px solid var(--rule);
+    overflow-y: auto;
+    padding: 24px;
+  }
+  .rail-section { margin-bottom: 28px; }
+  .rail-section:last-child { margin-bottom: 0; }
+  .rail-label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .rail-label .count {
+    font-size: 9px;
+    color: var(--ink);
+    opacity: 0.6;
+  }
+
+  /* Color swatches */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  /* BG swatches → 3 columns × 3 rows so the 9 options sit cleanly. */
+  .swatch-grid--bg {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  /* Halve BG swatch height so the rail is more compact (2:1 instead of 1:1). */
+  .swatch-grid--bg .swatch {
+    aspect-ratio: 2 / 1;
+  }
+  /* Compact spot-color bar — sits above the spot shapes; spans the full rail
+     width so it lines up with the 3-column thumbnail grid below. */
+  .swatch-grid--compact {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  .swatch-grid--compact .swatch {
+    aspect-ratio: 3 / 1;
+  }
+  /* Transparent swatch — checkerboard pattern so it reads as "no fill". */
+  .swatch--transparent {
+    background-image:
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 12px 12px;
+    background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+    background-color: #fff;
+  }
+  .swatch {
+    aspect-ratio: 1;
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.1s;
+  }
+  .swatch:hover { transform: scale(1.05); }
+  .swatch.active { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .swatch-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    text-align: center;
+    margin-top: 4px;
+  }
+  .swatch-attr {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-style: italic;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.2;
+    min-height: 24px;
+  }
+  .swatch-cell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Asset thumbnail grid */
+  .thumb-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  /* Spot picker = 3×3 (9 unique shapes, all rendered in the active spot color). */
+  .thumb-grid--3x3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .thumb {
+    aspect-ratio: 1;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, transform 0.1s;
+  }
+  .thumb:hover { border-color: var(--ink); }
+  .thumb.active {
+    border-color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+  }
+  .thumb-empty {
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: var(--ink);
+    padding: 16px 0;
+    text-align: center;
+    grid-column: 1 / -1;
+    font-style: italic;
+  }
+
+  /* Concept hint */
+  .concept-hint {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.5;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-left: 2px solid var(--slate);
+    margin-bottom: 12px;
+  }
+  .concept-hint strong {
+    font-style: normal;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ── Stage ── */
+  .stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    overflow: auto;
+    background:
+      linear-gradient(45deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%),
+      linear-gradient(-45deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%),
+      var(--bg);
+    background-size: 40px 40px;
+  }
+
+  .canvas-wrap {
+    position: relative;
+    width: min(72vh, 72vw);
+    aspect-ratio: 1;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 12px 48px rgba(0,0,0,0.08);
+  }
+
+  .canvas {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: var(--paper);
+    user-select: none;
+  }
+  /* When BG = Transparent, show a checkerboard underlay so the user can see
+     the canvas (the export still produces real PNG alpha, no checkerboard). */
+  .canvas--transparent {
+    background:
+      linear-gradient(45deg, #d8d6d2 25%, transparent 25%),
+      linear-gradient(-45deg, #d8d6d2 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #d8d6d2 75%),
+      linear-gradient(-45deg, transparent 75%, #d8d6d2 75%) !important;
+    background-size: 32px 32px !important;
+    background-position: 0 0, 0 16px, 16px -16px, -16px 0 !important;
+    background-color: #f4f3ef !important;
+  }
+
+  .layer {
+    position: absolute;
+    pointer-events: auto;
+    cursor: grab;
+    transform-origin: center center;
+    /* prevent native image drag */
+    -webkit-user-drag: none;
+    user-drag: none;
+  }
+  .layer.dragging { cursor: grabbing; }
+  /* Inner element owns rotation + flip; image fills it. The outer .layer keeps
+     its rectangle in screen-space so handles/toolbar stay readable while rotated. */
+  .layer-inner {
+    position: absolute;
+    inset: 0;
+    transform-origin: center center;
+    pointer-events: none;
+  }
+  .layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+  }
+  .layer.selected {
+    outline: 1px dashed var(--slate);
+    outline-offset: 2px;
+  }
+
+  /* Handles are always visible on populated layers (more discoverable) */
+  .handle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--paper);
+    border: 1px solid var(--slate);
+    cursor: nwse-resize;
+    z-index: 10;
+    opacity: 0.55;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .layer:hover .handle,
+  .layer.selected .handle { opacity: 1; }
+  .handle:hover { transform: scale(1.2); opacity: 1; }
+  .handle.br { right: -7px; bottom: -7px; }
+
+  /* Layer toolbar — rotate, flip, remove buttons sit above each layer. */
+  .layer-toolbar {
+    position: absolute;
+    top: -32px;
+    right: 0;
+    display: flex;
+    gap: 4px;
+    z-index: 11;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .layer:hover .layer-toolbar,
+  .layer.selected .layer-toolbar { opacity: 1; }
+  .layer-tool {
+    width: 24px;
+    height: 24px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.12s;
+  }
+  .layer-tool:hover { background: var(--slate); }
+  .layer-tool--remove:hover { background: var(--ochre); }
+
+  /* Status / hint strip */
+  .stage-hint {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    padding: 8px 14px;
+    pointer-events: none;
+  }
+
+  /* Loading state for Airtable */
+  .loading-pill {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 2px 8px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="rail">
+
+    <!-- Toolbar -->
+    <div class="rail-toolbar">
+      <div class="toolbar-field combobox" id="concept-combobox">
+        <label for="concept-input">Concept</label>
+        <div class="combobox-row">
+          <input id="concept-input" type="text" autocomplete="off" spellcheck="false"
+                 placeholder="Type any concept… (e.g. feedback, growth)">
+          <button class="btn-icon" id="shuffle-btn" type="button"
+                  title="Shuffle — re-roll spot, scribble, illustrations on this concept"
+                  aria-label="Shuffle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 3h5v5"/>
+              <path d="M4 20 21 3"/>
+              <path d="M21 16v5h-5"/>
+              <path d="m15 15 6 6"/>
+              <path d="M4 4l5 5"/>
+            </svg>
+          </button>
+        </div>
+        <div class="combobox-popover" id="concept-suggestions" hidden></div>
+      </div>
+      <div class="toolbar-buttons">
+        <button class="btn btn-primary btn-sm" id="export-btn">Export PNG</button>
+        <button class="btn btn-secondary btn-sm" id="save-btn" title="Save to Brand Guide → Collage Elements page">Save to Brand Guide</button>
+      </div>
+      <div class="toast" id="save-toast" role="status" aria-live="polite" hidden></div>
+    </div>
+
+    <!-- Background -->
+    <div class="rail-section">
+      <div class="rail-label">Background <span class="count" id="bg-count"></span></div>
+      <div class="swatch-grid swatch-grid--bg" id="bg-swatches"></div>
+    </div>
+
+    <!-- Spot (shapes + color sit together) -->
+    <div class="rail-section">
+      <div class="rail-label">Watercolor Spot <span class="count" id="spot-count"></span></div>
+      <div class="swatch-grid swatch-grid--compact" id="spot-color-swatches"></div>
+      <div class="thumb-grid thumb-grid--3x3" id="spot-thumbs"></div>
+    </div>
+
+    <!-- Scribble -->
+    <div class="rail-section">
+      <div class="rail-label">Scribble <span class="count" id="scribble-count"></span></div>
+      <div class="thumb-grid" id="scribble-thumbs"></div>
+    </div>
+
+    <!-- Illustration -->
+    <div class="rail-section">
+      <div class="rail-label">
+        Illustrations <span class="count" id="illus-count"></span>
+      </div>
+      <div class="concept-hint" id="concept-hint">
+        <strong>Tip</strong>
+        Type any concept above to surface on-brand illustrations. Click thumbs to add up to 3.
+      </div>
+      <div class="thumb-grid" id="illus-thumbs">
+        <div class="thumb-empty">Pick a concept to load illustrations.</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <main class="stage">
+    <div class="canvas-wrap">
+      <div class="canvas" id="canvas"></div>
+    </div>
+  </main>
+
+</div>
+
+<div class="stage-hint">Click a layer to select · Drag to move · Corner to resize · × to remove</div>
+
+<script>
+/* ───────────────────────────────────────────────────────────
+   ASSET MANIFEST
+─────────────────────────────────────────────────────────── */
+
+const COLORS = [
+  { id: 'paper',       name: 'Clear White',        hex: '#F9F8F2', attr: 'open · neutral' },
+  { id: 'calm',        name: 'Calm Blue',          hex: '#ACCDD9', attr: 'reflect · slow down' },
+  { id: 'gold',        name: 'Radiant Gold',       hex: '#CD9F36', attr: 'warm · insight' },
+  { id: 'ochre',       name: 'Honest Ochre',       hex: '#B55312', attr: 'tension · truth' },
+  { id: 'clean',       name: 'Clean Slate',        hex: '#1E4D5C', attr: 'foundation · trust' },
+  { id: 'steady',      name: 'Steady Blue',        hex: '#061A49', attr: 'leadership · safety' },
+  { id: 'intentional', name: 'Intentional Blue',   hex: '#2531A5', attr: 'action · purpose' },
+  { id: 'black',       name: 'Grounded Black',     hex: '#1F1E1E', attr: 'solid · direct' },
+];
+
+/* Background picker = 8 brand colors + Transparent (9 total, 3×3) */
+const BG_OPTIONS = [
+  ...COLORS,
+  { id: 'transparent', name: 'Transparent',        hex: null,      attr: 'no fill · alpha export' },
+];
+
+/* Spots library — 9 unique shapes × 7 brand colors, all hand-painted variants
+   live in `assets/Watercolor Textures/Spots/{Color}/`.
+   Source of truth: shape index (1-9) + active spotColorId → resolved path. */
+const SPOT_COLOR_FOLDERS = {
+  black:       { folder: 'Grounded Black',   prefix: 'Grounded-Black' },
+  calm:        { folder: 'Calm Blue',        prefix: 'Calm-Blue' },
+  gold:        { folder: 'Radiant Gold',     prefix: 'Gold' },          // filename uses "Gold", not "Radiant-Gold"
+  ochre:       { folder: 'Honest Ochre',     prefix: 'Honest-Ochre' },
+  clean:       { folder: 'Clean Slate',      prefix: 'Clean-Slate' },
+  steady:      { folder: 'Steady Blue',      prefix: 'Steady-Blue' },
+  intentional: { folder: 'Intentional Blue', prefix: 'Intentional-Blue' },
+};
+function spotSrc(idx, colorId) {
+  const m = SPOT_COLOR_FOLDERS[colorId] || SPOT_COLOR_FOLDERS.black;
+  const folder = m.folder.replace(/ /g, '%20');
+  return `assets/Watercolor%20Textures/Spots/${folder}/WBT-20260403-${m.prefix}-Watercolor-Spots-${idx}.png`;
+}
+const SPOTS = Array.from({ length: 9 }, (_, i) => ({ idx: i + 1, name: `Shape ${i + 1}` }));
+
+const SCRIBBLES = [
+  { src: 'assets/Scribbles/WBT-scribble-cascading-ovals.png',     name: 'Cascading Ovals' },
+  { src: 'assets/Scribbles/WBT-scribble-double-oval-tail.png',    name: 'Double Oval Tail' },
+  { src: 'assets/Scribbles/WBT-scribble-heart-black-converted.png', name: 'Heart' },
+  { src: 'assets/Scribbles/WBT-scribble-long-sweep-spiral.png',   name: 'Long Sweep Spiral' },
+  { src: 'assets/Scribbles/WBT-scribble-loop-wavy-tail.png',      name: 'Loop Wavy Tail' },
+  { src: 'assets/Scribbles/WBT-scribble-looping-wave.png',        name: 'Looping Wave' },
+  { src: 'assets/Scribbles/WBT-scribble-overlapping-ovals.png',   name: 'Overlapping Ovals' },
+  { src: 'assets/Scribbles/WBT-scribble-s-curve-loop.png',        name: 'S-Curve Loop' },
+  { src: 'assets/Scribbles/WBT-scribble-sweep-with-leaves.png',   name: 'Sweep With Leaves' },
+  { src: 'assets/Scribbles/WBT-scribble-swooping-line-leaves.png', name: 'Swooping Line Leaves' },
+];
+
+/* Static vintage etched library — concept-grouped (mirrors Collage Elements.html) */
+const STATIC_CONCEPTS = [
+  {
+    id: 'perception',
+    name: 'Perception & Bias',
+    bgColorId: 'calm',
+    blurb: 'Use for assessment, perception & bias, reflection.',
+    images: [
+      'assets/Illustrations/Eye.png',
+      'assets/Illustrations/Eye-Rays.png',
+      'assets/Illustrations/Gold-Blue-Eye.png',
+      'assets/Illustrations/Hands-With-Eyes.png',
+      'assets/Illustrations/Mirror.png',
+    ],
+  },
+  {
+    id: 'emotional-intelligence',
+    name: 'Emotional Intelligence',
+    bgColorId: 'ochre',
+    blurb: 'Use for emotional intelligence, feedback, contact.',
+    images: [
+      'assets/Illustrations/Heart.png',
+      'assets/Illustrations/Heart-Tablet.png',
+      'assets/Illustrations/Heart-Tablet-2.png',
+    ],
+  },
+  {
+    id: 'time-pacing',
+    name: 'Time & Pacing',
+    bgColorId: 'clean',
+    blurb: 'Use for assessment (stopwatch), stress, agenda.',
+    images: [
+      'assets/Illustrations/Hourglass.png',
+      'assets/Illustrations/Watch.png',
+    ],
+  },
+  {
+    id: 'growth-development',
+    name: 'Growth & Development',
+    bgColorId: 'gold',
+    blurb: 'Use for growth, development, leadership.',
+    images: [
+      'assets/Illustrations/Key.png',
+      'assets/Illustrations/Open-Doors.png',
+      'assets/Illustrations/Map.png',
+    ],
+  },
+  {
+    id: 'renewal-resilience',
+    name: 'Renewal & Resilience',
+    bgColorId: 'calm',
+    blurb: 'Use for renewal, resilience, psychological safety.',
+    images: [
+      'assets/Illustrations/Roots.png',
+      'assets/Illustrations/Tree-Roots.png',
+      'assets/Illustrations/Nest.png',
+      'assets/Illustrations/Nest-Bird.png',
+      'assets/Illustrations/Red-Butterfly.png',
+    ],
+  },
+  {
+    id: 'energy-spotlight',
+    name: 'Light, Energy & Spotlight',
+    bgColorId: 'gold',
+    blurb: 'Use for motivation, brainstorming, team spotlight.',
+    images: [
+      'assets/Illustrations/Sun.png',
+      'assets/Illustrations/Sun2.png',
+      'assets/Illustrations/Rays.png',
+      'assets/Illustrations/Star.png',
+      'assets/Illustrations/Star-Colors.png',
+    ],
+  },
+];
+
+/* Airtable concept library — fetched live */
+const AIRTABLE = {
+  TOKEN:   'patfBEWJ2bJaznYk6.f5416b66a6ff5858152a5c903efd5e6f820046aa8aaa5c41575fe9b7ef2ef1ae',
+  BASE_ID: 'appXa8GBjPJJnztSd',
+  TABLE:   'tblXQBLJF6MmzA3qW',
+  VIEW:    'viw3oCcP67Iv2td3V',
+};
+
+/* Airtable concept type → default brand color id */
+const TYPE_TO_BG = {
+  'Services':      'steady',
+  'Content Focus': 'clean',
+  'Facilitation':  'gold',
+};
+
+/* ───────────────────────────────────────────────────────────
+   STATE
+─────────────────────────────────────────────────────────── */
+
+const MAX_ILLUSTRATIONS = 3;
+
+const state = {
+  bgColorId: 'paper',
+  userPickedBg: false, // true once Jenna/Stacy click a swatch — concepts never overwrite their choice
+  spotColorId: 'black',// brand color id — selects which spot color folder to load from
+  spot: null,          // { idx, src, x, y, w, h, rot, flipX, flipY }
+  scribble: null,      // { src, x, y, w, h }
+  illustrations: [],   // up to MAX_ILLUSTRATIONS of { src, x, y, w, h }
+  selected: null,      // 'spot' | 'scribble' | 'illustration:0..2' | null
+  concept: null,       // concept object
+  concepts: [...STATIC_CONCEPTS],  // populated with Airtable on load
+};
+
+const CANVAS_SIZE = 1000; // logical units in CSS-px world; the canvas-wrap clamps actual on-screen
+
+/* ───────────────────────────────────────────────────────────
+   RECOLOR UTILITY — turn any PNG silhouette into target hex
+   Cache by `${src}|${hex}` to avoid re-rendering on every paint.
+─────────────────────────────────────────────────────────── */
+
+const recolorCache = new Map();
+
+function recolorPNG(src, hex) {
+  const cacheKey = `${src}|${hex}`;
+  if (recolorCache.has(cacheKey)) return Promise.resolve(recolorCache.get(cacheKey));
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth;
+      c.height = img.naturalHeight;
+      const ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      ctx.globalCompositeOperation = 'source-in';
+      ctx.fillStyle = hex;
+      ctx.fillRect(0, 0, c.width, c.height);
+      const dataUrl = c.toDataURL('image/png');
+      recolorCache.set(cacheKey, dataUrl);
+      resolve(dataUrl);
+    };
+    img.onerror = () => reject(new Error(`Failed to load: ${src}`));
+    img.src = src;
+  });
+}
+
+/* ───────────────────────────────────────────────────────────
+   RENDER
+─────────────────────────────────────────────────────────── */
+
+const $canvas = document.getElementById('canvas');
+
+function colorById(id) { return COLORS.find(c => c.id === id); }
+function bgOptionById(id) { return BG_OPTIONS.find(o => o.id === id) || BG_OPTIONS[0]; }
+
+/* getLayer / setLayer abstract over the dotted-key for illustrations
+   ('illustration:0' indexes state.illustrations[0]). */
+function getLayer(kind) {
+  if (kind === 'spot') return state.spot;
+  if (kind === 'scribble') return state.scribble;
+  if (kind && kind.startsWith('illustration:')) {
+    const i = parseInt(kind.split(':')[1], 10);
+    return state.illustrations[i];
+  }
+  return null;
+}
+function setLayer(kind, value) {
+  if (kind === 'spot') state.spot = value;
+  else if (kind === 'scribble') state.scribble = value;
+  else if (kind && kind.startsWith('illustration:')) {
+    const i = parseInt(kind.split(':')[1], 10);
+    if (value === null) state.illustrations.splice(i, 1);
+    else state.illustrations[i] = value;
+  }
+}
+
+function render() {
+  const bg = bgOptionById(state.bgColorId);
+  if (bg.id === 'transparent') {
+    $canvas.classList.add('canvas--transparent');
+    $canvas.style.background = '';
+  } else {
+    $canvas.classList.remove('canvas--transparent');
+    $canvas.style.background = bg.hex;
+  }
+
+  // wipe and redraw layers in fixed z-order: spot → scribble → illustrations
+  $canvas.innerHTML = '';
+
+  if (state.spot) {
+    renderLayer('spot', state.spot);
+  }
+  if (state.scribble) renderLayer('scribble', state.scribble);
+  state.illustrations.forEach((il, i) => renderLayer(`illustration:${i}`, il));
+
+  // refresh active states on pickers
+  document.querySelectorAll('#bg-swatches .swatch').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === state.bgColorId);
+  });
+  document.querySelectorAll('#spot-color-swatches .swatch').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === state.spotColorId);
+  });
+  document.querySelectorAll('#spot-thumbs .thumb').forEach(el => {
+    el.classList.toggle('active', !!state.spot && Number(el.dataset.idx) === state.spot.idx);
+  });
+  document.querySelectorAll('#scribble-thumbs .thumb').forEach(el => {
+    el.classList.toggle('active', state.scribble && el.dataset.src === state.scribble.src);
+  });
+  document.querySelectorAll('#illus-thumbs .thumb').forEach(el => {
+    el.classList.toggle('active', state.illustrations.some(il => il.src === el.dataset.src));
+  });
+
+  // Keep the "X/3 placed" badge live
+  const illusCountEl = document.getElementById('illus-count');
+  if (illusCountEl && state.concept) {
+    const images = (state.concept.images || []).length;
+    illusCountEl.textContent = images
+      ? `${state.illustrations.length}/${MAX_ILLUSTRATIONS} placed · ${images} available`
+      : '';
+  }
+}
+
+function renderLayer(kind, layer, opts = {}) {
+  const wrap = document.createElement('div');
+  wrap.className = 'layer' + (kind === 'spot' ? ' layer--spot' : '') + (state.selected === kind ? ' selected' : '');
+  wrap.dataset.kind = kind;
+
+  // percent-based positioning so canvas can scale freely
+  wrap.style.left   = (layer.x * 100) + '%';
+  wrap.style.top    = (layer.y * 100) + '%';
+  wrap.style.width  = (layer.w * 100) + '%';
+  wrap.style.height = (layer.h * 100) + '%';
+
+  // Image lives in an inner wrapper that owns the rotation+flip transform.
+  // Keeping it on a child means the toolbar/handle stay in screen-aligned space.
+  const inner = document.createElement('div');
+  inner.className = 'layer-inner';
+  inner.style.transform = `rotate(${layer.rot || 0}deg) scale(${layer.flipX ? -1 : 1}, ${layer.flipY ? -1 : 1})`;
+
+  const img = document.createElement('img');
+  img.alt = '';
+  inner.appendChild(img);
+  wrap.appendChild(inner);
+
+  if (opts.recolor) {
+    // Recolor async; fall back to the original src if recolor fails
+    recolorPNG(layer.src, opts.recolor)
+      .then(url => { img.src = url; })
+      .catch(() => { img.src = layer.src; });
+  } else {
+    img.src = layer.src;
+  }
+
+  // Resize handle (always on populated layers; CSS fades it on hover/select)
+  const handle = document.createElement('div');
+  handle.className = 'handle br';
+  handle.dataset.role = 'resize';
+  handle.title = 'Drag to resize';
+  wrap.appendChild(handle);
+
+  // Layer toolbar — rotate, flip, remove. Only shown on selected/hover via CSS.
+  const toolbar = document.createElement('div');
+  toolbar.className = 'layer-toolbar';
+  toolbar.innerHTML = `
+    <button class="layer-tool" data-role="rotate-left"  title="Rotate -15°">↺</button>
+    <button class="layer-tool" data-role="rotate-right" title="Rotate +15°">↻</button>
+    <button class="layer-tool" data-role="flip-h"       title="Flip horizontal">⇄</button>
+    <button class="layer-tool" data-role="flip-v"       title="Flip vertical">⇅</button>
+    <button class="layer-tool layer-tool--remove" data-role="remove" title="Remove layer">×</button>
+  `;
+  wrap.appendChild(toolbar);
+
+  $canvas.appendChild(wrap);
+}
+
+/* ───────────────────────────────────────────────────────────
+   INTERACTIONS — drag, resize, select, remove
+─────────────────────────────────────────────────────────── */
+
+let drag = null;
+
+$canvas.addEventListener('pointerdown', (e) => {
+  const layerEl = e.target.closest('.layer');
+  if (!layerEl) {
+    state.selected = null;
+    render();
+    return;
+  }
+
+  // Inside a layer = inside canvas-wrap. Block bubbling so the stage's
+  // click-outside handler doesn't run with a detached node after render().
+  e.stopPropagation();
+
+  const kind = layerEl.dataset.kind;
+  const role = e.target.dataset.role;
+
+  if (role === 'remove') {
+    setLayer(kind, null);
+    if (state.selected === kind) state.selected = null;
+    render();
+    return;
+  }
+
+  // Rotate / flip — discrete actions, no drag follow-up
+  if (role === 'rotate-left' || role === 'rotate-right' || role === 'flip-h' || role === 'flip-v') {
+    const layer = getLayer(kind);
+    if (!layer) return;
+    if (role === 'rotate-left')  layer.rot = (layer.rot || 0) - 15;
+    if (role === 'rotate-right') layer.rot = (layer.rot || 0) + 15;
+    if (role === 'flip-h')       layer.flipX = !layer.flipX;
+    if (role === 'flip-v')       layer.flipY = !layer.flipY;
+    state.selected = kind;
+    render();
+    return;
+  }
+
+  // select if not already
+  if (state.selected !== kind) {
+    state.selected = kind;
+    render();
+  }
+
+  const rect = $canvas.getBoundingClientRect();
+  const layer = getLayer(kind);
+  if (!layer) return;
+
+  if (role === 'resize') {
+    drag = {
+      mode: 'resize',
+      kind,
+      startX: e.clientX,
+      startY: e.clientY,
+      startW: layer.w,
+      startH: layer.h,
+      canvasW: rect.width,
+      canvasH: rect.height,
+      aspect: layer.w / layer.h,
+    };
+  } else {
+    drag = {
+      mode: 'move',
+      kind,
+      startX: e.clientX,
+      startY: e.clientY,
+      startLayerX: layer.x,
+      startLayerY: layer.y,
+      canvasW: rect.width,
+      canvasH: rect.height,
+    };
+  }
+  e.target.setPointerCapture?.(e.pointerId);
+});
+
+window.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  const dx = (e.clientX - drag.startX) / drag.canvasW;
+  const dy = (e.clientY - drag.startY) / drag.canvasH;
+
+  const layer = getLayer(drag.kind);
+  if (!layer) return;
+
+  if (drag.mode === 'move') {
+    layer.x = drag.startLayerX + dx;
+    layer.y = drag.startLayerY + dy;
+  } else if (drag.mode === 'resize') {
+    // Use the larger axis as driver, keep aspect
+    const driver = Math.max(dx, dy);
+    let newW = Math.max(0.05, drag.startW + driver);
+    let newH = newW / drag.aspect;
+    layer.w = newW;
+    layer.h = newH;
+  }
+  render();
+});
+
+window.addEventListener('pointerup', () => { drag = null; });
+
+/* ───────────────────────────────────────────────────────────
+   LAYER ADDITIONS — defaults, randomization
+─────────────────────────────────────────────────────────── */
+
+/* Stagger placements for multiple illustrations so they don't pile on top of each other. */
+const ILLUSTRATION_PLACEMENTS = [
+  { x: 0.25, y: 0.20, w: 0.50, h: 0.60 },
+  { x: 0.05, y: 0.05, w: 0.40, h: 0.45 },
+  { x: 0.55, y: 0.50, w: 0.40, h: 0.45 },
+];
+
+function defaultPlacement(kind, index = 0) {
+  let base;
+  if (kind === 'spot')         base = { x: 0.05, y: 0.30, w: 0.55, h: 0.55 };
+  else if (kind === 'scribble')     base = { x: 0.45, y: 0.10, w: 0.45, h: 0.45 };
+  else if (kind === 'illustration') base = { ...(ILLUSTRATION_PLACEMENTS[index % ILLUSTRATION_PLACEMENTS.length]) };
+  else                              base = { x: 0.25, y: 0.25, w: 0.50, h: 0.50 };
+  return { ...base, rot: 0, flipX: false, flipY: false };
+}
+
+function setBg(id)    { state.bgColorId = id; state.userPickedBg = true; render(); }
+function setSpotColor(id) {
+  state.spotColorId = id;
+  // Swap the active spot to the matching color variant
+  if (state.spot) state.spot.src = spotSrc(state.spot.idx, id);
+  // Re-render the spot picker thumbs from the new color folder
+  buildSpotThumbs();
+  render();
+}
+function setSpot(idx) {
+  state.spot = { idx, src: spotSrc(idx, state.spotColorId), ...defaultPlacement('spot') };
+  state.selected = 'spot';
+  render();
+}
+function setScribble(src) {
+  state.scribble = { src, ...defaultPlacement('scribble') };
+  state.selected = 'scribble';
+  render();
+}
+
+/* Click-to-add illustration up to MAX_ILLUSTRATIONS. Beyond that, replaces
+   the most recently selected illustration (or the last one). */
+function addIllustration(src) {
+  if (state.illustrations.length < MAX_ILLUSTRATIONS) {
+    const idx = state.illustrations.length;
+    state.illustrations.push({ src, ...defaultPlacement('illustration', idx) });
+    state.selected = `illustration:${idx}`;
+  } else {
+    // replace selected illustration if one is selected, else last one
+    let replaceIdx = state.illustrations.length - 1;
+    if (state.selected && state.selected.startsWith('illustration:')) {
+      replaceIdx = parseInt(state.selected.split(':')[1], 10);
+    }
+    const prev = state.illustrations[replaceIdx];
+    state.illustrations[replaceIdx] = { src, x: prev.x, y: prev.y, w: prev.w, h: prev.h };
+    state.selected = `illustration:${replaceIdx}`;
+  }
+  render();
+}
+
+function randPick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function applyConcept(concept) {
+  state.concept = concept;
+  // Only auto-set BG if Jenna/Stacy haven't picked one yet — once they choose, we don't overwrite.
+  if (!state.userPickedBg) {
+    state.bgColorId = concept.bgColorId || 'paper';
+  }
+
+  const spotIdxA = randPick(SPOTS).idx;
+  state.spot     = { idx: spotIdxA, src: spotSrc(spotIdxA, state.spotColorId), ...defaultPlacement('spot') };
+  state.scribble = { src: randPick(SCRIBBLES).src,  ...defaultPlacement('scribble') };
+
+  // Seed exactly 1 illustration; user adds up to 2 more via picker.
+  if (concept.images && concept.images.length) {
+    state.illustrations = [{ src: randPick(concept.images), ...defaultPlacement('illustration', 0) }];
+  } else {
+    state.illustrations = [];
+  }
+
+  state.selected = null;
+  renderConceptHint();
+  renderIllustrationGrid();
+  render();
+}
+
+function shuffle() {
+  // Randomize BG (any of the 9 options including Transparent)
+  state.bgColorId = randPick(BG_OPTIONS).id;
+  state.userPickedBg = true; // shuffle counts as a deliberate pick
+
+  // Randomize spot color (only colors with an asset folder), then rebuild the spot thumbs
+  const spotColorPool = COLORS.filter(c => SPOT_COLOR_FOLDERS[c.id]);
+  state.spotColorId = randPick(spotColorPool).id;
+  buildSpotThumbs();
+
+  const spotIdx = randPick(SPOTS).idx;
+  state.spot     = { idx: spotIdx, src: spotSrc(spotIdx, state.spotColorId), ...defaultPlacement('spot') };
+  state.scribble = { src: randPick(SCRIBBLES).src, ...defaultPlacement('scribble') };
+
+  const pool = (state.concept && state.concept.images && state.concept.images.length)
+    ? state.concept.images
+    : STATIC_CONCEPTS.flatMap(c => c.images);
+
+  // Re-roll same number of illustrations as currently active (default 1 if none).
+  const targetCount = Math.max(1, state.illustrations.length);
+  state.illustrations = [];
+  for (let i = 0; i < targetCount && i < MAX_ILLUSTRATIONS; i++) {
+    state.illustrations.push({ src: randPick(pool), ...defaultPlacement('illustration', i) });
+  }
+  state.selected = null;
+  render();
+}
+
+/* ───────────────────────────────────────────────────────────
+   RAIL — populate pickers
+─────────────────────────────────────────────────────────── */
+
+function buildSwatches() {
+  const grid = document.getElementById('bg-swatches');
+  grid.innerHTML = '';
+  BG_OPTIONS.forEach(c => {
+    const cell = document.createElement('div');
+    cell.className = 'swatch-cell';
+
+    const sw = document.createElement('div');
+    sw.className = 'swatch';
+    sw.dataset.id = c.id;
+    if (c.id === 'transparent') {
+      sw.classList.add('swatch--transparent');
+    } else {
+      sw.style.background = c.hex;
+    }
+    sw.title = `${c.name} — ${c.attr}`;
+    sw.addEventListener('click', () => setBg(c.id));
+
+    cell.appendChild(sw);
+    grid.appendChild(cell);
+  });
+  document.getElementById('bg-count').textContent = `${BG_OPTIONS.length} options`;
+}
+
+/* Spot color picker — compact bar of just-the-swatches above the spot shapes.
+   Only includes colors that have a matching asset folder. */
+function buildSpotColorSwatches() {
+  const grid = document.getElementById('spot-color-swatches');
+  grid.innerHTML = '';
+  COLORS.filter(c => SPOT_COLOR_FOLDERS[c.id]).forEach(c => {
+    const sw = document.createElement('div');
+    sw.className = 'swatch';
+    sw.dataset.id = c.id;
+    sw.style.background = c.hex;
+    sw.title = `${c.name} — ${c.attr}`;
+    sw.addEventListener('click', () => setSpotColor(c.id));
+    grid.appendChild(sw);
+  });
+}
+
+/* Spot thumb picker — uses the actual color-variant PNGs, not runtime recoloring */
+function buildSpotThumbs() {
+  const grid = document.getElementById('spot-thumbs');
+  grid.innerHTML = '';
+  SPOTS.forEach(item => {
+    const t = document.createElement('div');
+    t.className = 'thumb';
+    t.dataset.idx = String(item.idx);
+    t.title = item.name;
+    const img = document.createElement('img');
+    img.alt = item.name;
+    img.loading = 'lazy';
+    img.src = spotSrc(item.idx, state.spotColorId);
+    t.appendChild(img);
+    t.addEventListener('click', () => setSpot(item.idx));
+    grid.appendChild(t);
+  });
+}
+
+function buildThumbs(containerId, items, onPick, opts = {}) {
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = '';
+  items.forEach(item => {
+    const t = document.createElement('div');
+    t.className = 'thumb';
+    t.dataset.src = item.src;
+    t.title = item.name;
+    const img = document.createElement('img');
+    img.alt = item.name;
+    img.loading = 'lazy';
+    if (opts.recolorHex) {
+      // Render the thumb as a uniform silhouette in the requested hex
+      recolorPNG(item.src, opts.recolorHex)
+        .then(url => { img.src = url; })
+        .catch(() => { img.src = item.src; });
+    } else {
+      img.src = item.src;
+    }
+    t.appendChild(img);
+    t.addEventListener('click', () => onPick(item.src));
+    grid.appendChild(t);
+  });
+}
+
+function renderIllustrationGrid() {
+  const grid = document.getElementById('illus-thumbs');
+  grid.innerHTML = '';
+  const countEl = document.getElementById('illus-count');
+
+  if (!state.concept) {
+    grid.innerHTML = '<div class="thumb-empty">Pick a concept to load illustrations.</div>';
+    countEl.textContent = '';
+    return;
+  }
+  const images = state.concept.images || [];
+  if (!images.length) {
+    grid.innerHTML = '<div class="thumb-empty">No illustrations tagged for this concept yet.</div>';
+    countEl.textContent = '';
+    return;
+  }
+  images.forEach(src => {
+    const t = document.createElement('div');
+    t.className = 'thumb';
+    t.dataset.src = src;
+    const img = document.createElement('img');
+    img.src = src;
+    img.loading = 'lazy';
+    img.alt = '';
+    t.appendChild(img);
+    t.addEventListener('click', () => addIllustration(src));
+    grid.appendChild(t);
+  });
+  countEl.textContent = `${state.illustrations.length}/${MAX_ILLUSTRATIONS} placed · ${images.length} available`;
+}
+
+function renderConceptHint() {
+  const el = document.getElementById('concept-hint');
+  if (!state.concept) {
+    el.innerHTML = '<strong>Tip</strong>Pick a concept above to filter on-brand illustrations.';
+    return;
+  }
+  const color = colorById(state.concept.bgColorId);
+  el.innerHTML = `<strong>${state.concept.name}</strong>${state.concept.blurb || ''} Suggested ground: <em>${color.name}</em>.`;
+}
+
+/* ───────────────────────────────────────────────────────────
+   CONCEPT COMBOBOX — free-text search across all concepts
+─────────────────────────────────────────────────────────── */
+
+function allConcepts() {
+  // STATIC + Airtable, deduped by name (Airtable wins ties only if it has images)
+  return [
+    ...STATIC_CONCEPTS.map(c => ({ ...c, source: 'static', tag: 'Vintage Etched' })),
+    ...state.concepts.filter(c => c.source === 'airtable'),
+  ];
+}
+
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function escapeHTML(str) {
+  return str.replace(/[&<>"']/g, ch => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[ch]));
+}
+
+function highlightMatch(text, query) {
+  const safe = escapeHTML(text);
+  if (!query) return safe;
+  const re = new RegExp(`(${escapeRegExp(query)})`, 'ig');
+  return safe.replace(re, '<mark>$1</mark>');
+}
+
+function searchConcepts(query) {
+  const q = (query || '').trim().toLowerCase();
+  const list = allConcepts();
+  if (!q) {
+    return list.slice(0, 8);
+  }
+  const scored = list.map(c => {
+    const name = (c.name || '').toLowerCase();
+    const blurb = (c.blurb || '').toLowerCase();
+    const type = (c.type || c.tag || '').toLowerCase();
+    let score = 0;
+    if (name === q) score += 100;
+    else if (name.startsWith(q)) score += 60;
+    else if (name.includes(q)) score += 40;
+    if (blurb.includes(q)) score += 15;
+    if (type.includes(q)) score += 10;
+    // bonus: more images = more useful
+    if (c.images && c.images.length) score += Math.min(c.images.length, 5);
+    return { c, score };
+  }).filter(r => r.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 8);
+  return scored.map(r => r.c);
+}
+
+function renderSuggestions(query) {
+  const popover = document.getElementById('concept-suggestions');
+  const matches = searchConcepts(query);
+  popover.innerHTML = '';
+
+  if (!matches.length) {
+    const empty = document.createElement('div');
+    empty.className = 'combobox-empty';
+    empty.textContent = `No concepts match "${query}". Try a different word.`;
+    popover.appendChild(empty);
+    popover.hidden = false;
+    return;
+  }
+
+  matches.forEach(c => {
+    const row = document.createElement('div');
+    row.className = 'combobox-suggestion';
+    const tag = c.source === 'static' ? 'Vintage Etched' : (c.type || 'Concept Library');
+    const imgCount = (c.images && c.images.length) || 0;
+    row.innerHTML = `${highlightMatch(c.name, query)}<span class="meta">${escapeHTML(tag)} · ${imgCount} image${imgCount === 1 ? '' : 's'}</span>`;
+    row.addEventListener('mousedown', (e) => {
+      e.preventDefault(); // keep focus from being lost before click registers
+      pickConceptFromSuggestion(c);
+    });
+    popover.appendChild(row);
+  });
+
+  popover.hidden = false;
+}
+
+function pickConceptFromSuggestion(concept) {
+  const input = document.getElementById('concept-input');
+  input.value = concept.name;
+  document.getElementById('concept-suggestions').hidden = true;
+  applyConcept(concept);
+}
+
+/* ───────────────────────────────────────────────────────────
+   AIRTABLE FETCH
+─────────────────────────────────────────────────────────── */
+
+async function fetchAirtable() {
+  let records = [], offset = null;
+  try {
+    do {
+      const params = new URLSearchParams({ view: AIRTABLE.VIEW, pageSize: 100 });
+      if (offset) params.set('offset', offset);
+      const res = await fetch(
+        `https://api.airtable.com/v0/${AIRTABLE.BASE_ID}/${AIRTABLE.TABLE}?${params}`,
+        { headers: { Authorization: `Bearer ${AIRTABLE.TOKEN}` } }
+      );
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      records = records.concat(data.records);
+      offset = data.offset;
+    } while (offset);
+
+    records.forEach(r => {
+      const f = r.fields;
+      const images = (f['Image(s)'] || []).map(img => img.thumbnails?.large?.url || img.url);
+      const type = f['Type of Concept'] || 'Other';
+      state.concepts.push({
+        id: r.id,
+        name: f['Concept'] || 'Untitled',
+        type,
+        bgColorId: TYPE_TO_BG[type] || 'steady',
+        blurb: f['Icon'] ? `Icon: ${f['Icon']}.` : '',
+        images,
+        source: 'airtable',
+      });
+    });
+
+    // If the concept input is currently focused/non-empty, refresh suggestions
+    const input = document.getElementById('concept-input');
+    if (document.activeElement === input) {
+      renderSuggestions(input.value);
+    }
+  } catch (err) {
+    console.warn('Airtable fetch failed:', err.message);
+    // Static concepts still work without Airtable
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   EXPORT — render to 2400×2400 canvas, download PNG
+─────────────────────────────────────────────────────────── */
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error(`Failed to load: ${src}`));
+    img.src = src;
+  });
+}
+
+function fitInto(naturalW, naturalH, boxW, boxH) {
+  const scale = Math.min(boxW / naturalW, boxH / naturalH);
+  return { w: naturalW * scale, h: naturalH * scale };
+}
+
+async function drawLayerOnCanvas(ctx, layer, exportSize, opts = {}) {
+  if (!layer) return;
+  try {
+    const src = opts.recolor
+      ? await recolorPNG(layer.src, opts.recolor)
+      : layer.src;
+    const img = await loadImage(src);
+    const boxW = layer.w * exportSize;
+    const boxH = layer.h * exportSize;
+    // Match the on-screen `object-fit: contain` behavior
+    const fitted = fitInto(img.naturalWidth, img.naturalHeight, boxW, boxH);
+    const cx = layer.x * exportSize + boxW / 2;
+    const cy = layer.y * exportSize + boxH / 2;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (layer.rot)   ctx.rotate((layer.rot * Math.PI) / 180);
+    if (layer.flipX || layer.flipY) {
+      ctx.scale(layer.flipX ? -1 : 1, layer.flipY ? -1 : 1);
+    }
+    ctx.drawImage(img, -fitted.w / 2, -fitted.h / 2, fitted.w, fitted.h);
+    ctx.restore();
+  } catch (err) {
+    console.warn('Layer export failed:', err.message);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   SAVE TO BRAND GUIDE — write a smaller render to localStorage
+   so the Collage Elements page can show it in Finished Collages.
+─────────────────────────────────────────────────────────── */
+
+const STORAGE_KEY = 'wbt-finished-collages';
+/* Save at 1600px (not 2400) — keeps localStorage usage reasonable
+   while still leaving headroom for the gallery's contain-fit display. */
+const SAVE_SIZE = 1600;
+
+function readSavedCollages() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeSavedCollages(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+function showToast(message, isError = false) {
+  const el = document.getElementById('save-toast');
+  el.textContent = message;
+  el.classList.toggle('toast--error', !!isError);
+  el.hidden = false;
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => { el.hidden = true; }, 2400);
+}
+
+async function saveToBrandGuide() {
+  const btn = document.getElementById('save-btn');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+  try {
+    // Render at SAVE_SIZE using the same layered pipeline as Export
+    const off = document.createElement('canvas');
+    off.width = SAVE_SIZE; off.height = SAVE_SIZE;
+    const ctx = off.getContext('2d');
+    const bg = bgOptionById(state.bgColorId);
+    if (bg.id !== 'transparent') {
+      ctx.fillStyle = bg.hex;
+      ctx.fillRect(0, 0, SAVE_SIZE, SAVE_SIZE);
+    }
+    await drawLayerOnCanvas(ctx, state.spot, SAVE_SIZE);
+    await drawLayerOnCanvas(ctx, state.scribble, SAVE_SIZE);
+    for (const il of state.illustrations) {
+      await drawLayerOnCanvas(ctx, il, SAVE_SIZE);
+    }
+    const dataUrl = off.toDataURL('image/png');
+
+    const title = state.concept?.name || 'Untitled Collage';
+    const list = readSavedCollages();
+    list.unshift({
+      id: 'wbt-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+      title,
+      concept: state.concept?.name || null,
+      bgColorId: state.bgColorId,
+      spotColorId: state.spotColorId,
+      savedAt: new Date().toISOString(),
+      dataUrl,
+    });
+    try {
+      writeSavedCollages(list);
+    } catch (err) {
+      // Quota exceeded — drop oldest until it fits, then retry.
+      while (list.length > 1) {
+        list.pop();
+        try { writeSavedCollages(list); break; } catch {}
+      }
+    }
+    showToast(`Saved to Brand Guide ✓ (${list.length} total)`);
+  } catch (err) {
+    console.warn('Save failed:', err);
+    showToast('Save failed — try again', true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+}
+
+async function exportPNG() {
+  const btn = document.getElementById('export-btn');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Rendering…';
+
+  try {
+    const SIZE = 2400;
+    const off = document.createElement('canvas');
+    off.width = SIZE;
+    off.height = SIZE;
+    const ctx = off.getContext('2d');
+
+    // BG — skip fillRect entirely if Transparent (export keeps alpha=0 behind layers)
+    const bg = bgOptionById(state.bgColorId);
+    if (bg.id !== 'transparent') {
+      ctx.fillStyle = bg.hex;
+      ctx.fillRect(0, 0, SIZE, SIZE);
+    }
+
+    // Layers in z-order: spot (recolored) → scribble → illustrations
+    await drawLayerOnCanvas(ctx, state.spot, SIZE);
+    await drawLayerOnCanvas(ctx, state.scribble, SIZE);
+    for (const il of state.illustrations) {
+      await drawLayerOnCanvas(ctx, il, SIZE);
+    }
+
+    off.toBlob((blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      const conceptSlug = state.concept ? state.concept.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : 'untitled';
+      a.href = url;
+      a.download = `WBT-Collage-${conceptSlug}-${date}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 'image/png');
+  } catch (err) {
+    alert('Export failed: ' + err.message);
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   WIRE UP
+─────────────────────────────────────────────────────────── */
+
+/* Concept combobox — type any word, see matching concepts */
+(function wireConceptCombobox() {
+  const input = document.getElementById('concept-input');
+  const popover = document.getElementById('concept-suggestions');
+
+  input.addEventListener('focus', () => renderSuggestions(input.value));
+  input.addEventListener('input', () => renderSuggestions(input.value));
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      popover.hidden = true;
+      input.blur();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const matches = searchConcepts(input.value);
+      if (matches.length) pickConceptFromSuggestion(matches[0]);
+    }
+  });
+  // Hide popover when clicking elsewhere
+  document.addEventListener('mousedown', (e) => {
+    if (!e.target.closest('#concept-combobox')) {
+      popover.hidden = true;
+    }
+  });
+})();
+
+document.getElementById('shuffle-btn').addEventListener('click', shuffle);
+document.getElementById('export-btn').addEventListener('click', exportPNG);
+document.getElementById('save-btn').addEventListener('click', saveToBrandGuide);
+
+// click outside any layer also deselects (handled in canvas pointerdown)
+// click on stage background also deselects
+document.querySelector('.stage').addEventListener('pointerdown', (e) => {
+  if (!e.target.closest('.canvas-wrap')) {
+    state.selected = null;
+    render();
+  }
+});
+
+// Initial build
+buildSwatches();
+
+buildSpotColorSwatches();
+buildSpotThumbs();
+buildThumbs('scribble-thumbs', SCRIBBLES, setScribble);
+document.getElementById('spot-count').textContent = `${SPOTS.length} shapes`;
+document.getElementById('scribble-count').textContent = `${SCRIBBLES.length} options`;
+render();
+fetchAirtable(); // async, will surface in concept search when done
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>

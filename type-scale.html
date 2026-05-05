@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Type Scale — Work Better Together</title>
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #c8c8c8;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --accent: #1e4d5c;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre: #B55312;
+      --ochre-light: #F5E8D8;
+      --gold: #CD9F36;
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6; }
+    .page { max-width: 960px; margin: 0 auto; padding: 64px 40px 120px; }
+
+    /* ── Header ── */
+    .page-header { margin-bottom: 72px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+    .page-header .label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); display: block; margin-bottom: 8px; }
+    .page-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1; color: var(--ink); margin-bottom: 12px; }
+    .page-header p { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--ink); max-width: 520px; line-height: 1.5; }
+
+    /* ── Section label ── */
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 0; }
+
+    /* ── Type row ── */
+    .type-row { display: grid; grid-template-columns: 1fr 200px; gap: 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .type-sample { padding: 28px 0 24px; }
+    .type-specs { padding: 28px 0 24px 32px; border-left: 1px solid var(--rule); display: flex; flex-direction: column; gap: 6px; justify-content: flex-start; }
+    .spec-item { display: flex; flex-direction: column; }
+    .spec-label { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
+    .spec-value { font-family: var(--font-display); font-weight: 500; font-size: 13px; color: var(--ink); }
+    .type-role-tag { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); background: var(--slate-light); padding: 2px 7px; border-radius: 2px; display: inline-block; margin-bottom: 8px; }
+
+    /* ── Scale entries ── */
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: 80px; letter-spacing: -0.03em; line-height: 0.95; color: var(--ink); }
+    .t-h1      { font-family: var(--font-display); font-weight: 700; font-size: 56px; letter-spacing: -0.025em; line-height: 1; color: var(--ink); }
+    .t-h2      { font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); }
+    .t-h3      { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.01em; line-height: 1.1; color: var(--ink); }
+    .t-h4      { font-family: var(--font-display); font-weight: 500; font-size: 20px; letter-spacing: 0; line-height: 1.2; color: var(--ink); }
+    .t-h5      { font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: 0.01em; line-height: 1.3; color: var(--ink); }
+    .t-body-lg { font-family: var(--font-body); font-weight: 400; font-size: 19px; line-height: 1.75; color: var(--ink); }
+    .t-body    { font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.75; color: var(--ink); }
+    .t-body-sm { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.65; color: var(--ink); }
+    .t-quote   { font-family: var(--font-body); font-weight: 400; font-size: 22px; font-style: italic; line-height: 1.55; color: var(--ink); hanging-punctuation: first; text-indent: -0.44em; }
+    .t-label   { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); }
+    .t-caption { font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: 0; color: var(--ink); }
+    .t-code    { font-family: var(--font-mono); font-weight: 400; font-size: 14px; letter-spacing: 0.02em; color: var(--ink); line-height: 1.7; }
+
+    /* ── Section divider ── */
+    .scale-divider { height: 1px; background: var(--rule); margin: 56px 0 0; }
+    .scale-divider + .section-label { margin-top: 0; }
+
+    /* ── Spacing table ── */
+    .scale-section { margin-top: 56px; }
+
+    /* ── Live demo ── */
+    .demo-section { margin-top: 72px; }
+    .demo-card { background: var(--bg-card); border: 1px solid var(--rule); padding: 48px 52px; margin-bottom: 2px; }
+    .demo-card.dark { background: #061A49; border-color: #061A49; }
+    .demo-card.teal { background: #1E4D5C; border-color: #1E4D5C; }
+    .demo-eyebrow { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); margin-bottom: 10px; }
+    .demo-eyebrow.light { color: #ACCDD9; }
+    .demo-eyebrow.gold  { color: #CD9F36; }
+    .demo-h { font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); margin-bottom: 16px; }
+    .demo-h.light { color: #F9F8F2; }
+    .demo-body { font-family: var(--font-body); font-size: 16px; line-height: 1.75; color: var(--ink); max-width: 520px; }
+    .demo-body.light { color: #F9F8F2; }
+    .demo-body em { font-style: italic; }
+    .demo-body.light em { font-style: italic; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <h1>Type Scale</h1>
+    <p>Defined sizes, weights, and roles for every level of the typographic hierarchy.</p>
+  </header>
+
+  <!-- ── Display & Headings ── -->
+  <div class="section-label">Display &amp; Headings · League Spartan</div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Display</div>
+      <div class="t-display">Leadership.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">80px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">700 Bold</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">−0.03em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">0.95</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Hero text, covers</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H1</div>
+      <div class="t-h1">Work Better Together</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">56px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">700 Bold</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">−0.025em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.0</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Page titles</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H2</div>
+      <div class="t-h2">Leadership is hard.<br>Let’s work on it.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">40px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">700 Bold</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">−0.02em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.05</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Section headers</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H3</div>
+      <div class="t-h3">What We Do</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">28px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">700 Bold</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">−0.01em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.1</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Sub-sections</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H4</div>
+      <div class="t-h4">Team Coaching</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">20px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">500 Medium</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">0</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.2</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Cards, panels</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">H5</div>
+      <div class="t-h5">The Impact Coaches</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">16px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">500 Medium</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">+0.01em</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.3</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">List titles, UI labels</span></div>
+    </div>
+  </div>
+
+  <!-- ── Body copy ── -->
+  <div class="scale-divider"></div>
+  <div class="section-label" style="margin-top:56px">Body Copy · Lora</div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Body Large</div>
+      <div class="t-body-lg">Psychological safety isn’t a soft goal — it’s the foundation of every high-performing team.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">19px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.75</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Intro paragraphs</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Body</div>
+      <div class="t-body">Teams that feel safe to speak up, disagree, and experiment consistently outperform those that don’t. Here’s how to build it — intentionally, sustainably, and at scale.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">16px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.75</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">General body copy</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Body Small</div>
+      <div class="t-body-sm">Updated weekly. Data reflects responses from 240 participants across 18 organizations in the 2025–2026 cohort.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">14px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.65</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Footnotes, captions</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Pull Quote</div>
+      <div class="t-quote">“The best teams don’t just work hard — they work <strong>intentionally</strong>.”</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">22px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Italic</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.55</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Testimonials, callouts</span></div>
+    </div>
+  </div>
+
+  <!-- ── Labels & Mono ── -->
+  <div class="scale-divider"></div>
+  <div class="section-label" style="margin-top:56px">Attributions, CTAs &amp; Code · Inconsolata</div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Attribution</div>
+      <div class="t-label">— Maya Carrington, Executive Director, Center for Reproductive Equity</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">11px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">500 Medium</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">+0.18em</span></div>
+      <div class="spec-item"><span class="spec-label">Case</span><span class="spec-value">All caps</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Quote attributions, CTAs</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Caption</div>
+      <div class="t-caption">engagement_score → 87 / 100 &nbsp;·&nbsp; next_retro → Friday, 2 May</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">12px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">+0.04em</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Data, metadata</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Code</div>
+      <div class="t-code"><span style="color:#ACCDD9;background:#1E4D5C;padding:2px 6px;border-radius:2px;font-size:13px">const</span> team = { mission: <span style="color:#7a4f2e">"Work Better Together"</span> }</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">14px</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.7</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Code, structured data</span></div>
+    </div>
+  </div>
+
+  <!-- ── In context demos ── -->
+  <div class="demo-section">
+    <div class="section-label">Type in context</div>
+
+    <div class="demo-card" style="margin-top:0">
+      <div class="demo-eyebrow">Services · Leadership Coaching</div>
+      <div class="demo-h">Building teams that<br>last.</div>
+      <div class="demo-body">High-performing teams aren’t built by accident. They’re built with <strong>intention, practice, and honest feedback.</strong> We help leaders create the conditions for that to happen.</div>
+    </div>
+
+    <div class="demo-card dark">
+      <div class="demo-eyebrow gold">The Impact Coaches · Results</div>
+      <div class="demo-h light" style="font-size:56px;letter-spacing:-0.025em">80%</div>
+      <div class="demo-body light">of leaders report measurable improvement in team trust within the first 90 days.</div>
+    </div>
+
+    <div class="demo-card teal">
+      <div class="demo-eyebrow light">About Us</div>
+      <div class="demo-h light" style="font-size:32px;letter-spacing:-0.01em;font-weight:700;hanging-punctuation:first;text-indent:-0.44em">“Leadership is hard.<br>Let’s work on it.”</div>
+      <div class="demo-body light">We are coaches, facilitators, and strategists who believe that <strong>better teams make a better world.</strong></div>
+    </div>
+
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

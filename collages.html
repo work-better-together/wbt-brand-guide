@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finished Collages — Work Better Together</title>
+  <style>
+    @font-face {
+      font-family: 'League Spartan';
+      src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype');
+      font-weight: 100 900;
+    }
+    @font-face {
+      font-family: 'Lora';
+      src: url('assets/Fonts/Lora-Variable.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Lora';
+      src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Inconsolata';
+      src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype');
+      font-weight: 200 900;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #c8c8c8;
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --rule: #e4e2de;
+      --accent: #1E4D5C;
+      --accent-light: #E0E8EB;
+      --slate: #1E4D5C;
+      --slate-light: #E0E8EB;
+      --ochre: #B55312;
+      --ochre-light: #F5E8D8;
+      --font-display: 'League Spartan', sans-serif;
+      --font-body: 'Lora', serif;
+      --font-mono: 'Inconsolata', monospace;
+    }
+
+    html, body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6; }
+
+    .page { max-width: 960px; margin: 0 auto; padding: 64px 40px 120px; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 56px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+    .page-header .label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); display: block; margin-bottom: 8px; }
+    .page-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1; color: var(--ink); margin-bottom: 12px; }
+    .page-header p { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--ink); max-width: 560px; }
+
+    /* ── Loading state ── */
+    .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 0; gap: 16px; }
+    .loading-spinner { width: 32px; height: 32px; border: 2px solid var(--rule); border-top-color: var(--slate); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-family: var(--font-display); font-weight: 500; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); }
+
+    /* ── Stats bar ── */
+    .stats-bar { display: flex; gap: 0; margin-bottom: 48px; border: 1px solid var(--rule); }
+    .stat-cell { flex: 1; padding: 16px 20px; border-right: 1px solid var(--rule); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.02em; color: var(--ink); }
+    .stat-label { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-top: 2px; }
+
+    /* ── Section label ── */
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 28px; }
+
+    /* ── Concept group ── */
+    .concept-group { margin-bottom: 56px; }
+    .concept-name { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 4px; }
+    .concept-icon { font-family: var(--font-body); font-size: 13px; font-style: italic; color: var(--ink); margin-bottom: 16px; }
+    .concept-meta { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .meta-tag { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
+    .tag-type { background: var(--slate-light); color: var(--slate); }
+    .tag-where { background: #f0efed; color: var(--ink); }
+
+    /* ── Image grid ── */
+    .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 2px; }
+    .image-cell { background: var(--bg-card); border: 1px solid var(--rule); aspect-ratio: 1; position: relative; overflow: hidden; cursor: pointer; }
+    .image-cell img { width: 100%; height: 100%; object-fit: contain; display: block; padding: 8px; transition: transform 0.2s ease; }
+    .image-cell:hover img { transform: scale(1.04); }
+    .image-filename { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(249,248,242,0.92); padding: 6px 8px; font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.06em; color: var(--ink); opacity: 0; transition: opacity 0.15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .image-cell:hover .image-filename { opacity: 1; }
+
+    /* ── No image placeholder ── */
+    .no-image { background: var(--bg-card); border: 1px solid var(--rule); border-style: dashed; padding: 20px; display: flex; align-items: center; gap: 12px; }
+    .no-image-icon { font-size: 24px; opacity: 0.3; }
+    .no-image-text { font-family: var(--font-body); font-size: 13px; font-style: italic; color: var(--ink); }
+
+    /* ── Divider ── */
+    .group-divider { height: 1px; background: var(--rule); margin: 48px 0; }
+
+    /* ── Lightbox ── */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(31,30,30,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 40px; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 85vh; object-fit: contain; }
+    .lightbox-close { position: absolute; top: 20px; right: 28px; font-family: var(--font-mono); font-weight: 500; font-size: 13px; letter-spacing: 0.1em; color: #F9F8F2; cursor: pointer; text-transform: uppercase; }
+    .lightbox-close:hover { color: var(--calm-blue, #ACCDD9); }
+    .lightbox-caption { position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F9F8F2; }
+
+    /* ── Error state ── */
+    .error-state { background: var(--bg-card); border: 1px solid var(--rule); padding: 32px; text-align: center; }
+    .error-state p { font-family: var(--font-body); font-size: 15px; color: var(--ink); font-style: italic; }
+
+    /* ── Static library section ── */
+    .static-section { margin-bottom: 80px; padding-bottom: 64px; border-bottom: 1px solid var(--rule); }
+    .static-section-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 36px;
+      padding: 24px 0;
+    }
+    .static-section-intro h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+    .static-section-intro h2 strong {
+      font-family: var(--font-display);
+      font-weight: 700;
+    }
+    .static-section-intro p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+    .static-section-intro p + p { margin-top: 10px; }
+
+    /* ── Finished collages ── */
+    .finished-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-bottom: 8px;
+    }
+    .finished-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+    }
+    .finished-thumb {
+      aspect-ratio: 4 / 3;
+      background: #f5f3ee;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid var(--rule);
+    }
+    .finished-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 24px;
+      transition: transform 0.25s ease;
+    }
+    .finished-thumb:hover img { transform: scale(1.03); }
+    .finished-body { padding: 20px 22px 22px; }
+    .finished-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .finished-filename {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+    .finished-notes {
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+    .finished-notes.placeholder {
+      font-style: italic;
+      color: var(--ink-muted);
+    }
+    .finished-notes-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.6;
+      margin-bottom: 6px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--rule);
+    }
+
+    @media (max-width: 700px) {
+      .finished-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Saved-from-Builder cards (localStorage-backed) ── */
+    .finished-card--saved { position: relative; }
+    .finished-card--saved .finished-thumb {
+      background:
+        linear-gradient(45deg, #ececea 25%, transparent 25%),
+        linear-gradient(-45deg, #ececea 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ececea 75%),
+        linear-gradient(-45deg, transparent 75%, #ececea 75%),
+        #f5f3ee;
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+    }
+    .finished-saved-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg-card);
+      background: var(--slate);
+      padding: 3px 7px;
+      z-index: 2;
+    }
+    .finished-saved-remove {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.15s, background 0.15s;
+    }
+    .finished-card--saved:hover .finished-saved-remove { opacity: 1; }
+    .finished-saved-remove:hover { background: #B55312; }
+    .section-divider { height: 1px; background: var(--rule); margin: 72px 0; }
+    .coming-soon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .coming-card { background: var(--bg-card); border: 1px solid var(--rule); padding: 32px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 140px; transition: background 0.15s ease; }
+    .coming-card:hover { background: var(--slate-light); }
+    .coming-card:hover h4 { color: var(--slate); }
+    .coming-card .coming-tag { font-family: var(--font-display); font-weight: 500; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate); background: var(--slate-light); padding: 2px 7px; border-radius: 2px; align-self: flex-start; }
+    .coming-card h4 { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--ink); }
+    .coming-card p { font-family: var(--font-body); font-size: 13px; color: var(--ink); line-height: 1.55; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <h1>Finished Collages</h1>
+    <p>Three sections: finished collages that show the system in practice, a curated set of vintage etched + watercolor illustrations, and a living concept library synced from Airtable.</p>
+  </header>
+
+  <!-- ══════════════════════════════════════
+       FINISHED COLLAGES
+       Examples of completed compositions, with
+       notes on what each represents. Add notes
+       inline as the library grows.
+  ══════════════════════════════════════ -->
+
+  <section class="static-section">
+    <div class="static-section-intro">
+      <div>
+        <h2>Finished <strong>Collages</strong></h2>
+      </div>
+      <div>
+        <p>Examples of completed collages — how the elements combine into finished compositions. Each piece carries a specific meaning or use case.</p>
+        <p>This is a living gallery — as we make new collages, they get added here with notes on what they represent and where they belong.</p>
+      </div>
+    </div>
+
+    <div class="section-label" id="finished-gallery-label">Gallery · 9 collages</div>
+
+    <div class="finished-grid" id="finished-grid">
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-bees-blue-circle.png','WBT-collage-bees-blue-circle.png')">
+          <img src="assets/Finished Collages/WBT-collage-bees-blue-circle.png" alt="Bees and blue circle collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Bees + Blue Circle</div>
+          <div class="finished-filename">WBT-collage-bees-blue-circle.png</div>
+          <div class="finished-notes-label">Represents · Service</div>
+          <p class="finished-notes"><strong>Team Coaching</strong></p>
+          <p class="finished-notes" style="margin-top:8px;">Team coaching is an ongoing partnership that treats the team as the unit of change, strengthening <strong>how people work together</strong> over time.</p>
+        </div>
+      </div>
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-brain-blue.png','WBT-collage-brain-blue.png')">
+          <img src="assets/Finished Collages/WBT-collage-brain-blue.png" alt="Brain (blue) collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Brain (Blue)</div>
+          <div class="finished-filename">WBT-collage-brain-blue.png</div>
+          <div class="finished-notes-label">Represents · Article cover</div>
+          <p class="finished-notes"><strong>Leadership Coaching</strong></p>
+          <p class="finished-notes" style="margin-top:8px;font-style:italic;">&ldquo;Emotional Intelligence and Leadership&rdquo;</p>
+        </div>
+      </div>
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-compass.png','WBT-collage-compass.png')">
+          <img src="assets/Finished Collages/WBT-collage-compass.png" alt="Compass collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Compass</div>
+          <div class="finished-filename">WBT-collage-compass.png</div>
+          <div class="finished-notes-label">Notes</div>
+          <p class="finished-notes placeholder">Add notes about what this collage represents and where it should be used.</p>
+        </div>
+      </div>
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-eyeglasses-eye-chart.png','WBT-collage-eyeglasses-eye-chart.png')">
+          <img src="assets/Finished Collages/WBT-collage-eyeglasses-eye-chart.png" alt="Eyeglasses and eye chart collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Eyeglasses + Eye Chart</div>
+          <div class="finished-filename">WBT-collage-eyeglasses-eye-chart.png</div>
+          <div class="finished-notes-label">Represents · Article cover</div>
+          <p class="finished-notes"><strong>Facilitation</strong></p>
+          <p class="finished-notes" style="margin-top:8px;font-style:italic;">&ldquo;In Service of the Group: The Facilitator&rsquo;s Role&rdquo;</p>
+        </div>
+      </div>
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-gramophone.png','WBT-collage-gramophone.png')">
+          <img src="assets/Finished Collages/WBT-collage-gramophone.png" alt="Gramophone collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Gramophone</div>
+          <div class="finished-filename">WBT-collage-gramophone.png</div>
+          <div class="finished-notes-label">Notes</div>
+          <p class="finished-notes placeholder">Add notes about what this collage represents and where it should be used.</p>
+        </div>
+      </div>
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-lightbulb-orange.png','WBT-collage-lightbulb-orange.png')">
+          <img src="assets/Finished Collages/WBT-collage-lightbulb-orange.png" alt="Lightbulb (orange) collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Lightbulb (Orange)</div>
+          <div class="finished-filename">WBT-collage-lightbulb-orange.png</div>
+          <div class="finished-notes-label">Represents · Service</div>
+          <p class="finished-notes"><strong>Facilitation + Training</strong></p>
+          <p class="finished-notes" style="margin-top:8px;">Training and facilitation <strong>supports team development through key conversations</strong>, helping them think clearly, surface what matters, and make decisions.</p>
+        </div>
+      </div>
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-megaphone.png','WBT-collage-megaphone.png')">
+          <img src="assets/Finished Collages/WBT-collage-megaphone.png" alt="Megaphone collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Megaphone</div>
+          <div class="finished-filename">WBT-collage-megaphone.png</div>
+          <div class="finished-notes-label">Represents · Article cover</div>
+          <p class="finished-notes"><strong>Facilitation</strong></p>
+          <p class="finished-notes" style="margin-top:8px;font-style:italic;">&ldquo;Don&rsquo;t Skip the Convo About Feelings at Your Next Team Retreat&rdquo;</p>
+        </div>
+      </div>
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-moon-gold.png','WBT-collage-moon-gold.png')">
+          <img src="assets/Finished Collages/WBT-collage-moon-gold.png" alt="Moon (gold) collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Moon (Gold)</div>
+          <div class="finished-filename">WBT-collage-moon-gold.png</div>
+          <div class="finished-notes-label">Represents · Service</div>
+          <p class="finished-notes"><strong>Leadership Coaching</strong></p>
+          <p class="finished-notes" style="margin-top:8px;">Coaching focuses on <strong>one individual leader&rsquo;s growth</strong>, supporting reflection, skill-building, and more intentional leadership.</p>
+        </div>
+      </div>
+
+      <div class="finished-card">
+        <div class="finished-thumb" onclick="openLightbox('assets/Finished Collages/WBT-collage-rotary-telephone.png','WBT-collage-rotary-telephone.png')">
+          <img src="assets/Finished Collages/WBT-collage-rotary-telephone.png" alt="Rotary telephone collage" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">Rotary Telephone</div>
+          <div class="finished-filename">WBT-collage-rotary-telephone.png</div>
+          <div class="finished-notes-label">Notes</div>
+          <p class="finished-notes placeholder">Add notes about what this collage represents and where it should be used.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="coming-soon-grid">
+    <a class="coming-card" href="elements.html#images" style="text-decoration:none;color:inherit;">
+      <span class="coming-tag">Active</span>
+      <h4>Collage Elements →</h4>
+      <p>Vintage etched illustrations, watercolor shapes, and the live Airtable concept library — all the raw material for building collages.</p>
+    </a>
+    <a class="coming-card" href="collage-maker.html" style="text-decoration:none;color:inherit;">
+      <span class="coming-tag">Active</span>
+      <h4>Collage Maker →</h4>
+      <p>Build new collages in the browser using concept library images. Save directly to the Finished Collages gallery.</p>
+    </a>
+  </div>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">ESC · CLOSE</span>
+  <img id="lightbox-img" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script>
+  function openLightbox(url, caption) {
+    document.getElementById('lightbox-img').src = url;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').src = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  /* ── Saved-from-Builder collages (localStorage) ──
+     Pulls anything saved by Collage Builder.html and prepends it
+     to the Finished Collages grid, with a small remove (×) control. */
+  const SAVED_KEY = 'wbt-finished-collages';
+  const STATIC_COUNT = 9; // hand-curated cards already in the grid
+
+  function readSaved() {
+    try {
+      const raw = localStorage.getItem(SAVED_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  }
+
+  function escapeAttr(s) {
+    return String(s).replace(/[&<>"']/g, ch => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[ch]));
+  }
+
+  function formatSavedDate(iso) {
+    try { return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }); }
+    catch { return iso; }
+  }
+
+  function renderSavedCollages() {
+    const grid = document.getElementById('finished-grid');
+    if (!grid) return;
+    // Clear any previous saved cards (so updates re-render cleanly)
+    grid.querySelectorAll('.finished-card--saved').forEach(el => el.remove());
+
+    const saved = readSaved();
+    saved.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'finished-card finished-card--saved';
+      card.dataset.id = item.id;
+      const dateLabel = formatSavedDate(item.savedAt);
+      card.innerHTML = `
+        <div class="finished-thumb">
+          <span class="finished-saved-tag">Saved</span>
+          <button class="finished-saved-remove" type="button" aria-label="Remove saved collage" title="Remove from gallery">×</button>
+          <img alt="${escapeAttr(item.title || 'Saved collage')}" loading="lazy">
+        </div>
+        <div class="finished-body">
+          <div class="finished-title">${escapeAttr(item.title || 'Untitled Collage')}</div>
+          <div class="finished-filename">Saved · ${escapeAttr(dateLabel)}${item.concept ? ' · ' + escapeAttr(item.concept) : ''}</div>
+          <div class="finished-notes-label">From the Collage Builder</div>
+          <p class="finished-notes" style="font-style:italic;">Saved locally in this browser. Export the PNG to add it to the shared gallery.</p>
+        </div>
+      `;
+
+      // Wire up image, lightbox, and remove
+      const img = card.querySelector('img');
+      const thumb = card.querySelector('.finished-thumb');
+      img.src = item.dataUrl;
+      thumb.addEventListener('click', (e) => {
+        if (e.target.closest('.finished-saved-remove')) return;
+        openLightbox(item.dataUrl, item.title || 'Saved collage');
+      });
+      card.querySelector('.finished-saved-remove').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const list = readSaved().filter(x => x.id !== item.id);
+        localStorage.setItem(SAVED_KEY, JSON.stringify(list));
+        renderSavedCollages();
+      });
+
+      grid.insertBefore(card, grid.firstChild);
+    });
+
+    // Update gallery count label
+    const label = document.getElementById('finished-gallery-label');
+    if (label) {
+      const total = STATIC_COUNT + saved.length;
+      label.textContent = `Gallery · ${total} collages${saved.length ? ` (${saved.length} saved)` : ''}`;
+    }
+  }
+
+  renderSavedCollages();
+  // Refresh if saves happen in another tab
+  window.addEventListener('storage', (e) => {
+    if (e.key === SAVED_KEY) renderSavedCollages();
+  });
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
