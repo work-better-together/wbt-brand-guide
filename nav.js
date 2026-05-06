@@ -105,7 +105,6 @@
       .wbt-nav-pager .pager-label { max-width: 110px; }
     }
     @media (max-width: 620px) {
-      .wbt-nav-crumb { display: none; }
       .wbt-nav-pager .pager-label { display: none; }
     }
 
