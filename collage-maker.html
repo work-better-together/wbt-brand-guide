@@ -571,6 +571,8 @@
     /* ── Compact swatch grids ── */
     .swatch-grid--bg { grid-template-columns: repeat(3, 1fr); }
     .swatch-grid--compact { grid-template-columns: repeat(6, 1fr); }
+    /* Spot colors on a single row of 7 */
+    .swatch-grid--spot-row { grid-template-columns: repeat(7, 1fr); gap: 4px; }
 
     /* ── Stage: hidden by default; step 7 shows it ── */
     .stage { display: none; }
@@ -670,7 +672,7 @@
 
   <aside class="rail">
 
-    <!-- Step 1: Concept -->
+    <!-- Step 1: Concept + Illustrations -->
     <div class="rail-toolbar wizard-step" data-step="1">
       <span class="wizard-step-label">Choose a Concept</span>
       <div class="toolbar-field combobox" id="concept-combobox">
@@ -692,6 +694,17 @@
         </div>
         <div class="combobox-popover" id="concept-suggestions" hidden></div>
       </div>
+      <!-- Illustration picker lives here on mobile; also shown in rail on desktop -->
+      <div class="rail-label" style="margin-top:20px">
+        Illustrations <span class="count" id="illus-count"></span>
+      </div>
+      <div class="concept-hint" id="concept-hint">
+        <strong>Tip</strong>
+        Type any concept above to surface on-brand illustrations. Click thumbs to add up to 3.
+      </div>
+      <div class="thumb-grid" id="illus-thumbs">
+        <div class="thumb-empty">Pick a concept to load illustrations.</div>
+      </div>
       <div class="toolbar-buttons">
         <button class="btn btn-primary btn-sm" id="export-btn">Export PNG</button>
         <button class="btn btn-secondary btn-sm" id="save-btn" title="Save to Brand Guide → Collage Elements page">Save to Brand Guide</button>
@@ -706,40 +719,20 @@
       <div class="swatch-grid swatch-grid--bg" id="bg-swatches"></div>
     </div>
 
-    <!-- Step 3: Spot color -->
+    <!-- Step 3: Watercolor Spot (color row + shapes) -->
     <div class="rail-section wizard-step" data-step="3">
-      <span class="wizard-step-label">Choose a Spot Color</span>
-      <div class="rail-label">Watercolor Spot Color</div>
-      <div class="swatch-grid swatch-grid--compact" id="spot-color-swatches"></div>
-    </div>
-
-    <!-- Step 4: Spot shape -->
-    <div class="rail-section wizard-step" data-step="4">
-      <span class="wizard-step-label">Choose a Spot Shape</span>
-      <div class="rail-label">Watercolor Spot <span class="count" id="spot-count"></span></div>
+      <span class="wizard-step-label">Choose a Watercolor Spot</span>
+      <div class="rail-label">Spot Color</div>
+      <div class="swatch-grid swatch-grid--compact swatch-grid--spot-row" id="spot-color-swatches"></div>
+      <div class="rail-label" style="margin-top:16px">Spot Shape <span class="count" id="spot-count"></span></div>
       <div class="thumb-grid thumb-grid--3x3" id="spot-thumbs"></div>
     </div>
 
-    <!-- Step 5: Scribble -->
-    <div class="rail-section wizard-step" data-step="5">
+    <!-- Step 4: Scribble -->
+    <div class="rail-section wizard-step" data-step="4">
       <span class="wizard-step-label">Add a Scribble</span>
       <div class="rail-label">Scribble <span class="count" id="scribble-count"></span></div>
       <div class="thumb-grid" id="scribble-thumbs"></div>
-    </div>
-
-    <!-- Step 6: Illustrations -->
-    <div class="rail-section wizard-step" data-step="6">
-      <span class="wizard-step-label">Add Illustrations</span>
-      <div class="rail-label">
-        Illustrations <span class="count" id="illus-count"></span>
-      </div>
-      <div class="concept-hint" id="concept-hint">
-        <strong>Tip</strong>
-        Type any concept above to surface on-brand illustrations. Click thumbs to add up to 3.
-      </div>
-      <div class="thumb-grid" id="illus-thumbs">
-        <div class="thumb-empty">Pick a concept to load illustrations.</div>
-      </div>
     </div>
 
   </aside>
@@ -1802,7 +1795,7 @@ document.querySelector('.stage').addEventListener('pointerdown', (e) => {
    MOBILE WIZARD — step-by-step picker flow
 ─────────────────────────────────────────────────────────── */
 
-const WIZARD_TOTAL = 7;
+const WIZARD_TOTAL = 5;
 let wizardStep = 1;
 
 function isWizardMode() {
