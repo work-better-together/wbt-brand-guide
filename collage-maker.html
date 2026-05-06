@@ -238,10 +238,17 @@
     border: 1px solid var(--rule);
     border-radius: 0;
     padding: 28px 28px 24px;
-    max-width: 360px;
+    box-sizing: border-box;
+    max-width: 400px;
     width: calc(100vw - 48px);
     background: var(--bg-card);
     box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+  @media (max-width: 480px) {
+    #save-name-dialog {
+      width: calc(100vw - 32px);
+      padding: 24px 20px 20px;
+    }
   }
   #save-name-dialog::backdrop { background: rgba(0,0,0,0.45); }
   #save-name-dialog h3 {
@@ -2507,7 +2514,7 @@ async function saveToBrandGuide(nameOverride) {
         try { writeSavedCollages(list); break; } catch {}
       }
     }
-    showToast(`Saved to Brand Guide ✓ (${list.length} total)`);
+    showToast('Added to Collages ✓');
   } catch (err) {
     console.warn('Save failed:', err);
     showToast('Save failed — try again', true);
