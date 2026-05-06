@@ -1656,7 +1656,7 @@ function renderSelectionOnly() {
     const isSelected = el.dataset.kind === state.selected;
     el.classList.toggle('selected', isSelected);
     const stackIdx = state.stackOrder.indexOf(el.dataset.kind);
-    el.style.zIndex = isSelected ? stackIdx + 100 : stackIdx + 1;
+    el.style.zIndex = stackIdx + 1;
   });
   const ctBar = document.getElementById('canvas-toolbar');
   if (ctBar) {
@@ -1767,7 +1767,7 @@ function renderLayer(kind, layer, opts = {}, stackIdx = 0) {
   wrap.style.width   = (layer.w * 100) + '%';
   wrap.style.height  = (layer.h * 100) + '%';
   // explicit z-index from stack order; selected floats above all others
-  wrap.style.zIndex  = state.selected === kind ? stackIdx + 100 : stackIdx + 1;
+  wrap.style.zIndex  = stackIdx + 1;
 
   // Image lives in an inner wrapper that owns the rotation+flip transform.
   // Keeping it on a child means the toolbar/handle stay in screen-aligned space.
