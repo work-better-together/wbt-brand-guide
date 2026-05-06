@@ -665,14 +665,28 @@
 
   /* ── Mobile ── */
   @media (max-width: 768px) {
-    html, body { height: auto !important; overflow: visible !important; display: block !important; }
+    /* Fixed viewport — rail scrolls internally so window never scrolls (fixes iOS snap) */
+    html, body { height: 100% !important; overflow: hidden !important; display: block !important; }
     .layout { display: block; height: auto; overflow: visible; }
 
-    /* ── Rail: full-width, no right border, room for fixed wizard-nav ── */
+    /* Wizard chrome: fixed below the site nav (nav = 49px) */
+    .wizard-chrome {
+      position: fixed !important;
+      top: 49px;
+      left: 0; right: 0;
+      z-index: 200;
+    }
+
+    /* ── Rail: fixed-position scroll container so iOS uses element scroll, not window scroll ── */
     .rail {
+      position: fixed;
+      top: 112px; /* nav (49) + chrome (63) */
+      left: 0; right: 0;
+      bottom: 69px; /* wizard-nav */
       border-right: none;
-      padding: 16px 20px 80px;
-      overflow-y: visible;
+      padding: 16px 20px 16px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       max-height: none;
       height: auto;
     }
@@ -698,7 +712,7 @@
       align-items: center;
       justify-content: center;
       padding: 0;
-      height: calc(100vh - 44px - 68px); /* between chrome and nav bar */
+      height: calc(100vh - 112px - 69px); /* nav(49)+chrome(63) top, wizard-nav(69) bottom */
       overflow: hidden;
     }
 
@@ -1248,6 +1262,41 @@ async function applyTightBounds(layer, kind, adjustSize = true) {
 
 /* Static vintage etched library — concept-grouped (mirrors Collage Elements.html) */
 const STATIC_CONCEPTS = [
+  {
+    id: 'facilitation-training',
+    name: 'Facilitation & Training',
+    bgColorId: 'clean',
+    blurb: 'Use for facilitation, training, workshops, ideas, learning.',
+    images: [
+      'assets/Illustrations/Lightbulb-3D.png',
+      'assets/Illustrations/Lightbulb-Glowing.png',
+      'assets/Illustrations/Lightbulb-Pendant.png',
+      'assets/Illustrations/Street-Lamp.png',
+    ],
+  },
+  {
+    id: 'leadership-coaching',
+    name: 'Leadership Coaching',
+    bgColorId: 'calm',
+    blurb: 'Use for leadership coaching, vision, strategy, the bigger picture.',
+    images: [
+      'assets/Illustrations/Full-Moon.png',
+      'assets/Illustrations/Planet-Mars.png',
+      'assets/Illustrations/Planet-Neptune.png',
+      'assets/Illustrations/Saturn-Rings.png',
+    ],
+  },
+  {
+    id: 'team-coaching',
+    name: 'Team Coaching',
+    bgColorId: 'steady',
+    blurb: 'Use for team coaching, collaboration, collective intelligence, group dynamics.',
+    images: [
+      'assets/Illustrations/Bee-Single.png',
+      'assets/Illustrations/Bees-Pair.png',
+      'assets/Illustrations/Bees-Trio.png',
+    ],
+  },
   {
     id: 'perception',
     name: 'Perception & Bias',
@@ -2176,12 +2225,26 @@ async function fetchAirtable() {
       });
     });
 
-    // Refresh illustration grid with newly loaded images (if no concept selected, shows all)
-    // Preserve scroll position — Airtable callback fires async; grid rebuild resets scroll
+    // Append new Airtable images to the grid without clearing it — clearing innerHTML
+    // collapses page height to zero which snaps iOS scroll and can't be undone via JS
     if (!state.concept) {
-      const sy = window.scrollY;
-      renderIllustrationGrid();
-      requestAnimationFrame(() => window.scrollTo(0, sy));
+      const grid = document.getElementById('illus-thumbs');
+      const existing = new Set(Array.from(grid.querySelectorAll('.thumb')).map(t => t.dataset.src));
+      const newSrcs = allImages().filter(s => !existing.has(s));
+      newSrcs.forEach(src => {
+        const t = document.createElement('div');
+        t.className = 'thumb';
+        t.dataset.src = src;
+        const img = document.createElement('img');
+        img.src = src; img.loading = 'lazy'; img.alt = '';
+        t.appendChild(img);
+        t.addEventListener('click', () => addIllustration(src));
+        grid.appendChild(t);
+      });
+      if (newSrcs.length) {
+        document.getElementById('illus-count').textContent =
+          `${grid.querySelectorAll('.thumb').length} total`;
+      }
     }
     // If the concept input is currently focused/non-empty, refresh suggestions
     const input = document.getElementById('concept-input');
@@ -2456,10 +2519,21 @@ const WIZARD_TOTAL_MOBILE  = 5; // steps 1-4 in rail + step 5 is canvas
 const WIZARD_TOTAL_DESKTOP = 4; // steps 1-4 in rail; canvas always visible
 let wizardStep = 1;
 
-// Prevent phantom dot taps during fast scroll (iOS sticky-header touch bleed)
-let lastScrollMs = 0;
-document.addEventListener('scroll', () => { lastScrollMs = Date.now(); }, { passive: true });
-function recentlyScrolled() { return Date.now() - lastScrollMs < 400; }
+// Distinguish real taps from scroll gestures (iOS fires click at touchstart point even during swipes)
+let _touchScrolling = false;
+let _touchStartY = 0;
+document.addEventListener('touchstart', e => {
+  _touchScrolling = false;
+  _touchStartY = e.touches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (Math.abs(e.touches[0].clientY - _touchStartY) > 5) _touchScrolling = true;
+}, { passive: true });
+// click fires just after touchend — keep flag alive long enough to block it
+document.addEventListener('touchend', () => {
+  setTimeout(() => { _touchScrolling = false; }, 300);
+}, { passive: true });
+function isTap() { return !_touchScrolling; }
 
 function isWizardMode() {
   return window.matchMedia('(max-width: 768px)').matches;
@@ -2495,7 +2569,7 @@ function showStep(n) {
       const s = i + 1;
       dot.classList.toggle('active', s === wizardStep);
       dot.classList.add('clickable');
-      dot.onclick = () => { if (!recentlyScrolled()) showStep(s); };
+      dot.onclick = () => { if (isTap()) showStep(s); };
     });
   } else {
     // Desktop: canvas is always visible; only rail steps paginate
@@ -2508,7 +2582,7 @@ function showStep(n) {
       const s = i + 1;
       dot.classList.toggle('active', s === wizardStep);
       dot.style.cursor = 'pointer';
-      dot.onclick = () => { if (!recentlyScrolled()) showStep(s); };
+      dot.onclick = () => { if (isTap()) showStep(s); };
     });
   }
 
@@ -2530,8 +2604,9 @@ function showStep(n) {
     }));
   }
 
-  // Scroll to top on step change
-  window.scrollTo(0, 0);
+  // Scroll to top on step change (rail is the scroll container on mobile, not window)
+  const railEl = document.querySelector('.rail');
+  if (railEl) railEl.scrollTop = 0;
 }
 
 function initWizard() {
@@ -2546,7 +2621,7 @@ function initWizard() {
         dot.textContent = String(i);
         dotsEl.appendChild(dot);
       }
-      document.getElementById('wizard-next').addEventListener('click', () => { if (!recentlyScrolled()) showStep(wizardStep + 1); });
+      document.getElementById('wizard-next').addEventListener('click', () => { if (isTap()) showStep(wizardStep + 1); });
     }
   } else {
     // Build desktop rail dots
