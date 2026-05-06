@@ -825,7 +825,13 @@
     .stage.wizard-active.stage--gallery {
       justify-content: flex-start;
       padding-top: 14vh;
-      background-position: center bottom; /* show floor in portrait crop */
+    }
+    /* Make toolbar + nav semi-transparent so room floor shows through */
+    body:has(.stage.wizard-active.stage--gallery) .wizard-nav,
+    .stage.wizard-active.stage--gallery .canvas-toolbar {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .stage--gallery .canvas-wrap {
       width: min(54vw, 42vh);
@@ -2135,7 +2141,12 @@ async function fetchAirtable() {
     });
 
     // Refresh illustration grid with newly loaded images (if no concept selected, shows all)
-    if (!state.concept) renderIllustrationGrid();
+    // Preserve scroll position — Airtable callback fires async; grid rebuild resets scroll
+    if (!state.concept) {
+      const sy = window.scrollY;
+      renderIllustrationGrid();
+      requestAnimationFrame(() => window.scrollTo(0, sy));
+    }
     // If the concept input is currently focused/non-empty, refresh suggestions
     const input = document.getElementById('concept-input');
     if (document.activeElement === input) {
@@ -2389,6 +2400,16 @@ document.getElementById('gallery-toggle').addEventListener('click', () => {
   const label = document.getElementById('gallery-toggle-label');
   const isGallery = stage.classList.toggle('stage--gallery');
   label.textContent = isGallery ? 'Close' : 'Gallery';
+  // Recompute crop pixel positions once the canvas-wrap width transition ends
+  const canvasWrap = document.querySelector('.canvas-wrap');
+  canvasWrap.addEventListener('transitionend', function onEnd(e) {
+    if (e.propertyName !== 'width') return;
+    canvasWrap.removeEventListener('transitionend', onEnd);
+    recomputeCropSize(state.spot, 'spot');
+    recomputeCropSize(state.scribble, 'scribble');
+    state.illustrations.forEach(il => recomputeCropSize(il, 'illustration'));
+    render();
+  });
 });
 
 /* ───────────────────────────────────────────────────────────
