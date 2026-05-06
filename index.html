@@ -453,7 +453,7 @@
 
     <nav class="hero-nav">
       <img class="wordmark-logo" src="assets/Logos/WBT-20260502-Work-Better-Together-Wordmark-Black.svg" alt="Work Better Together">
-      <span class="guide-label">Last updated<br>May 5, 2026</span>
+      <span class="guide-label" id="last-updated-label">Last updated<br><span id="last-updated-date">May 5, 2026</span></span>
     </nav>
 
     <div class="hero-body">
@@ -559,6 +559,20 @@
 
     </div>
   </section>
+
+<script>
+(async () => {
+  try {
+    const res = await fetch('last-updated.json?t=' + Date.now());
+    if (!res.ok) return;
+    const { date } = await res.json();
+    if (!date) return;
+    const d = new Date(date);
+    const formatted = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    document.getElementById('last-updated-date').textContent = formatted;
+  } catch {}
+})();
+</script>
 
 </body>
 </html>
