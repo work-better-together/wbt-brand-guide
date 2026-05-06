@@ -536,18 +536,17 @@
   }
   .canvas-toolbar { transition: opacity 0.2s; }
 
-  /* ── Desktop: no toolbar animation; gallery toolbar pushed to stage bottom via flex ── */
+  /* ── Desktop: toolbar always fixed at stage bottom, no animation ── */
   @media (min-width: 769px) {
     .canvas-wrap { transition: none; }
-    .canvas-toolbar { transition: none; }
-    .stage--gallery .canvas-toolbar {
-      position: static;
-      bottom: auto;
-      left: auto;
-      transform: none;
-      white-space: normal;
-      margin-top: auto;
-      padding-bottom: 24px;
+    .canvas-toolbar {
+      transition: none;
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 0;
+      white-space: nowrap;
       width: fit-content;
     }
   }
