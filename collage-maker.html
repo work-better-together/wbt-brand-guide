@@ -2794,7 +2794,7 @@ function showStep(n) {
     const back = document.getElementById('rail-back');
     const next = document.getElementById('rail-next');
     if (back) back.style.visibility = wizardStep === 1 ? 'hidden' : 'visible';
-    if (next) next.style.display    = wizardStep === total ? 'none' : '';
+    if (next) next.style.visibility = wizardStep === total ? 'hidden' : '';
 
     document.querySelectorAll('.rail-wizard-dot').forEach((dot, i) => {
       const s = i + 1;
