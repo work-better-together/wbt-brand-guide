@@ -158,7 +158,7 @@
     }
     .wbt-nav-menu-btn {
       background: none; border: none; cursor: pointer; padding: 4px 2px;
-      color: #F9F8F2; font-size: 18px; line-height: 1; display: flex; align-items: center;
+      color: #F9F8F2; font-size: 22px; line-height: 1; display: flex; align-items: center;
     }
     .wbt-nav-menu-btn:hover { opacity: 0.7; }
     .wbt-nav-overlay {
