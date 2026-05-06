@@ -1462,7 +1462,7 @@ function searchConcepts(query) {
   const q = (query || '').trim().toLowerCase();
   const list = allConcepts();
   if (!q) {
-    return list.slice(0, 8);
+    return list; // show all concepts when browsing
   }
   const scored = list.map(c => {
     const name = (c.name || '').toLowerCase();
@@ -1478,8 +1478,7 @@ function searchConcepts(query) {
     if (c.images && c.images.length) score += Math.min(c.images.length, 5);
     return { c, score };
   }).filter(r => r.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 8);
+    .sort((a, b) => b.score - a.score);
   return scored.map(r => r.c);
 }
 
