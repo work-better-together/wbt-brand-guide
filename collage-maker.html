@@ -1013,6 +1013,16 @@
 
 </div>
 
+<dialog id="save-name-dialog" aria-labelledby="save-dialog-title">
+  <h3 id="save-dialog-title">Name this collage</h3>
+  <p>Give it a name so you can find it easily in the brand guide.</p>
+  <input id="save-name-input" type="text" maxlength="80" autocomplete="off" spellcheck="false" />
+  <div class="save-dialog-actions">
+    <button class="btn btn-secondary btn-sm" id="save-dialog-cancel">Cancel</button>
+    <button class="btn btn-primary btn-sm" id="save-dialog-confirm">Save</button>
+  </div>
+</dialog>
+
 <!-- Wizard nav — fixed at bottom; canvas step swaps Next for Export/Save -->
 <div class="wizard-nav" id="wizard-nav">
   <button class="btn btn-primary btn-sm" id="wizard-next">Next →</button>
@@ -2840,16 +2850,7 @@ render();
 fetchAirtable(); // async, will surface in concept search when done
 </script>
 
-<dialog id="save-name-dialog" aria-labelledby="save-dialog-title">
-  <h3 id="save-dialog-title">Name this collage</h3>
-  <p>Give it a name so you can find it easily in the brand guide.</p>
-  <input id="save-name-input" type="text" maxlength="80" autocomplete="off" spellcheck="false" />
-  <div class="save-dialog-actions">
-    <button class="btn btn-secondary btn-sm" id="save-dialog-cancel">Cancel</button>
-    <button class="btn btn-primary btn-sm" id="save-dialog-confirm">Save</button>
-  </div>
-</dialog>
-
 <script src="nav.js"></script>
 </body>
+
 </html>
