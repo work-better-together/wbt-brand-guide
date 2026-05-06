@@ -584,7 +584,7 @@
     color: var(--paper);
     border: none;
     font-family: var(--font-mono);
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1;
     cursor: pointer;
     display: flex;
@@ -825,6 +825,8 @@
     .stage.wizard-active.stage--gallery {
       justify-content: flex-start;
       padding-top: 14vh;
+      background-size: auto 170%;
+      background-position: center bottom;
     }
     /* In gallery mode: fade out the white bar backgrounds so floor shows through */
     body:has(.stage.wizard-active.stage--gallery) .wizard-nav,
@@ -945,7 +947,7 @@
       <button class="canvas-tool" data-role="rotate-right"  title="Rotate +15°">↻</button>
       <button class="canvas-tool" data-role="flip-h"        title="Flip horizontal">⇄</button>
       <button class="canvas-tool" data-role="flip-v"        title="Flip vertical">⇅</button>
-      <button class="canvas-tool canvas-tool--remove" data-role="remove" title="Remove layer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+      <button class="canvas-tool canvas-tool--remove" data-role="remove" title="Remove layer"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
     </div>
     <div class="toast" id="save-toast-mobile" role="status" aria-live="polite" hidden></div>
   </main>
