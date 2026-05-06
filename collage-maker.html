@@ -1643,9 +1643,13 @@ function render() {
   if (bg.id === 'transparent') {
     $canvas.classList.add('canvas--transparent');
     $canvas.style.background = '';
+    document.getElementById('stage').style.backgroundColor = '';
   } else {
     $canvas.classList.remove('canvas--transparent');
     $canvas.style.background = bg.hex;
+    // Fill the full mobile stage area — backgroundColor doesn't override
+    // the gallery-mode background-image set via CSS class
+    document.getElementById('stage').style.backgroundColor = bg.hex;
   }
 
   // wipe and redraw layers; assign explicit z-index from stack order
@@ -2550,21 +2554,34 @@ async function exportPNG() {
       await drawLayerOnCanvas(ctx, il, SIZE);
     }
 
-    off.toBlob((blob) => {
+    const blob = await new Promise(res => off.toBlob(res, 'image/png'));
+    const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const conceptSlug = state.concept ? state.concept.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : 'untitled';
+    const filename = `WBT-Collage-${conceptSlug}-${date}.png`;
+    const file = new File([blob], filename, { type: 'image/png' });
+
+    // On iOS, use share sheet so user can tap "Save Image" → Camera Roll
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: filename });
+      } catch (e) {
+        if (e.name !== 'AbortError') {
+          // Share failed — fall back to download
+          const url = URL.createObjectURL(blob);
+          Object.assign(document.createElement('a'), { href: url, download: filename }).click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+      }
+    } else {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      const conceptSlug = state.concept ? state.concept.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : 'untitled';
-      a.href = url;
-      a.download = `WBT-Collage-${conceptSlug}-${date}.png`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      [btn, btnM].forEach(b => b && (b.textContent = originalText, b.disabled = false));
-    }, 'image/png');
+    }
   } catch (err) {
     alert('Export failed: ' + err.message);
+  } finally {
     [btn, btnM].forEach(b => b && (b.textContent = originalText, b.disabled = false));
   }
 }
