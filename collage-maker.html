@@ -1530,6 +1530,51 @@ function sendBack(key) {
   }
 }
 
+/* Update only selection visuals — no DOM teardown, no img flicker */
+function renderSelectionOnly() {
+  $canvas.querySelectorAll('.layer').forEach(el => {
+    const isSelected = el.dataset.kind === state.selected;
+    el.classList.toggle('selected', isSelected);
+    const stackIdx = state.stackOrder.indexOf(el.dataset.kind);
+    el.style.zIndex = isSelected ? stackIdx + 100 : stackIdx + 1;
+  });
+  const ctBar = document.getElementById('canvas-toolbar');
+  if (ctBar) {
+    ctBar.style.visibility = state.selected ? '' : 'hidden';
+    ctBar.style.pointerEvents = state.selected ? '' : 'none';
+  }
+}
+
+/* Update position/size/rotation of one layer in-place — no img flicker */
+function renderLayerPos(kind) {
+  const layer = getLayer(kind);
+  if (!layer) return;
+  const el = $canvas.querySelector(`[data-kind="${kind}"]`);
+  if (!el) return;
+  el.style.left   = (layer.x * 100) + '%';
+  el.style.top    = (layer.y * 100) + '%';
+  el.style.width  = (layer.w * 100) + '%';
+  el.style.height = (layer.h * 100) + '%';
+  const inner = el.querySelector('.layer-inner');
+  if (inner) {
+    inner.style.transform = `rotate(${layer.rot || 0}deg) scale(${layer.flipX ? -1 : 1}, ${layer.flipY ? -1 : 1})`;
+    if (layer.crop) {
+      const img = inner.querySelector('img');
+      if (img) {
+        const c = layer.crop, cW = $canvas.offsetWidth, cH = $canvas.offsetHeight;
+        if (cW > 0 && cH > 0) {
+          const natW = c.pw / c.w, natH = c.ph / c.h;
+          const scale = (layer.w * cW) / c.pw;
+          img.style.width  = (natW * scale) + 'px';
+          img.style.height = (natH * scale) + 'px';
+          img.style.left   = (-c.x * natW * scale) + 'px';
+          img.style.top    = (-c.y * natH * scale) + 'px';
+        }
+      }
+    }
+  }
+}
+
 function render() {
   const bg = bgOptionById(state.bgColorId);
   if (bg.id === 'transparent') {
@@ -1691,7 +1736,7 @@ $canvas.addEventListener('pointerdown', (e) => {
   // select if not already
   if (state.selected !== kind) {
     state.selected = kind;
-    render();
+    renderSelectionOnly();
   }
 
   const rect = $canvas.getBoundingClientRect();
@@ -1766,7 +1811,7 @@ window.addEventListener('pointermove', (e) => {
     const angle = Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx);
     layer.rot = drag.startRot + (angle - drag.startAngle) * (180 / Math.PI);
   }
-  render();
+  renderLayerPos(drag.kind);
 });
 
 window.addEventListener('pointerup', () => { drag = null; });
