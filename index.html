@@ -432,7 +432,7 @@
         padding: 8px 0 0;
       }
       .hero-footer { order: 3; margin-top: 40px; }
-      body::before { background-size: auto 250%; background-position: center top; }
+      .hero { min-height: 100dvh; }
       .section-cards,
       .section-cards.two-col { grid-template-columns: 1fr; }
       .section-card.full { grid-column: span 1; }
@@ -560,10 +560,6 @@
   </section>
 
 <script>
-// Set hero min-height from actual window.innerHeight — reliable across iOS Safari
-if (window.innerWidth <= 900) {
-  document.querySelector('.hero').style.minHeight = window.innerHeight + 'px';
-}
 
 (async () => {
   try {
