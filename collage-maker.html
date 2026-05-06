@@ -665,14 +665,28 @@
 
   /* ── Mobile ── */
   @media (max-width: 768px) {
-    html, body { height: auto !important; overflow: visible !important; display: block !important; }
+    /* Fixed viewport — rail scrolls internally so window never scrolls (fixes iOS snap) */
+    html, body { height: 100% !important; overflow: hidden !important; display: block !important; }
     .layout { display: block; height: auto; overflow: visible; }
 
-    /* ── Rail: full-width, no right border, room for fixed wizard-nav ── */
+    /* Wizard chrome: fixed below the site nav (nav = 49px) */
+    .wizard-chrome {
+      position: fixed !important;
+      top: 49px;
+      left: 0; right: 0;
+      z-index: 200;
+    }
+
+    /* ── Rail: fixed-position scroll container so iOS uses element scroll, not window scroll ── */
     .rail {
+      position: fixed;
+      top: 112px; /* nav (49) + chrome (63) */
+      left: 0; right: 0;
+      bottom: 69px; /* wizard-nav */
       border-right: none;
-      padding: 16px 20px 80px;
-      overflow-y: visible;
+      padding: 16px 20px 16px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       max-height: none;
       height: auto;
     }
@@ -698,7 +712,7 @@
       align-items: center;
       justify-content: center;
       padding: 0;
-      height: calc(100vh - 44px - 68px); /* between chrome and nav bar */
+      height: calc(100vh - 112px - 69px); /* nav(49)+chrome(63) top, wizard-nav(69) bottom */
       overflow: hidden;
     }
 
@@ -2555,8 +2569,9 @@ function showStep(n) {
     }));
   }
 
-  // Scroll to top on step change
-  window.scrollTo(0, 0);
+  // Scroll to top on step change (rail is the scroll container on mobile, not window)
+  const railEl = document.querySelector('.rail');
+  if (railEl) railEl.scrollTop = 0;
 }
 
 function initWizard() {
