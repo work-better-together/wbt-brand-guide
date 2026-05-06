@@ -750,7 +750,16 @@
 
   /* ── Desktop: show step labels in rail ── */
   @media (min-width: 769px) {
-    .wizard-step-label { display: block; }
+    .wizard-step-label {
+      display: block;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
   }
 
   /* ── Mobile ── */
