@@ -243,14 +243,15 @@
       }`
     : '';
 
+  const isHome = here === 'index' || here === '';
   nav.innerHTML = `
     <div class="wbt-nav-left">
       <a class="wbt-nav-home" href="${idxHref}" title="Brand Guide Index" aria-label="Brand Guide Index">
         ${monogramSVG}
         <span>Brand Guide</span>
       </a>
-      <span class="wbt-nav-divider" aria-hidden="true"></span>
-      <span class="wbt-nav-crumb">${crumbHTML}</span>
+      ${isHome ? '' : `<span class="wbt-nav-divider" aria-hidden="true"></span>
+      <span class="wbt-nav-crumb">${crumbHTML}</span>`}
     </div>
     <div class="wbt-nav-right">
     </div>
