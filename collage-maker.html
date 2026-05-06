@@ -512,10 +512,21 @@
       0 24px 64px rgba(0,0,0,0.16);
   }
 
-  .stage--gallery {
+  /* Gallery bg lives on ::before so it can fade in/out independently */
+  .stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     background-image: url('assets/Reference/WBT-gallery-room.jpg');
     background-size: cover;
     background-position: 65% center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .stage--gallery::before { opacity: 1; }
+  .stage--gallery {
     justify-content: flex-start;
     padding-top: 9%;
   }
@@ -580,6 +591,12 @@
     /* prevent native image drag */
     -webkit-user-drag: none;
     user-drag: none;
+  }
+  .canvas--animating .layer {
+    transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                top  0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                width  0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   .layer.dragging { cursor: grabbing; }
   /* Inner element owns rotation + flip; image fills it. The outer .layer keeps
@@ -916,6 +933,8 @@
     .stage.wizard-active.stage--gallery {
       justify-content: flex-start;
       padding-top: 22vh;
+    }
+    .stage.wizard-active.stage--gallery::before {
       background-size: auto 220%;
       background-position: center 88%;
     }
@@ -2692,10 +2711,13 @@ document.getElementById('gallery-toggle').addEventListener('click', () => {
                         getComputedStyle(canvasWrap).transition !== '';
 
   function recompute() {
+    const canvas = document.querySelector('.canvas');
+    canvas.classList.add('canvas--animating');
     recomputeCropSize(state.spot, 'spot');
     recomputeCropSize(state.scribble, 'scribble');
     state.illustrations.forEach(il => recomputeCropSize(il, 'illustration'));
     render();
+    setTimeout(() => canvas.classList.remove('canvas--animating'), 450);
   }
 
   if (hasTransition) {
