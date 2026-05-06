@@ -246,7 +246,11 @@
   }
   @media (max-width: 480px) {
     #save-name-dialog {
-      width: calc(100vw - 32px);
+      position: fixed;
+      left: 8px;
+      right: 8px;
+      width: auto;
+      max-width: none;
       padding: 24px 20px 20px;
     }
   }
@@ -776,6 +780,10 @@
       /* max size that fits both stage width and height — keep square */
       width: min(100vw, calc(100vh - 118px));
       height: auto; /* let base aspect-ratio:1 rule determine height */
+    }
+    /* No shadow on mobile canvas view — bg fills the stage, shadow is redundant */
+    .stage.wizard-active:not(.stage--gallery) .canvas-wrap {
+      box-shadow: none;
     }
 
     /* Stage hint replaced by wizard chrome */
