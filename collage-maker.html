@@ -494,26 +494,27 @@
   .handle:hover { transform: scale(1.2); opacity: 1; }
   .handle.br { right: -7px; bottom: -7px; }
 
-  /* Layer toolbar — rotate, flip, remove buttons sit above each layer. */
-  .layer-toolbar {
+  /* Canvas toolbar — shared layer controls, fixed at bottom of canvas wrap */
+  .canvas-toolbar {
     position: absolute;
-    top: -32px;
+    bottom: 0;
+    left: 0;
     right: 0;
     display: flex;
-    gap: 4px;
-    z-index: 11;
-    opacity: 0;
-    transition: opacity 0.15s;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(31, 30, 30, 0.72);
+    backdrop-filter: blur(6px);
+    z-index: 200;
   }
-  .layer:hover .layer-toolbar,
-  .layer.selected .layer-toolbar { opacity: 1; }
-  .layer-tool {
-    width: 24px;
-    height: 24px;
-    background: var(--ink);
-    color: var(--paper);
-    border: none;
+  .canvas-tool {
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
+    background: rgba(249, 248, 242, 0.88);
+    color: var(--ink);
+    border: none;
     font-family: var(--font-mono);
     font-size: 13px;
     line-height: 1;
@@ -522,10 +523,11 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    transition: background 0.12s;
+    transition: background 0.12s, color 0.12s;
+    flex-shrink: 0;
   }
-  .layer-tool:hover { background: var(--slate); }
-  .layer-tool--remove:hover { background: var(--ochre); }
+  .canvas-tool:hover { background: #fff; }
+  .canvas-tool--remove:hover { background: var(--ochre); color: #fff; }
 
   /* Status / hint strip */
   .stage-hint {
@@ -671,6 +673,27 @@
       color: var(--ink-muted);
       flex-shrink: 0;
     }
+    /* ── Wizard arrow buttons (← and → flanking the dots) ── */
+    .wizard-arrow {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--rule);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+    .wizard-arrow:hover { background: var(--ink); color: var(--paper); }
+    .wizard-arrow[aria-disabled="true"] { opacity: 0.2; pointer-events: none; }
+
     .wizard-dots { display: flex; gap: 10px; align-items: center; }
     .wizard-dot {
       width: 26px; height: 26px;
@@ -726,7 +749,9 @@
 
 <!-- Wizard chrome — step dots, mobile only (hidden on desktop via CSS) -->
 <div class="wizard-chrome" id="wizard-chrome" aria-hidden="true">
+  <button class="wizard-arrow" id="wizard-prev" aria-label="Previous step">←</button>
   <div class="wizard-dots" id="wizard-dots"></div>
+  <button class="wizard-arrow" id="wizard-next-arrow" aria-label="Next step">→</button>
 </div>
 
 <div class="layout">
@@ -807,15 +832,23 @@
   <main class="stage">
     <div class="canvas-wrap">
       <div class="canvas" id="canvas"></div>
+      <div class="canvas-toolbar" id="canvas-toolbar" style="display:none;">
+        <button class="canvas-tool" data-role="bring-forward" title="Bring forward">↑</button>
+        <button class="canvas-tool" data-role="send-back"     title="Send back">↓</button>
+        <button class="canvas-tool" data-role="rotate-left"   title="Rotate −15°">↺</button>
+        <button class="canvas-tool" data-role="rotate-right"  title="Rotate +15°">↻</button>
+        <button class="canvas-tool" data-role="flip-h"        title="Flip horizontal">⇄</button>
+        <button class="canvas-tool" data-role="flip-v"        title="Flip vertical">⇅</button>
+        <button class="canvas-tool canvas-tool--remove" data-role="remove" title="Remove layer">×</button>
+      </div>
     </div>
     <div class="toast" id="save-toast-mobile" role="status" aria-live="polite" hidden></div>
   </main>
 
 </div>
 
-<!-- Wizard nav — always fixed at bottom; canvas step swaps Next for Export/Save -->
+<!-- Wizard nav — fixed at bottom; canvas step swaps Next for Export/Save -->
 <div class="wizard-nav" id="wizard-nav">
-  <button class="btn btn-secondary btn-sm" id="wizard-back">← Back</button>
   <button class="btn btn-primary btn-sm" id="wizard-next">Next →</button>
   <button class="btn btn-secondary btn-sm" id="export-btn-mobile" style="display:none;">Export PNG</button>
   <button class="btn btn-primary btn-sm" id="save-btn-mobile" style="display:none;">Save to Guide</button>
@@ -1119,6 +1152,10 @@ function render() {
     el.classList.toggle('active', state.illustrations.some(il => il.src === el.dataset.src));
   });
 
+  // Show/hide canvas toolbar based on selection
+  const ctBar = document.getElementById('canvas-toolbar');
+  if (ctBar) ctBar.style.display = state.selected ? '' : 'none';
+
   // Keep the "X/3 placed" badge live
   const illusCountEl = document.getElementById('illus-count');
   if (illusCountEl && state.concept) {
@@ -1169,20 +1206,6 @@ function renderLayer(kind, layer, opts = {}, stackIdx = 0) {
   handle.title = 'Drag to resize';
   wrap.appendChild(handle);
 
-  // Layer toolbar — rotate, flip, remove. Only shown on selected/hover via CSS.
-  const toolbar = document.createElement('div');
-  toolbar.className = 'layer-toolbar';
-  toolbar.innerHTML = `
-    <button class="layer-tool" data-role="bring-forward" title="Bring forward">↑</button>
-    <button class="layer-tool" data-role="send-back"     title="Send back">↓</button>
-    <button class="layer-tool" data-role="rotate-left"   title="Rotate -15°">↺</button>
-    <button class="layer-tool" data-role="rotate-right"  title="Rotate +15°">↻</button>
-    <button class="layer-tool" data-role="flip-h"        title="Flip horizontal">⇄</button>
-    <button class="layer-tool" data-role="flip-v"        title="Flip vertical">⇅</button>
-    <button class="layer-tool layer-tool--remove" data-role="remove" title="Remove layer">×</button>
-  `;
-  wrap.appendChild(toolbar);
-
   $canvas.appendChild(wrap);
 }
 
@@ -1207,29 +1230,8 @@ $canvas.addEventListener('pointerdown', (e) => {
   const kind = layerEl.dataset.kind;
   const role = e.target.dataset.role;
 
-  if (role === 'remove') {
-    setLayer(kind, null);
-    if (state.selected === kind) state.selected = null;
-    render();
-    return;
-  }
-
-  // Stack order — bring forward / send back
-  if (role === 'bring-forward') { bringForward(kind); return; }
-  if (role === 'send-back')     { sendBack(kind);     return; }
-
-  // Rotate / flip — discrete actions, no drag follow-up
-  if (role === 'rotate-left' || role === 'rotate-right' || role === 'flip-h' || role === 'flip-v') {
-    const layer = getLayer(kind);
-    if (!layer) return;
-    if (role === 'rotate-left')  layer.rot = (layer.rot || 0) - 15;
-    if (role === 'rotate-right') layer.rot = (layer.rot || 0) + 15;
-    if (role === 'flip-h')       layer.flipX = !layer.flipX;
-    if (role === 'flip-v')       layer.flipY = !layer.flipY;
-    state.selected = kind;
-    render();
-    return;
-  }
+  // Resize handle — handled below; all other toolbar actions come from canvas-toolbar
+  if (role && role !== 'resize') return;
 
   // select if not already
   if (state.selected !== kind) {
@@ -1291,6 +1293,31 @@ window.addEventListener('pointermove', (e) => {
 });
 
 window.addEventListener('pointerup', () => { drag = null; });
+
+/* ── Canvas toolbar — shared layer controls shown on selection ── */
+document.getElementById('canvas-toolbar').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-role]');
+  if (!btn || !state.selected) return;
+  const role = btn.dataset.role;
+  const kind = state.selected;
+
+  if (role === 'remove') {
+    setLayer(kind, null);
+    state.selected = null;
+    render();
+    return;
+  }
+  if (role === 'bring-forward') { bringForward(kind); return; }
+  if (role === 'send-back')     { sendBack(kind);     return; }
+
+  const layer = getLayer(kind);
+  if (!layer) return;
+  if (role === 'rotate-left')  layer.rot = (layer.rot || 0) - 15;
+  if (role === 'rotate-right') layer.rot = (layer.rot || 0) + 15;
+  if (role === 'flip-h')       layer.flipX = !layer.flipX;
+  if (role === 'flip-v')       layer.flipY = !layer.flipY;
+  render();
+});
 
 /* ───────────────────────────────────────────────────────────
    LAYER ADDITIONS — defaults, randomization
@@ -1966,22 +1993,26 @@ function showStep(n) {
     rail.classList.toggle('wizard-hidden', onCanvas);
     stage.classList.toggle('wizard-active', onCanvas);
 
-    const back      = document.getElementById('wizard-back');
+    // Arrows in dots bar
+    const prevArrow = document.getElementById('wizard-prev');
+    const nextArrow = document.getElementById('wizard-next-arrow');
+    if (prevArrow) prevArrow.setAttribute('aria-disabled', wizardStep === 1 ? 'true' : 'false');
+    if (nextArrow) nextArrow.setAttribute('aria-disabled', wizardStep === WIZARD_TOTAL_MOBILE ? 'true' : 'false');
+
+    // Bottom nav: swap Next for Export/Save on canvas step
     const next      = document.getElementById('wizard-next');
     const exportBtn = document.getElementById('export-btn-mobile');
     const saveBtn   = document.getElementById('save-btn-mobile');
-    back.style.visibility   = wizardStep === 1 ? 'hidden' : 'visible';
     next.style.display      = onCanvas ? 'none' : '';
     exportBtn.style.display = onCanvas ? '' : 'none';
     saveBtn.style.display   = onCanvas ? '' : 'none';
 
-    // Mobile dots
-    const onFinalStep = wizardStep === WIZARD_TOTAL_MOBILE;
+    // Mobile dots — always clickable
     document.querySelectorAll('.wizard-dot').forEach((dot, i) => {
       const s = i + 1;
       dot.classList.toggle('active', s === wizardStep);
-      dot.classList.toggle('clickable', onFinalStep);
-      dot.onclick = onFinalStep ? () => showStep(s) : null;
+      dot.classList.add('clickable');
+      dot.onclick = () => showStep(s);
     });
   } else {
     // Desktop: canvas is always visible; only rail steps paginate
@@ -1991,7 +2022,10 @@ function showStep(n) {
     if (next) next.style.display    = wizardStep === total ? 'none' : '';
 
     document.querySelectorAll('.rail-wizard-dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i + 1 === wizardStep);
+      const s = i + 1;
+      dot.classList.toggle('active', s === wizardStep);
+      dot.style.cursor = 'pointer';
+      dot.onclick = () => showStep(s);
     });
   }
 
@@ -2016,7 +2050,8 @@ function initWizard() {
         dot.textContent = String(i);
         dotsEl.appendChild(dot);
       }
-      document.getElementById('wizard-back').addEventListener('click', () => showStep(wizardStep - 1));
+      document.getElementById('wizard-prev').addEventListener('click', () => showStep(wizardStep - 1));
+      document.getElementById('wizard-next-arrow').addEventListener('click', () => showStep(wizardStep + 1));
       document.getElementById('wizard-next').addEventListener('click', () => showStep(wizardStep + 1));
     }
   } else {
