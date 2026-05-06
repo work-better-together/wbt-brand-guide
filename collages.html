@@ -285,9 +285,30 @@
 <div class="page">
 
   <header class="page-header">
-    <h1>Finished Collages</h1>
-    <p>Three sections: finished collages that show the system in practice, a curated set of vintage etched + watercolor illustrations, and a living concept library synced from Airtable.</p>
+    <h1>Collages</h1>
+    <p>Generated collages from the Collage Maker, plus finished reference pieces that show the system in practice.</p>
   </header>
+
+  <!-- ══════════════════════════════════════
+       GENERATED COLLAGES (localStorage-backed)
+  ══════════════════════════════════════ -->
+
+  <section class="static-section" id="generated-section" style="display:none;">
+    <div class="static-section-intro">
+      <div>
+        <h2>Generated <strong>Collages</strong></h2>
+      </div>
+      <div>
+        <p>Collages built in the Collage Maker and saved to this browser. Export any as a PNG to share or add to the finished gallery.</p>
+      </div>
+    </div>
+
+    <div class="section-label" id="generated-gallery-label">Generated · 0 collages</div>
+
+    <div class="finished-grid" id="generated-grid"></div>
+  </section>
+
+  <div class="section-divider" id="section-divider" style="display:none;"></div>
 
   <!-- ══════════════════════════════════════
        FINISHED COLLAGES
@@ -489,12 +510,21 @@
   }
 
   function renderSavedCollages() {
-    const grid = document.getElementById('finished-grid');
+    const grid = document.getElementById('generated-grid');
+    const section = document.getElementById('generated-section');
+    const divider = document.getElementById('section-divider');
     if (!grid) return;
-    // Clear any previous saved cards (so updates re-render cleanly)
-    grid.querySelectorAll('.finished-card--saved').forEach(el => el.remove());
+
+    grid.innerHTML = '';
 
     const saved = readSaved();
+
+    section.style.display = saved.length ? '' : 'none';
+    divider.style.display = saved.length ? '' : 'none';
+
+    const label = document.getElementById('generated-gallery-label');
+    if (label) label.textContent = `Generated · ${saved.length} collage${saved.length === 1 ? '' : 's'}`;
+
     saved.forEach(item => {
       const card = document.createElement('div');
       card.className = 'finished-card finished-card--saved';
@@ -502,7 +532,6 @@
       const dateLabel = formatSavedDate(item.savedAt);
       card.innerHTML = `
         <div class="finished-thumb">
-          <span class="finished-saved-tag">Saved</span>
           <button class="finished-saved-remove" type="button" aria-label="Remove saved collage" title="Remove from gallery">×</button>
           <img alt="${escapeAttr(item.title || 'Saved collage')}" loading="lazy">
         </div>
@@ -514,7 +543,6 @@
         </div>
       `;
 
-      // Wire up image, lightbox, and remove
       const img = card.querySelector('img');
       const thumb = card.querySelector('.finished-thumb');
       if (item.bgHex) thumb.style.background = item.bgHex;
@@ -530,15 +558,8 @@
         renderSavedCollages();
       });
 
-      grid.insertBefore(card, grid.firstChild);
+      grid.appendChild(card);
     });
-
-    // Update gallery count label
-    const label = document.getElementById('finished-gallery-label');
-    if (label) {
-      const total = STATIC_COUNT + saved.length;
-      label.textContent = `Gallery · ${total} collages${saved.length ? ` (${saved.length} saved)` : ''}`;
-    }
   }
 
   renderSavedCollages();
