@@ -500,8 +500,8 @@
     justify-content: center;
     gap: 6px;
     padding: 10px 16px;
-    background: rgba(31, 30, 30, 0.78);
-    backdrop-filter: blur(6px);
+    background: var(--bg-card);
+    border-top: 1px solid var(--rule);
     margin-top: 12px;
     border-radius: 40px;
   }
@@ -509,8 +509,8 @@
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: rgba(249, 248, 242, 0.88);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
     border: none;
     font-family: var(--font-mono);
     font-size: 13px;
@@ -523,8 +523,8 @@
     transition: background 0.12s, color 0.12s;
     flex-shrink: 0;
   }
-  .canvas-tool:hover { background: #fff; }
-  .canvas-tool--remove:hover { background: var(--ochre); color: #fff; }
+  .canvas-tool:hover { background: var(--slate); }
+  .canvas-tool--remove:hover { background: var(--ochre); }
 
   /* Status / hint strip */
   .stage-hint {
@@ -743,6 +743,7 @@
       left: 0; right: 0;
       margin-top: 0;
       border-radius: 0;
+      border-top: 1px solid var(--rule);
       padding: 10px 20px;
       z-index: 25;
     }
@@ -757,9 +758,7 @@
 
 <!-- Wizard chrome — step dots, mobile only (hidden on desktop via CSS) -->
 <div class="wizard-chrome" id="wizard-chrome" aria-hidden="true">
-  <button class="wizard-arrow" id="wizard-prev" aria-label="Previous step">←</button>
   <div class="wizard-dots" id="wizard-dots"></div>
-  <button class="wizard-arrow" id="wizard-next-arrow" aria-label="Next step">→</button>
 </div>
 
 <div class="layout">
@@ -2001,12 +2000,6 @@ function showStep(n) {
     rail.classList.toggle('wizard-hidden', onCanvas);
     stage.classList.toggle('wizard-active', onCanvas);
 
-    // Arrows in dots bar
-    const prevArrow = document.getElementById('wizard-prev');
-    const nextArrow = document.getElementById('wizard-next-arrow');
-    if (prevArrow) prevArrow.setAttribute('aria-disabled', wizardStep === 1 ? 'true' : 'false');
-    if (nextArrow) nextArrow.setAttribute('aria-disabled', wizardStep === WIZARD_TOTAL_MOBILE ? 'true' : 'false');
-
     // Bottom nav: swap Next for Export/Save on canvas step
     const next      = document.getElementById('wizard-next');
     const exportBtn = document.getElementById('export-btn-mobile');
@@ -2058,8 +2051,6 @@ function initWizard() {
         dot.textContent = String(i);
         dotsEl.appendChild(dot);
       }
-      document.getElementById('wizard-prev').addEventListener('click', () => showStep(wizardStep - 1));
-      document.getElementById('wizard-next-arrow').addEventListener('click', () => showStep(wizardStep + 1));
       document.getElementById('wizard-next').addEventListener('click', () => showStep(wizardStep + 1));
     }
   } else {
