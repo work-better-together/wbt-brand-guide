@@ -275,7 +275,6 @@
     position: absolute;
     object-fit: contain;
     pointer-events: none;
-    mix-blend-mode: multiply;
   }
   /* Compact spot-color bar — sits above the spot shapes; spans the full rail
      width so it lines up with the 3-column thumbnail grid below. */
@@ -713,7 +712,7 @@
     <!-- Step 2: Background color -->
     <div class="rail-section wizard-step" data-step="2">
       <span class="wizard-step-label">Choose a Background</span>
-      <div class="rail-label">Background <span class="count" id="bg-count"></span></div>
+      <div class="rail-label"><span class="count" id="bg-count"></span></div>
       <div class="swatch-grid swatch-grid--bg" id="bg-swatches"></div>
     </div>
 
@@ -1318,7 +1317,7 @@ function refreshBgPreviews() {
       img.className = 'swatch-preview';
       img.src = il.src;
       img.alt = '';
-      Object.assign(img.style, { position: 'absolute', objectFit: 'contain', pointerEvents: 'none', mixBlendMode: 'multiply', ...positions[i] });
+      Object.assign(img.style, { position: 'absolute', objectFit: 'contain', pointerEvents: 'none', ...positions[i] });
       sw.appendChild(img);
     });
   });
