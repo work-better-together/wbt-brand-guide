@@ -826,12 +826,11 @@
       justify-content: flex-start;
       padding-top: 14vh;
     }
-    /* Make toolbar + nav semi-transparent so room floor shows through */
+    /* In gallery mode: fade out the white bar backgrounds so floor shows through */
     body:has(.stage.wizard-active.stage--gallery) .wizard-nav,
     .stage.wizard-active.stage--gallery .canvas-toolbar {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: transparent;
+      border-color: transparent;
     }
     .stage--gallery .canvas-wrap {
       width: min(54vw, 42vh);
