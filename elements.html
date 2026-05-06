@@ -128,6 +128,7 @@
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 15px;
+      line-height: 1.15;
       color: var(--ink);
     }
     .library-nav-item .nav-status {
@@ -443,12 +444,13 @@
       .color-pill { font-size: 9px; }
       .spots-grid { grid-template-columns: repeat(2, 1fr); }
       .spots-grid[style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
+      .spots-grid[style*="grid-template-columns:repeat(6"] { grid-template-columns: repeat(3, 1fr) !important; }
       .bg-grid { grid-template-columns: 1fr; }
       .coming-soon-grid { grid-template-columns: 1fr; }
       .static-section-intro { grid-template-columns: 1fr; gap: 16px; }
       .static-section-intro h2 { font-size: 24px; }
-      .stats-bar { flex-wrap: wrap; }
-      .stat-cell { flex: 1 1 50%; min-width: 0; border-right: none; border-bottom: 1px solid var(--rule); }
+      .stats-bar { flex-wrap: wrap; overflow: hidden; }
+      .stat-cell { flex: 0 0 50%; min-width: 0; box-sizing: border-box; border-right: none; border-bottom: 1px solid var(--rule); }
       .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
       .image-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
       .static-section { margin-bottom: 56px; padding-bottom: 40px; }
@@ -469,17 +471,17 @@
     <a class="library-nav-item" href="#watercolor-textures" style="text-decoration:none;">
       <div class="nav-count">01</div>
       <div class="nav-name">Watercolor Textures</div>
-      <div class="nav-status status-active">● Active · 48 assets</div>
+      <div class="nav-status status-active">Active · 48 assets</div>
     </a>
     <a class="library-nav-item" href="#scribbles" style="text-decoration:none;">
       <div class="nav-count">02</div>
       <div class="nav-name">Scribbles</div>
-      <div class="nav-status status-active">● Active · 27 assets</div>
+      <div class="nav-status status-active">Active · 27 assets</div>
     </a>
     <a class="library-nav-item" href="#images" style="text-decoration:none;">
       <div class="nav-count">03</div>
       <div class="nav-name">Images</div>
-      <div class="nav-status status-active">● Active · Live library</div>
+      <div class="nav-status status-active">Active · Live library</div>
     </a>
   </div>
 
@@ -1478,6 +1480,70 @@
       </div>
     </div>
 
+    <!-- ── Ideas & Light ── -->
+    <div class="section-label">Ideas &amp; Light · 4 illustrations</div>
+
+    <div class="concept-group">
+      <div class="concept-name">Lightbulbs &amp; Street Lamp</div>
+      <div class="concept-icon">Use for: facilitation, training, workshops, ideas, illumination, a-ha moments</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Objects</span>
+        <span class="meta-tag tag-where">Photography / 3D</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Lightbulb-3D.png','Lightbulb-3D.png')">
+          <img src="assets/Illustrations/Lightbulb-3D.png" alt="3D rendered lightbulb" loading="lazy">
+          <div class="image-filename">Lightbulb-3D.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Lightbulb-Glowing.png','Lightbulb-Glowing.png')">
+          <img src="assets/Illustrations/Lightbulb-Glowing.png" alt="Glowing lightbulb — dramatic b&amp;w photo" loading="lazy">
+          <div class="image-filename">Lightbulb-Glowing.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Lightbulb-Pendant.png','Lightbulb-Pendant.png')">
+          <img src="assets/Illustrations/Lightbulb-Pendant.png" alt="Pendant lightbulb" loading="lazy">
+          <div class="image-filename">Lightbulb-Pendant.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Street-Lamp.png','Street-Lamp.png')">
+          <img src="assets/Illustrations/Street-Lamp.png" alt="Street lamp" loading="lazy">
+          <div class="image-filename">Street-Lamp.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-divider"></div>
+
+    <!-- ── Cosmos & Wonder ── -->
+    <div class="section-label">Cosmos &amp; Wonder · 4 illustrations</div>
+
+    <div class="concept-group">
+      <div class="concept-name">Moon &amp; Planets</div>
+      <div class="concept-icon">Use for: leadership coaching, vision, strategy, the bigger picture, aspiration</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Celestial</span>
+        <span class="meta-tag tag-where">Photography / Render</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Full-Moon.png','Full-Moon.png')">
+          <img src="assets/Illustrations/Full-Moon.png" alt="Full moon — photographic" loading="lazy">
+          <div class="image-filename">Full-Moon.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Planet-Mars.png','Planet-Mars.png')">
+          <img src="assets/Illustrations/Planet-Mars.png" alt="Planet Mars" loading="lazy">
+          <div class="image-filename">Planet-Mars.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Planet-Neptune.png','Planet-Neptune.png')">
+          <img src="assets/Illustrations/Planet-Neptune.png" alt="Planet Neptune" loading="lazy">
+          <div class="image-filename">Planet-Neptune.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Saturn-Rings.png','Saturn-Rings.png')">
+          <img src="assets/Illustrations/Saturn-Rings.png" alt="Saturn with rings" loading="lazy">
+          <div class="image-filename">Saturn-Rings.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-divider"></div>
+
     <!-- ── Perception & Reflection ── -->
     <div class="section-label">Perception &amp; Reflection · 6 illustrations</div>
 
@@ -1649,6 +1715,34 @@
         <div class="image-cell" onclick="openLightbox('assets/Illustrations/Star-Colors.png','Star-Colors.png')">
           <img src="assets/Illustrations/Star-Colors.png" alt="Star with watercolor texture" loading="lazy">
           <div class="image-filename">Star-Colors.png</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-divider"></div>
+
+    <!-- ── Bees & Insects ── -->
+    <div class="section-label">Bees &amp; Insects · 3 illustrations</div>
+
+    <div class="concept-group">
+      <div class="concept-name">Bees — Single, Pair, Trio</div>
+      <div class="concept-icon">Use for: team coaching, collaboration, collective intelligence, hive mind, group dynamics</div>
+      <div class="concept-meta">
+        <span class="meta-tag tag-type">Nature</span>
+        <span class="meta-tag tag-where">Etched / Engraved</span>
+      </div>
+      <div class="image-grid">
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Bee-Single.png','Bee-Single.png')">
+          <img src="assets/Illustrations/Bee-Single.png" alt="Single bee — etched illustration" loading="lazy">
+          <div class="image-filename">Bee-Single.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Bees-Pair.png','Bees-Pair.png')">
+          <img src="assets/Illustrations/Bees-Pair.png" alt="Pair of bees — etched illustration" loading="lazy">
+          <div class="image-filename">Bees-Pair.png</div>
+        </div>
+        <div class="image-cell" onclick="openLightbox('assets/Illustrations/Bees-Trio.png','Bees-Trio.png')">
+          <img src="assets/Illustrations/Bees-Trio.png" alt="Trio of bees — etched illustration" loading="lazy">
+          <div class="image-filename">Bees-Trio.png</div>
         </div>
       </div>
     </div>
