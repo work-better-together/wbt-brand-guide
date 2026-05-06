@@ -463,6 +463,7 @@
     inset: 0;
     transform-origin: center center;
     pointer-events: none;
+    overflow: hidden;
   }
   .layer img {
     width: 100%;
@@ -919,6 +920,57 @@ const SCRIBBLES = [
   { src: 'assets/Scribbles/WBT-scribble-swooping-line-leaves.png', name: 'Swooping Line Leaves' },
 ];
 
+/* ── Tight-bounds cache: scan alpha channel to find real content rect ── */
+const tightBoundsCache = new Map();
+function computeTightBounds(src) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const oc = document.createElement('canvas');
+      oc.width = img.naturalWidth; oc.height = img.naturalHeight;
+      const ctx2 = oc.getContext('2d');
+      ctx2.drawImage(img, 0, 0);
+      const { data } = ctx2.getImageData(0, 0, oc.width, oc.height);
+      const W = oc.width, H = oc.height;
+      let minX = W, maxX = 0, minY = H, maxY = 0;
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          if (data[(y * W + x) * 4 + 3] > 8) {
+            if (x < minX) minX = x; if (x > maxX) maxX = x;
+            if (y < minY) minY = y; if (y > maxY) maxY = y;
+          }
+        }
+      }
+      if (maxX < minX) { resolve({ x: 0, y: 0, w: 1, h: 1 }); return; }
+      const pad = 4;
+      minX = Math.max(0, minX - pad); minY = Math.max(0, minY - pad);
+      maxX = Math.min(W - 1, maxX + pad); maxY = Math.min(H - 1, maxY + pad);
+      resolve({ x: minX / W, y: minY / H, w: (maxX - minX + 1) / W, h: (maxY - minY + 1) / H });
+    };
+    img.onerror = () => resolve({ x: 0, y: 0, w: 1, h: 1 });
+    img.src = src;
+  });
+}
+function getTightBounds(src) {
+  if (!tightBoundsCache.has(src)) tightBoundsCache.set(src, computeTightBounds(src));
+  return tightBoundsCache.get(src);
+}
+async function applyTightBounds(layer, kind, adjustSize = true) {
+  const src = layer.src;
+  const crop = await getTightBounds(src);
+  if (layer.src !== src) return; // stale (layer was replaced)
+  layer.crop = crop;
+  if (adjustSize) {
+    const targetW = kind === 'spot' ? 0.55 : kind === 'scribble' ? 0.45 : null;
+    if (targetW !== null) {
+      layer.w = targetW;
+      layer.h = targetW * (crop.h / crop.w);
+    }
+  }
+  render();
+}
+
 /* Static vintage etched library — concept-grouped (mirrors Collage Elements.html) */
 const STATIC_CONCEPTS = [
   {
@@ -1196,6 +1248,18 @@ function renderLayer(kind, layer, opts = {}, stackIdx = 0) {
 
   const img = document.createElement('img');
   img.alt = '';
+
+  // Apply tight-bounds crop: position img so only real content fills the layer box
+  if (layer.crop) {
+    const c = layer.crop;
+    img.style.position = 'absolute';
+    img.style.objectFit = 'fill';
+    img.style.width  = (100 / c.w) + '%';
+    img.style.height = (100 / c.h) + '%';
+    img.style.left   = (-c.x / c.w * 100) + '%';
+    img.style.top    = (-c.y / c.h * 100) + '%';
+  }
+
   inner.appendChild(img);
   wrap.appendChild(inner);
 
@@ -1362,9 +1426,11 @@ function defaultPlacement(kind, index = 0) {
 function setBg(id)    { state.bgColorId = id; state.userPickedBg = true; render(); }
 function setSpotColor(id) {
   state.spotColorId = id;
-  // Swap the active spot to the matching color variant
-  if (state.spot) state.spot.src = spotSrc(state.spot.idx, id);
-  // Re-render the spot picker thumbs from the new color folder
+  if (state.spot) {
+    const oldCrop = state.spot.crop; // same shape → same alpha bounds
+    state.spot.src = spotSrc(state.spot.idx, id);
+    state.spot.crop = oldCrop;
+  }
   buildSpotThumbs();
   render();
 }
@@ -1372,11 +1438,13 @@ function setSpot(idx) {
   state.spot = { idx, src: spotSrc(idx, state.spotColorId), ...defaultPlacement('spot') };
   state.selected = 'spot';
   render();
+  applyTightBounds(state.spot, 'spot');
 }
 function setScribble(src) {
   state.scribble = { src, ...defaultPlacement('scribble') };
   state.selected = 'scribble';
   render();
+  applyTightBounds(state.scribble, 'scribble');
 }
 
 /* Click-to-add illustration up to MAX_ILLUSTRATIONS. Beyond that, replaces
@@ -1421,6 +1489,8 @@ function applyConcept(concept) {
   renderConceptHint();
   renderIllustrationGrid();
   render();
+  applyTightBounds(state.spot, 'spot');
+  applyTightBounds(state.scribble, 'scribble');
 }
 
 function shuffle() {
@@ -1449,6 +1519,8 @@ function shuffle() {
   }
   state.selected = null;
   render();
+  applyTightBounds(state.spot, 'spot');
+  applyTightBounds(state.scribble, 'scribble');
 }
 
 /* ───────────────────────────────────────────────────────────
@@ -1795,7 +1867,15 @@ async function drawLayerOnCanvas(ctx, layer, exportSize, opts = {}) {
     if (layer.flipX || layer.flipY) {
       ctx.scale(layer.flipX ? -1 : 1, layer.flipY ? -1 : 1);
     }
-    ctx.drawImage(img, -fitted.w / 2, -fitted.h / 2, fitted.w, fitted.h);
+    if (layer.crop) {
+      const c = layer.crop;
+      ctx.drawImage(img,
+        c.x * img.naturalWidth, c.y * img.naturalHeight,
+        c.w * img.naturalWidth, c.h * img.naturalHeight,
+        -boxW / 2, -boxH / 2, boxW, boxH);
+    } else {
+      ctx.drawImage(img, -fitted.w / 2, -fitted.h / 2, fitted.w, fitted.h);
+    }
     ctx.restore();
   } catch (err) {
     console.warn('Layer export failed:', err.message);
