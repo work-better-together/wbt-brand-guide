@@ -472,7 +472,7 @@
     justify-content: center;
     padding: 32px;
     overflow: auto;
-    background: #eeece8;
+    background: #d4cac0;
   }
 
   .gallery-toggle {
@@ -534,6 +534,19 @@
     white-space: nowrap;
   }
   .canvas-toolbar { transition: opacity 0.2s; }
+
+  /* ── Desktop: no toolbar animation, no repositioning between modes ── */
+  @media (min-width: 769px) {
+    .canvas-wrap { transition: none; }
+    .canvas-toolbar { transition: none; }
+    .stage--gallery .canvas-toolbar {
+      position: static;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      white-space: normal;
+    }
+  }
 
   .canvas {
     position: absolute;
