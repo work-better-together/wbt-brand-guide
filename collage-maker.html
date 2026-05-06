@@ -820,7 +820,10 @@
     /* ── Hide desktop rail nav on mobile (uses wizard-chrome/nav instead) ── */
     .rail-wizard-nav { display: none; }
 
-    /* ── Gallery view on mobile: square canvas, toolbar stays fixed ── */
+    /* ── Gallery view on mobile: square canvas, higher on wall, toolbar stays fixed ── */
+    .stage--gallery {
+      padding-top: 18%;
+    }
     .stage--gallery .canvas-wrap {
       width: min(54vw, 42vh);
       height: auto;
