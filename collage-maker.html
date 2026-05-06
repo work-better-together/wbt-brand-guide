@@ -962,8 +962,9 @@ async function applyTightBounds(layer, kind, adjustSize = true) {
   if (layer.src !== src) return; // stale (layer was replaced)
   layer.crop = crop;
   if (adjustSize) {
-    const targetW = kind === 'spot' ? 0.55 : kind === 'scribble' ? 0.45 : null;
-    if (targetW !== null) {
+    // For illustrations keep their current w; for spots/scribbles use fixed targets
+    const targetW = kind === 'spot' ? 0.55 : kind === 'scribble' ? 0.45 : layer.w;
+    {
       layer.w = targetW;
       layer.h = targetW * (crop.h / crop.w);
     }
@@ -1450,21 +1451,24 @@ function setScribble(src) {
 /* Click-to-add illustration up to MAX_ILLUSTRATIONS. Beyond that, replaces
    the most recently selected illustration (or the last one). */
 function addIllustration(src) {
+  let layer;
   if (state.illustrations.length < MAX_ILLUSTRATIONS) {
     const idx = state.illustrations.length;
-    state.illustrations.push({ src, ...defaultPlacement('illustration', idx) });
+    layer = { src, ...defaultPlacement('illustration', idx) };
+    state.illustrations.push(layer);
     state.selected = `illustration:${idx}`;
   } else {
-    // replace selected illustration if one is selected, else last one
     let replaceIdx = state.illustrations.length - 1;
     if (state.selected && state.selected.startsWith('illustration:')) {
       replaceIdx = parseInt(state.selected.split(':')[1], 10);
     }
     const prev = state.illustrations[replaceIdx];
-    state.illustrations[replaceIdx] = { src, x: prev.x, y: prev.y, w: prev.w, h: prev.h };
+    layer = { src, x: prev.x, y: prev.y, w: prev.w, h: prev.h };
+    state.illustrations[replaceIdx] = layer;
     state.selected = `illustration:${replaceIdx}`;
   }
   render();
+  applyTightBounds(layer, 'illustration');
 }
 
 function randPick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -1481,8 +1485,10 @@ function applyConcept(concept) {
   state.scribble = { src: randPick(SCRIBBLES).src,  ...defaultPlacement('scribble') };
 
   // Seed 1 illustration only if none placed yet; preserve existing selections across concept switches.
+  let seededIllus = null;
   if (!state.illustrations.length && concept.images && concept.images.length) {
-    state.illustrations = [{ src: randPick(concept.images), ...defaultPlacement('illustration', 0) }];
+    seededIllus = { src: randPick(concept.images), ...defaultPlacement('illustration', 0) };
+    state.illustrations = [seededIllus];
   }
 
   state.selected = null;
@@ -1491,6 +1497,7 @@ function applyConcept(concept) {
   render();
   applyTightBounds(state.spot, 'spot');
   applyTightBounds(state.scribble, 'scribble');
+  if (seededIllus) applyTightBounds(seededIllus, 'illustration');
 }
 
 function shuffle() {
@@ -1521,6 +1528,7 @@ function shuffle() {
   render();
   applyTightBounds(state.spot, 'spot');
   applyTightBounds(state.scribble, 'scribble');
+  state.illustrations.forEach(il => applyTightBounds(il, 'illustration'));
 }
 
 /* ───────────────────────────────────────────────────────────
