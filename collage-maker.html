@@ -2141,12 +2141,26 @@ async function fetchAirtable() {
       });
     });
 
-    // Refresh illustration grid with newly loaded images (if no concept selected, shows all)
-    // Preserve scroll position — Airtable callback fires async; grid rebuild resets scroll
+    // Append new Airtable images to the grid without clearing it — clearing innerHTML
+    // collapses page height to zero which snaps iOS scroll and can't be undone via JS
     if (!state.concept) {
-      const sy = window.scrollY;
-      renderIllustrationGrid();
-      requestAnimationFrame(() => window.scrollTo(0, sy));
+      const grid = document.getElementById('illus-thumbs');
+      const existing = new Set(Array.from(grid.querySelectorAll('.thumb')).map(t => t.dataset.src));
+      const newSrcs = allImages().filter(s => !existing.has(s));
+      newSrcs.forEach(src => {
+        const t = document.createElement('div');
+        t.className = 'thumb';
+        t.dataset.src = src;
+        const img = document.createElement('img');
+        img.src = src; img.loading = 'lazy'; img.alt = '';
+        t.appendChild(img);
+        t.addEventListener('click', () => addIllustration(src));
+        grid.appendChild(t);
+      });
+      if (newSrcs.length) {
+        document.getElementById('illus-count').textContent =
+          `${grid.querySelectorAll('.thumb').length} total`;
+      }
     }
     // If the concept input is currently focused/non-empty, refresh suggestions
     const input = document.getElementById('concept-input');
