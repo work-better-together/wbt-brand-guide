@@ -820,11 +820,12 @@
     /* ── Hide desktop rail nav on mobile (uses wizard-chrome/nav instead) ── */
     .rail-wizard-nav { display: none; }
 
-    /* ── Gallery view on mobile: higher on wall, floor visible at bottom ── */
+    /* ── Gallery view on mobile: canvas mid-wall, floor visible at bottom ── */
     /* 3-class specificity overrides .stage.wizard-active (2 classes) */
     .stage.wizard-active.stage--gallery {
       justify-content: flex-start;
-      padding-top: 8vh;
+      padding-top: 14vh;
+      background-position: center bottom; /* show floor in portrait crop */
     }
     .stage--gallery .canvas-wrap {
       width: min(54vw, 42vh);
