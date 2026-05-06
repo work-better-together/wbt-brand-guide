@@ -200,6 +200,27 @@
     gap: 6px;
   }
   .combobox-row input[type="text"] { flex: 1; min-width: 0; }
+  .concept-input-wrap { position: relative; flex: 1; min-width: 0; display: flex; }
+  .concept-input-wrap input[type="text"] { flex: 1; min-width: 0; padding-right: 28px; }
+  #concept-clear {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: transparent;
+    color: var(--ink-secondary, #888);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  #concept-clear:hover { color: var(--ink); background: transparent; }
   .btn-icon {
     flex: 0 0 auto;
     width: 36px;
@@ -992,8 +1013,11 @@
       <div class="toolbar-field combobox" id="concept-combobox">
         <label for="concept-input">Concept</label>
         <div class="combobox-row">
-          <input id="concept-input" type="text" autocomplete="off" spellcheck="false"
-                 placeholder="Type any concept… (e.g. feedback, growth)">
+          <div class="concept-input-wrap">
+            <input id="concept-input" type="text" autocomplete="off" spellcheck="false"
+                   placeholder="Type any concept…">
+            <button id="concept-clear" type="button" aria-label="Clear concept" title="Clear concept">×</button>
+          </div>
           <button class="btn-icon" id="shuffle-btn" type="button"
                   title="Shuffle — re-roll spot, scribble, illustrations on this concept"
                   aria-label="Shuffle">
@@ -2295,6 +2319,7 @@ function renderIllustrationGrid() {
 
 function renderConceptHint() {
   const el = document.getElementById('concept-hint');
+  if (!el) return;
   if (!state.concept) {
     el.innerHTML = '<strong>All illustrations</strong>Search a concept above to filter.';
     return;
@@ -2348,8 +2373,8 @@ function searchConcepts(query) {
     else if (name.includes(q)) score += 40;
     if (blurb.includes(q)) score += 15;
     if (type.includes(q)) score += 10;
-    // bonus: more images = more useful
-    if (c.images && c.images.length) score += Math.min(c.images.length, 5);
+    // bonus: more images = more useful (only when there's already a text match)
+    if (score > 0 && c.images && c.images.length) score += Math.min(c.images.length, 5);
     return { c, score };
   }).filter(r => r.score > 0)
     .sort((a, b) => b.score - a.score);
@@ -2390,8 +2415,21 @@ function pickConceptFromSuggestion(concept) {
   const input = document.getElementById('concept-input');
   input.value = concept.name;
   document.getElementById('concept-suggestions').hidden = true;
+  document.getElementById('concept-clear').style.display = 'flex';
   applyConcept(concept);
 }
+
+function clearConcept() {
+  const input = document.getElementById('concept-input');
+  input.value = '';
+  document.getElementById('concept-clear').style.display = 'none';
+  document.getElementById('concept-suggestions').hidden = true;
+  state.concept = null;
+  renderConceptHint();
+  renderIllustrationGrid();
+}
+
+document.getElementById('concept-clear').addEventListener('click', clearConcept);
 
 /* ───────────────────────────────────────────────────────────
    AIRTABLE FETCH
