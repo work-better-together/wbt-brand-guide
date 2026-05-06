@@ -305,7 +305,15 @@
     transition: transform 0.1s;
   }
   .swatch:hover { transform: scale(1.05); }
-  .swatch.active { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .swatch.active { outline: none; }
+  .swatch.active::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border: 2px solid var(--ink);
+    pointer-events: none;
+    z-index: 10;
+  }
   .swatch-name {
     font-family: var(--font-display);
     font-weight: 500;
@@ -404,18 +412,17 @@
     justify-content: center;
     padding: 32px;
     overflow: auto;
-    background:
-      linear-gradient(45deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%),
-      linear-gradient(-45deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%),
-      var(--bg);
-    background-size: 40px 40px;
+    background: #eeece8;
   }
 
   .canvas-wrap {
     position: relative;
     width: min(72vh, 72vw);
     aspect-ratio: 1;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 12px 48px rgba(0,0,0,0.08);
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.06),
+      0 6px 20px rgba(0,0,0,0.14),
+      0 24px 64px rgba(0,0,0,0.16);
   }
 
   .canvas {
@@ -424,6 +431,7 @@
     overflow: hidden;
     background: var(--paper);
     user-select: none;
+    touch-action: none;
   }
   /* When BG = Transparent, show a checkerboard underlay so the user can see
      the canvas (the export still produces real PNG alpha, no checkerboard). */
@@ -551,6 +559,38 @@
     border-radius: 999px;
   }
 
+  /* ── Wizard step visibility — global so desktop pagination also works ── */
+  .wizard-step { display: none; }
+  .wizard-step.wizard-active { display: block; }
+
+  /* ── Desktop rail pagination nav ── */
+  .rail-wizard-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+    gap: 10px;
+  }
+  .rail-wizard-dots { display: flex; gap: 6px; align-items: center; }
+  .rail-wizard-dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--rule);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .rail-wizard-dot.active { background: var(--intentional); color: var(--paper); transform: scale(1.15); }
+  .rail-wizard-buttons { display: flex; gap: 6px; flex-shrink: 0; }
+
   /* ── Wizard chrome + nav — hidden on desktop, shown on mobile via media query ── */
   .wizard-chrome, .wizard-nav { display: none; }
   .wizard-step-label { display: none; }
@@ -676,9 +716,8 @@
       display: block;
     }
 
-    /* ── Show/hide wizard steps ── */
-    .wizard-step { display: none; }
-    .wizard-step.wizard-active { display: block; }
+    /* ── Hide desktop rail nav on mobile (uses wizard-chrome/nav instead) ── */
+    .rail-wizard-nav { display: none; }
 
   }
 </style>
@@ -693,6 +732,15 @@
 <div class="layout">
 
   <aside class="rail">
+
+    <!-- Desktop rail pagination nav (hidden on mobile) -->
+    <div class="rail-wizard-nav" id="rail-wizard-nav">
+      <div class="rail-wizard-dots" id="rail-wizard-dots"></div>
+      <div class="rail-wizard-buttons">
+        <button class="btn btn-secondary btn-sm" id="rail-back">← Back</button>
+        <button class="btn btn-primary btn-sm" id="rail-next">Next →</button>
+      </div>
+    </div>
 
     <!-- Step 1: Concept + Illustrations -->
     <div class="rail-toolbar wizard-step" data-step="1">
@@ -1893,48 +1941,63 @@ document.querySelector('.stage').addEventListener('pointerdown', (e) => {
    MOBILE WIZARD — step-by-step picker flow
 ─────────────────────────────────────────────────────────── */
 
-const WIZARD_TOTAL = 5;
+const WIZARD_TOTAL_MOBILE  = 5; // steps 1-4 in rail + step 5 is canvas
+const WIZARD_TOTAL_DESKTOP = 4; // steps 1-4 in rail; canvas always visible
 let wizardStep = 1;
 
 function isWizardMode() {
   return window.matchMedia('(max-width: 768px)').matches;
 }
 
+function getWizardTotal() {
+  return isWizardMode() ? WIZARD_TOTAL_MOBILE : WIZARD_TOTAL_DESKTOP;
+}
+
 function showStep(n) {
-  if (!isWizardMode()) return;
-  wizardStep = Math.max(1, Math.min(WIZARD_TOTAL, n));
+  const total = getWizardTotal();
+  wizardStep = Math.max(1, Math.min(total, n));
 
   const rail  = document.querySelector('.rail');
   const stage = document.querySelector('.stage');
 
-  const wizardNav  = document.getElementById('wizard-nav');
+  if (isWizardMode()) {
+    // Mobile: step 5 hides rail and shows canvas
+    const onCanvas = wizardStep === WIZARD_TOTAL_MOBILE;
+    rail.classList.toggle('wizard-hidden', onCanvas);
+    stage.classList.toggle('wizard-active', onCanvas);
 
-  const onCanvas = wizardStep === WIZARD_TOTAL;
-  rail.classList.toggle('wizard-hidden', onCanvas);
-  stage.classList.toggle('wizard-active', onCanvas);
+    const back      = document.getElementById('wizard-back');
+    const next      = document.getElementById('wizard-next');
+    const exportBtn = document.getElementById('export-btn-mobile');
+    const saveBtn   = document.getElementById('save-btn-mobile');
+    back.style.visibility   = wizardStep === 1 ? 'hidden' : 'visible';
+    next.style.display      = onCanvas ? 'none' : '';
+    exportBtn.style.display = onCanvas ? '' : 'none';
+    saveBtn.style.display   = onCanvas ? '' : 'none';
 
-  // Swap nav buttons: canvas step shows Export/Save, other steps show Next
-  const back   = document.getElementById('wizard-back');
-  const next   = document.getElementById('wizard-next');
-  const exportBtn = document.getElementById('export-btn-mobile');
-  const saveBtn   = document.getElementById('save-btn-mobile');
-  back.style.visibility = wizardStep === 1 ? 'hidden' : 'visible';
-  next.style.display    = onCanvas ? 'none' : '';
-  exportBtn.style.display = onCanvas ? '' : 'none';
-  saveBtn.style.display   = onCanvas ? '' : 'none';
+    // Mobile dots
+    const onFinalStep = wizardStep === WIZARD_TOTAL_MOBILE;
+    document.querySelectorAll('.wizard-dot').forEach((dot, i) => {
+      const s = i + 1;
+      dot.classList.toggle('active', s === wizardStep);
+      dot.classList.toggle('clickable', onFinalStep);
+      dot.onclick = onFinalStep ? () => showStep(s) : null;
+    });
+  } else {
+    // Desktop: canvas is always visible; only rail steps paginate
+    const back = document.getElementById('rail-back');
+    const next = document.getElementById('rail-next');
+    if (back) back.style.visibility = wizardStep === 1 ? 'hidden' : 'visible';
+    if (next) next.style.display    = wizardStep === total ? 'none' : '';
 
-  // Show only the active step
+    document.querySelectorAll('.rail-wizard-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i + 1 === wizardStep);
+    });
+  }
+
+  // Show only the active wizard step (applies to both modes)
   document.querySelectorAll('.wizard-step').forEach(el => {
     el.classList.toggle('wizard-active', el.dataset.step === String(wizardStep));
-  });
-
-  // Update dots
-  const onFinalStep = wizardStep === WIZARD_TOTAL;
-  document.querySelectorAll('.wizard-dot').forEach((dot, i) => {
-    const s = i + 1;
-    dot.classList.toggle('active', s === wizardStep);
-    dot.classList.toggle('clickable', onFinalStep);
-    dot.onclick = onFinalStep ? () => showStep(s) : null;
   });
 
   // Scroll to top on step change
@@ -1942,29 +2005,45 @@ function showStep(n) {
 }
 
 function initWizard() {
-  if (!isWizardMode()) return;
-
-  // Build dots
-  const dotsEl = document.getElementById('wizard-dots');
-  if (!dotsEl.children.length) {
-    for (let i = 1; i <= WIZARD_TOTAL; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'wizard-dot';
-      dot.dataset.step = String(i);
-      dot.textContent = String(i);
-      dotsEl.appendChild(dot);
+  if (isWizardMode()) {
+    // Build mobile dots
+    const dotsEl = document.getElementById('wizard-dots');
+    if (!dotsEl.children.length) {
+      for (let i = 1; i <= WIZARD_TOTAL_MOBILE; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'wizard-dot';
+        dot.dataset.step = String(i);
+        dot.textContent = String(i);
+        dotsEl.appendChild(dot);
+      }
+      document.getElementById('wizard-back').addEventListener('click', () => showStep(wizardStep - 1));
+      document.getElementById('wizard-next').addEventListener('click', () => showStep(wizardStep + 1));
     }
-    document.getElementById('wizard-back').addEventListener('click', () => showStep(wizardStep - 1));
-    document.getElementById('wizard-next').addEventListener('click', () => showStep(wizardStep + 1));
+  } else {
+    // Build desktop rail dots
+    const dotsEl = document.getElementById('rail-wizard-dots');
+    if (dotsEl && !dotsEl.children.length) {
+      for (let i = 1; i <= WIZARD_TOTAL_DESKTOP; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'rail-wizard-dot';
+        dot.dataset.step = String(i);
+        dot.textContent = String(i);
+        dotsEl.appendChild(dot);
+      }
+      document.getElementById('rail-back').addEventListener('click', () => showStep(wizardStep - 1));
+      document.getElementById('rail-next').addEventListener('click', () => showStep(wizardStep + 1));
+    }
   }
 
   showStep(wizardStep);
 }
 
-// Init on load; re-run on resize (orientation change)
+// Init on load; re-run on resize (handles orientation change and desktop↔mobile)
 initWizard();
 window.addEventListener('resize', () => {
-  if (isWizardMode()) initWizard();
+  const total = getWizardTotal();
+  if (wizardStep > total) wizardStep = total;
+  initWizard();
 });
 
 /* ───────────────────────────────────────────────────────────
