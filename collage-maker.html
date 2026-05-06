@@ -478,7 +478,6 @@
     outline-offset: 2px;
   }
 
-  /* Handles are always visible on populated layers (more discoverable) */
   .handle {
     position: absolute;
     width: 14px;
@@ -487,12 +486,12 @@
     border: 1px solid var(--slate);
     cursor: nwse-resize;
     z-index: 10;
-    opacity: 0.55;
+    opacity: 0;
+    pointer-events: none;
     transition: opacity 0.15s, transform 0.1s;
   }
-  .layer:hover .handle,
-  .layer.selected .handle { opacity: 1; }
-  .handle:hover { transform: scale(1.2); opacity: 1; }
+  .layer.selected .handle { opacity: 1; pointer-events: auto; }
+  .handle:hover { transform: scale(1.2); }
   .handle.tl { left: -7px;  top: -7px;    cursor: nwse-resize; }
   .handle.tr { right: -7px; top: -7px;    cursor: nesw-resize; }
   .handle.bl { left: -7px;  bottom: -7px; cursor: nesw-resize; }
@@ -942,11 +941,12 @@ function computeTightBounds(src) {
           }
         }
       }
-      if (maxX < minX) { resolve({ x: 0, y: 0, w: 1, h: 1 }); return; }
+      if (maxX < minX) { resolve({ x: 0, y: 0, w: 1, h: 1, pw: W, ph: H }); return; }
       const pad = 4;
       minX = Math.max(0, minX - pad); minY = Math.max(0, minY - pad);
       maxX = Math.min(W - 1, maxX + pad); maxY = Math.min(H - 1, maxY + pad);
-      resolve({ x: minX / W, y: minY / H, w: (maxX - minX + 1) / W, h: (maxY - minY + 1) / H });
+      const pw = maxX - minX + 1, ph = maxY - minY + 1;
+      resolve({ x: minX / W, y: minY / H, w: pw / W, h: ph / H, pw, ph });
     };
     img.onerror = () => resolve({ x: 0, y: 0, w: 1, h: 1 });
     img.src = src;
@@ -966,7 +966,7 @@ async function applyTightBounds(layer, kind, adjustSize = true) {
     const targetW = kind === 'spot' ? 0.55 : kind === 'scribble' ? 0.45 : layer.w;
     {
       layer.w = targetW;
-      layer.h = targetW * (crop.h / crop.w);
+      layer.h = targetW * (crop.ph / crop.pw); // pixel aspect ratio
     }
   }
   render();
