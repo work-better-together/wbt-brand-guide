@@ -1250,15 +1250,23 @@ function renderLayer(kind, layer, opts = {}, stackIdx = 0) {
   const img = document.createElement('img');
   img.alt = '';
 
-  // Apply tight-bounds crop: position img so only real content fills the layer box
+  // Apply tight-bounds crop: scale full image so crop rect fills inner exactly.
+  // Uses actual canvas px (not %) so non-square canvases don't stretch.
   if (layer.crop) {
     const c = layer.crop;
-    img.style.position = 'absolute';
-    img.style.objectFit = 'fill';
-    img.style.width  = (100 / c.w) + '%';
-    img.style.height = (100 / c.h) + '%';
-    img.style.left   = (-c.x / c.w * 100) + '%';
-    img.style.top    = (-c.y / c.h * 100) + '%';
+    const cW = $canvas.offsetWidth;
+    const cH = $canvas.offsetHeight;
+    if (cW > 0 && cH > 0) {
+      const natW  = c.pw / c.w;           // natural image width in px
+      const natH  = c.ph / c.h;           // natural image height in px
+      const scale = (layer.w * cW) / c.pw; // uniform scale: crop px → display px
+      img.style.position = 'absolute';
+      img.style.objectFit = 'fill';
+      img.style.width  = (natW * scale) + 'px';
+      img.style.height = (natH * scale) + 'px';
+      img.style.left   = (-c.x * natW * scale) + 'px';
+      img.style.top    = (-c.y * natH * scale) + 'px';
+    }
   }
 
   inner.appendChild(img);
@@ -2179,6 +2187,7 @@ window.addEventListener('resize', () => {
   const total = getWizardTotal();
   if (wizardStep > total) wizardStep = total;
   initWizard();
+  render(); // recompute crop px values for non-square canvases
 });
 
 /* ───────────────────────────────────────────────────────────
