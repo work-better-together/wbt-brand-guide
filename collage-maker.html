@@ -577,14 +577,14 @@
     border-radius: 40px;
   }
   .canvas-tool {
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: var(--ink);
     color: var(--paper);
     border: none;
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: 18px;
     line-height: 1;
     cursor: pointer;
     display: flex;
@@ -820,9 +820,11 @@
     /* ── Hide desktop rail nav on mobile (uses wizard-chrome/nav instead) ── */
     .rail-wizard-nav { display: none; }
 
-    /* ── Gallery view on mobile: square canvas, higher on wall, toolbar stays fixed ── */
-    .stage--gallery {
-      padding-top: 18%;
+    /* ── Gallery view on mobile: higher on wall, floor visible at bottom ── */
+    /* 3-class specificity overrides .stage.wizard-active (2 classes) */
+    .stage.wizard-active.stage--gallery {
+      justify-content: flex-start;
+      padding-top: 8vh;
     }
     .stage--gallery .canvas-wrap {
       width: min(54vw, 42vh);
