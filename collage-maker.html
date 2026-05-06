@@ -1256,11 +1256,9 @@ function applyConcept(concept) {
   state.spot     = { idx: spotIdxA, src: spotSrc(spotIdxA, state.spotColorId), ...defaultPlacement('spot') };
   state.scribble = { src: randPick(SCRIBBLES).src,  ...defaultPlacement('scribble') };
 
-  // Seed exactly 1 illustration; user adds up to 2 more via picker.
-  if (concept.images && concept.images.length) {
+  // Seed 1 illustration only if none placed yet; preserve existing selections across concept switches.
+  if (!state.illustrations.length && concept.images && concept.images.length) {
     state.illustrations = [{ src: randPick(concept.images), ...defaultPlacement('illustration', 0) }];
-  } else {
-    state.illustrations = [];
   }
 
   state.selected = null;
