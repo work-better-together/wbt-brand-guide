@@ -3,7 +3,7 @@
 <head>
     <link rel="icon" type="image/svg+xml" href="assets/Logos/WBT-20260505-Favicon-Intentional-Blue.svg">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Brand Guide — Work Better Together</title>
   <style>
     @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
@@ -432,7 +432,11 @@
         padding: 8px 0 0;
       }
       .hero-footer { order: 3; margin-top: 40px; }
-      .hero { min-height: 100dvh; }
+      .hero {
+        min-height: 100lvh;
+        padding-top: max(32px, env(safe-area-inset-top, 32px));
+        padding-bottom: max(48px, env(safe-area-inset-bottom, 48px));
+      }
       .section-cards,
       .section-cards.two-col { grid-template-columns: 1fr; }
       .section-card.full { grid-column: span 1; }
