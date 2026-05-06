@@ -90,11 +90,11 @@
   .btn:focus-visible { outline: 2px solid var(--intentional); outline-offset: 2px; }
 
   .btn-primary { background: var(--intentional); color: var(--paper); border-color: var(--intentional); }
-  .btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+  @media (hover: hover) { .btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); } }
   .btn-primary[disabled] { background: var(--intentional); opacity: 0.4; cursor: not-allowed; }
 
   .btn-secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
-  .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+  @media (hover: hover) { .btn-secondary:hover { background: var(--ink); color: var(--paper); } }
   .btn-secondary[disabled] { opacity: 0.4; cursor: not-allowed; }
 
   .btn-sm { padding: 8px 14px; font-size: 11px; min-height: 36px; letter-spacing: 0.14em; }
