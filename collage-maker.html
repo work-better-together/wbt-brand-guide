@@ -672,10 +672,12 @@
     /* Wizard chrome: fixed below the site nav (nav = 49px) */
     .wizard-chrome {
       position: fixed !important;
-      top: 49px;
+      top: 49px !important;
       left: 0; right: 0;
       z-index: 200;
     }
+    /* Hide chrome in canvas step — gallery toggle takes its place */
+    body:has(.stage.wizard-active) .wizard-chrome { display: none !important; }
 
     /* ── Rail: fixed-position scroll container so iOS uses element scroll, not window scroll ── */
     .rail {
@@ -712,7 +714,7 @@
       align-items: center;
       justify-content: center;
       padding: 0;
-      height: calc(100vh - 112px - 69px); /* nav(49)+chrome(63) top, wizard-nav(69) bottom */
+      height: calc(100vh - 49px - 69px); /* nav(49) top, wizard-nav(69) bottom; chrome hidden in canvas mode */
       overflow: hidden;
     }
 
@@ -740,9 +742,6 @@
       padding: 16px 20px;
       background: var(--bg-card);
       border-bottom: 1px solid var(--rule);
-      position: sticky;
-      top: 0;
-      z-index: 200;
     }
     .wizard-steps-label {
       font-family: var(--font-mono);
@@ -839,8 +838,8 @@
     .stage.wizard-active.stage--gallery {
       justify-content: flex-start;
       padding-top: 14vh;
-      background-size: auto 170%;
-      background-position: center bottom;
+      background-size: auto 130%;
+      background-position: center 40%;
     }
     /* In gallery mode: fade out the white bar backgrounds so floor shows through */
     body:has(.stage.wizard-active.stage--gallery) .wizard-nav,
