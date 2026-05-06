@@ -1978,7 +1978,7 @@ document.getElementById('save-btn-mobile').addEventListener('click', saveToBrand
 // click outside any layer also deselects (handled in canvas pointerdown)
 // click on stage background also deselects
 document.querySelector('.stage').addEventListener('pointerdown', (e) => {
-  if (!e.target.closest('.canvas-wrap')) {
+  if (!e.target.closest('.canvas-wrap') && !e.target.closest('#canvas-toolbar')) {
     state.selected = null;
     render();
   }
