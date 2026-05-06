@@ -492,7 +492,10 @@
   .layer:hover .handle,
   .layer.selected .handle { opacity: 1; }
   .handle:hover { transform: scale(1.2); opacity: 1; }
-  .handle.br { right: -7px; bottom: -7px; }
+  .handle.tl { left: -7px;  top: -7px;    cursor: nwse-resize; }
+  .handle.tr { right: -7px; top: -7px;    cursor: nesw-resize; }
+  .handle.bl { left: -7px;  bottom: -7px; cursor: nesw-resize; }
+  .handle.br { right: -7px; bottom: -7px; cursor: nwse-resize; }
 
   /* Canvas toolbar — shared layer controls below the canvas */
   .canvas-toolbar {
@@ -501,7 +504,6 @@
     gap: 10px;
     padding: 10px 16px;
     background: var(--bg-card);
-    border-top: 1px solid var(--rule);
     margin-top: 12px;
     border-radius: 40px;
   }
@@ -659,7 +661,7 @@
       border-bottom: 1px solid var(--rule);
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 200;
     }
     .wizard-steps-label {
       font-family: var(--font-mono);
@@ -719,7 +721,7 @@
       border-top: 1px solid var(--rule);
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      z-index: 20;
+      z-index: 200;
     }
     .wizard-nav.wizard-hidden { display: none !important; }
     .wizard-nav .btn { flex: 1; }
@@ -743,9 +745,9 @@
       left: 0; right: 0;
       margin-top: 0;
       border-radius: 0;
-      border-top: 1px solid var(--rule);
-      padding: 10px 20px;
-      z-index: 25;
+      border-bottom: 1px solid var(--rule);
+      padding: 16px 20px; /* match wizard-chrome height */
+      z-index: 200; /* above any layer (max ~104) */
     }
 
     /* ── Hide desktop rail nav on mobile (uses wizard-chrome/nav instead) ── */
@@ -847,7 +849,7 @@
       <button class="canvas-tool" data-role="rotate-right"  title="Rotate +15°">↻</button>
       <button class="canvas-tool" data-role="flip-h"        title="Flip horizontal">⇄</button>
       <button class="canvas-tool" data-role="flip-v"        title="Flip vertical">⇅</button>
-      <button class="canvas-tool canvas-tool--remove" data-role="remove" title="Remove layer">×</button>
+      <button class="canvas-tool canvas-tool--remove" data-role="remove" title="Remove layer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
     </div>
     <div class="toast" id="save-toast-mobile" role="status" aria-live="polite" hidden></div>
   </main>
@@ -1206,12 +1208,15 @@ function renderLayer(kind, layer, opts = {}, stackIdx = 0) {
     img.src = layer.src;
   }
 
-  // Resize handle (always on populated layers; CSS fades it on hover/select)
-  const handle = document.createElement('div');
-  handle.className = 'handle br';
-  handle.dataset.role = 'resize';
-  handle.title = 'Drag to resize';
-  wrap.appendChild(handle);
+  // Resize handles at all 4 corners
+  ['tl','tr','bl','br'].forEach(corner => {
+    const h = document.createElement('div');
+    h.className = `handle ${corner}`;
+    h.dataset.role = 'resize';
+    h.dataset.corner = corner;
+    h.title = 'Drag to resize';
+    wrap.appendChild(h);
+  });
 
   $canvas.appendChild(wrap);
 }
@@ -1254,10 +1259,13 @@ $canvas.addEventListener('pointerdown', (e) => {
     drag = {
       mode: 'resize',
       kind,
+      corner: e.target.dataset.corner || 'br',
       startX: e.clientX,
       startY: e.clientY,
       startW: layer.w,
       startH: layer.h,
+      startLayerX: layer.x,
+      startLayerY: layer.y,
       canvasW: rect.width,
       canvasH: rect.height,
       aspect: layer.w / layer.h,
@@ -1289,12 +1297,17 @@ window.addEventListener('pointermove', (e) => {
     layer.x = drag.startLayerX + dx;
     layer.y = drag.startLayerY + dy;
   } else if (drag.mode === 'resize') {
-    // Use the larger axis as driver, keep aspect
-    const driver = Math.max(dx, dy);
+    // Sign of delta depends on which corner is being dragged
+    const signX = drag.corner.includes('l') ? -1 : 1;
+    const signY = drag.corner.includes('t') ? -1 : 1;
+    const driver = Math.max(signX * dx, signY * dy);
     let newW = Math.max(0.05, drag.startW + driver);
     let newH = newW / drag.aspect;
     layer.w = newW;
     layer.h = newH;
+    // Anchor the opposite corner by adjusting position
+    if (drag.corner.includes('l')) layer.x = drag.startLayerX - (newW - drag.startW);
+    if (drag.corner.includes('t')) layer.y = drag.startLayerY - (newH - drag.startH);
   }
   render();
 });
