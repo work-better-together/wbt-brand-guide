@@ -935,6 +935,7 @@ const state = {
   selected: null,      // 'spot' | 'scribble' | 'illustration:0..2' | null
   concept: null,       // concept object
   concepts: [...STATIC_CONCEPTS],  // populated with Airtable on load
+  stackOrder: [],      // layer keys bottom→top; managed by getStackOrder()
 };
 
 const CANVAS_SIZE = 1000; // logical units in CSS-px world; the canvas-wrap clamps actual on-screen
@@ -1000,6 +1001,36 @@ function setLayer(kind, value) {
   }
 }
 
+function getStackOrder() {
+  const active = [];
+  if (state.spot) active.push('spot');
+  if (state.scribble) active.push('scribble');
+  state.illustrations.forEach((_, i) => active.push(`illustration:${i}`));
+  const known = state.stackOrder.filter(k => active.includes(k));
+  const fresh  = active.filter(k => !known.includes(k));
+  return [...known, ...fresh]; // new layers land on top
+}
+
+function bringForward(key) {
+  const order = getStackOrder();
+  const i = order.indexOf(key);
+  if (i < order.length - 1) {
+    [order[i], order[i + 1]] = [order[i + 1], order[i]];
+    state.stackOrder = order;
+    render();
+  }
+}
+
+function sendBack(key) {
+  const order = getStackOrder();
+  const i = order.indexOf(key);
+  if (i > 0) {
+    [order[i - 1], order[i]] = [order[i], order[i - 1]];
+    state.stackOrder = order;
+    render();
+  }
+}
+
 function render() {
   const bg = bgOptionById(state.bgColorId);
   if (bg.id === 'transparent') {
@@ -1010,14 +1041,16 @@ function render() {
     $canvas.style.background = bg.hex;
   }
 
-  // wipe and redraw layers in fixed z-order: spot → scribble → illustrations
+  // wipe and redraw layers in user-controlled stack order
   $canvas.innerHTML = '';
-
-  if (state.spot) {
-    renderLayer('spot', state.spot);
-  }
-  if (state.scribble) renderLayer('scribble', state.scribble);
-  state.illustrations.forEach((il, i) => renderLayer(`illustration:${i}`, il));
+  state.stackOrder = getStackOrder();
+  state.stackOrder.forEach(key => {
+    const layer = getLayer(key);
+    if (!layer) return;
+    if (key === 'spot') renderLayer('spot', state.spot);
+    else if (key === 'scribble') renderLayer('scribble', state.scribble);
+    else renderLayer(key, layer);
+  });
 
   // refresh illustration previews inside each BG swatch
   refreshBgPreviews();
@@ -1091,10 +1124,12 @@ function renderLayer(kind, layer, opts = {}) {
   const toolbar = document.createElement('div');
   toolbar.className = 'layer-toolbar';
   toolbar.innerHTML = `
-    <button class="layer-tool" data-role="rotate-left"  title="Rotate -15°">↺</button>
-    <button class="layer-tool" data-role="rotate-right" title="Rotate +15°">↻</button>
-    <button class="layer-tool" data-role="flip-h"       title="Flip horizontal">⇄</button>
-    <button class="layer-tool" data-role="flip-v"       title="Flip vertical">⇅</button>
+    <button class="layer-tool" data-role="bring-forward" title="Bring forward">↑</button>
+    <button class="layer-tool" data-role="send-back"     title="Send back">↓</button>
+    <button class="layer-tool" data-role="rotate-left"   title="Rotate -15°">↺</button>
+    <button class="layer-tool" data-role="rotate-right"  title="Rotate +15°">↻</button>
+    <button class="layer-tool" data-role="flip-h"        title="Flip horizontal">⇄</button>
+    <button class="layer-tool" data-role="flip-v"        title="Flip vertical">⇅</button>
     <button class="layer-tool layer-tool--remove" data-role="remove" title="Remove layer">×</button>
   `;
   wrap.appendChild(toolbar);
@@ -1129,6 +1164,10 @@ $canvas.addEventListener('pointerdown', (e) => {
     render();
     return;
   }
+
+  // Stack order — bring forward / send back
+  if (role === 'bring-forward') { bringForward(kind); return; }
+  if (role === 'send-back')     { sendBack(kind);     return; }
 
   // Rotate / flip — discrete actions, no drag follow-up
   if (role === 'rotate-left' || role === 'rotate-right' || role === 'flip-h' || role === 'flip-v') {
