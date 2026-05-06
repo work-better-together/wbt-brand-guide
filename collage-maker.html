@@ -676,8 +676,10 @@
       left: 0; right: 0;
       z-index: 200;
     }
-    /* Hide chrome in canvas step — gallery toggle takes its place */
-    body:has(.stage.wizard-active) .wizard-chrome { display: none !important; }
+    /* Hide chrome only in gallery mode — dots nav stays visible in regular canvas step */
+    body:has(.stage.wizard-active.stage--gallery) .wizard-chrome { display: none !important; }
+    /* Gallery toggle sits above chrome in regular canvas mode */
+    .gallery-toggle { z-index: 210; }
 
     /* ── Rail: fixed-position scroll container so iOS uses element scroll, not window scroll ── */
     .rail {
@@ -839,7 +841,7 @@
       justify-content: flex-start;
       padding-top: 14vh;
       background-size: auto 130%;
-      background-position: center 40%;
+      background-position: center 55%;
     }
     /* In gallery mode: fade out the white bar backgrounds so floor shows through */
     body:has(.stage.wizard-active.stage--gallery) .wizard-nav,
