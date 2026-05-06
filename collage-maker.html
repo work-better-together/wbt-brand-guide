@@ -2157,6 +2157,18 @@ function showStep(n) {
     el.classList.toggle('wizard-active', el.dataset.step === String(wizardStep));
   });
 
+  render();
+
+  // Recompute crop sizes after browser reflow so canvas offsetWidth/Height are real.
+  if (isWizardMode() && wizardStep === WIZARD_TOTAL_MOBILE) {
+    requestAnimationFrame(() => {
+      recomputeCropSize(state.spot, 'spot');
+      recomputeCropSize(state.scribble, 'scribble');
+      state.illustrations.forEach(il => recomputeCropSize(il, 'illustration'));
+      render();
+    });
+  }
+
   // Scroll to top on step change
   window.scrollTo(0, 0);
 }
