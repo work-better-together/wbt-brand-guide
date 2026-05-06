@@ -2882,7 +2882,7 @@ buildSwatches();
 
 buildSpotColorSwatches();
 buildSpotThumbs();
-buildThumbs('scribble-thumbs', SCRIBBLES, setScribble, { categorized: true });
+buildThumbs('scribble-thumbs', SCRIBBLES, setScribble);
 renderIllustrationGrid();
 document.getElementById('spot-count').textContent = `${SPOTS.length} shapes`;
 document.getElementById('scribble-count').textContent = `${SCRIBBLES.length} options`;
