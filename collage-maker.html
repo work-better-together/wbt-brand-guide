@@ -1691,6 +1691,7 @@ async function saveToBrandGuide() {
       title,
       concept: state.concept?.name || null,
       bgColorId: state.bgColorId,
+      bgHex: bgOptionById(state.bgColorId).hex || null,
       spotColorId: state.spotColorId,
       savedAt: new Date().toISOString(),
       dataUrl,

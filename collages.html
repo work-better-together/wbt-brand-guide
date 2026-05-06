@@ -517,6 +517,7 @@
       // Wire up image, lightbox, and remove
       const img = card.querySelector('img');
       const thumb = card.querySelector('.finished-thumb');
+      if (item.bgHex) thumb.style.background = item.bgHex;
       img.src = item.dataUrl;
       thumb.addEventListener('click', (e) => {
         if (e.target.closest('.finished-saved-remove')) return;
