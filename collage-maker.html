@@ -3,7 +3,7 @@
 <head>
   <link rel="icon" type="image/svg+xml" href="assets/Logos/WBT-20260505-Favicon-Intentional-Blue.svg">
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Collage Builder — Work Better Together</title>
 <style>
   @font-face {
@@ -969,10 +969,7 @@
       <div class="rail-label" style="margin-top:20px">
         Illustrations <span class="count" id="illus-count"></span>
       </div>
-      <div class="concept-hint" id="concept-hint">
-        <strong>All illustrations</strong>Search a concept above to filter.
-      </div>
-      <div class="thumb-grid" id="illus-thumbs"></div>
+<div class="thumb-grid" id="illus-thumbs"></div>
       <div class="toolbar-buttons">
         <button class="btn btn-primary btn-sm" id="export-btn">Export PNG</button>
         <button class="btn btn-secondary btn-sm" id="save-btn" title="Save to Brand Guide → Collage Elements page">Save to Brand Guide</button>
@@ -999,8 +996,18 @@
     <!-- Step 4: Scribble -->
     <div class="rail-section wizard-step" data-step="4">
       <span class="wizard-step-label">Add a Scribble</span>
-      <div class="rail-label">Scribble <span class="count" id="scribble-count"></span></div>
+      <div class="rail-label"><span class="count" id="scribble-count"></span></div>
       <div class="thumb-grid" id="scribble-thumbs"></div>
+    </div>
+
+    <!-- Step 5: Save / Export (desktop) -->
+    <div class="rail-section wizard-step" data-step="5">
+      <span class="wizard-step-label">Save or Export</span>
+      <div class="toolbar-buttons" style="margin-top:4px;">
+        <button class="btn btn-primary btn-sm" id="export-btn-step5">Export PNG</button>
+        <button class="btn btn-secondary btn-sm" id="save-btn-step5">Save to Guide</button>
+      </div>
+      <div class="toast" id="save-toast-step5" role="status" aria-live="polite" hidden></div>
     </div>
 
   </aside>
@@ -2456,7 +2463,7 @@ function writeSavedCollages(list) {
 }
 
 function showToast(message, isError = false) {
-  ['save-toast', 'save-toast-mobile'].forEach(id => {
+  ['save-toast', 'save-toast-mobile', 'save-toast-step5'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
     el.textContent = message;
@@ -2465,7 +2472,7 @@ function showToast(message, isError = false) {
   });
   clearTimeout(showToast._t);
   showToast._t = setTimeout(() => {
-    ['save-toast', 'save-toast-mobile'].forEach(id => {
+    ['save-toast', 'save-toast-mobile', 'save-toast-step5'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.hidden = true;
     });
@@ -2627,6 +2634,8 @@ document.getElementById('export-btn').addEventListener('click', exportPNG);
 document.getElementById('save-btn').addEventListener('click', openSaveDialog);
 document.getElementById('export-btn-mobile').addEventListener('click', exportPNG);
 document.getElementById('save-btn-mobile').addEventListener('click', openSaveDialog);
+document.getElementById('export-btn-step5').addEventListener('click', exportPNG);
+document.getElementById('save-btn-step5').addEventListener('click', openSaveDialog);
 
 // Save name dialog wiring
 (function () {
@@ -2679,7 +2688,7 @@ document.getElementById('gallery-toggle').addEventListener('click', () => {
 ─────────────────────────────────────────────────────────── */
 
 const WIZARD_TOTAL_MOBILE  = 5; // steps 1-4 in rail + step 5 is canvas
-const WIZARD_TOTAL_DESKTOP = 4; // steps 1-4 in rail; canvas always visible
+const WIZARD_TOTAL_DESKTOP = 5; // steps 1-4 in rail + step 5 is save/export
 let wizardStep = 1;
 
 // Distinguish real taps from scroll gestures (iOS fires click at touchstart point even during swipes)
