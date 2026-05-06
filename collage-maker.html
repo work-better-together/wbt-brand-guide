@@ -748,6 +748,11 @@
   .wizard-chrome, .wizard-nav { display: none; }
   .wizard-step-label { display: none; }
 
+  /* ── Desktop: show step labels in rail ── */
+  @media (min-width: 769px) {
+    .wizard-step-label { display: block; }
+  }
+
   /* ── Mobile ── */
   @media (max-width: 768px) {
     /* Fixed viewport — rail scrolls internally so window never scrolls (fixes iOS snap) */
