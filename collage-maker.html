@@ -2806,7 +2806,6 @@ function initWizard() {
         dot.textContent = String(i);
         dotsEl.appendChild(dot);
       }
-      document.getElementById('rail-back').addEventListener('click', () => showStep(wizardStep - 1));
       document.getElementById('rail-next').addEventListener('click', () => showStep(wizardStep + 1));
     }
   }
