@@ -2421,10 +2421,21 @@ const WIZARD_TOTAL_MOBILE  = 5; // steps 1-4 in rail + step 5 is canvas
 const WIZARD_TOTAL_DESKTOP = 4; // steps 1-4 in rail; canvas always visible
 let wizardStep = 1;
 
-// Prevent phantom dot taps during fast scroll (iOS sticky-header touch bleed)
-let lastScrollMs = 0;
-document.addEventListener('scroll', () => { lastScrollMs = Date.now(); }, { passive: true });
-function recentlyScrolled() { return Date.now() - lastScrollMs < 400; }
+// Distinguish real taps from scroll gestures (iOS fires click at touchstart point even during swipes)
+let _touchScrolling = false;
+let _touchStartY = 0;
+document.addEventListener('touchstart', e => {
+  _touchScrolling = false;
+  _touchStartY = e.touches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (Math.abs(e.touches[0].clientY - _touchStartY) > 5) _touchScrolling = true;
+}, { passive: true });
+// click fires just after touchend — keep flag alive long enough to block it
+document.addEventListener('touchend', () => {
+  setTimeout(() => { _touchScrolling = false; }, 300);
+}, { passive: true });
+function isTap() { return !_touchScrolling; }
 
 function isWizardMode() {
   return window.matchMedia('(max-width: 768px)').matches;
@@ -2460,7 +2471,7 @@ function showStep(n) {
       const s = i + 1;
       dot.classList.toggle('active', s === wizardStep);
       dot.classList.add('clickable');
-      dot.onclick = () => { if (!recentlyScrolled()) showStep(s); };
+      dot.onclick = () => { if (isTap()) showStep(s); };
     });
   } else {
     // Desktop: canvas is always visible; only rail steps paginate
@@ -2473,7 +2484,7 @@ function showStep(n) {
       const s = i + 1;
       dot.classList.toggle('active', s === wizardStep);
       dot.style.cursor = 'pointer';
-      dot.onclick = () => { if (!recentlyScrolled()) showStep(s); };
+      dot.onclick = () => { if (isTap()) showStep(s); };
     });
   }
 
@@ -2511,7 +2522,7 @@ function initWizard() {
         dot.textContent = String(i);
         dotsEl.appendChild(dot);
       }
-      document.getElementById('wizard-next').addEventListener('click', () => { if (!recentlyScrolled()) showStep(wizardStep + 1); });
+      document.getElementById('wizard-next').addEventListener('click', () => { if (isTap()) showStep(wizardStep + 1); });
     }
   } else {
     // Build desktop rail dots
