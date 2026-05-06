@@ -467,6 +467,7 @@
   .layer.selected {
     outline: 1px dashed var(--slate);
     outline-offset: 2px;
+    z-index: 100 !important;
   }
 
   /* Handles are always visible on populated layers (more discoverable) */
@@ -594,10 +595,11 @@
       overflow: hidden;
     }
 
-    /* Canvas fills available height, capped at viewport width */
+    /* Canvas fills full available space between chrome and nav */
     .canvas-wrap {
-      width: min(calc(100vh - 44px - 68px), 100vw);
-      margin: 0 auto;
+      width: 100vw;
+      height: 100%;
+      aspect-ratio: unset;
     }
 
     /* Stage hint replaced by wizard chrome */
