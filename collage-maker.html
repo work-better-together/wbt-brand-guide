@@ -902,8 +902,7 @@
       background-size: auto 160%;
       background-position: center 58%;
     }
-    /* In gallery mode: fade out the white bar backgrounds so floor shows through */
-    body:has(.stage.wizard-active.stage--gallery) .wizard-nav,
+    /* In gallery mode: only the canvas toolbar fades; wizard-nav stays opaque so floor stops at button bar */
     .stage.wizard-active.stage--gallery .canvas-toolbar {
       background: transparent;
       border-color: transparent;
