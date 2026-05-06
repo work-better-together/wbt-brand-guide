@@ -66,7 +66,7 @@
   /* Body becomes a flex column so the brand-guide nav (injected by nav.js) sits
      above the .layout, and the layout consumes the remaining viewport height. */
   body { display: flex; flex-direction: column; }
-  .layout { flex: 1; min-height: 0; }
+  .layout { flex: 1; min-height: 0; height: 100%; }
 
   /* Buttons — canonical from Components.html */
   .btn {
@@ -407,7 +407,9 @@
 
   /* ── Stage ── */
   .stage {
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 32px;
@@ -415,15 +417,65 @@
     background: #eeece8;
   }
 
+  .gallery-toggle {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(0,0,0,0.10);
+    border-radius: 20px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink);
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: background 0.15s, opacity 0.15s;
+    z-index: 50;
+  }
+  .gallery-toggle:hover { background: rgba(255,255,255,0.92); }
+  .gallery-toggle svg { flex-shrink: 0; }
+
   .canvas-wrap {
     position: relative;
     width: min(72vh, 72vw);
     aspect-ratio: 1;
+    transition: width 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow:
       0 1px 2px rgba(0,0,0,0.06),
       0 6px 20px rgba(0,0,0,0.14),
       0 24px 64px rgba(0,0,0,0.16);
   }
+
+  .stage--gallery {
+    background-image: url('assets/Reference/WBT-gallery-room.jpg');
+    background-size: cover;
+    background-position: center;
+    justify-content: flex-start;
+    padding-top: 9%;
+  }
+  .stage--gallery .canvas-wrap {
+    width: min(34vh, 34vw);
+    box-shadow:
+      0 1px 1px rgba(0,0,0,0.06),
+      0 3px 9px rgba(0,0,0,0.14),
+      0 11px 30px rgba(0,0,0,0.22);
+  }
+  .stage--gallery .canvas-toolbar {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0;
+    white-space: nowrap;
+  }
+  .canvas-toolbar { transition: opacity 0.2s; }
 
   .canvas {
     position: absolute;
@@ -497,6 +549,23 @@
   .handle.bl { left: -7px;  bottom: -7px; cursor: nesw-resize; }
   .handle.br { right: -7px; bottom: -7px; cursor: nwse-resize; }
 
+  /* Rotation zones — invisible hit areas just outside each corner handle */
+  .handle-rotate {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    z-index: 9;
+    opacity: 0;
+    pointer-events: none;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23333' d='M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z'/%3E%3C/svg%3E") 12 12, grab;
+  }
+  .layer.selected .handle-rotate { opacity: 1; pointer-events: auto; }
+  .handle-rotate.tl { left: -22px;  top: -22px; }
+  .handle-rotate.tr { right: -22px; top: -22px; }
+  .handle-rotate.bl { left: -22px;  bottom: -22px; }
+  .handle-rotate.br { right: -22px; bottom: -22px; }
+
   /* Canvas toolbar — shared layer controls below the canvas */
   .canvas-toolbar {
     display: flex;
@@ -504,7 +573,7 @@
     gap: 10px;
     padding: 10px 16px;
     background: var(--bg-card);
-    margin-top: 12px;
+    margin-top: 28px;
     border-radius: 40px;
   }
   .canvas-tool {
@@ -531,18 +600,16 @@
   /* Status / hint strip */
   .stage-hint {
     position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 24px;
+    right: 28px;
     font-family: var(--font-display);
     font-weight: 500;
     font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink);
-    background: var(--bg-card);
-    border: 1px solid var(--rule);
-    padding: 8px 14px;
+    color: var(--ink-muted);
+    text-align: right;
+    line-height: 1.9;
     pointer-events: none;
   }
 
@@ -838,7 +905,11 @@
 
   </aside>
 
-  <main class="stage">
+  <main class="stage" id="stage">
+    <button class="gallery-toggle" id="gallery-toggle" title="Toggle gallery view">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M9 21V9"/></svg>
+      <span id="gallery-toggle-label">Gallery</span>
+    </button>
     <div class="canvas-wrap">
       <div class="canvas" id="canvas"></div>
     </div>
@@ -863,7 +934,6 @@
   <button class="btn btn-primary btn-sm" id="save-btn-mobile" style="display:none;">Save to Guide</button>
 </div>
 
-<div class="stage-hint">Click a layer to select · Drag to move · Corner to resize · × to remove</div>
 
 <script>
 /* ───────────────────────────────────────────────────────────
@@ -907,31 +977,194 @@ function spotSrc(idx, colorId) {
 const SPOTS = Array.from({ length: 9 }, (_, i) => ({ idx: i + 1, name: `Shape ${i + 1}` }));
 
 const SCRIBBLES = [
-  { src: 'assets/Scribbles/WBT-scribble-cascading-ovals.png',     name: 'Cascading Ovals' },
-  { src: 'assets/Scribbles/WBT-scribble-double-oval-tail.png',    name: 'Double Oval Tail' },
-  { src: 'assets/Scribbles/WBT-scribble-heart-black-converted.png', name: 'Heart' },
-  { src: 'assets/Scribbles/WBT-scribble-long-sweep-spiral.png',   name: 'Long Sweep Spiral' },
-  { src: 'assets/Scribbles/WBT-scribble-loop-wavy-tail.png',      name: 'Loop Wavy Tail' },
-  { src: 'assets/Scribbles/WBT-scribble-looping-wave.png',        name: 'Looping Wave' },
-  { src: 'assets/Scribbles/WBT-scribble-overlapping-ovals.png',   name: 'Overlapping Ovals' },
-  { src: 'assets/Scribbles/WBT-scribble-s-curve-loop.png',        name: 'S-Curve Loop' },
-  { src: 'assets/Scribbles/WBT-scribble-sweep-with-leaves.png',   name: 'Sweep With Leaves' },
-  { src: 'assets/Scribbles/WBT-scribble-swooping-line-leaves.png', name: 'Swooping Line Leaves' },
+  // Loops
+  { src: 'assets/Scribbles/Loops/WBT-scribble-cascading-ovals.png',  name: 'Cascading Ovals',  category: 'Loops' },
+  { src: 'assets/Scribbles/Loops/WBT-scribble-double-oval-tail.png', name: 'Double Oval Tail', category: 'Loops' },
+  { src: 'assets/Scribbles/Loops/WBT-scribble-loop-wavy-tail.png',   name: 'Loop Wavy Tail',   category: 'Loops' },
+  { src: 'assets/Scribbles/Loops/WBT-scribble-overlapping-ovals.png',name: 'Overlapping Ovals',category: 'Loops' },
+  // Sweeps
+  { src: 'assets/Scribbles/Sweeps/WBT-scribble-s-curve-loop.png',      name: 'S-Curve Loop',      category: 'Sweeps' },
+  { src: 'assets/Scribbles/Sweeps/WBT-scribble-long-sweep-spiral.png', name: 'Long Sweep Spiral', category: 'Sweeps' },
+  // Waves
+  { src: 'assets/Scribbles/Waves/WBT-scribble-looping-wave.png', name: 'Looping Wave', category: 'Waves' },
+  // Botanical
+  { src: 'assets/Scribbles/Botanical/WBT-scribble-sweep-with-leaves.png',    name: 'Sweep With Leaves',    category: 'Botanical' },
+  { src: 'assets/Scribbles/Botanical/WBT-scribble-swooping-line-leaves.png', name: 'Swooping Line Leaves', category: 'Botanical' },
+  // Hearts
+  { src: 'assets/Scribbles/Hearts/WBT-scribble-heart-black.png',           name: 'Heart · Painted', category: 'Hearts' },
+  { src: 'assets/Scribbles/Hearts/WBT-scribble-heart-black-converted.png', name: 'Heart · Outline', category: 'Hearts' },
+  // Blocks
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-01.png', name: 'Blocks 01', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-02.png', name: 'Blocks 02', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-03.png', name: 'Blocks 03', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-04.png', name: 'Blocks 04', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-05.png', name: 'Blocks 05', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-06.png', name: 'Blocks 06', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-07.png', name: 'Blocks 07', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-08.png', name: 'Blocks 08', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-09.png', name: 'Blocks 09', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-10.png', name: 'Blocks 10', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-11.png', name: 'Blocks 11', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-12.png', name: 'Blocks 12', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-13.png', name: 'Blocks 13', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-14.png', name: 'Blocks 14', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-15.png', name: 'Blocks 15', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-16.png', name: 'Blocks 16', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-17.png', name: 'Blocks 17', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-18.png', name: 'Blocks 18', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-19.png', name: 'Blocks 19', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-20.png', name: 'Blocks 20', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-21.png', name: 'Blocks 21', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-22.png', name: 'Blocks 22', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-23.png', name: 'Blocks 23', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-24.png', name: 'Blocks 24', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-25.png', name: 'Blocks 25', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-26.png', name: 'Blocks 26', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-27.png', name: 'Blocks 27', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-28.png', name: 'Blocks 28', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-29.png', name: 'Blocks 29', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-30.png', name: 'Blocks 30', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-31.png', name: 'Blocks 31', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-32.png', name: 'Blocks 32', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-33.png', name: 'Blocks 33', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-34.png', name: 'Blocks 34', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-35.png', name: 'Blocks 35', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-36.png', name: 'Blocks 36', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-37.png', name: 'Blocks 37', category: 'Blocks' },
+  { src: 'assets/Scribbles/Blocks/WBT-scribble-block-38.png', name: 'Blocks 38', category: 'Blocks' },
+  // Chaotic
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-01.png', name: 'Chaotic 01', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-02.png', name: 'Chaotic 02', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-03.png', name: 'Chaotic 03', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-04.png', name: 'Chaotic 04', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-05.png', name: 'Chaotic 05', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-06.png', name: 'Chaotic 06', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-07.png', name: 'Chaotic 07', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-08.png', name: 'Chaotic 08', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-09.png', name: 'Chaotic 09', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-10.png', name: 'Chaotic 10', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-11.png', name: 'Chaotic 11', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-12.png', name: 'Chaotic 12', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-13.png', name: 'Chaotic 13', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-14.png', name: 'Chaotic 14', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-15.png', name: 'Chaotic 15', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-16.png', name: 'Chaotic 16', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-17.png', name: 'Chaotic 17', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-18.png', name: 'Chaotic 18', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-19.png', name: 'Chaotic 19', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-20.png', name: 'Chaotic 20', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-21.png', name: 'Chaotic 21', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-22.png', name: 'Chaotic 22', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-23.png', name: 'Chaotic 23', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-24.png', name: 'Chaotic 24', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-25.png', name: 'Chaotic 25', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-26.png', name: 'Chaotic 26', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-27.png', name: 'Chaotic 27', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-28.png', name: 'Chaotic 28', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-29.png', name: 'Chaotic 29', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-30.png', name: 'Chaotic 30', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-31.png', name: 'Chaotic 31', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-32.png', name: 'Chaotic 32', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-33.png', name: 'Chaotic 33', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-34.png', name: 'Chaotic 34', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-35.png', name: 'Chaotic 35', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-36.png', name: 'Chaotic 36', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-37.png', name: 'Chaotic 37', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-38.png', name: 'Chaotic 38', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-39.png', name: 'Chaotic 39', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-40.png', name: 'Chaotic 40', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-41.png', name: 'Chaotic 41', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-42.png', name: 'Chaotic 42', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-43.png', name: 'Chaotic 43', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-44.png', name: 'Chaotic 44', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-45.png', name: 'Chaotic 45', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-46.png', name: 'Chaotic 46', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-47.png', name: 'Chaotic 47', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-48.png', name: 'Chaotic 48', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-49.png', name: 'Chaotic 49', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-50.png', name: 'Chaotic 50', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-51.png', name: 'Chaotic 51', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-52.png', name: 'Chaotic 52', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-53.png', name: 'Chaotic 53', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-54.png', name: 'Chaotic 54', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-55.png', name: 'Chaotic 55', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-56.png', name: 'Chaotic 56', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-57.png', name: 'Chaotic 57', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-58.png', name: 'Chaotic 58', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-59.png', name: 'Chaotic 59', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-60.png', name: 'Chaotic 60', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-61.png', name: 'Chaotic 61', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-62.png', name: 'Chaotic 62', category: 'Chaotic' },
+  { src: 'assets/Scribbles/Chaotic/WBT-scribble-chaotic-63.png', name: 'Chaotic 63', category: 'Chaotic' },
+  // Misc
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-01.png', name: 'Misc 01', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-02.png', name: 'Misc 02', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-03.png', name: 'Misc 03', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-04.png', name: 'Misc 04', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-05.png', name: 'Misc 05', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-06.png', name: 'Misc 06', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-07.png', name: 'Misc 07', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-08.png', name: 'Misc 08', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-09.png', name: 'Misc 09', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-10.png', name: 'Misc 10', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-11.png', name: 'Misc 11', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-12.png', name: 'Misc 12', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-13.png', name: 'Misc 13', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-14.png', name: 'Misc 14', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-15.png', name: 'Misc 15', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-16.png', name: 'Misc 16', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-17.png', name: 'Misc 17', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-18.png', name: 'Misc 18', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-19.png', name: 'Misc 19', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-20.png', name: 'Misc 20', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-21.png', name: 'Misc 21', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-22.png', name: 'Misc 22', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-23.png', name: 'Misc 23', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-24.png', name: 'Misc 24', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-25.png', name: 'Misc 25', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-26.png', name: 'Misc 26', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-27.png', name: 'Misc 27', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-28.png', name: 'Misc 28', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-29.png', name: 'Misc 29', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-30.png', name: 'Misc 30', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-31.png', name: 'Misc 31', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-32.png', name: 'Misc 32', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-33.png', name: 'Misc 33', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-34.png', name: 'Misc 34', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-35.png', name: 'Misc 35', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-36.png', name: 'Misc 36', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-37.png', name: 'Misc 37', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-38.png', name: 'Misc 38', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-39.png', name: 'Misc 39', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-40.png', name: 'Misc 40', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-41.png', name: 'Misc 41', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-42.png', name: 'Misc 42', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-43.png', name: 'Misc 43', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-44.png', name: 'Misc 44', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-45.png', name: 'Misc 45', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-46.png', name: 'Misc 46', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-47.png', name: 'Misc 47', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-48.png', name: 'Misc 48', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-49.png', name: 'Misc 49', category: 'Misc' },
+  { src: 'assets/Scribbles/Misc/WBT-scribble-misc-50.png', name: 'Misc 50', category: 'Misc' },
 ];
 
 /* ── Tight-bounds cache: scan alpha channel to find real content rect ── */
 const tightBoundsCache = new Map();
 function computeTightBounds(src) {
   return new Promise(resolve => {
+    const fallback = { x: 0, y: 0, w: 1, h: 1 }; // no pw/ph → skip crop
     const img = new Image();
-    img.crossOrigin = 'anonymous';
     img.onload = () => {
+      const W = img.naturalWidth, H = img.naturalHeight;
+      if (!W || !H) { resolve(fallback); return; }
       const oc = document.createElement('canvas');
-      oc.width = img.naturalWidth; oc.height = img.naturalHeight;
+      oc.width = W; oc.height = H;
       const ctx2 = oc.getContext('2d');
       ctx2.drawImage(img, 0, 0);
-      const { data } = ctx2.getImageData(0, 0, oc.width, oc.height);
-      const W = oc.width, H = oc.height;
+      let data;
+      try { data = ctx2.getImageData(0, 0, W, H).data; }
+      catch (_) { resolve(fallback); return; } // canvas tainted
       let minX = W, maxX = 0, minY = H, maxY = 0;
       for (let y = 0; y < H; y++) {
         for (let x = 0; x < W; x++) {
@@ -948,7 +1181,7 @@ function computeTightBounds(src) {
       const pw = maxX - minX + 1, ph = maxY - minY + 1;
       resolve({ x: minX / W, y: minY / H, w: pw / W, h: ph / H, pw, ph });
     };
-    img.onerror = () => resolve({ x: 0, y: 0, w: 1, h: 1 });
+    img.onerror = () => resolve(fallback);
     img.src = src;
   });
 }
@@ -971,6 +1204,7 @@ async function applyTightBounds(layer, kind, adjustSize = true) {
   const src = layer.src;
   const crop = await getTightBounds(src);
   if (layer.src !== src) return; // stale (layer was replaced)
+  if (!crop.pw || !crop.ph) return; // bounds couldn't be read — keep default placement
   layer.crop = crop;
   if (adjustSize) {
     const targetW = kind === 'spot' ? 0.55 : kind === 'scribble' ? 0.45 : layer.w;
@@ -1304,6 +1538,16 @@ function renderLayer(kind, layer, opts = {}, stackIdx = 0) {
     wrap.appendChild(h);
   });
 
+  // Rotation zones just outside each corner
+  ['tl','tr','bl','br'].forEach(corner => {
+    const h = document.createElement('div');
+    h.className = `handle-rotate ${corner}`;
+    h.dataset.role = 'rotate';
+    h.dataset.corner = corner;
+    h.title = 'Drag to rotate';
+    wrap.appendChild(h);
+  });
+
   $canvas.appendChild(wrap);
 }
 
@@ -1328,8 +1572,8 @@ $canvas.addEventListener('pointerdown', (e) => {
   const kind = layerEl.dataset.kind;
   const role = e.target.dataset.role;
 
-  // Resize handle — handled below; all other toolbar actions come from canvas-toolbar
-  if (role && role !== 'resize') return;
+  // Only handle resize, rotate, and move (no other roles — toolbar handles the rest)
+  if (role && role !== 'resize' && role !== 'rotate') return;
 
   // select if not already
   if (state.selected !== kind) {
@@ -1355,6 +1599,17 @@ $canvas.addEventListener('pointerdown', (e) => {
       canvasW: rect.width,
       canvasH: rect.height,
       aspect: layer.w / layer.h,
+    };
+  } else if (role === 'rotate') {
+    // Compute layer center in screen space
+    const cx = rect.left + (layer.x + layer.w / 2) * rect.width;
+    const cy = rect.top  + (layer.y + layer.h / 2) * rect.height;
+    drag = {
+      mode: 'rotate',
+      kind,
+      cx, cy,
+      startAngle: Math.atan2(e.clientY - cy, e.clientX - cx),
+      startRot: layer.rot || 0,
     };
   } else {
     drag = {
@@ -1394,6 +1649,9 @@ window.addEventListener('pointermove', (e) => {
     // Anchor the opposite corner by adjusting position
     if (drag.corner.includes('l')) layer.x = drag.startLayerX - (newW - drag.startW);
     if (drag.corner.includes('t')) layer.y = drag.startLayerY - (newH - drag.startH);
+  } else if (drag.mode === 'rotate') {
+    const angle = Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx);
+    layer.rot = drag.startRot + (angle - drag.startAngle) * (180 / Math.PI);
   }
   render();
 });
@@ -1535,9 +1793,13 @@ function shuffle() {
   state.spot     = { idx: spotIdx, src: spotSrc(spotIdx, state.spotColorId), ...defaultPlacement('spot') };
   state.scribble = { src: randPick(SCRIBBLES).src, ...defaultPlacement('scribble') };
 
+  const allImages = [
+    ...STATIC_CONCEPTS.flatMap(c => c.images),
+    ...state.concepts.flatMap(c => c.images || []),
+  ];
   const pool = (state.concept && state.concept.images && state.concept.images.length)
     ? state.concept.images
-    : STATIC_CONCEPTS.flatMap(c => c.images);
+    : allImages;
 
   // Re-roll same number of illustrations as currently active (default 1 if none).
   const targetCount = Math.max(1, state.illustrations.length);
@@ -1644,7 +1906,15 @@ function buildSpotThumbs() {
 function buildThumbs(containerId, items, onPick, opts = {}) {
   const grid = document.getElementById(containerId);
   grid.innerHTML = '';
+  let lastCategory = null;
   items.forEach(item => {
+    if (opts.categorized && item.category && item.category !== lastCategory) {
+      const header = document.createElement('div');
+      header.style.cssText = 'grid-column:1/-1;font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#888;padding:8px 0 4px;border-top:1px solid #e4e2de;margin-top:4px;';
+      header.textContent = item.category;
+      grid.appendChild(header);
+      lastCategory = item.category;
+    }
     const t = document.createElement('div');
     t.className = 'thumb';
     t.dataset.src = item.src;
@@ -1706,7 +1976,7 @@ function renderIllustrationGrid() {
 
   countEl.textContent = state.concept
     ? `${state.illustrations.length}/${MAX_ILLUSTRATIONS} placed · ${images.length} available`
-    : `${images.length} total — pick a concept to filter`;
+    : `${images.length} total`;
 }
 
 function renderConceptHint() {
@@ -2087,10 +2357,18 @@ document.getElementById('save-btn-mobile').addEventListener('click', saveToBrand
 // click outside any layer also deselects (handled in canvas pointerdown)
 // click on stage background also deselects
 document.querySelector('.stage').addEventListener('pointerdown', (e) => {
-  if (!e.target.closest('.canvas-wrap') && !e.target.closest('#canvas-toolbar')) {
+  if (!e.target.closest('.canvas-wrap') && !e.target.closest('#canvas-toolbar') && !e.target.closest('#gallery-toggle')) {
     state.selected = null;
     render();
   }
+});
+
+// Gallery view toggle
+document.getElementById('gallery-toggle').addEventListener('click', () => {
+  const stage = document.getElementById('stage');
+  const label = document.getElementById('gallery-toggle-label');
+  const isGallery = stage.classList.toggle('stage--gallery');
+  label.textContent = isGallery ? 'Close' : 'Gallery';
 });
 
 /* ───────────────────────────────────────────────────────────
@@ -2274,7 +2552,7 @@ buildSwatches();
 
 buildSpotColorSwatches();
 buildSpotThumbs();
-buildThumbs('scribble-thumbs', SCRIBBLES, setScribble);
+buildThumbs('scribble-thumbs', SCRIBBLES, setScribble, { categorized: true });
 renderIllustrationGrid();
 document.getElementById('spot-count').textContent = `${SPOTS.length} shapes`;
 document.getElementById('scribble-count').textContent = `${SCRIBBLES.length} options`;
