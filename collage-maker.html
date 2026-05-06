@@ -2497,7 +2497,7 @@ document.getElementById('gallery-toggle').addEventListener('click', () => {
   const stage = document.getElementById('stage');
   const label = document.getElementById('gallery-toggle-label');
   const isGallery = stage.classList.toggle('stage--gallery');
-  label.textContent = isGallery ? 'Close' : 'Gallery';
+  label.textContent = isGallery ? 'Canvas' : 'Gallery';
   // Recompute crop pixel positions once the canvas-wrap width transition ends
   const canvasWrap = document.querySelector('.canvas-wrap');
   canvasWrap.addEventListener('transitionend', function onEnd(e) {
