@@ -564,6 +564,16 @@
   </section>
 
 <script>
+const dbg = document.createElement('div');
+dbg.style.cssText = 'position:fixed;bottom:120px;right:8px;background:rgba(0,0,0,0.85);color:#fff;font:11px/1.8 monospace;padding:6px 8px;z-index:9999;border-radius:4px;pointer-events:none';
+document.body.appendChild(dbg);
+function updateDbg() {
+  const hero = document.querySelector('.hero');
+  const sect = document.querySelector('.sections');
+  dbg.innerHTML = `innerH: ${window.innerHeight}<br>heroH: ${hero.offsetHeight}<br>sectTop: ${sect.getBoundingClientRect().top.toFixed(0)}<br>scrollY: ${window.scrollY}`;
+}
+updateDbg();
+window.addEventListener('scroll', updateDbg);
 
 (async () => {
   try {
