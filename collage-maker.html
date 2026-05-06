@@ -264,7 +264,7 @@
     box-sizing: border-box;
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px; /* 16px minimum prevents iOS auto-zoom on focus */
     padding: 9px 12px;
     border: 1px solid var(--rule);
     background: var(--paper);
@@ -766,9 +766,9 @@
 
     /* Canvas fills full available space between chrome and nav */
     .canvas-wrap {
-      width: 100vw;
-      height: 100%;
-      aspect-ratio: unset;
+      /* max size that fits both stage width and height — keep square */
+      width: min(100vw, calc(100vh - 118px));
+      height: auto; /* let base aspect-ratio:1 rule determine height */
     }
 
     /* Stage hint replaced by wizard chrome */
