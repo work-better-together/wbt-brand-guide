@@ -489,8 +489,8 @@
   /* ── Generated collages (GitHub-backed) ──
      Reads manifest.json committed by the Collage Maker and renders
      each entry as a card linking to the raw GitHub asset URL.        */
-  const GITHUB_RAW = 'https://raw.githubusercontent.com/deroyperaza/wbt-brand-guide/main';
-  const MANIFEST_URL = `${GITHUB_RAW}/assets/Generated%20Illustrations/manifest.json`;
+  const SITE_BASE = 'https://brand.wbt.coach';
+  const MANIFEST_URL = `${SITE_BASE}/assets/Generated%20Illustrations/manifest.json`;
 
   function escapeAttr(s) {
     return String(s).replace(/[&<>"']/g, ch => ({
@@ -524,7 +524,7 @@
     if (label) label.textContent = `Generated · ${items.length} collage${items.length === 1 ? '' : 's'}`;
 
     items.forEach(item => {
-      const imgUrl   = `${GITHUB_RAW}/assets/Generated%20Illustrations/${encodeURIComponent(item.filename)}`;
+      const imgUrl   = `${SITE_BASE}/assets/Generated%20Illustrations/${encodeURIComponent(item.filename)}`;
       const dateLabel = formatSavedDate(item.savedAt);
       const card = document.createElement('div');
       card.className = 'finished-card';
