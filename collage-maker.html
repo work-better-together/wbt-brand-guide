@@ -473,6 +473,7 @@
     padding: 32px;
     overflow: auto;
     background: #e8e2dc;
+    height: 100%;
   }
 
   .gallery-toggle {
@@ -535,7 +536,7 @@
   }
   .canvas-toolbar { transition: opacity 0.2s; }
 
-  /* ── Desktop: no toolbar animation, no repositioning between modes ── */
+  /* ── Desktop: no toolbar animation; gallery toolbar pushed to stage bottom via flex ── */
   @media (min-width: 769px) {
     .canvas-wrap { transition: none; }
     .canvas-toolbar { transition: none; }
@@ -545,6 +546,8 @@
       left: auto;
       transform: none;
       white-space: normal;
+      margin-top: auto;
+      padding-bottom: 24px;
     }
   }
 
