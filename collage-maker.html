@@ -270,9 +270,12 @@
   .swatch-grid--bg {
     grid-template-columns: repeat(3, 1fr);
   }
-  /* Halve BG swatch height so the rail is more compact (2:1 instead of 1:1). */
-  .swatch-grid--bg .swatch {
-    aspect-ratio: 2 / 1;
+  /* Illustration preview layered inside each BG swatch */
+  .swatch-preview {
+    position: absolute;
+    object-fit: contain;
+    pointer-events: none;
+    mix-blend-mode: multiply;
   }
   /* Compact spot-color bar — sits above the spot shapes; spans the full rail
      width so it lines up with the 3-column thumbnail grid below. */
@@ -287,13 +290,13 @@
   /* Transparent swatch — checkerboard pattern so it reads as "no fill". */
   .swatch--transparent {
     background-image:
-      linear-gradient(45deg, #ccc 25%, transparent 25%),
-      linear-gradient(-45deg, #ccc 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, #ccc 75%),
-      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+      linear-gradient(45deg, #e0deda 25%, transparent 25%),
+      linear-gradient(-45deg, #e0deda 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #e0deda 75%),
+      linear-gradient(-45deg, transparent 75%, #e0deda 75%);
     background-size: 12px 12px;
     background-position: 0 0, 0 6px, 6px -6px, -6px 0;
-    background-color: #fff;
+    background-color: #f5f4f0;
   }
   .swatch {
     aspect-ratio: 1;
@@ -550,7 +553,7 @@
   }
 
   /* ── Wizard chrome + nav — hidden on desktop, shown on mobile via media query ── */
-  .wizard-chrome, .wizard-nav, .wizard-canvas-btns { display: none; }
+  .wizard-chrome, .wizard-nav { display: none; }
   .wizard-step-label { display: none; }
 
   /* ── Mobile ── */
@@ -582,13 +585,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 20px 24px;
-      height: auto;
-      min-height: 0;
-      overflow: visible;
+      justify-content: center;
+      padding: 0;
+      height: calc(100vh - 44px - 68px); /* between chrome and nav bar */
+      overflow: hidden;
     }
 
-    .canvas-wrap { width: min(86vw, 420px); margin: 0 auto; }
+    /* Canvas fills available height, capped at viewport width */
+    .canvas-wrap {
+      width: min(calc(100vh - 44px - 68px), 100vw);
+      margin: 0 auto;
+    }
 
     /* Stage hint replaced by wizard chrome */
     .stage-hint { display: none; }
@@ -652,14 +659,6 @@
     .wizard-step { display: none; }
     .wizard-step.wizard-active { display: block; }
 
-    /* ── Canvas step buttons (Export + Save side-by-side) ── */
-    .wizard-canvas-btns {
-      gap: 8px;
-      margin-top: 16px;
-      width: min(86vw, 420px);
-    }
-    .wizard-canvas-btns.wizard-active { display: flex; }
-    .wizard-canvas-btns .btn { flex: 1; font-size: 10px; padding: 10px 8px; }
   }
 </style>
 </head>
@@ -740,20 +739,17 @@
     <div class="canvas-wrap">
       <div class="canvas" id="canvas"></div>
     </div>
-    <!-- Step 7 canvas action buttons (mobile only) -->
-    <div class="wizard-canvas-btns" id="wizard-canvas-btns">
-      <button class="btn btn-primary btn-sm" id="export-btn-mobile">Export PNG</button>
-      <button class="btn btn-secondary btn-sm" id="save-btn-mobile">Save to Guide</button>
-    </div>
-    <div class="toast" id="save-toast-mobile" role="status" aria-live="polite" hidden style="margin-top:10px;width:min(86vw,420px)"></div>
+    <div class="toast" id="save-toast-mobile" role="status" aria-live="polite" hidden></div>
   </main>
 
 </div>
 
-<!-- Wizard nav — Back / Next, mobile only -->
+<!-- Wizard nav — always fixed at bottom; canvas step swaps Next for Export/Save -->
 <div class="wizard-nav" id="wizard-nav">
   <button class="btn btn-secondary btn-sm" id="wizard-back">← Back</button>
   <button class="btn btn-primary btn-sm" id="wizard-next">Next →</button>
+  <button class="btn btn-secondary btn-sm" id="export-btn-mobile" style="display:none;">Export PNG</button>
+  <button class="btn btn-primary btn-sm" id="save-btn-mobile" style="display:none;">Save to Guide</button>
 </div>
 
 <div class="stage-hint">Click a layer to select · Drag to move · Corner to resize · × to remove</div>
@@ -1000,6 +996,9 @@ function render() {
   }
   if (state.scribble) renderLayer('scribble', state.scribble);
   state.illustrations.forEach((il, i) => renderLayer(`illustration:${i}`, il));
+
+  // refresh illustration previews inside each BG swatch
+  refreshBgPreviews();
 
   // refresh active states on pickers
   document.querySelectorAll('#bg-swatches .swatch').forEach(el => {
@@ -1298,6 +1297,32 @@ function shuffle() {
 /* ───────────────────────────────────────────────────────────
    RAIL — populate pickers
 ─────────────────────────────────────────────────────────── */
+
+function refreshBgPreviews() {
+  const illus = state.illustrations.slice(0, 3);
+  document.querySelectorAll('#bg-swatches .swatch').forEach(sw => {
+    sw.querySelectorAll('.swatch-preview').forEach(el => el.remove());
+    if (!illus.length) return;
+
+    const positions = illus.length === 1
+      ? [{ top:'8%', left:'8%', width:'84%', height:'84%' }]
+      : illus.length === 2
+        ? [{ top:'4%',  left:'4%',  width:'58%', height:'58%' },
+           { bottom:'4%', right:'4%', width:'58%', height:'58%' }]
+        : [{ top:'4%',  left:'4%',  width:'52%', height:'52%' },
+           { bottom:'4%', right:'4%', width:'52%', height:'52%' },
+           { top:'24%', left:'24%', width:'52%', height:'52%' }];
+
+    illus.forEach((il, i) => {
+      const img = document.createElement('img');
+      img.className = 'swatch-preview';
+      img.src = il.src;
+      img.alt = '';
+      Object.assign(img.style, { position: 'absolute', objectFit: 'contain', pointerEvents: 'none', mixBlendMode: 'multiply', ...positions[i] });
+      sw.appendChild(img);
+    });
+  });
+}
 
 function buildSwatches() {
   const grid = document.getElementById('bg-swatches');
@@ -1819,14 +1844,22 @@ function showStep(n) {
 
   const rail  = document.querySelector('.rail');
   const stage = document.querySelector('.stage');
-  const canvasBtns = document.getElementById('wizard-canvas-btns');
+
   const wizardNav  = document.getElementById('wizard-nav');
 
   const onCanvas = wizardStep === WIZARD_TOTAL;
   rail.classList.toggle('wizard-hidden', onCanvas);
   stage.classList.toggle('wizard-active', onCanvas);
-  canvasBtns.classList.toggle('wizard-active', onCanvas);
-  wizardNav.classList.toggle('wizard-hidden', onCanvas);
+
+  // Swap nav buttons: canvas step shows Export/Save, other steps show Next
+  const back   = document.getElementById('wizard-back');
+  const next   = document.getElementById('wizard-next');
+  const exportBtn = document.getElementById('export-btn-mobile');
+  const saveBtn   = document.getElementById('save-btn-mobile');
+  back.style.visibility = wizardStep === 1 ? 'hidden' : 'visible';
+  next.style.display    = onCanvas ? 'none' : '';
+  exportBtn.style.display = onCanvas ? '' : 'none';
+  saveBtn.style.display   = onCanvas ? '' : 'none';
 
   // Show only the active step
   document.querySelectorAll('.wizard-step').forEach(el => {
@@ -1841,12 +1874,6 @@ function showStep(n) {
     dot.classList.toggle('clickable', onFinalStep);
     dot.onclick = onFinalStep ? () => showStep(s) : null;
   });
-
-  // Back / Next visibility
-  const back = document.getElementById('wizard-back');
-  const next = document.getElementById('wizard-next');
-  back.style.visibility = wizardStep === 1 ? 'hidden' : 'visible';
-  next.style.visibility = onCanvas ? 'hidden' : 'visible';
 
   // Scroll to top on step change
   window.scrollTo(0, 0);
