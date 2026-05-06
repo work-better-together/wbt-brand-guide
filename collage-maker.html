@@ -592,12 +592,6 @@
     -webkit-user-drag: none;
     user-drag: none;
   }
-  .canvas--animating .layer {
-    transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                top  0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                width  0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
   .layer.dragging { cursor: grabbing; }
   /* Inner element owns rotation + flip; image fills it. The outer .layer keeps
      its rectangle in screen-space so handles/toolbar stay readable while rotated. */
@@ -2700,6 +2694,7 @@ document.querySelector('.stage').addEventListener('pointerdown', (e) => {
 });
 
 // Gallery view toggle
+let _galleryRafId = null;
 document.getElementById('gallery-toggle').addEventListener('click', () => {
   const stage = document.getElementById('stage');
   const label = document.getElementById('gallery-toggle-label');
@@ -2707,30 +2702,31 @@ document.getElementById('gallery-toggle').addEventListener('click', () => {
   label.textContent = isGallery ? 'Canvas' : 'Gallery';
 
   const canvasWrap = document.querySelector('.canvas-wrap');
-  const hasTransition = getComputedStyle(canvasWrap).transition !== 'none' &&
-                        getComputedStyle(canvasWrap).transition !== '';
 
-  function recompute() {
-    const canvas = document.querySelector('.canvas');
-    canvas.classList.add('canvas--animating');
+  // Cancel any in-progress sync loop from a rapid re-click
+  if (_galleryRafId) cancelAnimationFrame(_galleryRafId);
+
+  // On every animation frame during the width transition, update each layer's
+  // img pixel sizes to match the current canvas offsetWidth. Without this,
+  // the crop images stay at their old pixel sizes while the %-based layer divs
+  // shrink/grow, causing a visible mismatch mid-transition.
+  function syncLayerImages() {
+    ['spot', 'scribble'].forEach(k => renderLayerPos(k));
+    state.illustrations.forEach((_, i) => renderLayerPos(`illustration:${i}`));
+    _galleryRafId = requestAnimationFrame(syncLayerImages);
+  }
+  _galleryRafId = requestAnimationFrame(syncLayerImages);
+
+  canvasWrap.addEventListener('transitionend', function onEnd(e) {
+    if (e.propertyName !== 'width') return;
+    canvasWrap.removeEventListener('transitionend', onEnd);
+    cancelAnimationFrame(_galleryRafId);
+    _galleryRafId = null;
     recomputeCropSize(state.spot, 'spot');
     recomputeCropSize(state.scribble, 'scribble');
     state.illustrations.forEach(il => recomputeCropSize(il, 'illustration'));
     render();
-    setTimeout(() => canvas.classList.remove('canvas--animating'), 450);
-  }
-
-  if (hasTransition) {
-    // Wait for CSS width transition to finish
-    canvasWrap.addEventListener('transitionend', function onEnd(e) {
-      if (e.propertyName !== 'width') return;
-      canvasWrap.removeEventListener('transitionend', onEnd);
-      recompute();
-    });
-  } else {
-    // No transition on desktop — wait two frames for DOM reflow
-    requestAnimationFrame(() => requestAnimationFrame(recompute));
-  }
+  });
 });
 
 /* ───────────────────────────────────────────────────────────
