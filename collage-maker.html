@@ -1524,6 +1524,40 @@ const STATIC_CONCEPTS = [
 ];
 
 /* Airtable concept library — fetched live */
+/* ── GitHub save config ──────────────────────────────────────────────
+   Fine-grained PAT with Contents: read+write on this repo only.       */
+const GITHUB = {
+  owner:  'deroyperaza',
+  repo:   'wbt-brand-guide',
+  branch: 'main',
+  token:  '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',
+  folder: 'assets/Generated Illustrations',
+  manifest: 'assets/Generated Illustrations/manifest.json',
+};
+
+async function ghGet(path) {
+  const encoded = path.split('/').map(encodeURIComponent).join('/');
+  const res = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${encoded}`, {
+    headers: { Authorization: `token ${GITHUB.token}`, Accept: 'application/vnd.github+json' },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`GitHub GET ${path} → ${res.status}`);
+  return res.json();
+}
+
+async function ghPut(path, base64Content, message, sha) {
+  const encoded = path.split('/').map(encodeURIComponent).join('/');
+  const body = { message, content: base64Content, branch: GITHUB.branch };
+  if (sha) body.sha = sha;
+  const res = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${encoded}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${GITHUB.token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`GitHub PUT ${path} → ${res.status}: ${await res.text()}`);
+  return res.json();
+}
+
 const AIRTABLE = {
   TOKEN:   'patfBEWJ2bJaznYk6.f5416b66a6ff5858152a5c903efd5e6f820046aa8aaa5c41575fe9b7ef2ef1ae',
   BASE_ID: 'appXa8GBjPJJnztSd',
@@ -2532,54 +2566,64 @@ function openSaveDialog() {
 }
 
 async function saveToBrandGuide(nameOverride) {
-  const btn = document.getElementById('save-btn');
-  const btnM = document.getElementById('save-btn-mobile');
-  const original = btn?.textContent || 'Save to Brand Guide';
-  [btn, btnM].forEach(b => b && (b.disabled = true, b.textContent = 'Saving…'));
+  const allBtns = ['save-btn','save-btn-mobile','save-btn-step5'].map(id => document.getElementById(id)).filter(Boolean);
+  const origTexts = allBtns.map(b => b.textContent);
+  allBtns.forEach(b => { b.disabled = true; b.textContent = 'Saving…'; });
+
   try {
-    // Render at SAVE_SIZE using the same layered pipeline as Export
+    // 1. Render PNG at SAVE_SIZE
     const off = document.createElement('canvas');
     off.width = SAVE_SIZE; off.height = SAVE_SIZE;
     const ctx = off.getContext('2d');
     const bg = bgOptionById(state.bgColorId);
-    if (bg.id !== 'transparent') {
-      ctx.fillStyle = bg.hex;
-      ctx.fillRect(0, 0, SAVE_SIZE, SAVE_SIZE);
-    }
+    if (bg.id !== 'transparent') { ctx.fillStyle = bg.hex; ctx.fillRect(0, 0, SAVE_SIZE, SAVE_SIZE); }
     await drawLayerOnCanvas(ctx, state.spot, SAVE_SIZE);
     await drawLayerOnCanvas(ctx, state.scribble, SAVE_SIZE);
-    for (const il of state.illustrations) {
-      await drawLayerOnCanvas(ctx, il, SAVE_SIZE);
-    }
-    const dataUrl = off.toDataURL('image/png');
+    for (const il of state.illustrations) await drawLayerOnCanvas(ctx, il, SAVE_SIZE);
 
-    const title = (nameOverride || '').trim() || state.concept?.name || 'Untitled Collage';
-    const list = readSavedCollages();
-    list.unshift({
-      id: 'wbt-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+    // base64 content (strip data URL prefix)
+    const dataUrl  = off.toDataURL('image/png');
+    const b64      = dataUrl.slice('data:image/png;base64,'.length);
+
+    // 2. Build filename + metadata
+    const title    = (nameOverride || '').trim() || state.concept?.name || 'Untitled Collage';
+    const slug     = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'collage';
+    const now      = new Date();
+    const stamp    = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+    const filename = `WBT-collage-${slug}-${stamp}.png`;
+    const imgPath  = `${GITHUB.folder}/${filename}`;
+
+    allBtns.forEach(b => { b.textContent = 'Uploading…'; });
+
+    // 3. Commit the PNG (check for existing SHA to handle re-saves of same name)
+    const existing = await ghGet(imgPath);
+    await ghPut(imgPath, b64, `Add generated collage: ${title}`, existing?.sha);
+
+    // 4. Read + update manifest.json
+    allBtns.forEach(b => { b.textContent = 'Updating…'; });
+    const manifestFile = await ghGet(GITHUB.manifest);
+    const manifestList = manifestFile
+      ? JSON.parse(atob(manifestFile.content.replace(/\n/g, '')))
+      : [];
+
+    manifestList.unshift({
+      filename,
       title,
-      concept: state.concept?.name || null,
-      bgColorId: state.bgColorId,
-      bgHex: bgOptionById(state.bgColorId).hex || null,
-      spotColorId: state.spotColorId,
-      savedAt: new Date().toISOString(),
-      dataUrl,
+      concept:    state.concept?.name || null,
+      bgColorId:  state.bgColorId,
+      bgHex:      bgOptionById(state.bgColorId).hex || null,
+      savedAt:    now.toISOString(),
     });
-    try {
-      writeSavedCollages(list);
-    } catch (err) {
-      // Quota exceeded — drop oldest until it fits, then retry.
-      while (list.length > 1) {
-        list.pop();
-        try { writeSavedCollages(list); break; } catch {}
-      }
-    }
-    showToast('Added to Collages ✓');
+
+    const manifestB64 = btoa(unescape(encodeURIComponent(JSON.stringify(manifestList, null, 2))));
+    await ghPut(GITHUB.manifest, manifestB64, `Update collage manifest: ${title}`, manifestFile?.sha);
+
+    showToast('Saved to Brand Guide ✓');
   } catch (err) {
     console.warn('Save failed:', err);
-    showToast('Save failed — try again', true);
+    showToast('Save failed — ' + err.message, true);
   } finally {
-    [btn, btnM].forEach(b => b && (b.disabled = false, b.textContent = original));
+    allBtns.forEach((b, i) => { b.disabled = false; b.textContent = origTexts[i]; });
   }
 }
 

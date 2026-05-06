@@ -486,18 +486,11 @@
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-  /* ── Saved-from-Builder collages (localStorage) ──
-     Pulls anything saved by Collage Builder.html and prepends it
-     to the Finished Collages grid, with a small remove (×) control. */
-  const SAVED_KEY = 'wbt-finished-collages';
-  const STATIC_COUNT = 9; // hand-curated cards already in the grid
-
-  function readSaved() {
-    try {
-      const raw = localStorage.getItem(SAVED_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch { return []; }
-  }
+  /* ── Generated collages (GitHub-backed) ──
+     Reads manifest.json committed by the Collage Maker and renders
+     each entry as a card linking to the raw GitHub asset URL.        */
+  const GITHUB_RAW = 'https://raw.githubusercontent.com/deroyperaza/wbt-brand-guide/main';
+  const MANIFEST_URL = `${GITHUB_RAW}/assets/Generated%20Illustrations/manifest.json`;
 
   function escapeAttr(s) {
     return String(s).replace(/[&<>"']/g, ch => ({
@@ -510,64 +503,50 @@
     catch { return iso; }
   }
 
-  function renderSavedCollages() {
-    const grid = document.getElementById('generated-grid');
+  async function renderSavedCollages() {
+    const grid    = document.getElementById('generated-grid');
     const section = document.getElementById('generated-section');
     const divider = document.getElementById('section-divider');
+    const label   = document.getElementById('generated-gallery-label');
     if (!grid) return;
 
+    grid.innerHTML = '<p style="color:var(--ink-muted);font-size:13px;padding:8px 0;">Loading…</p>';
+
+    let items = [];
+    try {
+      const res = await fetch(MANIFEST_URL + '?t=' + Date.now());
+      if (res.ok) items = await res.json();
+    } catch {}
+
     grid.innerHTML = '';
+    section.style.display = items.length ? '' : 'none';
+    divider.style.display = items.length ? '' : 'none';
+    if (label) label.textContent = `Generated · ${items.length} collage${items.length === 1 ? '' : 's'}`;
 
-    const saved = readSaved();
-
-    section.style.display = saved.length ? '' : 'none';
-    divider.style.display = saved.length ? '' : 'none';
-
-    const label = document.getElementById('generated-gallery-label');
-    if (label) label.textContent = `Generated · ${saved.length} collage${saved.length === 1 ? '' : 's'}`;
-
-    saved.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'finished-card finished-card--saved';
-      card.dataset.id = item.id;
+    items.forEach(item => {
+      const imgUrl   = `${GITHUB_RAW}/assets/Generated%20Illustrations/${encodeURIComponent(item.filename)}`;
       const dateLabel = formatSavedDate(item.savedAt);
+      const card = document.createElement('div');
+      card.className = 'finished-card';
       card.innerHTML = `
-        <div class="finished-thumb">
-          <button class="finished-saved-remove" type="button" aria-label="Remove saved collage" title="Remove from gallery">×</button>
-          <img alt="${escapeAttr(item.title || 'Saved collage')}" loading="lazy">
+        <div class="finished-thumb" style="${item.bgHex ? `background:${escapeAttr(item.bgHex)}` : ''}">
+          <img src="${escapeAttr(imgUrl)}" alt="${escapeAttr(item.title || 'Generated collage')}" loading="lazy">
         </div>
         <div class="finished-body">
           <div class="finished-title">${escapeAttr(item.title || 'Untitled Collage')}</div>
-          <div class="finished-filename">Saved · ${escapeAttr(dateLabel)}${item.concept ? ' · ' + escapeAttr(item.concept) : ''}</div>
-          <div class="finished-notes-label">Saved locally in this browser</div>
-          <p class="finished-notes" style="font-style:italic;">Only visible on this device. Export the PNG to share or add to the gallery.</p>
+          <div class="finished-filename">${escapeAttr(item.filename)}</div>
+          <div class="finished-notes-label">Saved · ${escapeAttr(dateLabel)}${item.concept ? ' · ' + escapeAttr(item.concept) : ''}</div>
         </div>
       `;
-
-      const img = card.querySelector('img');
-      const thumb = card.querySelector('.finished-thumb');
-      if (item.bgHex) thumb.style.background = item.bgHex;
-      img.src = item.dataUrl;
-      thumb.addEventListener('click', (e) => {
-        if (e.target.closest('.finished-saved-remove')) return;
-        openLightbox(item.dataUrl, item.title || 'Saved collage');
+      card.querySelector('.finished-thumb').addEventListener('click', () => {
+        openLightbox(imgUrl, item.title || 'Generated collage');
       });
-      card.querySelector('.finished-saved-remove').addEventListener('click', (e) => {
-        e.stopPropagation();
-        const list = readSaved().filter(x => x.id !== item.id);
-        localStorage.setItem(SAVED_KEY, JSON.stringify(list));
-        renderSavedCollages();
-      });
-
       grid.appendChild(card);
     });
   }
 
   renderSavedCollages();
-  // Refresh if saves happen in another tab
-  window.addEventListener('storage', (e) => {
-    if (e.key === SAVED_KEY) renderSavedCollages();
-  });
+  // No localStorage polling needed — GitHub manifest is the source of truth.
 </script>
 <script src="nav.js"></script>
 </body>
