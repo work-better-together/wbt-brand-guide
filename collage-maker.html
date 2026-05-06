@@ -416,6 +416,71 @@
     flex-direction: column;
   }
 
+  /* ── Tint bar ── */
+  .tint-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 10px 0;
+  }
+  .tint-bar label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    flex: 0 0 auto;
+  }
+  .tint-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 0;
+  }
+  .tint-slider::-webkit-slider-runnable-track {
+    height: 2px;
+    background: var(--rule);
+    border-radius: 999px;
+  }
+  .tint-slider::-moz-range-track {
+    height: 2px;
+    background: var(--rule);
+    border-radius: 999px;
+  }
+  .tint-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--ink);
+    cursor: pointer;
+    border: none;
+    margin-top: -8px;
+  }
+  .tint-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--ink);
+    cursor: pointer;
+    border: none;
+  }
+  .tint-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    flex: 0 0 30px;
+    text-align: right;
+  }
+
   /* Asset thumbnail grid */
   .thumb-grid {
     display: grid;
@@ -1048,6 +1113,11 @@
     <div class="rail-section wizard-step" data-step="2">
       <span class="wizard-step-label">Choose a Background</span>
       <div class="rail-label"><span class="count" id="bg-count"></span></div>
+      <div class="tint-bar">
+        <label for="bg-tint-slider">Tint</label>
+        <input type="range" class="tint-slider" id="bg-tint-slider" min="1" max="100" value="100">
+        <span class="tint-value" id="bg-tint-value">100%</span>
+      </div>
       <div class="swatch-grid swatch-grid--bg" id="bg-swatches"></div>
     </div>
 
@@ -1055,6 +1125,11 @@
     <div class="rail-section wizard-step" data-step="3">
       <span class="wizard-step-label">Choose a Watercolor Spot</span>
       <div class="rail-label">Spot Color</div>
+      <div class="tint-bar">
+        <label for="spot-tint-slider">Tint</label>
+        <input type="range" class="tint-slider" id="spot-tint-slider" min="1" max="100" value="100">
+        <span class="tint-value" id="spot-tint-value">100%</span>
+      </div>
       <div class="swatch-grid swatch-grid--compact swatch-grid--spot-row" id="spot-color-swatches"></div>
       <div class="rail-label" style="margin-top:16px">Spot Shape <span class="count" id="spot-count"></span></div>
       <div class="thumb-grid thumb-grid--3x3" id="spot-thumbs"></div>
@@ -1768,7 +1843,9 @@ const MAX_ILLUSTRATIONS = 3;
 const state = {
   bgColorId: 'paper',
   userPickedBg: false, // true once Jenna/Stacy click a swatch — concepts never overwrite their choice
+  bgTint: 100,         // 1–100; blends BG color toward white
   spotColorId: 'black',// brand color id — selects which spot color folder to load from
+  spotTint: 100,       // 1–100; applied as opacity to the spot layer
   spot: null,          // { idx, src, x, y, w, h, rot, flipX, flipY }
   scribble: null,      // { src, x, y, w, h }
   illustrations: [],   // up to MAX_ILLUSTRATIONS of { src, x, y, w, h }
@@ -1784,6 +1861,15 @@ const CANVAS_SIZE = 1000; // logical units in CSS-px world; the canvas-wrap clam
    RECOLOR UTILITY — turn any PNG silhouette into target hex
    Cache by `${src}|${hex}` to avoid re-rendering on every paint.
 ─────────────────────────────────────────────────────────── */
+
+function tintHex(hex, tint) {
+  // tint: 1–100. Blends hex toward white. 100 = pure color, 1 = nearly white.
+  const t = tint / 100;
+  const r = Math.round(255 + (parseInt(hex.slice(1, 3), 16) - 255) * t);
+  const g = Math.round(255 + (parseInt(hex.slice(3, 5), 16) - 255) * t);
+  const b = Math.round(255 + (parseInt(hex.slice(5, 7), 16) - 255) * t);
+  return `rgb(${r},${g},${b})`;
+}
 
 const recolorCache = new Map();
 
@@ -1924,9 +2010,9 @@ function render() {
     if (isWizardMode()) document.getElementById('stage').style.backgroundColor = '';
   } else {
     $canvas.classList.remove('canvas--transparent');
-    $canvas.style.background = bg.hex;
-    // Fill the full mobile stage area only — desktop stage keeps its CSS bg color
-    if (isWizardMode()) document.getElementById('stage').style.backgroundColor = bg.hex;
+    const bgColor = tintHex(bg.hex, state.bgTint);
+    $canvas.style.background = bgColor;
+    if (isWizardMode()) document.getElementById('stage').style.backgroundColor = bgColor;
   }
 
   // wipe and redraw layers; assign explicit z-index from stack order
@@ -1980,6 +2066,7 @@ function render() {
 function renderLayer(kind, layer, opts = {}, stackIdx = 0) {
   const wrap = document.createElement('div');
   wrap.className = 'layer' + (kind === 'spot' ? ' layer--spot' : '') + (state.selected === kind ? ' selected' : '');
+  if (kind === 'spot') wrap.style.opacity = state.spotTint / 100;
   wrap.dataset.kind = kind;
 
   // percent-based positioning so canvas can scale freely
@@ -2777,8 +2864,13 @@ async function saveToBrandGuide(nameOverride) {
     off.width = SAVE_SIZE; off.height = SAVE_SIZE;
     const ctx = off.getContext('2d');
     const bg = bgOptionById(state.bgColorId);
-    if (bg.id !== 'transparent') { ctx.fillStyle = bg.hex; ctx.fillRect(0, 0, SAVE_SIZE, SAVE_SIZE); }
+    if (bg.id !== 'transparent') {
+      ctx.fillStyle = tintHex(bg.hex, state.bgTint);
+      ctx.fillRect(0, 0, SAVE_SIZE, SAVE_SIZE);
+    }
+    ctx.globalAlpha = state.spotTint / 100;
     await drawLayerOnCanvas(ctx, state.spot, SAVE_SIZE);
+    ctx.globalAlpha = 1;
     await drawLayerOnCanvas(ctx, state.scribble, SAVE_SIZE);
     for (const il of state.illustrations) await drawLayerOnCanvas(ctx, il, SAVE_SIZE);
 
@@ -2844,12 +2936,14 @@ async function exportPNG() {
     // BG — skip fillRect entirely if Transparent (export keeps alpha=0 behind layers)
     const bg = bgOptionById(state.bgColorId);
     if (bg.id !== 'transparent') {
-      ctx.fillStyle = bg.hex;
+      ctx.fillStyle = tintHex(bg.hex, state.bgTint);
       ctx.fillRect(0, 0, SIZE, SIZE);
     }
 
     // Layers in z-order: spot (recolored) → scribble → illustrations
+    ctx.globalAlpha = state.spotTint / 100;
     await drawLayerOnCanvas(ctx, state.spot, SIZE);
+    ctx.globalAlpha = 1;
     await drawLayerOnCanvas(ctx, state.scribble, SIZE);
     for (const il of state.illustrations) {
       await drawLayerOnCanvas(ctx, il, SIZE);
@@ -2915,6 +3009,29 @@ async function exportPNG() {
     }
   });
 })();
+
+document.getElementById('bg-tint-slider').addEventListener('input', (e) => {
+  state.bgTint = Number(e.target.value);
+  document.getElementById('bg-tint-value').textContent = state.bgTint + '%';
+  document.querySelectorAll('#bg-swatches .swatch:not(.swatch--transparent)').forEach(sw => {
+    const opt = bgOptionById(sw.dataset.id);
+    if (opt && opt.hex) sw.style.background = tintHex(opt.hex, state.bgTint);
+  });
+  render();
+});
+
+document.getElementById('spot-tint-slider').addEventListener('input', (e) => {
+  state.spotTint = Number(e.target.value);
+  document.getElementById('spot-tint-value').textContent = state.spotTint + '%';
+  const alpha = state.spotTint / 100;
+  document.querySelectorAll('#spot-color-swatches .swatch').forEach(sw => {
+    sw.style.opacity = alpha;
+  });
+  document.querySelectorAll('#spot-thumbs .thumb img').forEach(img => {
+    img.style.opacity = alpha;
+  });
+  render();
+});
 
 document.getElementById('shuffle-btn').addEventListener('click', shuffle);
 document.getElementById('export-btn').addEventListener('click', exportPNG);
