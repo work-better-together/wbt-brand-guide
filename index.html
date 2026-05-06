@@ -3,7 +3,7 @@
 <head>
     <link rel="icon" type="image/svg+xml" href="assets/Logos/WBT-20260505-Favicon-Intentional-Blue.svg">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brand Guide — Work Better Together</title>
   <style>
     @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
@@ -564,20 +564,6 @@
   </section>
 
 <script>
-// Force scroll to top — prevents iOS scroll restoration from starting mid-page
-window.scrollTo(0, 0);
-
-// Temp debug overlay — remove once diagnosed
-const dbg = document.createElement('div');
-dbg.style.cssText = 'position:fixed;bottom:120px;right:8px;background:rgba(0,0,0,0.8);color:#fff;font:11px/1.6 monospace;padding:6px 8px;z-index:9999;border-radius:4px;pointer-events:none';
-document.body.appendChild(dbg);
-function updateDbg() {
-  const hero = document.querySelector('.hero');
-  dbg.innerHTML = `innerH: ${window.innerHeight}<br>heroH: ${hero.offsetHeight}<br>scrollY: ${window.scrollY}<br>lvh: ${CSS.supports('height','100lvh')}`;
-}
-updateDbg();
-window.addEventListener('scroll', updateDbg);
-window.addEventListener('resize', updateDbg);
 
 (async () => {
   try {
