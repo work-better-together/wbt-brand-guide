@@ -820,6 +820,20 @@
     /* ── Hide desktop rail nav on mobile (uses wizard-chrome/nav instead) ── */
     .rail-wizard-nav { display: none; }
 
+    /* ── Gallery view on mobile: square canvas, toolbar stays fixed ── */
+    .stage--gallery .canvas-wrap {
+      width: min(78vw, 60vh);
+      height: auto;
+      aspect-ratio: 1;
+    }
+    .stage--gallery .canvas-toolbar {
+      position: fixed;
+      bottom: 68px;
+      left: 0; right: 0;
+      transform: none;
+      border-radius: 0;
+    }
+
   }
 </style>
 </head>
@@ -2438,13 +2452,14 @@ function showStep(n) {
   render();
 
   // Recompute crop sizes after browser reflow so canvas offsetWidth/Height are real.
+  // Double-RAF ensures layout has flushed after display:none → flex transition.
   if (isWizardMode() && wizardStep === WIZARD_TOTAL_MOBILE) {
-    requestAnimationFrame(() => {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
       recomputeCropSize(state.spot, 'spot');
       recomputeCropSize(state.scribble, 'scribble');
       state.illustrations.forEach(il => recomputeCropSize(il, 'illustration'));
       render();
-    });
+    }));
   }
 
   // Scroll to top on step change
