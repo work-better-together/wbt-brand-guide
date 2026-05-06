@@ -571,7 +571,11 @@
     .rail.wizard-hidden { display: none !important; }
 
     /* ── Compact swatch grids ── */
-    .swatch-grid--bg { grid-template-columns: repeat(3, 1fr); }
+    .swatch-grid--bg {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin: 0 -20px;
+    }
     .swatch-grid--compact { grid-template-columns: repeat(6, 1fr); }
     /* Spot colors on a single row of 7 */
     .swatch-grid--spot-row { grid-template-columns: repeat(7, 1fr); gap: 4px; }
