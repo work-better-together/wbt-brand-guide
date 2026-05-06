@@ -573,8 +573,8 @@
     .swatch-grid--compact { grid-template-columns: repeat(6, 1fr); }
     /* Spot colors on a single row of 7 */
     .swatch-grid--spot-row { grid-template-columns: repeat(7, 1fr); gap: 4px; }
-    /* Scribbles: 3 columns on mobile */
-    #scribble-thumbs { grid-template-columns: repeat(3, 1fr); }
+    /* Scribbles + Illustrations: 3 columns on mobile */
+    #scribble-thumbs, #illus-thumbs { grid-template-columns: repeat(3, 1fr); }
 
     /* ── Stage: hidden by default; step 7 shows it ── */
     .stage { display: none; }
@@ -701,12 +701,9 @@
         Illustrations <span class="count" id="illus-count"></span>
       </div>
       <div class="concept-hint" id="concept-hint">
-        <strong>Tip</strong>
-        Type any concept above to surface on-brand illustrations. Click thumbs to add up to 3.
+        <strong>All illustrations</strong>Search a concept above to filter.
       </div>
-      <div class="thumb-grid" id="illus-thumbs">
-        <div class="thumb-empty">Pick a concept to load illustrations.</div>
-      </div>
+      <div class="thumb-grid" id="illus-thumbs"></div>
       <div class="toolbar-buttons">
         <button class="btn btn-primary btn-sm" id="export-btn">Export PNG</button>
         <button class="btn btn-secondary btn-sm" id="save-btn" title="Save to Brand Guide → Collage Elements page">Save to Brand Guide</button>
@@ -1388,22 +1385,31 @@ function buildThumbs(containerId, items, onPick, opts = {}) {
   });
 }
 
+/* Collect all unique illustration URLs across every concept (static + Airtable). */
+function allImages() {
+  const seen = new Set();
+  const result = [];
+  allConcepts().forEach(c => {
+    (c.images || []).forEach(src => {
+      if (!seen.has(src)) { seen.add(src); result.push(src); }
+    });
+  });
+  return result;
+}
+
 function renderIllustrationGrid() {
   const grid = document.getElementById('illus-thumbs');
   grid.innerHTML = '';
   const countEl = document.getElementById('illus-count');
 
-  if (!state.concept) {
-    grid.innerHTML = '<div class="thumb-empty">Pick a concept to load illustrations.</div>';
-    countEl.textContent = '';
-    return;
-  }
-  const images = state.concept.images || [];
+  const images = state.concept ? (state.concept.images || []) : allImages();
+
   if (!images.length) {
-    grid.innerHTML = '<div class="thumb-empty">No illustrations tagged for this concept yet.</div>';
+    grid.innerHTML = '<div class="thumb-empty">No illustrations yet — loading…</div>';
     countEl.textContent = '';
     return;
   }
+
   images.forEach(src => {
     const t = document.createElement('div');
     t.className = 'thumb';
@@ -1416,13 +1422,16 @@ function renderIllustrationGrid() {
     t.addEventListener('click', () => addIllustration(src));
     grid.appendChild(t);
   });
-  countEl.textContent = `${state.illustrations.length}/${MAX_ILLUSTRATIONS} placed · ${images.length} available`;
+
+  countEl.textContent = state.concept
+    ? `${state.illustrations.length}/${MAX_ILLUSTRATIONS} placed · ${images.length} available`
+    : `${images.length} total — pick a concept to filter`;
 }
 
 function renderConceptHint() {
   const el = document.getElementById('concept-hint');
   if (!state.concept) {
-    el.innerHTML = '<strong>Tip</strong>Pick a concept above to filter on-brand illustrations.';
+    el.innerHTML = '<strong>All illustrations</strong>Search a concept above to filter.';
     return;
   }
   const color = colorById(state.concept.bgColorId);
@@ -1554,6 +1563,8 @@ async function fetchAirtable() {
       });
     });
 
+    // Refresh illustration grid with newly loaded images (if no concept selected, shows all)
+    if (!state.concept) renderIllustrationGrid();
     // If the concept input is currently focused/non-empty, refresh suggestions
     const input = document.getElementById('concept-input');
     if (document.activeElement === input) {
@@ -1923,6 +1934,7 @@ buildSwatches();
 buildSpotColorSwatches();
 buildSpotThumbs();
 buildThumbs('scribble-thumbs', SCRIBBLES, setScribble);
+renderIllustrationGrid();
 document.getElementById('spot-count').textContent = `${SPOTS.length} shapes`;
 document.getElementById('scribble-count').textContent = `${SCRIBBLES.length} options`;
 render();
