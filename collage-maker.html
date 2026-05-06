@@ -1670,13 +1670,12 @@ function render() {
   if (bg.id === 'transparent') {
     $canvas.classList.add('canvas--transparent');
     $canvas.style.background = '';
-    document.getElementById('stage').style.backgroundColor = '';
+    if (isWizardMode()) document.getElementById('stage').style.backgroundColor = '';
   } else {
     $canvas.classList.remove('canvas--transparent');
     $canvas.style.background = bg.hex;
-    // Fill the full mobile stage area — backgroundColor doesn't override
-    // the gallery-mode background-image set via CSS class
-    document.getElementById('stage').style.backgroundColor = bg.hex;
+    // Fill the full mobile stage area only — desktop stage keeps its CSS bg color
+    if (isWizardMode()) document.getElementById('stage').style.backgroundColor = bg.hex;
   }
 
   // wipe and redraw layers; assign explicit z-index from stack order
