@@ -935,7 +935,7 @@ function computeTightBounds(src) {
       let minX = W, maxX = 0, minY = H, maxY = 0;
       for (let y = 0; y < H; y++) {
         for (let x = 0; x < W; x++) {
-          if (data[(y * W + x) * 4 + 3] > 8) {
+          if (data[(y * W + x) * 4 + 3] > 20) {
             if (x < minX) minX = x; if (x > maxX) maxX = x;
             if (y < minY) minY = y; if (y > maxY) maxY = y;
           }
@@ -956,18 +956,31 @@ function getTightBounds(src) {
   if (!tightBoundsCache.has(src)) tightBoundsCache.set(src, computeTightBounds(src));
   return tightBoundsCache.get(src);
 }
+function recomputeCropSize(layer, kind) {
+  if (!layer?.crop) return;
+  const c = layer.crop;
+  const targetW = kind === 'spot' ? 0.55 : kind === 'scribble' ? 0.45 : layer.w;
+  const cW = $canvas.offsetWidth;
+  const cH = $canvas.offsetHeight;
+  const canvasRatio = (cW > 0 && cH > 0) ? cW / cH : 1;
+  layer.w = targetW;
+  layer.h = targetW * canvasRatio * (c.ph / c.pw);
+}
+
 async function applyTightBounds(layer, kind, adjustSize = true) {
   const src = layer.src;
   const crop = await getTightBounds(src);
   if (layer.src !== src) return; // stale (layer was replaced)
   layer.crop = crop;
   if (adjustSize) {
-    // For illustrations keep their current w; for spots/scribbles use fixed targets
     const targetW = kind === 'spot' ? 0.55 : kind === 'scribble' ? 0.45 : layer.w;
-    {
-      layer.w = targetW;
-      layer.h = targetW * (crop.ph / crop.pw); // pixel aspect ratio
-    }
+    const cW = $canvas.offsetWidth;
+    const cH = $canvas.offsetHeight;
+    // layer.w is a fraction of canvasW; layer.h is a fraction of canvasH.
+    // To display the crop at its true pixel aspect, account for the canvas ratio.
+    const canvasRatio = (cW > 0 && cH > 0) ? cW / cH : 1;
+    layer.w = targetW;
+    layer.h = targetW * canvasRatio * (crop.ph / crop.pw);
   }
   render();
 }
@@ -2187,7 +2200,11 @@ window.addEventListener('resize', () => {
   const total = getWizardTotal();
   if (wizardStep > total) wizardStep = total;
   initWizard();
-  render(); // recompute crop px values for non-square canvases
+  // Recompute layer dimensions since canvas aspect may have changed
+  recomputeCropSize(state.spot, 'spot');
+  recomputeCropSize(state.scribble, 'scribble');
+  state.illustrations.forEach(il => recomputeCropSize(il, 'illustration'));
+  render();
 });
 
 /* ───────────────────────────────────────────────────────────
