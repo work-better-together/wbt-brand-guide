@@ -2687,16 +2687,29 @@ document.getElementById('gallery-toggle').addEventListener('click', () => {
   const label = document.getElementById('gallery-toggle-label');
   const isGallery = stage.classList.toggle('stage--gallery');
   label.textContent = isGallery ? 'Canvas' : 'Gallery';
-  // Recompute crop pixel positions once the canvas-wrap width transition ends
+
   const canvasWrap = document.querySelector('.canvas-wrap');
-  canvasWrap.addEventListener('transitionend', function onEnd(e) {
-    if (e.propertyName !== 'width') return;
-    canvasWrap.removeEventListener('transitionend', onEnd);
+  const hasTransition = getComputedStyle(canvasWrap).transition !== 'none' &&
+                        getComputedStyle(canvasWrap).transition !== '';
+
+  function recompute() {
     recomputeCropSize(state.spot, 'spot');
     recomputeCropSize(state.scribble, 'scribble');
     state.illustrations.forEach(il => recomputeCropSize(il, 'illustration'));
     render();
-  });
+  }
+
+  if (hasTransition) {
+    // Wait for CSS width transition to finish
+    canvasWrap.addEventListener('transitionend', function onEnd(e) {
+      if (e.propertyName !== 'width') return;
+      canvasWrap.removeEventListener('transitionend', onEnd);
+      recompute();
+    });
+  } else {
+    // No transition on desktop — wait two frames for DOM reflow
+    requestAnimationFrame(() => requestAnimationFrame(recompute));
+  }
 });
 
 /* ───────────────────────────────────────────────────────────
