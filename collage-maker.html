@@ -549,73 +549,130 @@
     border-radius: 999px;
   }
 
+  /* ── Wizard chrome + nav — hidden on desktop, shown on mobile via media query ── */
+  .wizard-chrome, .wizard-nav, .wizard-canvas-btns { display: none; }
+  .wizard-step-label { display: none; }
+
   /* ── Mobile ── */
   @media (max-width: 768px) {
-    /* Body is overflow:hidden on desktop (canvas stage fills remaining viewport).
-       On mobile, allow full-page scroll so the rail + stage are both reachable. */
-    html, body {
-      height: auto !important;
-      overflow: visible !important;
-    }
+    html, body { height: auto !important; overflow: visible !important; }
+    .layout { display: block; height: auto; overflow: visible; }
 
-    .layout {
-      display: block; /* single column, stacked */
-      height: auto;
-      overflow: visible;
-    }
-
-    /* Rail scrolls with page rather than independently */
+    /* ── Rail: full-width, no right border, room for fixed wizard-nav ── */
     .rail {
       border-right: none;
-      border-bottom: 1px solid var(--rule);
-      padding: 16px 20px 24px;
+      padding: 16px 20px 80px;
       overflow-y: visible;
       max-height: none;
       height: auto;
     }
+    .rail.wizard-hidden { display: none !important; }
 
-    /* Toolbar buttons full-width */
-    .toolbar-buttons { grid-template-columns: 1fr; }
-
-    /* Compact swatch grids on narrow viewports */
+    /* ── Compact swatch grids ── */
     .swatch-grid--bg { grid-template-columns: repeat(3, 1fr); }
     .swatch-grid--compact { grid-template-columns: repeat(6, 1fr); }
 
-    /* Stage: natural height rather than flex remainder */
-    .stage {
+    /* ── Stage: hidden by default; step 7 shows it ── */
+    .stage { display: none; }
+    .stage.wizard-active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 20px 24px;
       height: auto;
-      min-height: 340px;
-      padding: 20px;
+      min-height: 0;
       overflow: visible;
     }
 
-    /* Canvas: use viewport-relative sizing that fits mobile */
-    .canvas-wrap {
-      width: min(86vw, 420px);
-      margin: 0 auto;
+    .canvas-wrap { width: min(86vw, 420px); margin: 0 auto; }
+
+    /* Stage hint replaced by wizard chrome */
+    .stage-hint { display: none; }
+
+    /* ── Step 1: hide desktop toolbar-buttons/toast; remove internal border ── */
+    .wizard-step[data-step="1"] .toolbar-buttons,
+    .wizard-step[data-step="1"] #save-toast { display: none !important; }
+    .rail-toolbar { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    /* ── Wizard chrome (sticky step dots bar) ── */
+    .wizard-chrome {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .wizard-dots { display: flex; gap: 10px; align-items: center; }
+    .wizard-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--rule);
+      flex-shrink: 0;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .wizard-dot.active { background: var(--intentional); transform: scale(1.3); }
+    .wizard-dot.clickable { cursor: pointer; }
+    .wizard-dot.clickable:hover { background: var(--slate); }
+
+    /* ── Wizard nav (fixed bottom bar with Back / Next) ── */
+    .wizard-nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--rule);
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 20;
+    }
+    .wizard-nav.wizard-hidden { display: none !important; }
+    .wizard-nav .btn { flex: 1; }
+
+    /* ── Wizard step label ── */
+    .wizard-step-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+      display: block;
     }
 
-    /* Stage hint: static below canvas rather than fixed overlay */
-    .stage-hint {
-      position: static;
-      transform: none;
-      left: auto;
-      bottom: auto;
-      margin: 16px auto 0;
-      display: block;
-      width: fit-content;
+    /* ── Show/hide wizard steps ── */
+    .wizard-step { display: none; }
+    .wizard-step.wizard-active { display: block; }
+
+    /* ── Canvas step buttons (Export + Save side-by-side) ── */
+    .wizard-canvas-btns {
+      gap: 8px;
+      margin-top: 16px;
+      width: min(86vw, 420px);
     }
+    .wizard-canvas-btns.wizard-active { display: flex; }
+    .wizard-canvas-btns .btn { flex: 1; font-size: 10px; padding: 10px 8px; }
   }
 </style>
 </head>
 <body>
 
+<!-- Wizard chrome — step dots, mobile only (hidden on desktop via CSS) -->
+<div class="wizard-chrome" id="wizard-chrome" aria-hidden="true">
+  <div class="wizard-dots" id="wizard-dots"></div>
+</div>
+
 <div class="layout">
 
   <aside class="rail">
 
-    <!-- Toolbar -->
-    <div class="rail-toolbar">
+    <!-- Step 1: Concept -->
+    <div class="rail-toolbar wizard-step" data-step="1">
+      <span class="wizard-step-label">Choose a Concept</span>
       <div class="toolbar-field combobox" id="concept-combobox">
         <label for="concept-input">Concept</label>
         <div class="combobox-row">
@@ -642,27 +699,37 @@
       <div class="toast" id="save-toast" role="status" aria-live="polite" hidden></div>
     </div>
 
-    <!-- Background -->
-    <div class="rail-section">
+    <!-- Step 2: Background color -->
+    <div class="rail-section wizard-step" data-step="2">
+      <span class="wizard-step-label">Choose a Background</span>
       <div class="rail-label">Background <span class="count" id="bg-count"></span></div>
       <div class="swatch-grid swatch-grid--bg" id="bg-swatches"></div>
     </div>
 
-    <!-- Spot (shapes + color sit together) -->
-    <div class="rail-section">
-      <div class="rail-label">Watercolor Spot <span class="count" id="spot-count"></span></div>
+    <!-- Step 3: Spot color -->
+    <div class="rail-section wizard-step" data-step="3">
+      <span class="wizard-step-label">Choose a Spot Color</span>
+      <div class="rail-label">Watercolor Spot Color</div>
       <div class="swatch-grid swatch-grid--compact" id="spot-color-swatches"></div>
+    </div>
+
+    <!-- Step 4: Spot shape -->
+    <div class="rail-section wizard-step" data-step="4">
+      <span class="wizard-step-label">Choose a Spot Shape</span>
+      <div class="rail-label">Watercolor Spot <span class="count" id="spot-count"></span></div>
       <div class="thumb-grid thumb-grid--3x3" id="spot-thumbs"></div>
     </div>
 
-    <!-- Scribble -->
-    <div class="rail-section">
+    <!-- Step 5: Scribble -->
+    <div class="rail-section wizard-step" data-step="5">
+      <span class="wizard-step-label">Add a Scribble</span>
       <div class="rail-label">Scribble <span class="count" id="scribble-count"></span></div>
       <div class="thumb-grid" id="scribble-thumbs"></div>
     </div>
 
-    <!-- Illustration -->
-    <div class="rail-section">
+    <!-- Step 6: Illustrations -->
+    <div class="rail-section wizard-step" data-step="6">
+      <span class="wizard-step-label">Add Illustrations</span>
       <div class="rail-label">
         Illustrations <span class="count" id="illus-count"></span>
       </div>
@@ -681,8 +748,20 @@
     <div class="canvas-wrap">
       <div class="canvas" id="canvas"></div>
     </div>
+    <!-- Step 7 canvas action buttons (mobile only) -->
+    <div class="wizard-canvas-btns" id="wizard-canvas-btns">
+      <button class="btn btn-primary btn-sm" id="export-btn-mobile">Export PNG</button>
+      <button class="btn btn-secondary btn-sm" id="save-btn-mobile">Save to Guide</button>
+    </div>
+    <div class="toast" id="save-toast-mobile" role="status" aria-live="polite" hidden style="margin-top:10px;width:min(86vw,420px)"></div>
   </main>
 
+</div>
+
+<!-- Wizard nav — Back / Next, mobile only -->
+<div class="wizard-nav" id="wizard-nav">
+  <button class="btn btn-secondary btn-sm" id="wizard-back">← Back</button>
+  <button class="btn btn-primary btn-sm" id="wizard-next">Next →</button>
 </div>
 
 <div class="stage-hint">Click a layer to select · Drag to move · Corner to resize · × to remove</div>
@@ -1562,19 +1641,27 @@ function writeSavedCollages(list) {
 }
 
 function showToast(message, isError = false) {
-  const el = document.getElementById('save-toast');
-  el.textContent = message;
-  el.classList.toggle('toast--error', !!isError);
-  el.hidden = false;
+  ['save-toast', 'save-toast-mobile'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = message;
+    el.classList.toggle('toast--error', !!isError);
+    el.hidden = false;
+  });
   clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => { el.hidden = true; }, 2400);
+  showToast._t = setTimeout(() => {
+    ['save-toast', 'save-toast-mobile'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.hidden = true;
+    });
+  }, 2400);
 }
 
 async function saveToBrandGuide() {
   const btn = document.getElementById('save-btn');
-  const original = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Saving…';
+  const btnM = document.getElementById('save-btn-mobile');
+  const original = btn?.textContent || 'Save to Brand Guide';
+  [btn, btnM].forEach(b => b && (b.disabled = true, b.textContent = 'Saving…'));
   try {
     // Render at SAVE_SIZE using the same layered pipeline as Export
     const off = document.createElement('canvas');
@@ -1617,16 +1704,15 @@ async function saveToBrandGuide() {
     console.warn('Save failed:', err);
     showToast('Save failed — try again', true);
   } finally {
-    btn.disabled = false;
-    btn.textContent = original;
+    [btn, btnM].forEach(b => b && (b.disabled = false, b.textContent = original));
   }
 }
 
 async function exportPNG() {
   const btn = document.getElementById('export-btn');
-  const originalText = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Rendering…';
+  const btnM = document.getElementById('export-btn-mobile');
+  const originalText = btn?.textContent || 'Export PNG';
+  [btn, btnM].forEach(b => b && (b.disabled = true, b.textContent = 'Rendering…'));
 
   try {
     const SIZE = 2400;
@@ -1660,13 +1746,11 @@ async function exportPNG() {
       a.click();
       document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      btn.textContent = originalText;
-      btn.disabled = false;
+      [btn, btnM].forEach(b => b && (b.textContent = originalText, b.disabled = false));
     }, 'image/png');
   } catch (err) {
     alert('Export failed: ' + err.message);
-    btn.textContent = originalText;
-    btn.disabled = false;
+    [btn, btnM].forEach(b => b && (b.textContent = originalText, b.disabled = false));
   }
 }
 
@@ -1702,6 +1786,8 @@ async function exportPNG() {
 document.getElementById('shuffle-btn').addEventListener('click', shuffle);
 document.getElementById('export-btn').addEventListener('click', exportPNG);
 document.getElementById('save-btn').addEventListener('click', saveToBrandGuide);
+document.getElementById('export-btn-mobile').addEventListener('click', exportPNG);
+document.getElementById('save-btn-mobile').addEventListener('click', saveToBrandGuide);
 
 // click outside any layer also deselects (handled in canvas pointerdown)
 // click on stage background also deselects
@@ -1711,6 +1797,131 @@ document.querySelector('.stage').addEventListener('pointerdown', (e) => {
     render();
   }
 });
+
+/* ───────────────────────────────────────────────────────────
+   MOBILE WIZARD — step-by-step picker flow
+─────────────────────────────────────────────────────────── */
+
+const WIZARD_TOTAL = 7;
+let wizardStep = 1;
+
+function isWizardMode() {
+  return window.matchMedia('(max-width: 768px)').matches;
+}
+
+function showStep(n) {
+  if (!isWizardMode()) return;
+  wizardStep = Math.max(1, Math.min(WIZARD_TOTAL, n));
+
+  const rail  = document.querySelector('.rail');
+  const stage = document.querySelector('.stage');
+  const canvasBtns = document.getElementById('wizard-canvas-btns');
+  const wizardNav  = document.getElementById('wizard-nav');
+
+  const onCanvas = wizardStep === WIZARD_TOTAL;
+  rail.classList.toggle('wizard-hidden', onCanvas);
+  stage.classList.toggle('wizard-active', onCanvas);
+  canvasBtns.classList.toggle('wizard-active', onCanvas);
+  wizardNav.classList.toggle('wizard-hidden', onCanvas);
+
+  // Show only the active step
+  document.querySelectorAll('.wizard-step').forEach(el => {
+    el.classList.toggle('wizard-active', el.dataset.step === String(wizardStep));
+  });
+
+  // Update dots
+  const onFinalStep = wizardStep === WIZARD_TOTAL;
+  document.querySelectorAll('.wizard-dot').forEach((dot, i) => {
+    const s = i + 1;
+    dot.classList.toggle('active', s === wizardStep);
+    dot.classList.toggle('clickable', onFinalStep);
+    dot.onclick = onFinalStep ? () => showStep(s) : null;
+  });
+
+  // Back / Next visibility
+  const back = document.getElementById('wizard-back');
+  const next = document.getElementById('wizard-next');
+  back.style.visibility = wizardStep === 1 ? 'hidden' : 'visible';
+  next.style.visibility = onCanvas ? 'hidden' : 'visible';
+
+  // Scroll to top on step change
+  window.scrollTo(0, 0);
+}
+
+function initWizard() {
+  if (!isWizardMode()) return;
+
+  // Build dots
+  const dotsEl = document.getElementById('wizard-dots');
+  if (!dotsEl.children.length) {
+    for (let i = 1; i <= WIZARD_TOTAL; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'wizard-dot';
+      dot.dataset.step = String(i);
+      dotsEl.appendChild(dot);
+    }
+    document.getElementById('wizard-back').addEventListener('click', () => showStep(wizardStep - 1));
+    document.getElementById('wizard-next').addEventListener('click', () => showStep(wizardStep + 1));
+  }
+
+  showStep(wizardStep);
+}
+
+// Init on load; re-run on resize (orientation change)
+initWizard();
+window.addEventListener('resize', () => {
+  if (isWizardMode()) initWizard();
+});
+
+/* ───────────────────────────────────────────────────────────
+   TOUCH GESTURES — two-finger pinch to scale, rotate layer
+─────────────────────────────────────────────────────────── */
+
+let gesture = null;
+
+function touchDist(t1, t2) {
+  const dx = t2.clientX - t1.clientX, dy = t2.clientY - t1.clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+function touchAngle(t1, t2) {
+  return Math.atan2(t2.clientY - t1.clientY, t2.clientX - t1.clientX) * 180 / Math.PI;
+}
+
+$canvas.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 2) {
+    drag = null; // cancel any active single-touch drag
+    const t1 = e.touches[0], t2 = e.touches[1];
+    const layer = state.selected ? getLayer(state.selected) : null;
+    gesture = {
+      startDist:  touchDist(t1, t2),
+      startAngle: touchAngle(t1, t2),
+      startW:   layer ? layer.w         : null,
+      startH:   layer ? layer.h         : null,
+      startRot: layer ? (layer.rot || 0): null,
+    };
+    e.preventDefault();
+  }
+}, { passive: false });
+
+$canvas.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 2 && gesture) {
+    const t1 = e.touches[0], t2 = e.touches[1];
+    const newDist  = touchDist(t1, t2);
+    const newAngle = touchAngle(t1, t2);
+    const layer = state.selected ? getLayer(state.selected) : null;
+    if (layer && gesture.startW !== null) {
+      const scale = newDist / gesture.startDist;
+      layer.w = Math.max(0.05, gesture.startW * scale);
+      layer.h = Math.max(0.05, gesture.startH * scale);
+      layer.rot = gesture.startRot + (newAngle - gesture.startAngle);
+      render();
+    }
+    e.preventDefault();
+  }
+}, { passive: false });
+
+$canvas.addEventListener('touchend',    (e) => { if (e.touches.length < 2) gesture = null; });
+$canvas.addEventListener('touchcancel', ()  => { gesture = null; });
 
 // Initial build
 buildSwatches();
