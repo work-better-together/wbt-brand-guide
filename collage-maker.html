@@ -1352,12 +1352,11 @@ function getTightBounds(src) {
 function recomputeCropSize(layer, kind) {
   if (!layer?.crop) return;
   const c = layer.crop;
-  const targetW = kind === 'spot' ? 0.55 : kind === 'scribble' ? 0.45 : layer.w;
   const cW = $canvas.offsetWidth;
   const cH = $canvas.offsetHeight;
   const canvasRatio = (cW > 0 && cH > 0) ? cW / cH : 1;
-  layer.w = targetW;
-  layer.h = targetW * canvasRatio * (c.ph / c.pw);
+  // Preserve user-scaled width — only recalculate height to match crop aspect ratio
+  layer.h = layer.w * canvasRatio * (c.ph / c.pw);
 }
 
 async function applyTightBounds(layer, kind, adjustSize = true) {
