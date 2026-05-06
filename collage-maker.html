@@ -467,7 +467,6 @@
   .layer.selected {
     outline: 1px dashed var(--slate);
     outline-offset: 2px;
-    z-index: 100 !important;
   }
 
   /* Handles are always visible on populated layers (more discoverable) */
@@ -1041,15 +1040,15 @@ function render() {
     $canvas.style.background = bg.hex;
   }
 
-  // wipe and redraw layers in user-controlled stack order
+  // wipe and redraw layers; assign explicit z-index from stack order
   $canvas.innerHTML = '';
   state.stackOrder = getStackOrder();
-  state.stackOrder.forEach(key => {
+  state.stackOrder.forEach((key, stackIdx) => {
     const layer = getLayer(key);
     if (!layer) return;
-    if (key === 'spot') renderLayer('spot', state.spot);
-    else if (key === 'scribble') renderLayer('scribble', state.scribble);
-    else renderLayer(key, layer);
+    if (key === 'spot') renderLayer('spot', state.spot, {}, stackIdx);
+    else if (key === 'scribble') renderLayer('scribble', state.scribble, {}, stackIdx);
+    else renderLayer(key, layer, {}, stackIdx);
   });
 
   // refresh illustration previews inside each BG swatch
@@ -1082,16 +1081,18 @@ function render() {
   }
 }
 
-function renderLayer(kind, layer, opts = {}) {
+function renderLayer(kind, layer, opts = {}, stackIdx = 0) {
   const wrap = document.createElement('div');
   wrap.className = 'layer' + (kind === 'spot' ? ' layer--spot' : '') + (state.selected === kind ? ' selected' : '');
   wrap.dataset.kind = kind;
 
   // percent-based positioning so canvas can scale freely
-  wrap.style.left   = (layer.x * 100) + '%';
-  wrap.style.top    = (layer.y * 100) + '%';
-  wrap.style.width  = (layer.w * 100) + '%';
-  wrap.style.height = (layer.h * 100) + '%';
+  wrap.style.left    = (layer.x * 100) + '%';
+  wrap.style.top     = (layer.y * 100) + '%';
+  wrap.style.width   = (layer.w * 100) + '%';
+  wrap.style.height  = (layer.h * 100) + '%';
+  // explicit z-index from stack order; selected floats above all others
+  wrap.style.zIndex  = state.selected === kind ? stackIdx + 100 : stackIdx + 1;
 
   // Image lives in an inner wrapper that owns the rotation+flip transform.
   // Keeping it on a child means the toolbar/handle stay in screen-aligned space.
