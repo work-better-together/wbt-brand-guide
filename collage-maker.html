@@ -494,19 +494,16 @@
   .handle:hover { transform: scale(1.2); opacity: 1; }
   .handle.br { right: -7px; bottom: -7px; }
 
-  /* Canvas toolbar — shared layer controls, fixed at bottom of canvas wrap */
+  /* Canvas toolbar — shared layer controls below the canvas */
   .canvas-toolbar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     display: flex;
     justify-content: center;
     gap: 6px;
-    padding: 8px 12px;
-    background: rgba(31, 30, 30, 0.72);
+    padding: 10px 16px;
+    background: rgba(31, 30, 30, 0.78);
     backdrop-filter: blur(6px);
-    z-index: 200;
+    margin-top: 12px;
+    border-radius: 40px;
   }
   .canvas-tool {
     width: 26px;
@@ -739,6 +736,17 @@
       display: block;
     }
 
+    /* ── Canvas toolbar — fixed above the wizard-nav on mobile ── */
+    .canvas-toolbar {
+      position: fixed;
+      bottom: 68px; /* wizard-nav height */
+      left: 0; right: 0;
+      margin-top: 0;
+      border-radius: 0;
+      padding: 10px 20px;
+      z-index: 25;
+    }
+
     /* ── Hide desktop rail nav on mobile (uses wizard-chrome/nav instead) ── */
     .rail-wizard-nav { display: none; }
 
@@ -832,15 +840,15 @@
   <main class="stage">
     <div class="canvas-wrap">
       <div class="canvas" id="canvas"></div>
-      <div class="canvas-toolbar" id="canvas-toolbar" style="display:none;">
-        <button class="canvas-tool" data-role="bring-forward" title="Bring forward">↑</button>
-        <button class="canvas-tool" data-role="send-back"     title="Send back">↓</button>
-        <button class="canvas-tool" data-role="rotate-left"   title="Rotate −15°">↺</button>
-        <button class="canvas-tool" data-role="rotate-right"  title="Rotate +15°">↻</button>
-        <button class="canvas-tool" data-role="flip-h"        title="Flip horizontal">⇄</button>
-        <button class="canvas-tool" data-role="flip-v"        title="Flip vertical">⇅</button>
-        <button class="canvas-tool canvas-tool--remove" data-role="remove" title="Remove layer">×</button>
-      </div>
+    </div>
+    <div class="canvas-toolbar" id="canvas-toolbar" style="display:none;">
+      <button class="canvas-tool" data-role="bring-forward" title="Bring forward">↑</button>
+      <button class="canvas-tool" data-role="send-back"     title="Send back">↓</button>
+      <button class="canvas-tool" data-role="rotate-left"   title="Rotate −15°">↺</button>
+      <button class="canvas-tool" data-role="rotate-right"  title="Rotate +15°">↻</button>
+      <button class="canvas-tool" data-role="flip-h"        title="Flip horizontal">⇄</button>
+      <button class="canvas-tool" data-role="flip-v"        title="Flip vertical">⇅</button>
+      <button class="canvas-tool canvas-tool--remove" data-role="remove" title="Remove layer">×</button>
     </div>
     <div class="toast" id="save-toast-mobile" role="status" aria-live="polite" hidden></div>
   </main>
