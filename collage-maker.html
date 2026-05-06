@@ -233,6 +233,52 @@
     color: var(--ochre);
   }
 
+  /* ── Save name dialog ── */
+  #save-name-dialog {
+    border: 1px solid var(--rule);
+    border-radius: 0;
+    padding: 28px 28px 24px;
+    max-width: 360px;
+    width: calc(100vw - 48px);
+    background: var(--bg-card);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+  #save-name-dialog::backdrop { background: rgba(0,0,0,0.45); }
+  #save-name-dialog h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+  #save-name-dialog p {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--slate);
+    margin: 0 0 18px;
+    line-height: 1.5;
+  }
+  #save-name-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 9px 12px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: var(--ink);
+    outline: none;
+    margin-bottom: 16px;
+  }
+  #save-name-input:focus { border-color: var(--intentional); }
+  .save-dialog-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
   /* ── Left rail ── */
   .rail {
     background: var(--bg-card);
@@ -2398,7 +2444,17 @@ function showToast(message, isError = false) {
   }, 2400);
 }
 
-async function saveToBrandGuide() {
+function openSaveDialog() {
+  const dlg = document.getElementById('save-name-dialog');
+  const input = document.getElementById('save-name-input');
+  input.value = state.concept?.name || '';
+  input.placeholder = 'e.g. Moon Gold — Leadership';
+  dlg.showModal();
+  // select all so user can immediately retype
+  requestAnimationFrame(() => { input.select(); });
+}
+
+async function saveToBrandGuide(nameOverride) {
   const btn = document.getElementById('save-btn');
   const btnM = document.getElementById('save-btn-mobile');
   const original = btn?.textContent || 'Save to Brand Guide';
@@ -2420,7 +2476,7 @@ async function saveToBrandGuide() {
     }
     const dataUrl = off.toDataURL('image/png');
 
-    const title = state.concept?.name || 'Untitled Collage';
+    const title = (nameOverride || '').trim() || state.concept?.name || 'Untitled Collage';
     const list = readSavedCollages();
     list.unshift({
       id: 'wbt-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
@@ -2527,9 +2583,28 @@ async function exportPNG() {
 
 document.getElementById('shuffle-btn').addEventListener('click', shuffle);
 document.getElementById('export-btn').addEventListener('click', exportPNG);
-document.getElementById('save-btn').addEventListener('click', saveToBrandGuide);
+document.getElementById('save-btn').addEventListener('click', openSaveDialog);
 document.getElementById('export-btn-mobile').addEventListener('click', exportPNG);
-document.getElementById('save-btn-mobile').addEventListener('click', saveToBrandGuide);
+document.getElementById('save-btn-mobile').addEventListener('click', openSaveDialog);
+
+// Save name dialog wiring
+(function () {
+  const dlg     = document.getElementById('save-name-dialog');
+  const input   = document.getElementById('save-name-input');
+  const confirm = document.getElementById('save-dialog-confirm');
+  const cancel  = document.getElementById('save-dialog-cancel');
+
+  confirm.addEventListener('click', () => {
+    dlg.close();
+    saveToBrandGuide(input.value);
+  });
+  cancel.addEventListener('click', () => dlg.close());
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); dlg.close(); saveToBrandGuide(input.value); }
+    if (e.key === 'Escape') { e.preventDefault(); dlg.close(); }
+  });
+})();
 
 // click outside any layer also deselects (handled in canvas pointerdown)
 // click on stage background also deselects
@@ -2764,6 +2839,16 @@ document.getElementById('scribble-count').textContent = `${SCRIBBLES.length} opt
 render();
 fetchAirtable(); // async, will surface in concept search when done
 </script>
+
+<dialog id="save-name-dialog" aria-labelledby="save-dialog-title">
+  <h3 id="save-dialog-title">Name this collage</h3>
+  <p>Give it a name so you can find it easily in the brand guide.</p>
+  <input id="save-name-input" type="text" maxlength="80" autocomplete="off" spellcheck="false" />
+  <div class="save-dialog-actions">
+    <button class="btn btn-secondary btn-sm" id="save-dialog-cancel">Cancel</button>
+    <button class="btn btn-primary btn-sm" id="save-dialog-confirm">Save</button>
+  </div>
+</dialog>
 
 <script src="nav.js"></script>
 </body>

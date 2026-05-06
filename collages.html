@@ -224,6 +224,7 @@
     /* ── Saved-from-Builder cards (localStorage-backed) ── */
     .finished-card--saved { position: relative; }
     .finished-card--saved .finished-thumb {
+      aspect-ratio: 1; /* builder canvas is square, not 4:3 */
       background:
         linear-gradient(45deg, #ececea 25%, transparent 25%),
         linear-gradient(-45deg, #ececea 25%, transparent 25%),
@@ -538,8 +539,8 @@
         <div class="finished-body">
           <div class="finished-title">${escapeAttr(item.title || 'Untitled Collage')}</div>
           <div class="finished-filename">Saved · ${escapeAttr(dateLabel)}${item.concept ? ' · ' + escapeAttr(item.concept) : ''}</div>
-          <div class="finished-notes-label">From the Collage Builder</div>
-          <p class="finished-notes" style="font-style:italic;">Saved locally in this browser. Export the PNG to add it to the shared gallery.</p>
+          <div class="finished-notes-label">Saved locally in this browser</div>
+          <p class="finished-notes" style="font-style:italic;">Only visible on this device. Export the PNG to share or add to the gallery.</p>
         </div>
       `;
 
