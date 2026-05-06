@@ -953,7 +953,7 @@
     <div class="canvas-wrap">
       <div class="canvas" id="canvas"></div>
     </div>
-    <div class="canvas-toolbar" id="canvas-toolbar" style="display:none;">
+    <div class="canvas-toolbar" id="canvas-toolbar" style="visibility:hidden; pointer-events:none;">
       <button class="canvas-tool" data-role="bring-forward" title="Bring forward">↑</button>
       <button class="canvas-tool" data-role="send-back"     title="Send back">↓</button>
       <button class="canvas-tool" data-role="rotate-left"   title="Rotate −15°">↺</button>
@@ -1573,7 +1573,10 @@ function render() {
 
   // Show/hide canvas toolbar based on selection
   const ctBar = document.getElementById('canvas-toolbar');
-  if (ctBar) ctBar.style.display = state.selected ? '' : 'none';
+  if (ctBar) {
+    ctBar.style.visibility = state.selected ? '' : 'hidden';
+    ctBar.style.pointerEvents = state.selected ? '' : 'none';
+  }
 
   // Keep the "X/3 placed" badge live
   const illusCountEl = document.getElementById('illus-count');
