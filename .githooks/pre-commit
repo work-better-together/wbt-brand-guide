@@ -1,0 +1,13 @@
+#!/bin/sh
+# Auto-stamp the brand guide's "last updated" date on every commit.
+# Writes last-updated.json (read by index.html via JS) and keeps the
+# no-JS fallback date in index.html in sync, then stages both.
+set -e
+
+ISO=$(date +%Y-%m-%dT%H:%M:%S%z)
+HUMAN=$(date "+%B %e, %Y" | tr -s ' ')
+
+printf '{"date":"%s"}\n' "$ISO" > last-updated.json
+perl -0pi -e "s/(id=\"last-updated-date\">)[^<]*/\${1}$HUMAN/" index.html
+
+git add last-updated.json index.html

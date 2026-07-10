@@ -32,6 +32,9 @@
   const next = isGuidePage && idx < ORDER.length - 1 ? ORDER[idx + 1] : null;
 
   const css = `
+    /* Guard: the off-canvas nav drawer (fixed, translateX(100%)) sits just past the
+       right edge and would otherwise add horizontal scroll on mobile. */
+    html, body { overflow-x: hidden; }
     .wbt-nav {
       position: sticky; top: 0; z-index: 100;
       background: #1F1E1E;

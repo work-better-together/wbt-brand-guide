@@ -529,6 +529,8 @@
     /* ── Mobile ── */
     @media (max-width: 768px) {
       .page { padding: 40px 20px 80px !important; }
+      /* Let the hero wrap naturally on mobile instead of forcing the desktop line breaks */
+      .lora-hero .lh-br { display: none; }
       .type-row { grid-template-columns: 1fr; }
       .type-sample { padding: 24px 0 12px; min-width: 0; overflow: hidden; }
       .type-sample > * { max-width: 100%; word-break: break-word; }
@@ -624,7 +626,7 @@
     </div>
 
     <div class="specimen-hero">
-      <div class="lora-hero">The best teams don’t just<br>work hard — they work<br>intentionally.</div>
+      <div class="lora-hero">The best teams don’t just <br class="lh-br">work hard — they work <br class="lh-br">intentionally.</div>
       <div class="lora-para">Lora brings warmth and readability to long-form content. Its bracketed serifs and optical balance make it ideal for body copy, pull quotes, and editorial prose where sustained reading is expected.</div>
     </div>
 
