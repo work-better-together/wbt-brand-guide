@@ -223,7 +223,8 @@
     .section-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0;
+      gap: 4px 48px;
+      margin-top: 20px;
     }
     .card-title-row {
       display: flex;
@@ -232,44 +233,27 @@
       gap: 8px;
     }
 
-    .section-card {
-      background: var(--bg-card);
-      border: 1px solid var(--rule);
-      padding: 36px 36px 32px;
+    /* Plain floating links on the watercolor — no tile boxes */
+    .section-card,
+    .section-card.themed {
+      background: transparent;
+      border: 0;
+      padding: 7px 0;
       text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transition: background 0.15s;
+      color: #1F1E1E;
+      display: block;
+      transition: color 0.15s;
       position: relative;
     }
-    .section-card:hover { background: #f2f1ee; }
+    .section-card:hover,
+    .section-card.themed:hover { background: transparent; color: #061A49; }
     .section-card.full { grid-column: span 2; }
-    .section-card.dark { background: var(--steady-blue); border-color: rgba(255,255,255,0.15); }
-    .section-card.dark:hover { background: #0a2260; }
 
-    /* Themed cards — uniform: Grounded Black on Clear White; hover inverts */
-    .section-card.themed {
-      background: #F9F8F2;
-      color: #1F1E1E;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-    .section-card.themed:hover {
-      background: #1F1E1E;
-      border-color: rgba(249,248,242,0.2);
-      color: #F9F8F2;
-    }
-    .section-card.themed .card-number   { color: #1F1E1E; transition: color 0.15s; }
-    .section-card.themed .card-title    { color: #1F1E1E; transition: color 0.15s; }
-    .section-card.themed .card-arrow    { color: #1F1E1E; transition: color 0.15s, transform 0.15s; }
-    .section-card.themed .card-tag      { background: rgba(31,30,30,0.08); color: #1F1E1E; transition: background 0.15s, color 0.15s; }
-    .section-card.themed .card-coming-label { color: #1F1E1E; transition: color 0.15s; }
-    .section-card.themed:hover .card-number,
-    .section-card.themed:hover .card-title,
-    .section-card.themed:hover .card-arrow,
-    .section-card.themed:hover .card-coming-label { color: #F9F8F2; }
-    .section-card.themed:hover .card-tag { background: rgba(249,248,242,0.15); color: #F9F8F2; }
+    .section-card .card-title,
+    .section-card.themed .card-title { color: inherit; transition: color 0.15s; }
+    .section-card:hover .card-title,
+    .section-card.themed:hover .card-title { color: #061A49; }
+    .section-card.themed .card-coming-label { color: #1F1E1E; }
 
     .section-card.coming {
       cursor: default;
@@ -300,9 +284,9 @@
     .card-title {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 28px;
-      letter-spacing: -0.015em;
-      line-height: 1;
+      font-size: 23px;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
       color: var(--ink);
     }
     .card-title.light { color: #F9F8F2; }
