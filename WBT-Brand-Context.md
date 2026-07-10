@@ -307,6 +307,16 @@ Native `<details>/<summary>` — **no custom JS**, inherently keyboard- and scre
 - **Marker:** a League Spartan **`+`** in Intentional Blue at the top-right, which becomes **`–`** when open (240ms transition). Never a chevron or emoji.
 - **Answer:** Lora **17px** / 1.75, max-width ~68ch, indented to clear the marker.
 
+### Quote Carousel (Testimonials)
+
+Shows **one testimonial at a time**, advanced with circular prev/next arrows and a row of dots. Use it wherever multiple voices would otherwise stack into a wall of quotes (homepage testimonials) — the single-slide focus keeps each voice weighty, and the controls read as hand-placed rather than utilitarian.
+
+- **Quote:** Lora *italic*, `clamp(19–25px)` / 1.5.
+- **Attribution:** League Spartan **500**, 13px, uppercase, +0.08em, Steady Blue (`#061A49`).
+- **Arrow:** 48px circle, 1.5px `--border-default` border, card background, Steady Blue glyph (`‹` / `›`); on hover the circle **fills Steady Blue** and the glyph goes white.
+- **Dots:** 8px circles; inactive Grounded Black 22%; active **Intentional Blue**, scaled 1.3×. Dots are clickable and jump to that slide.
+- **Track:** slides are `flex: 0 0 100%`; advancing animates `transform: translateX()` over **420ms** ease.
+
 ### Callouts/Annotations
 
 - Left border: 3px solid `--border-color`
@@ -384,6 +394,8 @@ Native `<details>/<summary>` — **no custom JS**, inherently keyboard- and scre
 Everything overlaps and sits slightly off-center — a hand-placed, considered composition, not a symmetric grid. This is the brand's "mosaic of people and perspectives" quality made literal. (Production note: watercolor spots are *not* binary alpha masks — crop them to their content box using a **low** alpha threshold, ~10–30, or you'll silently clip half the organic edge; scale spots from their center, never a corner.)
 
 **Bio-page "scrapbook" collage:** a hand-placed, tilted, overlapping photo collage (4 photos at varied sizes/rotations) layered with a colored spot + scribble bleeding from a corner. Give each subject a *different* named spot color to differentiate otherwise-identical layouts.
+
+**Decorative bleed (spots & scribbles cropped off the page edges).** Beyond focal collages, large watercolor spots and looping scribbles are placed to **crop off the edges of a section** — a colored blob peeking in from one side, a scribble tail escaping the other — to add hand-made warmth and depth without competing with the content. Recipe: the section is `position: relative` with `overflow: hidden` (or `overflow-x: clip`); each deco is a `position: absolute`, `z-index: 0`, `pointer-events: none` image pushed off-frame with **negative offsets**; spots run 360–640px at opacity 0.55–0.92, scribbles 520–1128px, rotated or `scaleX(-1)` for a natural gesture. Content always sits above at `position: relative; z-index: 1`. Match the spot's colorway to the page. On mobile, **shrink the spot and drop the scribble** — a deco must never force horizontal scroll.
 
 **Editorial grid:** 2px gaps between adjacent panels create a newspaper/magazine feel — intentional density, not whitespace-heavy SaaS.
 

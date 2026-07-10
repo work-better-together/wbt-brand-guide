@@ -971,10 +971,10 @@
       .offset-demo .off-left  { max-width:66%; margin-right:auto; }
       .offset-demo .off-right { max-width:66%; margin-left:auto; margin-top:56px; }
       .offset-demo .od-lede { font-family:var(--font-display); font-weight:400; font-size:clamp(18px,2vw,24px); line-height:1.42; color:var(--ink-default); margin:0; }
-      .offset-demo .od-eyebrow { font-family:var(--font-display); font-weight:500; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--honest-ochre); margin:0 0 14px; }
+      .offset-demo .od-eyebrow { font-family:var(--font-display); font-weight:500; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#B55312; margin:0 0 14px; }
       .offset-demo ul.od-list { columns:2; column-gap:40px; list-style:none; padding:0; margin:0; font-family:var(--font-body); font-size:14px; line-height:1.5; }
       .offset-demo ul.od-list li { break-inside:avoid; margin-bottom:12px; padding-left:18px; position:relative; }
-      .offset-demo ul.od-list li::before { content:""; position:absolute; left:0; top:7px; width:8px; height:8px; background:#2531A5; }
+      .offset-demo ul.od-list li::before { content:""; position:absolute; left:0; top:8px; width:6px; height:6px; background:#2531A5; }
       .offset-spec { width:100%; border-collapse:collapse; margin-top:20px; font-family:var(--font-body); font-size:13px; }
       .offset-spec td { border-top:1px solid var(--border-subtle); padding:10px 12px; vertical-align:top; }
       .offset-spec td:first-child { white-space:nowrap; width:130px; }
@@ -1005,6 +1005,106 @@
         <tr><td>Mobile ≤ 640px</td><td>both go full-width and stack; offsets reset to 0, the drop shrinks to ~32px</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- ═══════ Quote carousel ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Quote carousel · Testimonials</div>
+    <p class="section-intro">One testimonial at a time, advanced with circular prev/next arrows and a row of dots. Used on the homepage to let voices breathe instead of stacking a wall of quotes. The single-slide focus keeps each voice weighty; the controls read as hand-placed, not utilitarian.</p>
+
+    <style>
+      .qc-demo { max-width:720px; }
+      .qc-viewport { overflow:hidden; }
+      .qc-track { display:flex; transition:transform 420ms cubic-bezier(.4,0,.2,1); }
+      .qc-slide { flex:0 0 100%; padding:8px 4px; }
+      .qc-slide blockquote { margin:0; font-family:var(--font-body); font-style:italic; font-size:clamp(19px,2.4vw,25px); line-height:1.5; color:var(--ink-default); }
+      .qc-slide cite { display:block; margin-top:18px; font-family:var(--font-display); font-weight:500; font-style:normal; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:#061A49; }
+      .qc-controls { display:flex; align-items:center; gap:20px; margin-top:28px; }
+      .qc-arrow { width:48px; height:48px; border-radius:50%; border:1.5px solid var(--border-subtle); background:var(--surface-card); color:#061A49; font-family:var(--font-body); font-size:26px; line-height:1; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 180ms, color 180ms, border-color 180ms; }
+      .qc-arrow:hover { background:#061A49; border-color:#061A49; color:#fff; }
+      .qc-arrow:focus-visible { outline:2px solid #2531A5; outline-offset:3px; }
+      .qc-dots { display:flex; gap:10px; margin-left:6px; }
+      .qc-dot { width:8px; height:8px; border-radius:50%; border:0; padding:0; background:rgba(31,30,30,0.22); cursor:pointer; transition:background 180ms, transform 180ms; }
+      .qc-dot.is-active { background:#2531A5; transform:scale(1.3); }
+    </style>
+
+    <div class="qc-demo" data-qc>
+      <div class="qc-viewport">
+        <div class="qc-track">
+          <div class="qc-slide"><blockquote>“They helped our leadership team slow down and actually hear each other. The change in how we work together has been night and day.”</blockquote><cite>Executive Director, National Nonprofit</cite></div>
+          <div class="qc-slide"><blockquote>“I came in skeptical about coaching. I left with a way of leading that finally feels like mine.”</blockquote><cite>VP of Programs, Foundation</cite></div>
+          <div class="qc-slide"><blockquote>“Facilitation that never felt like facilitation — just the most honest conversation our team has had in years.”</blockquote><cite>Chief of Staff, Advocacy Org</cite></div>
+        </div>
+      </div>
+      <div class="qc-controls">
+        <button class="qc-arrow" data-qc-prev aria-label="Previous testimonial">&#8249;</button>
+        <button class="qc-arrow" data-qc-next aria-label="Next testimonial">&#8250;</button>
+        <div class="qc-dots" data-qc-dots></div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        var root=document.querySelector('[data-qc]'); if(!root) return;
+        var track=root.querySelector('.qc-track'), slides=root.querySelectorAll('.qc-slide');
+        var dotsWrap=root.querySelector('[data-qc-dots]'), i=0;
+        slides.forEach(function(_,n){ var b=document.createElement('button'); b.className='qc-dot'+(n===0?' is-active':''); b.setAttribute('aria-label','Go to testimonial '+(n+1)); b.addEventListener('click',function(){ go(n); }); dotsWrap.appendChild(b); });
+        function go(n){ i=(n+slides.length)%slides.length; track.style.transform='translateX(-'+(i*100)+'%)'; dotsWrap.querySelectorAll('.qc-dot').forEach(function(d,k){ d.classList.toggle('is-active',k===i); }); }
+        root.querySelector('[data-qc-prev]').addEventListener('click',function(){ go(i-1); });
+        root.querySelector('[data-qc-next]').addEventListener('click',function(){ go(i+1); });
+      })();
+    </script>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:120px;"><strong>Quote</strong></td><td>Lora italic, <code>clamp(19–25px)</code> / 1.5</td></tr>
+          <tr><td><strong>Attribution</strong></td><td>League Spartan 500, 13px, uppercase, Steady Blue</td></tr>
+          <tr><td><strong>Arrow</strong></td><td>48px circle, 1.5px rule border, Steady Blue glyph; hover fills Steady Blue</td></tr>
+          <tr><td><strong>Dots</strong></td><td>8px; inactive Grounded Black 22%; active Intentional Blue, scale 1.3</td></tr>
+          <tr><td><strong>Track</strong></td><td>flex slides <code>0 0 100%</code>; <code>transform</code> transition 420ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════ Decorative bleed ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Layout · Decorative bleed (spots &amp; scribbles off-edge)</div>
+    <p class="section-intro">Large watercolor spots and looping scribbles positioned to crop off the page edges — a colored blob peeking in from one side, a scribble tail escaping the other. They add hand-made warmth and depth without competing with the content, which always sits above them. Purely decorative: <code>pointer-events:none</code>, behind the text, and shrunk or dropped on mobile.</p>
+
+    <style>
+      .bleed-demo { position:relative; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card); padding:clamp(40px,7vw,88px) clamp(24px,6vw,80px); }
+      .bleed-deco { position:absolute; z-index:0; pointer-events:none; user-select:none; }
+      .bleed-spot { width:360px; left:-140px; bottom:-120px; opacity:0.9; }
+      .bleed-scribble { width:520px; right:-180px; top:-90px; opacity:0.6; transform:rotate(8deg); }
+      .bleed-content { position:relative; z-index:1; max-width:540px; }
+      .bleed-content h3 { font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3.4vw,38px); line-height:1.12; letter-spacing:-0.01em; margin:0 0 16px; color:var(--ink-default); }
+      .bleed-content p { font-family:var(--font-body); font-size:17px; line-height:1.7; margin:0; color:var(--ink-default); max-width:46ch; }
+      @media (max-width:640px){ .bleed-scribble{ display:none; } .bleed-spot{ width:220px; left:-90px; bottom:-80px; opacity:0.7; } }
+    </style>
+
+    <div class="bleed-demo">
+      <img class="bleed-deco bleed-spot" src="assets/Watercolor%20Textures/Spots/Radiant%20Gold/WBT-20260403-Gold-Watercolor-Spots-1.png" alt="">
+      <img class="bleed-deco bleed-scribble" src="assets/Scribbles/Backgrounds/WBT-scribble-background-03.png" alt="">
+      <div class="bleed-content">
+        <h3>Leadership is hard. You don’t have to figure it out alone.</h3>
+        <p>The spot bleeds in from the lower left; the scribble escapes off the upper right. Together they frame the message without ever touching it.</p>
+      </div>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Container</strong></td><td><code>position:relative</code> + <code>overflow:hidden</code> (or <code>overflow-x:clip</code>) so decos crop at the edge</td></tr>
+          <tr><td><strong>Deco layer</strong></td><td><code>position:absolute</code>, <code>z-index:0</code>, <code>pointer-events:none</code>; negative offsets push it off-edge</td></tr>
+          <tr><td><strong>Spot</strong></td><td>watercolor blob 360–640px, opacity 0.55–0.92; pick the colorway to match the page</td></tr>
+          <tr><td><strong>Scribble</strong></td><td>looping line 520–1128px; rotate / <code>scaleX(-1)</code> for a natural gesture</td></tr>
+          <tr><td><strong>Content</strong></td><td>always <code>position:relative; z-index:1</code> — sits above the decoration</td></tr>
+          <tr><td><strong>Mobile</strong></td><td>shrink the spot and drop the scribble; never let a deco force horizontal scroll</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- ═══════ Whats next ═══════ -->
