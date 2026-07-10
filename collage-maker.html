@@ -3147,10 +3147,10 @@ function renderConceptHint() {
 ─────────────────────────────────────────────────────────── */
 
 function allConcepts() {
-  // STATIC + Airtable, deduped by name (Airtable wins ties only if it has images)
+  // STATIC + local concept library, deduped by name (library wins ties only if it has images)
   return [
     ...STATIC_CONCEPTS.map(c => ({ ...c, source: 'static', tag: 'Vintage Etched' })),
-    ...state.concepts.filter(c => c.source === 'airtable'),
+    ...state.concepts.filter(c => c.source === 'library'),
   ];
 }
 
