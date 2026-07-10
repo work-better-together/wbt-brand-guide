@@ -1,6 +1,53 @@
+# Work Better Together — Client Context
+
+This folder contains all Hyperakt work for Work Better Together. AI context here is shared across all sub-projects for this client.
+
+## Client Overview
+Work Better Together helps organizations build inclusive, equitable workplaces and stronger team cultures.
+
+**Relationship:** Hyperakt client
+
+## Sub-Project Structure
+Sub-folders follow the convention: `WBT [Project Name]`
+
+## Notes for AI
+- All client information is confidential
+- Apply Hyperakt's inside-out approach to all strategy and copy work
+- Refer to parent HKT AI/CLAUDE.md for Hyperakt philosophy
+
+---
+
 # WBT Brand Guide — Claude Instructions
 
 This is the Work Better Together brand guide and toolkit, built as a collection of HTML/CSS/JS pages. Read this file before doing any work.
+
+---
+
+## ⚠️ Deployment & Workflow (read first)
+
+**Work in the git repo, deploy from it, then mirror to this Drive folder.** Do NOT edit the Drive copy directly — it is a downstream mirror kept in sync after each deploy.
+
+- **Working copy / source of truth (EDIT HERE):**
+  `/Users/deroyperaza/Projects/wbt-brand-guide` → remote `github.com/deroyperaza/wbt-brand-guide`, branch `main`.
+- **Live site:** https://brand.wbt.coach — served by **GitHub Pages** from that repo (see `CNAME`).
+- **This Drive folder** (`HKT AI/Work Better Together`) is a **mirror for browsing/reference only.** It stays in sync with the repo but is not where you edit or deploy from.
+- **Why repo-first:** the repo is a normal local git clone — fast, `rm`/deletes work, no cloud lag. The Drive path is Google Drive File Stream: slow to read (cloud-only files hydrate on access) and it **blocks tool-driven `rm`**. Editing there caused real friction.
+- The `wbt-brand-guide/` **subfolder inside the Drive copy is NOT the repo** — it only holds `WBT-Website-Build-Decisions.md` (notes). The brand-guide pages live at the **root** of each copy (`elements.html`, `collage-maker.html`, …).
+
+**To ship a change:**
+1. **Edit in the repo** `~/Projects/wbt-brand-guide`.
+2. **Verify locally** — serve the folder and check in a browser (drive the actual UI; don't trust a syntax check alone).
+3. `git add …` → **`git pull --rebase origin main`** first — the remote **self-advances**: the collage maker commits generated collages + `manifest.json` straight to the repo, so origin is usually ahead — then `git push origin main`.
+4. GitHub Pages redeploys automatically (~1–2 min). **Verify against the live URL**, not just the push.
+5. **Mirror to Drive:** copy the changed files into this Drive folder so it stays current:
+   ```
+   rsync -a --exclude '.git' <changed paths> "<this Drive folder>/"
+   ```
+   Additive only — never delete Drive-only folders (`MEMORY/`, `Plans/`, `chats/`, `wbt-brand-guide/`). **Deletions must be mirrored by hand** (Finder trash or a manual `rm`) because the Drive path blocks `rm` from tooling.
+
+**Collage save (collage-maker.html):** saving a collage POSTs to a Cloudflare Worker — `wbt-collage-save.workbettertogether.workers.dev` (source in `collage-save-worker/`) — which holds the GitHub token server-side. **No API tokens live in any page.** Worker secrets (`GITHUB_TOKEN`, `SHARED_SECRET`) are set via `wrangler secret put`; never hard-code them. The gallery (`collages.html`) reads `assets/Generated Illustrations/manifest.json` over a plain public URL.
+
+**Concept illustrations** are served locally from `assets/Illustrations/`, not from Airtable. `elements.html` renders a single A–Z **`CONCEPTS`** array (the "Concept Image Library"); `collage-maker.html` builds its picker from `STATIC_CONCEPTS` + `LIBRARY_CONCEPTS`. Keep the two illustration sets in sync (both currently offer the same 102 illustrations). See `CHANGELOG.md` for the full history of this rework.
 
 ---
 
