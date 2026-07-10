@@ -4738,14 +4738,14 @@
   ══════════════════════════════════════ -->
 
   <div style="font-family:var(--font-display);font-weight:700;font-size:28px;letter-spacing:-0.02em;color:var(--ink);margin-bottom:8px;">
-    Concept Library <span style="font-family:var(--font-body);font-style:italic;font-weight:400;color:var(--slate);font-size:22px;">— synced from Airtable</span>
+    Concept Library <span style="font-family:var(--font-body);font-style:italic;font-weight:400;color:var(--slate);font-size:22px;">— our working library</span>
   </div>
-  <p style="font-family:var(--font-body);font-size:14px;color:var(--ink);font-style:italic;margin-bottom:32px;max-width:600px;">Photographic illustrations organized by concept, pulled live from the team's working library.</p>
+  <p style="font-family:var(--font-body);font-size:14px;color:var(--ink);font-style:italic;margin-bottom:32px;max-width:600px;">Photographic illustrations organized by concept, served from our local asset library.</p>
 
   <div id="app">
     <div class="loading-state">
       <div class="loading-spinner"></div>
-      <div class="loading-text">Loading from Airtable…</div>
+      <div class="loading-text">Loading…</div>
     </div>
   </div>
 
@@ -4769,27 +4769,45 @@
 <div class="lightbox" id="lightbox" onclick="closeLightbox()"><span class="lightbox-close" onclick="closeLightbox()">ESC · CLOSE</span><img id="lightbox-img" alt=""><div class="lightbox-caption" id="lightbox-caption"></div></div>
 
 <script>
-  const TOKEN   = 'patfBEWJ2bJaznYk6.f5416b66a6ff5858152a5c903efd5e6f820046aa8aaa5c41575fe9b7ef2ef1ae';
-  const BASE_ID = 'appXa8GBjPJJnztSd';
-  const TABLE   = 'tblXQBLJF6MmzA3qW';
-  const VIEW    = 'viw3oCcP67Iv2td3V';
-
-  async function fetchAll() {
-    let records = [], offset = null;
-    do {
-      const params = new URLSearchParams({ view: VIEW, pageSize: 100 });
-      if (offset) params.set('offset', offset);
-      const res = await fetch(
-        `https://api.airtable.com/v0/${BASE_ID}/${TABLE}?${params}`,
-        { headers: { Authorization: `Bearer ${TOKEN}` } }
-      );
-      const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
-      records = records.concat(data.records);
-      offset = data.offset;
-    } while (offset);
-    return records;
-  }
+  // Concept Library — served locally from assets/Illustrations/.
+  // Previously fetched live from Airtable; images vendored into the repo 2026-07-08
+  // and the Airtable API token removed. To refresh, re-run the sync in the wbt-collage skill.
+  const RECORDS = [
+    { id: 'rec0xzXtZDMQnoUaT', fields: { 'Concept': 'Case Study', 'Icon': 'Paper Clip, Card Catalog', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Case-Study-2.png', url: 'assets/Illustrations/Case-Study-2.png'}, {filename: 'Case-Study-3.png', url: 'assets/Illustrations/Case-Study-3.png'}] } },
+    { id: 'rec24nnBAc4Kdhjrm', fields: { 'Concept': 'Team Coaching', 'Icon': 'Light bulb', 'Type of Concept': 'Services', 'Image(s)': [] } },
+    { id: 'rec9L2oz4fzfgP6ps', fields: { 'Concept': 'Facilitation + Training', 'Icon': 'Lights, Lightbulbs, Lamps', 'Type of Concept': 'Services', 'Image(s)': [] } },
+    { id: 'rec9dCTV844O1LgHj', fields: { 'Concept': 'Collaboration', 'Icon': 'Cairn', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Cairn.png', url: 'assets/Illustrations/Cairn.png'}, {filename: 'Cairn-2.png', url: 'assets/Illustrations/Cairn-2.png'}] } },
+    { id: 'rec9u72oDBkWGlW0k', fields: { 'Concept': 'Small Group Breakouts', 'Icon': 'Orbits Sculpture', 'Type of Concept': 'Facilitation', 'Image(s)': [{filename: 'Small-Group-Breakouts.png', url: 'assets/Illustrations/Small-Group-Breakouts.png'}] } },
+    { id: 'recA38KnbRsVEyY5h', fields: { 'Concept': 'Break', 'Icon': 'Coffee', 'Type of Concept': 'Facilitation', 'Image(s)': [{filename: 'Break.png', url: 'assets/Illustrations/Break.png'}] } },
+    { id: 'recD7BMXGWn0v9f5D', fields: { 'Concept': 'Agenda', 'Icon': 'Notepad, Telegraph', 'Type of Concept': 'Facilitation', 'Image(s)': [{filename: 'Agenda.png', url: 'assets/Illustrations/Agenda.png'}] } },
+    { id: 'recF6o2mTqtw24GFu', fields: { 'Concept': 'Renewal', 'Icon': 'Watering Can', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Renewal.png', url: 'assets/Illustrations/Renewal.png'}] } },
+    { id: 'recGUGrsNRpSayjQt', fields: { 'Concept': 'Leadership Coaching', 'Icon': 'Moon/planets', 'Type of Concept': 'Services', 'Where does it live?': ['Website', 'Social Media', 'Presentations', 'Course Materials'], 'Image(s)': [] } },
+    { id: 'recGbQlz9Cr42Y5QX', fields: { 'Concept': 'Assessment', 'Icon': 'Eye chart, Stopwatch', 'Type of Concept': 'Services', 'Image(s)': [{filename: 'Assessment-4.png', url: 'assets/Illustrations/Assessment-4.png'}, {filename: 'Assessment.png', url: 'assets/Illustrations/Assessment.png'}] } },
+    { id: 'recJiApZ7GpBZRYcl', fields: { 'Concept': 'Perception and Bias', 'Icon': 'Lens/telescope', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Perception-And-Bias.png', url: 'assets/Illustrations/Perception-And-Bias.png'}] } },
+    { id: 'recLz5VVorjuEscCH', fields: { 'Concept': 'Managing Up and Across Levels of System', 'Icon': 'Knights facing off', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Managing-Up.png', url: 'assets/Illustrations/Managing-Up.png'}] } },
+    { id: 'recPoQ4fwz2AAwvbC', fields: { 'Concept': 'Resilience (team)', 'Icon': 'Dominoes, Card Pyramid', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Resilience-Team.png', url: 'assets/Illustrations/Resilience-Team.png'}, {filename: 'Resilience-Team-2.png', url: 'assets/Illustrations/Resilience-Team-2.png'}] } },
+    { id: 'recRFVGB6tlEjEOJm', fields: { 'Concept': 'Team Cohesion', 'Icon': 'Tandem Bicycle', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Tandem-Bicycle.png', url: 'assets/Illustrations/Tandem-Bicycle.png'}, {filename: 'Team-Cohesion-2.png', url: 'assets/Illustrations/Team-Cohesion-2.png'}] } },
+    { id: 'recStwTihB0kppFMD', fields: { 'Concept': 'Brainstorming', 'Icon': 'Lightning bolt, loaded bow', 'Type of Concept': 'Facilitation', 'Image(s)': [{filename: 'Brainstorm.png', url: 'assets/Illustrations/Brainstorm.png'}, {filename: 'Brainstorming-2.png', url: 'assets/Illustrations/Brainstorming-2.png'}] } },
+    { id: 'recW7lezBPtbWCpPe', fields: { 'Concept': 'Welcome', 'Icon': 'Pineapple', 'Type of Concept': 'Facilitation', 'Image(s)': [{filename: 'Welcome.png', url: 'assets/Illustrations/Welcome.png'}] } },
+    { id: 'recYzJ3v80AUIjz9L', fields: { 'Concept': 'Lunch', 'Icon': 'Sandwich', 'Type of Concept': 'Facilitation', 'Image(s)': [{filename: 'Lunch.png', url: 'assets/Illustrations/Lunch.png'}] } },
+    { id: 'recZz6mbtB5wZunV9', fields: { 'Concept': 'Motivation', 'Icon': 'Propeller, Matchbook', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Motivation.png', url: 'assets/Illustrations/Motivation.png'}, {filename: 'Motivation-2.png', url: 'assets/Illustrations/Motivation-2.png'}] } },
+    { id: 'recb1mvys3RiUFj4j', fields: { 'Concept': 'Resilience (Individual)', 'Icon': 'Beetle, Camel', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Concept-Noodles.png', url: 'assets/Illustrations/Concept-Noodles.png'}, {filename: 'Resilience.png', url: 'assets/Illustrations/Resilience.png'}] } },
+    { id: 'recbQUFqbzEGObj0b', fields: { 'Concept': 'Difficult Conversations (Communication)', 'Icon': 'Typewriter, Baritone, old radio', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Difficult-Conversations.png', url: 'assets/Illustrations/Difficult-Conversations.png'}, {filename: 'Difficult-Conversations-2.png', url: 'assets/Illustrations/Difficult-Conversations-2.png'}, {filename: 'Communication.png', url: 'assets/Illustrations/Communication.png'}] } },
+    { id: 'reccCsqL43Hkm3OYr', fields: { 'Concept': 'Leadership', 'Icon': 'Hot air balloon, Steering Helm, Compass, Horsebell', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Leadership.png', url: 'assets/Illustrations/Leadership.png'}, {filename: 'Leadership-2.png', url: 'assets/Illustrations/Leadership-2.png'}, {filename: 'Leadership-3.png', url: 'assets/Illustrations/Leadership-3.png'}, {filename: 'Horsebell.png', url: 'assets/Illustrations/Horsebell.png'}] } },
+    { id: 'receRoTHOReI6QiuV', fields: { 'Concept': 'Psychological Safety', 'Icon': 'Caution tape, Birdhouse, Traffic Cone, Antique Lock', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Psychological-Safety.png', url: 'assets/Illustrations/Psychological-Safety.png'}, {filename: 'Psychological-Safety-2.png', url: 'assets/Illustrations/Psychological-Safety-2.png'}, {filename: 'Psychological-Safety-3.png', url: 'assets/Illustrations/Psychological-Safety-3.png'}, {filename: 'Psychological-Safety-4.png', url: 'assets/Illustrations/Psychological-Safety-4.png'}] } },
+    { id: 'receoST02avN4nUzb', fields: { 'Concept': 'Team Spotlight', 'Icon': 'Bowling pins', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Team-Spotlight.png', url: 'assets/Illustrations/Team-Spotlight.png'}] } },
+    { id: 'rech7aw7ThqZJaJJT', fields: { 'Concept': 'Emotional Intelligence', 'Icon': 'Barometer, Newsprint Heart', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Emotional-Intelligence-1.png', url: 'assets/Illustrations/Emotional-Intelligence-1.png'}, {filename: 'Heart-2.png', url: 'assets/Illustrations/Heart-2.png'}] } },
+    { id: 'rechkxrcmpU03GQbe', fields: { 'Concept': 'Thank You', 'Icon': 'Thank you!', 'Type of Concept': 'Facilitation', 'Image(s)': [{filename: 'Thank-You.png', url: 'assets/Illustrations/Thank-You.png'}] } },
+    { id: 'rechrbuvUFZLzd00q', fields: { 'Concept': 'Growth and Development', 'Icon': 'Frame (for reframing), antique key', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Growth-And-Development-2.png', url: 'assets/Illustrations/Growth-And-Development-2.png'}, {filename: 'Growth-And-Development-1.png', url: 'assets/Illustrations/Growth-And-Development-1.png'}] } },
+    { id: 'rechuDqNkksgRJy7S', fields: { 'Concept': 'Conflict Management', 'Icon': 'Hazmat Caution, Skull', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Conflict-Management.png', url: 'assets/Illustrations/Conflict-Management.png'}, {filename: 'Conflict-Management-2.png', url: 'assets/Illustrations/Conflict-Management-2.png'}] } },
+    { id: 'reckRZuYY4QDwZhVr', fields: { 'Concept': 'Collaboration', 'Icon': 'Pinwheel, Gears in tandem,', 'Type of Concept': 'Facilitation', 'Image(s)': [{filename: 'Collaboration.png', url: 'assets/Illustrations/Collaboration.png'}, {filename: 'Collaboration-3.png', url: 'assets/Illustrations/Collaboration-3.png'}] } },
+    { id: 'recmCxnO4FGzG2n8I', fields: { 'Concept': 'Reflection', 'Icon': 'Looking Glass, Crystal Ball', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Reflection.png', url: 'assets/Illustrations/Reflection.png'}, {filename: 'Reflection-2.png', url: 'assets/Illustrations/Reflection-2.png'}] } },
+    { id: 'recoeBYBTrqFcOTLB', fields: { 'Concept': 'Stress', 'Icon': 'Fire alarm bells, frayed rope', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Stress-3.png', url: 'assets/Illustrations/Stress-3.png'}, {filename: 'Stress-1.png', url: 'assets/Illustrations/Stress-1.png'}, {filename: 'Stress-2.png', url: 'assets/Illustrations/Stress-2.png'}] } },
+    { id: 'recpmdYsVF7yzY4oA', fields: { 'Concept': 'Feedback/Contact', 'Icon': 'Feather Quill, Boombox, Letterbox', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Feedback.png', url: 'assets/Illustrations/Feedback.png'}, {filename: 'Communication-2.png', url: 'assets/Illustrations/Communication-2.png'}, {filename: 'Feedback-Contact.png', url: 'assets/Illustrations/Feedback-Contact.png'}] } },
+    { id: 'recsH7HLhOvMbklRr', fields: { 'Concept': 'Extras!', 'Icon': 'Hearts, Windmill, Casette, Telegraph', 'Image(s)': [{filename: 'Heart-1.png', url: 'assets/Illustrations/Heart-1.png'}, {filename: 'Windmill.png', url: 'assets/Illustrations/Windmill.png'}, {filename: 'Heart-3.png', url: 'assets/Illustrations/Heart-3.png'}, {filename: 'Extra-39.png', url: 'assets/Illustrations/Extra-39.png'}, {filename: 'Telegraph.png', url: 'assets/Illustrations/Telegraph.png'}] } },
+    { id: 'recsdOsuDUwwShnla', fields: { 'Concept': 'More Extras!', 'Icon': 'Target (dartboard), Fusebox, Spring (momentum?), Sundial', 'Image(s)': [{filename: 'Target.png', url: 'assets/Illustrations/Target.png'}, {filename: 'Fusebox.png', url: 'assets/Illustrations/Fusebox.png'}, {filename: 'Spring.png', url: 'assets/Illustrations/Spring.png'}, {filename: 'Sundial.png', url: 'assets/Illustrations/Sundial.png'}] } },
+    { id: 'recubQbNxu3Zdhp5A', fields: { 'Concept': 'Resource', 'Icon': 'Antique Books, Needle and thread', 'Type of Concept': 'Content Focus', 'Image(s)': [{filename: 'Resource.png', url: 'assets/Illustrations/Resource.png'}, {filename: 'Resource-2.png', url: 'assets/Illustrations/Resource-2.png'}] } }
+  ];
 
   function groupBy(records, key) {
     const groups = {};
@@ -4817,7 +4835,7 @@
   async function render() {
     const app = document.getElementById('app');
     try {
-      const records = await fetchAll();
+      const records = RECORDS;
       const groups  = groupBy(records, 'Type of Concept');
 
       const typeOrder = ['Services', 'Content Focus', 'Facilitation'];
@@ -4845,8 +4863,8 @@
             <div class="stat-label">Categories</div>
           </div>
           <div class="stat-cell">
-            <div class="stat-num">Live</div>
-            <div class="stat-label">Synced from Airtable</div>
+            <div class="stat-num">Local</div>
+            <div class="stat-label">Served from repo</div>
           </div>
         </div>
       `;

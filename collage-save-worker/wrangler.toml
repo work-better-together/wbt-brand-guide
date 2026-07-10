@@ -1,0 +1,15 @@
+name = "wbt-collage-save"
+main = "worker.js"
+compatibility_date = "2026-07-01"
+
+# Secrets are NOT set here — set them via the CLI so they never touch source:
+#   wrangler secret put GITHUB_TOKEN
+#   wrangler secret put SHARED_SECRET
+#
+# Optional: serve the Worker same-origin at brand.wbt.coach/collage-api/save
+# (requires the zone to be proxied through Cloudflare). If you use this, set
+# SAVE_ENDPOINT in collage-maker.html to "/collage-api/save" and no CORS is needed.
+#
+# [[routes]]
+# pattern = "brand.wbt.coach/collage-api/*"
+# zone_name = "wbt.coach"

@@ -2334,44 +2334,61 @@ const STATIC_CONCEPTS = [
 /* Airtable concept library — fetched live */
 /* ── GitHub save config ──────────────────────────────────────────────
    Fine-grained PAT with Contents: read+write on this repo only.       */
-const GITHUB = {
-  owner:  'deroyperaza',
-  repo:   'wbt-brand-guide',
-  branch: 'main',
-  token:  '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',
-  folder: 'assets/Generated Illustrations',
-  manifest: 'assets/Generated Illustrations/manifest.json',
-};
+/* ───────────────────────────────────────────────────────────
+   SAVE ENDPOINT — Cloudflare Worker (holds the GitHub token server-side)
+   No credentials live in this page. Deploy collage-save-worker/ and set
+   SAVE_ENDPOINT to its URL (or a same-origin route like '/collage-api/save').
+─────────────────────────────────────────────────────────── */
 
-async function ghGet(path) {
-  const encoded = path.split('/').map(encodeURIComponent).join('/');
-  const res = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${encoded}`, {
-    headers: { Authorization: `token ${GITHUB.token}`, Accept: 'application/vnd.github+json' },
-  });
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`GitHub GET ${path} → ${res.status}`);
-  return res.json();
+const SAVE_ENDPOINT = 'https://wbt-collage-save.workbettertogether.workers.dev';
+
+// The team enters the shared passphrase once; it's kept in localStorage,
+// never hard-coded. Wrong passphrases are cleared so the prompt reappears.
+function getSaveSecret() {
+  let s = localStorage.getItem('wbt-save-secret');
+  if (!s) {
+    s = (window.prompt('Enter the collage save passphrase:') || '').trim();
+    if (s) localStorage.setItem('wbt-save-secret', s);
+  }
+  return s;
 }
 
-async function ghPut(path, base64Content, message, sha) {
-  const encoded = path.split('/').map(encodeURIComponent).join('/');
-  const body = { message, content: base64Content, branch: GITHUB.branch };
-  if (sha) body.sha = sha;
-  const res = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${encoded}`, {
-    method: 'PUT',
-    headers: { Authorization: `token ${GITHUB.token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`GitHub PUT ${path} → ${res.status}: ${await res.text()}`);
-  return res.json();
-}
-
-const AIRTABLE = {
-  TOKEN:   'patfBEWJ2bJaznYk6.f5416b66a6ff5858152a5c903efd5e6f820046aa8aaa5c41575fe9b7ef2ef1ae',
-  BASE_ID: 'appXa8GBjPJJnztSd',
-  TABLE:   'tblXQBLJF6MmzA3qW',
-  VIEW:    'viw3oCcP67Iv2td3V',
-};
+/* Concept Library — served locally from assets/Illustrations/.
+   Previously fetched live from Airtable; images vendored into the repo 2026-07-08
+   and the Airtable API token removed. To refresh, re-run the wbt-collage sync. */
+const LIBRARY_CONCEPTS = [
+  { id: 'rec0xzXtZDMQnoUaT', name: 'Case Study', type: 'Content Focus', blurb: 'Icon: Paper Clip, Card Catalog.', images: ['assets/Illustrations/Case-Study-2.png', 'assets/Illustrations/Case-Study-3.png'] },
+  { id: 'rec9dCTV844O1LgHj', name: 'Collaboration', type: 'Content Focus', blurb: 'Icon: Cairn.', images: ['assets/Illustrations/Cairn.png', 'assets/Illustrations/Cairn-2.png'] },
+  { id: 'rec9u72oDBkWGlW0k', name: 'Small Group Breakouts', type: 'Facilitation', blurb: 'Icon: Orbits Sculpture.', images: ['assets/Illustrations/Small-Group-Breakouts.png'] },
+  { id: 'recA38KnbRsVEyY5h', name: 'Break', type: 'Facilitation', blurb: 'Icon: Coffee.', images: ['assets/Illustrations/Break.png'] },
+  { id: 'recD7BMXGWn0v9f5D', name: 'Agenda', type: 'Facilitation', blurb: 'Icon: Notepad, Telegraph.', images: ['assets/Illustrations/Agenda.png'] },
+  { id: 'recF6o2mTqtw24GFu', name: 'Renewal', type: 'Content Focus', blurb: 'Icon: Watering Can.', images: ['assets/Illustrations/Renewal.png'] },
+  { id: 'recGbQlz9Cr42Y5QX', name: 'Assessment', type: 'Services', blurb: 'Icon: Eye chart, Stopwatch.', images: ['assets/Illustrations/Assessment-4.png', 'assets/Illustrations/Assessment.png'] },
+  { id: 'recJiApZ7GpBZRYcl', name: 'Perception and Bias', type: 'Content Focus', blurb: 'Icon: Lens/telescope.', images: ['assets/Illustrations/Perception-And-Bias.png'] },
+  { id: 'recLz5VVorjuEscCH', name: 'Managing Up and Across Levels of System', type: 'Content Focus', blurb: 'Icon: Knights facing off.', images: ['assets/Illustrations/Managing-Up.png'] },
+  { id: 'recPoQ4fwz2AAwvbC', name: 'Resilience (team)', type: 'Content Focus', blurb: 'Icon: Dominoes, Card Pyramid.', images: ['assets/Illustrations/Resilience-Team.png', 'assets/Illustrations/Resilience-Team-2.png'] },
+  { id: 'recRFVGB6tlEjEOJm', name: 'Team Cohesion', type: 'Content Focus', blurb: 'Icon: Tandem Bicycle.', images: ['assets/Illustrations/Tandem-Bicycle.png', 'assets/Illustrations/Team-Cohesion-2.png'] },
+  { id: 'recStwTihB0kppFMD', name: 'Brainstorming', type: 'Facilitation', blurb: 'Icon: Lightning bolt, loaded bow.', images: ['assets/Illustrations/Brainstorm.png', 'assets/Illustrations/Brainstorming-2.png'] },
+  { id: 'recW7lezBPtbWCpPe', name: 'Welcome', type: 'Facilitation', blurb: 'Icon: Pineapple.', images: ['assets/Illustrations/Welcome.png'] },
+  { id: 'recYzJ3v80AUIjz9L', name: 'Lunch', type: 'Facilitation', blurb: 'Icon: Sandwich.', images: ['assets/Illustrations/Lunch.png'] },
+  { id: 'recZz6mbtB5wZunV9', name: 'Motivation', type: 'Content Focus', blurb: 'Icon: Propeller, Matchbook.', images: ['assets/Illustrations/Motivation.png', 'assets/Illustrations/Motivation-2.png'] },
+  { id: 'recb1mvys3RiUFj4j', name: 'Resilience (Individual)', type: 'Content Focus', blurb: 'Icon: Beetle, Camel.', images: ['assets/Illustrations/Concept-Noodles.png', 'assets/Illustrations/Resilience.png'] },
+  { id: 'recbQUFqbzEGObj0b', name: 'Difficult Conversations (Communication)', type: 'Content Focus', blurb: 'Icon: Typewriter, Baritone, old radio.', images: ['assets/Illustrations/Difficult-Conversations.png', 'assets/Illustrations/Difficult-Conversations-2.png', 'assets/Illustrations/Communication.png'] },
+  { id: 'reccCsqL43Hkm3OYr', name: 'Leadership', type: 'Content Focus', blurb: 'Icon: Hot air balloon, Steering Helm, Compass, Horsebell.', images: ['assets/Illustrations/Leadership.png', 'assets/Illustrations/Leadership-2.png', 'assets/Illustrations/Leadership-3.png', 'assets/Illustrations/Horsebell.png'] },
+  { id: 'receRoTHOReI6QiuV', name: 'Psychological Safety', type: 'Content Focus', blurb: 'Icon: Caution tape, Birdhouse, Traffic Cone, Antique Lock.', images: ['assets/Illustrations/Psychological-Safety.png', 'assets/Illustrations/Psychological-Safety-2.png', 'assets/Illustrations/Psychological-Safety-3.png', 'assets/Illustrations/Psychological-Safety-4.png'] },
+  { id: 'receoST02avN4nUzb', name: 'Team Spotlight', type: 'Content Focus', blurb: 'Icon: Bowling pins.', images: ['assets/Illustrations/Team-Spotlight.png'] },
+  { id: 'rech7aw7ThqZJaJJT', name: 'Emotional Intelligence', type: 'Content Focus', blurb: 'Icon: Barometer, Newsprint Heart.', images: ['assets/Illustrations/Emotional-Intelligence-1.png', 'assets/Illustrations/Heart-2.png'] },
+  { id: 'rechkxrcmpU03GQbe', name: 'Thank You', type: 'Facilitation', blurb: 'Icon: Thank you!.', images: ['assets/Illustrations/Thank-You.png'] },
+  { id: 'rechrbuvUFZLzd00q', name: 'Growth and Development', type: 'Content Focus', blurb: 'Icon: Frame (for reframing), antique key.', images: ['assets/Illustrations/Growth-And-Development-2.png', 'assets/Illustrations/Growth-And-Development-1.png'] },
+  { id: 'rechuDqNkksgRJy7S', name: 'Conflict Management', type: 'Content Focus', blurb: 'Icon: Hazmat Caution, Skull.', images: ['assets/Illustrations/Conflict-Management.png', 'assets/Illustrations/Conflict-Management-2.png'] },
+  { id: 'reckRZuYY4QDwZhVr', name: 'Collaboration', type: 'Facilitation', blurb: 'Icon: Pinwheel, Gears in tandem,.', images: ['assets/Illustrations/Collaboration.png', 'assets/Illustrations/Collaboration-3.png'] },
+  { id: 'recmCxnO4FGzG2n8I', name: 'Reflection', type: 'Content Focus', blurb: 'Icon: Looking Glass, Crystal Ball.', images: ['assets/Illustrations/Reflection.png', 'assets/Illustrations/Reflection-2.png'] },
+  { id: 'recoeBYBTrqFcOTLB', name: 'Stress', type: 'Content Focus', blurb: 'Icon: Fire alarm bells, frayed rope.', images: ['assets/Illustrations/Stress-3.png', 'assets/Illustrations/Stress-1.png', 'assets/Illustrations/Stress-2.png'] },
+  { id: 'recpmdYsVF7yzY4oA', name: 'Feedback/Contact', type: 'Content Focus', blurb: 'Icon: Feather Quill, Boombox, Letterbox.', images: ['assets/Illustrations/Feedback.png', 'assets/Illustrations/Communication-2.png', 'assets/Illustrations/Feedback-Contact.png'] },
+  { id: 'recsH7HLhOvMbklRr', name: 'Extras!', type: 'Other', blurb: 'Icon: Hearts, Windmill, Casette, Telegraph.', images: ['assets/Illustrations/Heart-1.png', 'assets/Illustrations/Windmill.png', 'assets/Illustrations/Heart-3.png', 'assets/Illustrations/Extra-39.png', 'assets/Illustrations/Telegraph.png'] },
+  { id: 'recsdOsuDUwwShnla', name: 'More Extras!', type: 'Other', blurb: 'Icon: Target (dartboard), Fusebox, Spring (momentum?), Sundial.', images: ['assets/Illustrations/Target.png', 'assets/Illustrations/Fusebox.png', 'assets/Illustrations/Spring.png', 'assets/Illustrations/Sundial.png'] },
+  { id: 'recubQbNxu3Zdhp5A', name: 'Resource', type: 'Content Focus', blurb: 'Icon: Antique Books, Needle and thread.', images: ['assets/Illustrations/Resource.png', 'assets/Illustrations/Resource-2.png'] }
+];
 
 /* Airtable concept type → default brand color id */
 const TYPE_TO_BG = {
@@ -3232,34 +3249,18 @@ document.getElementById('concept-clear').addEventListener('click', clearConcept)
    AIRTABLE FETCH
 ─────────────────────────────────────────────────────────── */
 
-async function fetchAirtable() {
-  let records = [], offset = null;
+function loadConceptLibrary() {
   try {
-    do {
-      const params = new URLSearchParams({ view: AIRTABLE.VIEW, pageSize: 100 });
-      if (offset) params.set('offset', offset);
-      const res = await fetch(
-        `https://api.airtable.com/v0/${AIRTABLE.BASE_ID}/${AIRTABLE.TABLE}?${params}`,
-        { headers: { Authorization: `Bearer ${AIRTABLE.TOKEN}` } }
-      );
-      const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
-      records = records.concat(data.records);
-      offset = data.offset;
-    } while (offset);
-
-    records.forEach(r => {
-      const f = r.fields;
-      const images = (f['Image(s)'] || []).map(img => img.thumbnails?.large?.url || img.url);
-      const type = f['Type of Concept'] || 'Other';
+    LIBRARY_CONCEPTS.forEach(c => {
+      const type = c.type || 'Other';
       state.concepts.push({
-        id: r.id,
-        name: f['Concept'] || 'Untitled',
+        id: c.id,
+        name: c.name,
         type,
         bgColorId: TYPE_TO_BG[type] || 'steady',
-        blurb: f['Icon'] ? `Icon: ${f['Icon']}.` : '',
-        images,
-        source: 'airtable',
+        blurb: c.blurb || '',
+        images: c.images,
+        source: 'library',
       });
     });
 
@@ -3290,7 +3291,7 @@ async function fetchAirtable() {
       renderSuggestions(input.value);
     }
   } catch (err) {
-    console.warn('Airtable fetch failed:', err.message);
+    console.warn('Concept library load failed:', err.message);
     // Static concepts still work without Airtable
   }
 }
@@ -3434,28 +3435,32 @@ async function saveToBrandGuide(nameOverride) {
 
     allBtns.forEach(b => { b.textContent = 'Uploading…'; });
 
-    // 3. Commit the PNG (check for existing SHA to handle re-saves of same name)
-    const existing = await ghGet(imgPath);
-    await ghPut(imgPath, b64, `Add generated collage: ${title}`, existing?.sha);
+    // 3. Send to the save Worker — it holds the GitHub token and does the commits.
+    const secret = getSaveSecret();
+    if (!secret) throw new Error('Save passphrase required');
 
-    // 4. Read + update manifest.json
-    allBtns.forEach(b => { b.textContent = 'Updating…'; });
-    const manifestFile = await ghGet(GITHUB.manifest);
-    const manifestList = manifestFile
-      ? JSON.parse(atob(manifestFile.content.replace(/\n/g, '')))
-      : [];
-
-    manifestList.unshift({
-      filename,
-      title,
-      concept:    state.concept?.name || null,
-      bgColorId:  state.bgColorId,
-      bgHex:      bgOptionById(state.bgColorId).hex || null,
-      savedAt:    now.toISOString(),
+    const res = await fetch(SAVE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Save-Secret': secret },
+      body: JSON.stringify({
+        filename,
+        contentBase64: b64,
+        entry: {
+          filename,
+          title,
+          concept:   state.concept?.name || null,
+          bgColorId: state.bgColorId,
+          bgHex:     bgOptionById(state.bgColorId).hex || null,
+          savedAt:   now.toISOString(),
+        },
+      }),
     });
 
-    const manifestB64 = btoa(unescape(encodeURIComponent(JSON.stringify(manifestList, null, 2))));
-    await ghPut(GITHUB.manifest, manifestB64, `Update collage manifest: ${title}`, manifestFile?.sha);
+    if (res.status === 401) {
+      localStorage.removeItem('wbt-save-secret'); // clear bad passphrase
+      throw new Error('Wrong save passphrase — try again');
+    }
+    if (!res.ok) throw new Error(`Save failed: ${res.status} ${await res.text()}`);
 
     showToast('Saved to Brand Guide ✓');
   } catch (err) {
@@ -3854,7 +3859,7 @@ renderIllustrationGrid();
 document.getElementById('spot-count').textContent = `${SPOTS.length} shapes`;
 document.getElementById('scribble-count').textContent = `${SCRIBBLES.length} options`;
 render();
-fetchAirtable(); // async, will surface in concept search when done
+loadConceptLibrary(); // populate concept library from local assets
 </script>
 
 <script src="nav.js"></script>
