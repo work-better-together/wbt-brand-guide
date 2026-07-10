@@ -389,7 +389,7 @@
   <!-- ═══════ BUTTON ═══════ -->
   <div class="section-block">
     <div class="section-label">Button</div>
-    <p class="section-intro">Four variants: <strong>primary</strong> for the page's main action; <strong>secondary</strong> for the alternative; <strong>ghost</strong> for low-stakes / inline actions; <strong>destructive</strong> for irreversible operations. All buttons share the same min-height (44px) for touch targets.</p>
+    <p class="section-intro">Four variants: <strong>primary</strong> for the page’s main action; <strong>secondary</strong> for the alternative; <strong>ghost</strong> for low-stakes / inline actions; <strong>destructive</strong> for irreversible operations. All buttons share the same min-height (44px) for touch targets.</p>
 
     <h3>Variants</h3>
     <div class="stage">
@@ -485,22 +485,22 @@
         <div class="field">
           <label class="field-label">Default</label>
           <input class="input" placeholder="your.name@company.com">
-          <span class="field-helper">We'll only use this for project updates.</span>
+          <span class="field-helper">We’ll only use this for project updates.</span>
         </div>
         <div class="field">
           <label class="field-label">Filled</label>
           <input class="input" value="deroy@hyperakt.com">
-          <span class="field-helper">We'll only use this for project updates.</span>
+          <span class="field-helper">We’ll only use this for project updates.</span>
         </div>
         <div class="field">
           <label class="field-label">Hover</label>
           <input class="input is-hover" placeholder="your.name@company.com">
-          <span class="field-helper">We'll only use this for project updates.</span>
+          <span class="field-helper">We’ll only use this for project updates.</span>
         </div>
         <div class="field">
           <label class="field-label">Focus</label>
           <input class="input is-focus" value="deroy">
-          <span class="field-helper">We'll only use this for project updates.</span>
+          <span class="field-helper">We’ll only use this for project updates.</span>
         </div>
         <div class="field">
           <label class="field-label">Error</label>
@@ -552,7 +552,7 @@
     <div class="stage">
       <div class="stage-grid cols-2">
         <div class="stack">
-          <label class="checkable is-checked"><input type="checkbox" checked><span class="checkable-box"></span><span>I'd like a follow-up call</span></label>
+          <label class="checkable is-checked"><input type="checkbox" checked><span class="checkable-box"></span><span>I’d like a follow-up call</span></label>
           <label class="checkable"><input type="checkbox"><span class="checkable-box"></span><span>Add me to the newsletter</span></label>
           <label class="checkable"><input type="checkbox" disabled><span class="checkable-box" style="opacity:0.4"></span><span style="color:var(--ink-muted)">Disabled option</span></label>
         </div>
@@ -661,7 +661,7 @@
           <tr><td>Tag radius</td><td><code>--tag-radius</code> → 2px</td></tr>
           <tr><td>Tag type</td><td><code>--tag-font</code> · 10px League Spartan 500, +0.1em tracking, uppercase</td></tr>
           <tr><td>Status variants</td><td><code>--status-{success|warning|info|critical}-{surface,ink}</code></td></tr>
-          <tr><td>Badge bg</td><td><code>--c-honest-ochre</code> (default; signals "attention")</td></tr>
+          <tr><td>Badge bg</td><td><code>--c-honest-ochre</code> (default; signals “attention”)</td></tr>
         </tbody>
       </table>
     </div>
@@ -728,12 +728,12 @@
         <p>Use Lora roman for body. Reserve italic for actual quotes, paraphrasing, special callouts, and annotations.</p>
       </div>
       <div class="callout-component callout-warning">
-        <span class="ce-tag">Don't</span>
-        <p>Don't use Inconsolata for eyebrows or labels. It's reserved for attributions and CTAs only.</p>
+        <span class="ce-tag">Don’t</span>
+        <p>Don’t use Inconsolata for eyebrows or labels. It’s reserved for attributions and CTAs only.</p>
       </div>
       <div class="callout-component callout-critical">
         <span class="ce-tag">Critical</span>
-        <p>Honest Ochre body text on Calm Blue or Radiant Gold backgrounds fails contrast at every size. Don't pair these.</p>
+        <p>Honest Ochre body text on Calm Blue or Radiant Gold backgrounds fails contrast at every size. Don’t pair these.</p>
       </div>
     </div>
 
@@ -816,7 +816,7 @@
         <div class="modal">
           <span class="modal-eyebrow">Confirm</span>
           <h2>Delete this engagement?</h2>
-          <p>This will remove "Pivotal Ventures · Brand Refresh" and all attached files. This action cannot be undone.</p>
+          <p>This will remove “Pivotal Ventures · Brand Refresh” and all attached files. This action cannot be undone.</p>
           <div class="modal-actions">
             <button class="btn btn-secondary btn-sm">Cancel</button>
             <button class="btn btn-destructive btn-sm">Delete forever</button>
@@ -885,7 +885,7 @@
           <div class="toast-icon"></div>
           <div class="toast-body">
             <div class="toast-title">Saved</div>
-            <div class="toast-msg">Your changes are synced. We'll keep working on this in the background.</div>
+            <div class="toast-msg">Your changes are synced. We’ll keep working on this in the background.</div>
           </div>
         </div>
         <div class="toast success">
@@ -905,7 +905,7 @@
         <div class="toast critical">
           <div class="toast-icon"></div>
           <div class="toast-body">
-            <div class="toast-title">Couldn't save</div>
+            <div class="toast-title">Couldn’t save</div>
             <div class="toast-msg">We lost connection mid-save. Try again — your work is held locally.</div>
           </div>
         </div>
@@ -1086,10 +1086,11 @@
     <p class="section-intro">The signature hero move: a big League Spartan headline in <strong>cream</strong>, centered low over a full-width photo, with a soft shadow so it clears the image underneath. Used for the homepage hero (“Leadership is hard. Let’s work on it.”) and the site’s Open Graph share image. Reserve it for a short, declarative line over a photo with calm midtones in the lower third — never body copy, never over a busy area.</p>
 
     <style>
+      /* Exact live-site hero-title values (.hero-home2-title in styles.css) */
       .hoi-demo { position:relative; overflow:hidden; }
       .hoi-demo img { width:100%; height:auto; display:block; }
-      .hoi-title { position:absolute; left:50%; top:72%; transform:translate(-50%,-50%); width:92%; text-align:center; color:#F9F8F2; font-family:var(--font-display); font-weight:700; font-size:clamp(24px,6.6vw,68px); line-height:1.0; letter-spacing:-0.02em; text-shadow:0 2px 26px rgba(0,0,0,0.34), 0 1px 4px rgba(0,0,0,0.28); margin:0; }
-      @media (max-width:640px){ .hoi-title{ top:62%; font-size:clamp(22px,7vw,40px); } }
+      .hoi-demo .hoi-title { position:absolute; left:50%; top:72%; transform:translate(-50%,-50%); width:92%; text-align:center; color:#F9F8F2; font-family:var(--font-display); font-weight:700; font-size:clamp(34px,6.6vw,92px); line-height:1.0; letter-spacing:-0.02em; text-shadow:0 2px 26px rgba(0,0,0,0.34), 0 1px 4px rgba(0,0,0,0.28); margin:0; }
+      @media (max-width:820px){ .hoi-demo .hoi-title{ top:62%; font-size:clamp(26px,7vw,46px); } }
     </style>
 
     <div class="hoi-demo">
@@ -1151,12 +1152,12 @@
       .eq-inline blockquote { margin:0 0 40px; font-family:var(--font-body); font-style:italic; font-size:22px; line-height:1.5; color:var(--ink-default); }
       .eq-inline cite { display:block; margin-top:14px; font-style:normal; font-family:var(--font-mono); font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-default); }
       /* hand-drawn blue asterisk */
-      .eq-aster { display:inline-block; width:40px; height:42px; }
+      .eq-aster { display:block; width:40px; height:auto; }
       .eq-pull { display:grid; grid-template-columns:auto 1fr; column-gap:26px; align-items:start; margin:44px 0; }
-      .eq-pull .eq-aster { width:52px; height:54px; transform:rotate(-9deg); margin-top:4px; }
+      .eq-pull .eq-aster { width:52px; transform:rotate(-9deg); margin-top:6px; }
       .eq-pull .eq-pull-body { font-family:var(--font-body); font-style:italic; font-size:clamp(24px,3.2vw,32px); line-height:1.4; color:var(--ink-default); }
       .eq-take { display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; column-gap:26px; row-gap:12px; align-items:start; margin:44px 0 8px; }
-      .eq-take .eq-aster { grid-column:1; grid-row:1 / span 2; width:52px; height:54px; margin-top:2px; }
+      .eq-take .eq-aster { grid-column:1; grid-row:1 / span 2; width:52px; margin-top:4px; }
       .eq-take .eq-eyebrow { grid-column:2; grid-row:1; align-self:center; font-family:var(--font-mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2531A5; }
       .eq-take .eq-take-body { grid-column:2; grid-row:2; font-family:var(--font-body); font-style:italic; font-size:clamp(22px,3vw,30px); line-height:1.4; color:var(--ink-default); }
     </style>
@@ -1167,12 +1168,12 @@
       </div>
 
       <div class="eq-pull">
-        <svg class="eq-aster" viewBox="0 0 40 42" fill="none" stroke="#2531A5" stroke-width="4" stroke-linecap="round"><path d="M20 4v34M6 12l28 18M34 12L6 30"/></svg>
+        <img class="eq-aster" src="assets/site/asterisk-mark.png" alt="">
         <div class="eq-pull-body">Naming something out loud is the moment a team stops guessing and starts moving.</div>
       </div>
 
       <div class="eq-take">
-        <svg class="eq-aster" viewBox="0 0 40 42" fill="none" stroke="#2531A5" stroke-width="4" stroke-linecap="round"><path d="M20 4v34M6 12l28 18M34 12L6 30"/></svg>
+        <img class="eq-aster" src="assets/site/asterisk-mark.png" alt="">
         <div class="eq-eyebrow">Key takeaway</div>
         <div class="eq-take-body">A single, well-facilitated day gave the team shared language for motivation, recognition, and values.</div>
       </div>
@@ -1364,31 +1365,31 @@
 
   <!-- ═══════ DO / DON'T ═══════ -->
   <div class="section-block">
-    <div class="section-label">Component patterns · Do / Don't</div>
+    <div class="section-label">Component patterns · Do / Don’t</div>
     <div class="stage-grid cols-2" style="gap:2px;">
       <div class="callout-component callout-success">
         <span class="ce-tag">Do — buttons</span>
         <p>Pair every primary button with a clear secondary or cancel path. Never show three primaries in the same scope.</p>
       </div>
       <div class="callout-component callout-warning">
-        <span class="ce-tag">Don't — buttons</span>
-        <p>Don't use destructive styling for "Cancel" or "Close". Reserve Honest Ochre for actions that genuinely can't be undone.</p>
+        <span class="ce-tag">Don’t — buttons</span>
+        <p>Don’t use destructive styling for “Cancel” or “Close”. Reserve Honest Ochre for actions that genuinely can’t be undone.</p>
       </div>
       <div class="callout-component callout-success">
         <span class="ce-tag">Do — focus</span>
-        <p>Always show the focus ring on keyboard focus. If you're styling a custom element, replicate the 2px Intentional Blue ring with 2px offset.</p>
+        <p>Always show the focus ring on keyboard focus. If you’re styling a custom element, replicate the 2px Intentional Blue ring with 2px offset.</p>
       </div>
       <div class="callout-component callout-warning">
-        <span class="ce-tag">Don't — focus</span>
-        <p>Don't <code>outline:none</code> without a replacement focus indicator. This breaks accessibility for keyboard-only users.</p>
+        <span class="ce-tag">Don’t — focus</span>
+        <p>Don’t <code>outline:none</code> without a replacement focus indicator. This breaks accessibility for keyboard-only users.</p>
       </div>
       <div class="callout-component callout-success">
         <span class="ce-tag">Do — color signaling</span>
         <p>Pair color with an icon, label, or position. A red border alone is not enough — add an error message, an icon, or both.</p>
       </div>
       <div class="callout-component callout-warning">
-        <span class="ce-tag">Don't — color signaling</span>
-        <p>Don't rely on color alone to convey state. ~8% of users have color vision differences.</p>
+        <span class="ce-tag">Don’t — color signaling</span>
+        <p>Don’t rely on color alone to convey state. ~8% of users have color vision differences.</p>
       </div>
     </div>
   </div>
@@ -1397,7 +1398,7 @@
   <!-- ═══════ Whats next ═══════ -->
   <div class="section-block">
     <div class="section-label">Not yet documented</div>
-    <p class="section-intro">Components below exist in the brand expression but haven't been formalized as DS components. Add when first needed:</p>
+    <p class="section-intro">Components below exist in the brand expression but haven’t been formalized as DS components. Add when first needed:</p>
     <ul style="font-family:var(--font-body); font-size:14px; line-height:1.8; padding-left:22px;">
       <li><strong>Table — interactive</strong> — sort, sticky header, dense vs comfortable density (the static schedule table is documented above)</li>
       <li><strong>Pagination</strong></li>

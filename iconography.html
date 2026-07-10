@@ -143,7 +143,7 @@
   <div class="recommendation">
     <div class="r-tag">Recommended library</div>
     <h2>Lucide</h2>
-    <p>Open source, MIT-licensed, comprehensive (1,400+ icons), 1.5–2px stroke geometry that pairs cleanly with Lora's editorial weight. Forks of Feather, with active maintenance. Available as React, Vue, Svelte, web component, or static SVG. <a href="https://lucide.dev" target="_blank">lucide.dev</a></p>
+    <p>Open source, MIT-licensed, comprehensive (1,400+ icons), 1.5–2px stroke geometry that pairs cleanly with Lora’s editorial weight. Forks of Feather, with active maintenance. Available as React, Vue, Svelte, web component, or static SVG. <a href="https://lucide.dev" target="_blank">lucide.dev</a></p>
   </div>
 
   <p style="font-family:var(--font-body); font-size:14px; color:var(--ink-muted); max-width:720px; margin-bottom:64px;">
@@ -158,12 +158,12 @@
       <div class="spec-card">
         <div class="s-eyebrow">Stroke width</div>
         <h4>1.5px at 24px viewport</h4>
-        <p>Default. Scales with the icon — at 16px, drop to 1.25px equivalent (Lucide's <code>stroke-width="2"</code> at small sizes); at 32px+, lift to 1.75–2px equivalent. The point is visual consistency, not literal pixels.</p>
+        <p>Default. Scales with the icon — at 16px, drop to 1.25px equivalent (Lucide’s <code>stroke-width="2"</code> at small sizes); at 32px+, lift to 1.75–2px equivalent. The point is visual consistency, not literal pixels.</p>
       </div>
       <div class="spec-card">
         <div class="s-eyebrow">Stroke style</div>
         <h4>Round caps · round joins</h4>
-        <p>Lucide ships this by default. Don't override to square — sharp corners don't pair with Lora's editorial roundness.</p>
+        <p>Lucide ships this by default. Don’t override to square — sharp corners don’t pair with Lora’s editorial roundness.</p>
       </div>
       <div class="spec-card">
         <div class="s-eyebrow">Fill</div>
@@ -280,12 +280,12 @@
       <div class="spec-card">
         <div class="s-eyebrow">Source</div>
         <h4>Lucide via package</h4>
-        <p>Engineering: <code>npm i lucide-react</code> (or your framework variant). Design: install the Lucide Figma plugin. Don't paste random SVGs from elsewhere — single source keeps geometry consistent.</p>
+        <p>Engineering: <code>npm i lucide-react</code> (or your framework variant). Design: install the Lucide Figma plugin. Don’t paste random SVGs from elsewhere — single source keeps geometry consistent.</p>
       </div>
       <div class="spec-card">
         <div class="s-eyebrow">Custom icons</div>
         <h4>Match the Lucide grid</h4>
-        <p>If a needed icon isn't in Lucide, draw it on a 24×24 grid with a 1.5px stroke, round caps/joins, and 2px keylines. Save as inline SVG. Submit to Lucide upstream when possible.</p>
+        <p>If a needed icon isn’t in Lucide, draw it on a 24×24 grid with a 1.5px stroke, round caps/joins, and 2px keylines. Save as inline SVG. Submit to Lucide upstream when possible.</p>
       </div>
       <div class="spec-card">
         <div class="s-eyebrow">Accessibility</div>
@@ -330,31 +330,31 @@
 
   <!-- ─── Do / Don't ─── -->
   <div class="section-block">
-    <div class="section-label">Do / Don't</div>
+    <div class="section-label">Do / Don’t</div>
     <div class="do-dont-grid">
       <div class="dd-card do">
         <div class="dd-tag">Do</div>
         <p>Use one icon library per product surface. Lucide everywhere — including admin, marketing, and email where rendering allows.</p>
       </div>
       <div class="dd-card dont">
-        <div class="dd-tag">Don't</div>
-        <p>Don't mix icon libraries (Material + Lucide + custom). Visual inconsistency reads as carelessness.</p>
+        <div class="dd-tag">Don’t</div>
+        <p>Don’t mix icon libraries (Material + Lucide + custom). Visual inconsistency reads as carelessness.</p>
       </div>
       <div class="dd-card do">
         <div class="dd-tag">Do</div>
-        <p>Keep stroke geometry consistent — 1.5px at 24px scales proportionally. Use Lucide's defaults.</p>
+        <p>Keep stroke geometry consistent — 1.5px at 24px scales proportionally. Use Lucide’s defaults.</p>
       </div>
       <div class="dd-card dont">
-        <div class="dd-tag">Don't</div>
-        <p>Don't override stroke caps to square or join to miter. The brand's roundness extends to icons.</p>
+        <div class="dd-tag">Don’t</div>
+        <p>Don’t override stroke caps to square or join to miter. The brand’s roundness extends to icons.</p>
       </div>
       <div class="dd-card do">
         <div class="dd-tag">Do</div>
         <p>Inherit color via <code>currentColor</code>. Let the parent component drive the tint.</p>
       </div>
       <div class="dd-card dont">
-        <div class="dd-tag">Don't</div>
-        <p>Don't bake fills into the SVG. It defeats theming and breaks state changes.</p>
+        <div class="dd-tag">Don’t</div>
+        <p>Don’t bake fills into the SVG. It defeats theming and breaks state changes.</p>
       </div>
     </div>
   </div>
