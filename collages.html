@@ -299,6 +299,21 @@
     <div class="static-section-intro">
       <div>
         <h2>The three-layer <strong>system</strong></h2>
+        <style>
+          .tls-collage { position:relative; width:100%; max-width:400px; aspect-ratio:1/1; margin-top:32px; }
+          .tls-collage img { position:absolute; display:block; pointer-events:none; }
+          .tls-collage .tls-spot { z-index:1; width:74%; left:6%; top:14%; }
+          .tls-collage .tls-scribble { z-index:2; width:82%; left:14%; top:30%; transform:rotate(-6deg); }
+          .tls-collage .tls-illus { z-index:3; width:52%; left:26%; top:16%; }
+          .tls-caption { font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-muted); margin-top:14px; }
+          @media (max-width:720px){ .tls-collage { max-width:320px; margin-left:auto; margin-right:auto; } }
+        </style>
+        <div class="tls-collage" role="img" aria-label="Example collage: a Calm Blue watercolor spot, a black scribble, and an armillary-sphere illustration layered together">
+          <img class="tls-spot" src="assets/Watercolor Textures/Spots/Calm Blue/WBT-20260403-Calm-Blue-Watercolor-Spots-1.png" alt="">
+          <img class="tls-scribble" src="assets/Scribbles/Loops/WBT-scribble-loop-wavy-tail.png" alt="">
+          <img class="tls-illus" src="assets/Illustrations/Armillary.png" alt="">
+        </div>
+        <p class="tls-caption">Calm Blue spot · scribble · armillary sphere</p>
       </div>
       <div>
         <p>Every WBT collage is built from three layers, always in this stacking order — the signature decorative motif, used on heroes, service pages, bio pages, and card icons. It’s the brand’s “mosaic of people and perspectives” made literal.</p>
