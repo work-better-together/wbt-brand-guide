@@ -417,6 +417,74 @@
     </div>
   </div>
 
+  <!-- ═══════ Feature heading ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Type · Big feature heading</div>
+    <p class="section-intro">The largest heading in the system — an <strong>uppercase League Spartan</strong> display line that opens service pages and major features. It’s always paired with a Lora italic subhead and a League Spartan “deck” paragraph, so the three weights (bold caps → italic serif → regular sans) create the brand’s signature vertical rhythm.</p>
+
+    <style>
+      .fh-demo { text-align:center; padding:8px 0 4px; }
+      .fh-demo h2.fh { font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:clamp(40px,7.4vw,72px); line-height:1.0; letter-spacing:-0.01em; color:var(--ink-default); margin:0; }
+      .fh-demo .fh-sub { font-family:var(--font-body); font-style:italic; font-weight:400; font-size:clamp(19px,3vw,27px); line-height:1.3; color:var(--ink-default); margin:12px 0 0; }
+      .fh-demo .fh-body { font-family:var(--font-display); font-weight:400; font-size:clamp(20px,2.4vw,24px); line-height:1.42; color:var(--ink-default); max-width:640px; margin:30px auto 0; }
+    </style>
+
+    <div class="fh-demo">
+      <h2 class="fh">Leadership Coaching</h2>
+      <p class="fh-sub">that Builds Mindset and Capacity</p>
+      <p class="fh-body">Coaching is a structured, relational partnership that creates space for leaders to reflect, experiment, and grow in real time.</p>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Heading</strong></td><td>League Spartan <strong>700</strong>, <strong>UPPERCASE</strong>, <code>clamp(40–82px)</code> / 1.0, tracking −0.01em</td></tr>
+          <tr><td><strong>Subhead</strong></td><td>Lora <em>italic</em> 400, <code>clamp(19–29px)</code> / 1.3 — often sentence-case, leads with “that…”</td></tr>
+          <tr><td><strong>Deck</strong></td><td>League Spartan 400 (the <code>.lede-thin</code> role), <code>clamp(20–26px)</code> / 1.42</td></tr>
+          <tr><td><strong>Reversed</strong></td><td>On dark surfaces the heading flips to Steady Blue / cream per the reversed-headline rule</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- ═══════ Decorative bleed ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Layout · Decorative bleed (spots &amp; scribbles off-edge)</div>
+    <p class="section-intro">Large watercolor spots and looping scribbles positioned to crop off the page edges — a colored blob peeking in from one side, a scribble tail escaping the other. They add hand-made warmth and depth without competing with the content, which always sits above them. Purely decorative: <code>pointer-events:none</code>, behind the text, and shrunk or dropped on mobile.</p>
+
+    <style>
+      .bleed-demo { position:relative; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card); padding:clamp(40px,7vw,88px) clamp(24px,6vw,80px); }
+      .bleed-deco { position:absolute; z-index:0; pointer-events:none; user-select:none; }
+      .bleed-spot { width:340px; left:-210px; bottom:-150px; opacity:0.9; }
+      .bleed-scribble { width:460px; right:-260px; top:-120px; opacity:0.55; transform:rotate(8deg); }
+      .bleed-content { position:relative; z-index:1; max-width:540px; }
+      .bleed-content h3 { font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3.4vw,38px); line-height:1.12; letter-spacing:-0.01em; margin:0 0 16px; color:var(--ink-default); }
+      .bleed-content p { font-family:var(--font-body); font-size:17px; line-height:1.7; margin:0; color:var(--ink-default); max-width:46ch; }
+      @media (max-width:640px){ .bleed-scribble{ display:none; } .bleed-spot{ width:220px; left:-90px; bottom:-80px; opacity:0.7; } }
+    </style>
+
+    <div class="bleed-demo">
+      <img class="bleed-deco bleed-spot" src="assets/Watercolor%20Textures/Spots/Radiant%20Gold/WBT-20260403-Gold-Watercolor-Spots-1.png" alt="">
+      <img class="bleed-deco bleed-scribble" src="assets/Scribbles/Backgrounds/WBT-scribble-background-03.png" alt="">
+      <div class="bleed-content">
+        <h3>Leadership is hard. You don’t have to figure it out alone.</h3>
+        <p>The spot bleeds in from the lower left; the scribble escapes off the upper right. Together they frame the message without ever touching it.</p>
+      </div>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Container</strong></td><td><code>position:relative</code> + <code>overflow:hidden</code> (or <code>overflow-x:clip</code>) so decos crop at the edge</td></tr>
+          <tr><td><strong>Deco layer</strong></td><td><code>position:absolute</code>, <code>z-index:0</code>, <code>pointer-events:none</code>; negative offsets push it off-edge</td></tr>
+          <tr><td><strong>Spot</strong></td><td>watercolor blob 360–640px, opacity 0.55–0.92; pick the colorway to match the page</td></tr>
+          <tr><td><strong>Scribble</strong></td><td>looping line 520–1128px; rotate / <code>scaleX(-1)</code> for a natural gesture</td></tr>
+          <tr><td><strong>Content</strong></td><td>always <code>position:relative; z-index:1</code> — sits above the decoration</td></tr>
+          <tr><td><strong>Mobile</strong></td><td>shrink the spot and drop the scribble; never let a deco force horizontal scroll</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- ═══════ Layout pattern · Offset 2-of-3 ═══════ -->
   <div class="section-block">
     <div class="section-label">Layout · Offset “2-of-3” (staggered)</div>
@@ -798,74 +866,6 @@
   </div>
 
 
-  <!-- ═══════ Decorative bleed ═══════ -->
-  <div class="section-block">
-    <div class="section-label">Layout · Decorative bleed (spots &amp; scribbles off-edge)</div>
-    <p class="section-intro">Large watercolor spots and looping scribbles positioned to crop off the page edges — a colored blob peeking in from one side, a scribble tail escaping the other. They add hand-made warmth and depth without competing with the content, which always sits above them. Purely decorative: <code>pointer-events:none</code>, behind the text, and shrunk or dropped on mobile.</p>
-
-    <style>
-      .bleed-demo { position:relative; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card); padding:clamp(40px,7vw,88px) clamp(24px,6vw,80px); }
-      .bleed-deco { position:absolute; z-index:0; pointer-events:none; user-select:none; }
-      .bleed-spot { width:340px; left:-210px; bottom:-150px; opacity:0.9; }
-      .bleed-scribble { width:460px; right:-260px; top:-120px; opacity:0.55; transform:rotate(8deg); }
-      .bleed-content { position:relative; z-index:1; max-width:540px; }
-      .bleed-content h3 { font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3.4vw,38px); line-height:1.12; letter-spacing:-0.01em; margin:0 0 16px; color:var(--ink-default); }
-      .bleed-content p { font-family:var(--font-body); font-size:17px; line-height:1.7; margin:0; color:var(--ink-default); max-width:46ch; }
-      @media (max-width:640px){ .bleed-scribble{ display:none; } .bleed-spot{ width:220px; left:-90px; bottom:-80px; opacity:0.7; } }
-    </style>
-
-    <div class="bleed-demo">
-      <img class="bleed-deco bleed-spot" src="assets/Watercolor%20Textures/Spots/Radiant%20Gold/WBT-20260403-Gold-Watercolor-Spots-1.png" alt="">
-      <img class="bleed-deco bleed-scribble" src="assets/Scribbles/Backgrounds/WBT-scribble-background-03.png" alt="">
-      <div class="bleed-content">
-        <h3>Leadership is hard. You don’t have to figure it out alone.</h3>
-        <p>The spot bleeds in from the lower left; the scribble escapes off the upper right. Together they frame the message without ever touching it.</p>
-      </div>
-    </div>
-
-    <div class="tokens-used" style="margin-top:20px;">
-      <table>
-        <tbody>
-          <tr><td style="white-space:nowrap;width:130px;"><strong>Container</strong></td><td><code>position:relative</code> + <code>overflow:hidden</code> (or <code>overflow-x:clip</code>) so decos crop at the edge</td></tr>
-          <tr><td><strong>Deco layer</strong></td><td><code>position:absolute</code>, <code>z-index:0</code>, <code>pointer-events:none</code>; negative offsets push it off-edge</td></tr>
-          <tr><td><strong>Spot</strong></td><td>watercolor blob 360–640px, opacity 0.55–0.92; pick the colorway to match the page</td></tr>
-          <tr><td><strong>Scribble</strong></td><td>looping line 520–1128px; rotate / <code>scaleX(-1)</code> for a natural gesture</td></tr>
-          <tr><td><strong>Content</strong></td><td>always <code>position:relative; z-index:1</code> — sits above the decoration</td></tr>
-          <tr><td><strong>Mobile</strong></td><td>shrink the spot and drop the scribble; never let a deco force horizontal scroll</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ═══════ Feature heading ═══════ -->
-  <div class="section-block">
-    <div class="section-label">Type · Big feature heading</div>
-    <p class="section-intro">The largest heading in the system — an <strong>uppercase League Spartan</strong> display line that opens service pages and major features. It’s always paired with a Lora italic subhead and a League Spartan “deck” paragraph, so the three weights (bold caps → italic serif → regular sans) create the brand’s signature vertical rhythm.</p>
-
-    <style>
-      .fh-demo { text-align:center; padding:8px 0 4px; }
-      .fh-demo h2.fh { font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:clamp(40px,7.4vw,72px); line-height:1.0; letter-spacing:-0.01em; color:var(--ink-default); margin:0; }
-      .fh-demo .fh-sub { font-family:var(--font-body); font-style:italic; font-weight:400; font-size:clamp(19px,3vw,27px); line-height:1.3; color:var(--ink-default); margin:12px 0 0; }
-      .fh-demo .fh-body { font-family:var(--font-display); font-weight:400; font-size:clamp(20px,2.4vw,24px); line-height:1.42; color:var(--ink-default); max-width:640px; margin:30px auto 0; }
-    </style>
-
-    <div class="fh-demo">
-      <h2 class="fh">Leadership Coaching</h2>
-      <p class="fh-sub">that Builds Mindset and Capacity</p>
-      <p class="fh-body">Coaching is a structured, relational partnership that creates space for leaders to reflect, experiment, and grow in real time.</p>
-    </div>
-
-    <div class="tokens-used" style="margin-top:20px;">
-      <table>
-        <tbody>
-          <tr><td style="white-space:nowrap;width:130px;"><strong>Heading</strong></td><td>League Spartan <strong>700</strong>, <strong>UPPERCASE</strong>, <code>clamp(40–82px)</code> / 1.0, tracking −0.01em</td></tr>
-          <tr><td><strong>Subhead</strong></td><td>Lora <em>italic</em> 400, <code>clamp(19–29px)</code> / 1.3 — often sentence-case, leads with “that…”</td></tr>
-          <tr><td><strong>Deck</strong></td><td>League Spartan 400 (the <code>.lede-thin</code> role), <code>clamp(20–26px)</code> / 1.42</td></tr>
-          <tr><td><strong>Reversed</strong></td><td>On dark surfaces the heading flips to Steady Blue / cream per the reversed-headline rule</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
 
 </div>
