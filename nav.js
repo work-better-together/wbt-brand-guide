@@ -304,6 +304,7 @@
     { label: 'Design System', pages: [
       { file: 'tokens.html',      title: 'Tokens' },
       { file: 'components.html',  title: 'Components' },
+      { file: 'patterns.html',    title: 'Patterns' },
       { file: 'iconography.html', title: 'Iconography' },
       { file: 'data-viz.html',    title: 'Data Viz' },
       { file: 'microcopy.html',   title: 'Microcopy' },

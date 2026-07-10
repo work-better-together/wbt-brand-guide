@@ -884,50 +884,6 @@
   </div>
 
 
-  <!-- ═══════ Data table ═══════ -->
-  <div class="section-block">
-    <div class="section-label">Data table · Schedule</div>
-    <p class="section-intro">For schedules, comparisons, and structured reference. Designed for a <strong>dark surface</strong>: a barely-there fill, Calm-Blue uppercase column headers, cream row-headers, and hairline Calm-Blue dividers. A row can be highlighted with a faint gold band, and secondary notes sit in a small gold Inconsolata line.</p>
-
-    <style>
-      .dt-demo { background:#1E4D5C; padding:clamp(32px,4vw,52px); }
-      .dt-note { font-family:var(--font-body); font-size:16px; line-height:1.7; color:rgba(249,248,242,0.9); max-width:60ch; margin:0 0 28px; }
-      table.dt { width:100%; border-collapse:collapse; font-family:var(--font-body); background:rgba(249,248,242,0.04); border:1px solid rgba(172,205,217,0.28); }
-      table.dt th, table.dt td { text-align:left; padding:14px 18px; border-bottom:1px solid rgba(172,205,217,0.2); }
-      table.dt thead th { font-family:var(--font-display); font-weight:600; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:#ACCDD9; }
-      table.dt tbody th { font-family:var(--font-display); font-weight:600; font-size:16px; color:#F9F8F2; width:34%; }
-      table.dt tbody td { font-size:16px; color:rgba(249,248,242,0.88); }
-      table.dt tbody tr:last-child th, table.dt tbody tr:last-child td { border-bottom:none; }
-      table.dt .dt-band { background:rgba(205,159,54,0.1); }
-      table.dt .dt-note-sm { font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#CD9F36; display:block; margin-top:3px; }
-    </style>
-
-    <div class="dt-demo">
-      <p class="dt-note">Two cohorts run the same arc on offset dates.</p>
-      <table class="dt">
-        <thead><tr><th scope="col">Session</th><th scope="col">Cohort 1</th><th scope="col">Cohort 2</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Launch</th><td>July 9</td><td>Sep 2</td></tr>
-          <tr><th scope="row">Training #1</th><td>July 30</td><td>Sep 16</td></tr>
-          <tr><th scope="row">Coaching &times;3</th><td>Aug–Oct <span class="dt-note-sm">Opt-in</span></td><td>Oct <span class="dt-note-sm">Opt-in</span></td></tr>
-          <tr class="dt-band"><th scope="row">Transition</th><td>November 5</td><td>November 5</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="tokens-used" style="margin-top:20px;">
-      <table>
-        <tbody>
-          <tr><td style="white-space:nowrap;width:130px;"><strong>Table</strong></td><td>Full width, <code>border-collapse</code>, cream-4% fill, 1px Calm-Blue-28% border</td></tr>
-          <tr><td><strong>Column head</strong></td><td>League Spartan 600, 13px, uppercase, 0.1em, Calm Blue</td></tr>
-          <tr><td><strong>Row head</strong></td><td>League Spartan 600, 16px, cream, ~34% width (<code>&lt;th scope="row"&gt;</code>)</td></tr>
-          <tr><td><strong>Cells</strong></td><td>Lora 16px, cream at 88%; hairline Calm-Blue-20% row dividers, none on last row</td></tr>
-          <tr><td><strong>Highlight</strong></td><td>Gold-10% row band; secondary note in Inconsolata 11px gold</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
   <!-- ═══════ DO / DON'T ═══════ -->
   <div class="section-block">
     <div class="section-label">Component patterns · Do / Don’t</div>
