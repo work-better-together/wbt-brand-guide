@@ -174,7 +174,7 @@ Focus ring:             Intentional Blue (#2531A5), 2px solid
 
 ### Typography Rules
 
-- **Eyebrows/section labels:** League Spartan 500, uppercase, +0.18em — never Inconsolata
+- **Eyebrows (section eyebrow above a headline):** League Spartan **500**, **14px**, uppercase, **+0.16em** tracking — **Honest Ochre** on light/cream, **Radiant Gold** on dark/tinted surfaces; ~20px bottom margin. Never Inconsolata. (Small component labels — callout eyebrows, tags — run smaller, ~10–11px.)
 - **Supporting text / deck under a page headline:** League Spartan **Regular 400** at `clamp(20px, 2.4vw, 26px)`, line-height 1.42 — the `.lede-thin` **deck role** (sentence case). This is the *first* text block under an H1/H2. Serif Lora body copy (Body Large / Body) picks up *below* the deck, once the reader is past the headline zone. Rule of thumb: first block under a headline = League Spartan deck; further-down prose = Lora.
 - **Big feature heading (service-page / feature opener):** the largest heading in the system — League Spartan **700 UPPERCASE**, `clamp(40–82px)` / line-height 1.0, tracking −0.01em. It's paired top-to-bottom with a **Lora italic subhead** (`clamp(19–29px)`, often leading "that…") and then the League Spartan **400 deck** — the three weights (bold caps → italic serif → regular sans) create the brand's signature vertical rhythm.
 - **Headline color:** headlines on light/cream backgrounds are **Grounded Black** (`#1F1E1E`), not Steady Blue. Steady Blue headlines are only for text **reversed out on a dark/Steady-Blue surface** (e.g. a hero title over a photo or on a blue band). This keeps "one headline color per context" while honoring "body/headlines are full ink on light."

@@ -331,10 +331,12 @@
     <style>
       .svc-collage-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:8px; }
       .svc-collage-card { border:1px solid var(--border-subtle); background:var(--surface-card); }
-      .svc-collage-thumb { aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--surface-canvas); }
+      .svc-collage-thumb { aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--surface-canvas); overflow:hidden; }
       .svc-collage-thumb img { max-width:100%; max-height:100%; object-fit:contain; }
+      /* the lightbulb collage is a 16:9 canvas (bulb sits small + centered); scale it up so it reads at the same size as the square moon/bees */
+      .svc-collage-card:last-child .svc-collage-thumb img { transform:scale(1.75); }
       .svc-collage-body { padding:20px 22px 24px; }
-      .svc-collage-body h3 { font-family:var(--font-display); font-weight:700; font-size:19px; letter-spacing:-0.01em; margin:0 0 4px; color:var(--ink-default); }
+      .svc-collage-body h3 { font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:-0.01em; margin:0 0 4px; color:var(--ink-default); }
       .svc-collage-accent { display:inline-flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-muted); margin-bottom:14px; }
       .svc-collage-accent .swatch { width:12px; height:12px; border-radius:50%; }
       .svc-collage-vars { list-style:none; padding:0; margin:0; font-family:var(--font-body); font-size:13px; line-height:1.5; }
