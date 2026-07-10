@@ -214,12 +214,25 @@
       text-transform: uppercase;
       color: var(--ink);
       padding-bottom: 16px;
-      border-bottom: 1px solid var(--rule);
+      border-bottom: 1px solid #1F1E1E;
       margin-bottom: 0;
       margin-top: 48px;
     }
     .section-group-label:first-of-type { margin-top: 0; }
     .section-cards.two-col { grid-template-columns: repeat(2, 1fr); }
+
+    /* Design System (3 columns) + Tools (4th column), aligned in one band */
+    .menu-4col { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 48px; }
+    .menu-4col .ds-label    { grid-column: 1 / 4; grid-row: 1; margin-top: 0; }
+    .menu-4col .tools-label { grid-column: 4;     grid-row: 1; margin-top: 0; }
+    .menu-4col .ds-cards    { grid-column: 1 / 4; grid-row: 2; }
+    .menu-4col .tools-cards { grid-column: 4;     grid-row: 2; grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .menu-4col { grid-template-columns: 1fr; }
+      .menu-4col .ds-label, .menu-4col .tools-label,
+      .menu-4col .ds-cards, .menu-4col .tools-cards { grid-column: 1; grid-row: auto; }
+      .menu-4col .tools-label { margin-top: 48px; }
+    }
 
     .section-cards {
       display: grid;
@@ -457,8 +470,9 @@
 
   <!-- ── Section cards ── -->
   <section class="sections" id="guide-contents">
-<div class="section-group-label">Design System</div>
-    <div class="section-cards">
+  <div class="menu-4col">
+    <div class="section-group-label ds-label">Design System</div>
+    <div class="section-cards ds-cards">
 
       <a class="section-card themed" style="--card-bg:#061A49;--card-text:#ACCDD9" href="voice.html">
         <div class="card-title">Voice</div>
@@ -525,8 +539,8 @@
       </a>
     </div>
 
-    <div class="section-group-label">Tools</div>
-    <div class="section-cards">
+    <div class="section-group-label tools-label">Tools</div>
+    <div class="section-cards tools-cards">
 
       <a class="section-card themed" style="--card-bg:#F9F8F2;--card-text:#B55312" href="collage-maker.html">
         <div class="card-title">Collage Maker</div>
@@ -542,6 +556,7 @@
 
 
     </div>
+  </div>
   </section>
 
 <script>
