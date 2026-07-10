@@ -298,6 +298,15 @@ Button radius: 10px
 - Hover: scale(1.01), shadow elevation-medium
 - Selected: Intentional Blue 2px border, Intentional Blue 10% bg tint
 
+### Accordion (Disclosure)
+
+Native `<details>/<summary>` — **no custom JS**, inherently keyboard- and screen-reader-accessible. This is the standard for any expandable/disclosure UI (FAQ, expandable case-study details). Keep this pattern rather than building a custom toggle.
+
+- **Item divider:** 1px rule (`--border-default`) between items — no card/box around each.
+- **Question (summary):** League Spartan **700**, `clamp(18–22px)`, line-height 1.25; ~24px vertical padding; cursor pointer; the browser's default disclosure triangle is hidden.
+- **Marker:** a League Spartan **`+`** in Intentional Blue at the top-right, which becomes **`–`** when open (240ms transition). Never a chevron or emoji.
+- **Answer:** Lora **17px** / 1.75, max-width ~68ch, indented to clear the marker.
+
 ### Callouts/Annotations
 
 - Left border: 3px solid `--border-color`

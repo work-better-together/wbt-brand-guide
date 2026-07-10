@@ -916,6 +916,51 @@
   </div>
 
 
+  <!-- ═══════ Accordion ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Accordion · Disclosure</div>
+    <p class="section-intro">Native <code>&lt;details&gt;/&lt;summary&gt;</code> — no custom JS, inherently keyboard- and screen-reader-accessible. The standard for any expandable/FAQ UI. A <code>+</code> marker flips to <code>–</code> when open. (Try it — click a question.)</p>
+
+    <style>
+      .acc-demo { max-width:720px; border-top:1px solid var(--border-subtle); }
+      .acc-item { border-bottom:1px solid var(--border-subtle); }
+      .acc-item summary { list-style:none; cursor:pointer; padding:22px 44px 22px 0; position:relative; font-family:var(--font-display); font-weight:700; font-size:clamp(17px,2vw,21px); letter-spacing:-0.01em; line-height:1.25; color:var(--ink-default); }
+      .acc-item summary::-webkit-details-marker { display:none; }
+      .acc-item summary::after { content:'+'; position:absolute; right:4px; top:19px; font-family:var(--font-display); font-weight:500; font-size:26px; line-height:1; color:#2531A5; }
+      .acc-item[open] summary::after { content:'\2013'; }
+      .acc-item summary:focus-visible { outline:2px solid #2531A5; outline-offset:3px; }
+      .acc-item .acc-answer { padding:0 44px 24px 0; font-family:var(--font-body); }
+      .acc-item .acc-answer p { font-size:16px; line-height:1.75; max-width:68ch; margin:0; color:var(--ink-default); }
+    </style>
+
+    <div class="acc-demo">
+      <details class="acc-item" open>
+        <summary>How is coaching different from consulting?</summary>
+        <div class="acc-answer"><p>Consulting hands you answers; coaching builds your own capacity to find them. We partner with you to think more clearly and lead more intentionally — so the growth stays with you long after the engagement ends.</p></div>
+      </details>
+      <details class="acc-item">
+        <summary>Do you work with whole teams, or just individual leaders?</summary>
+        <div class="acc-answer"><p>Both. We coach individual leaders one-on-one, and we work with whole teams to strengthen how people work together over time.</p></div>
+      </details>
+      <details class="acc-item">
+        <summary>How long is a typical engagement?</summary>
+        <div class="acc-answer"><p>It depends on the goal — from a single facilitated session to an ongoing multi-month partnership. We’ll scope it together on a chemistry call.</p></div>
+      </details>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:120px;"><strong>Markup</strong></td><td>Native <code>&lt;details&gt;/&lt;summary&gt;</code> — accessible, no JS</td></tr>
+          <tr><td><strong>Question</strong></td><td>League Spartan 700, <code>clamp(18–22px)</code> / 1.25</td></tr>
+          <tr><td><strong>Answer</strong></td><td>Lora 17px / 1.75, max-width ~68ch</td></tr>
+          <tr><td><strong>Marker</strong></td><td><code>+</code> → <code>–</code>, Intentional Blue, top-right</td></tr>
+          <tr><td><strong>Divider</strong></td><td>1px rule between items; no box per item</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- ═══════ Layout pattern · Offset 2-of-3 ═══════ -->
   <div class="section-block">
     <div class="section-label">Layout · Offset “2-of-3” (staggered)</div>
