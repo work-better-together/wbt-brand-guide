@@ -187,6 +187,21 @@ Focus ring:             Intentional Blue (#2531A5), 2px solid
 - **Curly quotes only:** always use typographic quotes and apostrophes (`'` `'` `"` `"`), never straight ASCII (`'` `"`), in any reader-facing copy — prose, headlines, page titles, meta descriptions, and image alt text. (Straight quotes are correct *only* inside code/markup, never in copy.)
 - **No single-word orphans:** the last line of a paragraph or list item should never be a single stranded word — glue the final two words with a non-breaking space so they wrap together.
 
+### Text Markings & Emphasis
+
+The brand marks up key words in running text with hand-drawn "ink" — a small, cohesive set of emphasis treatments used *instead of* a plain browser underline. Two families:
+
+**Hand-drawn annotations** — animated, draw in on scroll (see *Motion → Scroll-linked patterns*):
+- **Circle** — an open hand-drawn circle around a phrase. Intentional Blue, **double stroke**. Stays on one line.
+- **Underline** — a wobbly hand-drawn underline. Intentional Blue, **single stroke**. May wrap across lines.
+
+**SVG underlines** — static, a small stroke repeated under the phrase:
+- **Wave** (`.u-wave`) — a smooth sine-wave underline. Intentional Blue (`#2531A5`), ~1.5px stroke.
+- **Zigzag** (`.u-zigzag`) — a sharp zigzag underline. Intentional Blue (`#2531A5`), ~1.6px stroke, round joins.
+- **Gold scratch** (`.u-wave-gold`) — a doubled, jagged hand-scratched underline in Radiant Gold (`#CD9F36`) — the "insight / highlight" mark.
+
+Rules: use **sparingly** — one or two marks per passage, never every phrase. Blue is the default; **gold is reserved for insight/emphasis** (matching Radiant Gold's accent-only role). These marks are the "handwritten highlight" moment — they replace bold/italic for that gesture, not for structural emphasis.
+
 ---
 
 ## Logo & Mark
@@ -224,6 +239,8 @@ Focus ring:             Intentional Blue (#2531A5), 2px solid
 - Card/panel internal padding: 20–40px depending on size
 
 **Grid gap note:** The 2px gap between adjacent cards is a deliberate design choice — it creates a dense, editorial mosaic rather than floating cards.
+
+**Offset / staggered "2-of-3" layout (a signature pattern).** Rather than a centered single column, content blocks are capped at ~two-thirds width and alternately hugged **left** then **right**, with the right-hand block dropped down (~60px) so the two stagger diagonally instead of stacking flush. Classes: `.offset-left` (`max-width: 66%`, hugs left) and `.offset-right` (`max-width: 66%`, hugs right, `margin-top: ~60px`). On mobile both go **full-width and stack** (offsets reset to 0, the drop shrinks to ~32px). Use it for intro-statement + supporting-list pairings — e.g. "what we work on" / "who we work with" sections — where a single centered column would feel static.
 
 ---
 

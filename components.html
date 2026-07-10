@@ -916,6 +916,52 @@
   </div>
 
 
+  <!-- ═══════ Layout pattern · Offset 2-of-3 ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Layout · Offset “2-of-3” (staggered)</div>
+    <p class="section-intro">A signature editorial layout: blocks capped at ~two-thirds width, alternately hugged left then right, with the right block dropped down so the two stagger diagonally instead of stacking flush. The alternative to a centered single column — use it for an intro statement paired with a supporting list.</p>
+
+    <style>
+      .offset-demo { border:1px solid var(--border-subtle); padding:36px clamp(20px,4vw,56px); background:var(--surface-card); }
+      .offset-demo .off-left  { max-width:66%; margin-right:auto; }
+      .offset-demo .off-right { max-width:66%; margin-left:auto; margin-top:56px; }
+      .offset-demo .od-lede { font-family:var(--font-display); font-weight:400; font-size:clamp(18px,2vw,24px); line-height:1.42; color:var(--ink-default); margin:0; }
+      .offset-demo .od-eyebrow { font-family:var(--font-display); font-weight:500; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--honest-ochre); margin:0 0 14px; }
+      .offset-demo ul.od-list { columns:2; column-gap:40px; list-style:none; padding:0; margin:0; font-family:var(--font-body); font-size:14px; line-height:1.5; }
+      .offset-demo ul.od-list li { break-inside:avoid; margin-bottom:12px; padding-left:18px; position:relative; }
+      .offset-demo ul.od-list li::before { content:""; position:absolute; left:0; top:7px; width:8px; height:8px; background:var(--intentional-blue); }
+      .offset-spec { width:100%; border-collapse:collapse; margin-top:20px; font-family:var(--font-body); font-size:13px; }
+      .offset-spec td { border-top:1px solid var(--border-subtle); padding:10px 12px; vertical-align:top; }
+      .offset-spec td:first-child { white-space:nowrap; width:130px; }
+      @media (max-width:640px){ .offset-demo .off-left, .offset-demo .off-right{ max-width:100%; margin:0; } .offset-demo .off-right{ margin-top:28px; } .offset-demo ul.od-list{ columns:1; } }
+    </style>
+
+    <div class="offset-demo">
+      <div class="off-left">
+        <p class="od-lede">We help leaders and teams slow down, see what’s really happening, and move forward with clarity and care.</p>
+      </div>
+      <div class="off-right">
+        <p class="od-eyebrow">What we work on together</p>
+        <ul class="od-list">
+          <li>Navigating tension on a team</li>
+          <li>Leading through burnout</li>
+          <li>Giving &amp; receiving feedback</li>
+          <li>Delegating effectively</li>
+          <li>Managing up</li>
+          <li>Building healthy team culture</li>
+        </ul>
+      </div>
+    </div>
+
+    <table class="offset-spec">
+      <tbody>
+        <tr><td><code>.offset-left</code></td><td><code>max-width: 66%</code>; hugs left (<code>margin-right: auto</code>)</td></tr>
+        <tr><td><code>.offset-right</code></td><td><code>max-width: 66%</code>; hugs right (<code>margin-left: auto</code>); dropped down <code>margin-top: ~60px</code></td></tr>
+        <tr><td>Mobile ≤ 640px</td><td>both go full-width and stack; offsets reset to 0, the drop shrinks to ~32px</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- ═══════ Whats next ═══════ -->
   <div class="section-block">
     <div class="section-label">Not yet documented</div>
