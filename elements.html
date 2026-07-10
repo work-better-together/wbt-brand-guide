@@ -4463,7 +4463,6 @@
         <div class="stat-cell"><div class="stat-num">${CONCEPTS.length}</div><div class="stat-label">Concepts</div></div>
         <div class="stat-cell"><div class="stat-num">${totalImages}</div><div class="stat-label">Images</div></div>
         <div class="stat-cell"><div class="stat-num">A\u2013Z</div><div class="stat-label">By concept</div></div>
-        <div class="stat-cell"><div class="stat-num">Local</div><div class="stat-label">Served from repo</div></div>
       </div>`;
     const ORDERED = [...CONCEPTS].sort((a, b) => a.name.localeCompare(b.name));
     ORDERED.forEach((c, i) => {
