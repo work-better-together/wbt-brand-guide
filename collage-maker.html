@@ -3431,7 +3431,6 @@ async function saveToBrandGuide(nameOverride) {
     const now      = new Date();
     const stamp    = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
     const filename = `WBT-collage-${slug}-${stamp}.png`;
-    const imgPath  = `${GITHUB.folder}/${filename}`;
 
     allBtns.forEach(b => { b.textContent = 'Uploading…'; });
 
