@@ -176,6 +176,7 @@ Focus ring:             Intentional Blue (#2531A5), 2px solid
 
 - **Eyebrows/section labels:** League Spartan 500, uppercase, +0.18em — never Inconsolata
 - **Supporting text / deck under a page headline:** League Spartan **Regular 400** at `clamp(20px, 2.4vw, 26px)`, line-height 1.42 — the `.lede-thin` **deck role** (sentence case). This is the *first* text block under an H1/H2. Serif Lora body copy (Body Large / Body) picks up *below* the deck, once the reader is past the headline zone. Rule of thumb: first block under a headline = League Spartan deck; further-down prose = Lora.
+- **Big feature heading (service-page / feature opener):** the largest heading in the system — League Spartan **700 UPPERCASE**, `clamp(40–82px)` / line-height 1.0, tracking −0.01em. It's paired top-to-bottom with a **Lora italic subhead** (`clamp(19–29px)`, often leading "that…") and then the League Spartan **400 deck** — the three weights (bold caps → italic serif → regular sans) create the brand's signature vertical rhythm.
 - **Headline color:** headlines on light/cream backgrounds are **Grounded Black** (`#1F1E1E`), not Steady Blue. Steady Blue headlines are only for text **reversed out on a dark/Steady-Blue surface** (e.g. a hero title over a photo or on a blue band). This keeps "one headline color per context" while honoring "body/headlines are full ink on light."
 - **Lora italic:** reserved for quotes and callouts only — never general emphasis
 - **Inconsolata:** stays small (10–14px), uppercase, never mixed-case prose
@@ -309,13 +310,33 @@ Native `<details>/<summary>` — **no custom JS**, inherently keyboard- and scre
 
 ### Quote Carousel (Testimonials)
 
-Shows **one testimonial at a time**, advanced with circular prev/next arrows and a row of dots. Use it wherever multiple voices would otherwise stack into a wall of quotes (homepage testimonials) — the single-slide focus keeps each voice weighty, and the controls read as hand-placed rather than utilitarian.
+Shows **one testimonial at a time**, advanced with circular prev/next arrows and a row of dots. Use it wherever multiple voices would otherwise stack into a wall of quotes (homepage testimonials) — the single-slide focus keeps each voice weighty, and the controls read as hand-placed rather than utilitarian. Centered layout.
 
-- **Quote:** Lora *italic*, `clamp(19–25px)` / 1.5.
-- **Attribution:** League Spartan **500**, 13px, uppercase, +0.08em, Steady Blue (`#061A49`).
-- **Arrow:** 48px circle, 1.5px `--border-default` border, card background, Steady Blue glyph (`‹` / `›`); on hover the circle **fills Steady Blue** and the glyph goes white.
+- **Quote mark:** a **Radiant Gold** quotation mark (Lora italic 700, 90px) sits above the quote — the brand's signature quote signal.
+- **Quote:** Lora *italic*, `clamp(20–25px)` / 1.42.
+- **Attribution:** stacked and centered — a **client headshot** (56px circle) over the name (League Spartan 700, 17px) over the role (Inconsolata, 13–14px, uppercase, muted).
+- **Arrow:** 48px circle, 1.5px `--rule` border, card background, Steady Blue glyph (`‹` / `›`); on hover the circle **fills Steady Blue** and the glyph goes cream.
 - **Dots:** 8px circles; inactive Grounded Black 22%; active **Intentional Blue**, scaled 1.3×. Dots are clickable and jump to that slide.
 - **Track:** slides are `flex: 0 0 100%`; advancing animates `transform: translateX()` over **420ms** ease.
+
+### Editorial Quotes (inline · pull · key takeaway)
+
+Long-form (case studies, insights) uses three quote treatments, distinct from the carousel:
+- **Inline testimonial** — a **gold** quotation mark (Lora italic 700, 64px) above a Lora italic 22px quote; attribution in Inconsolata. For attributed voices woven into prose.
+- **Pull quote** — the **hand-drawn blue asterisk mark** to the left (rotated ±7–9°, alternating so no two match), Lora italic `clamp(24–32px)` / 1.4, **outdented ~100–200px** into the left margin for emphasis.
+- **Key takeaway** — a pull quote with a `KEY TAKEAWAY` eyebrow (Inconsolata 12px, 0.16em, Intentional Blue) above it; the asterisk spans both rows.
+
+### Card Carousel (multi-format, "Recent Wins")
+
+A horizontally **scroll-snapping** deck of fixed-height cards (~460–520px, 16px radius, soft shadow) that mixes formats in alternating brand colorways (Paper/bordered, Calm Blue, Steady Blue, Clean Slate). Card types: **testimonial** (gold quote mark 100px → Lora italic → 60px avatar + name + mono role), **full-bleed photo** (cover image with a Steady-Blue bottom gradient caption: League Spartan title + Lora/Calm-Blue sub), and a **closing prompt** card. Same circular arrows as the quote carousel, with a `0.32`-opacity **disabled** state at the ends. Track: `scroll-snap-type: x mandatory`, scrollbar hidden, 20px gaps. Used on case-study pages to string wins and voices into one browsable row.
+
+### Timeline (journey / phases)
+
+A vertical timeline for mapping an engagement phase-by-phase, on a **dark surface** (Clean Slate or Steady Blue). A 2px **Calm-Blue-35%** connector line runs down the left; each phase gets a **16px gold "target" marker** (gold dot, 3px surface-colored inner border, 2px gold outer ring). Per phase: a date range (Inconsolata 500, 12px, uppercase, 0.14em, Calm Blue), a title (League Spartan 700, 24px, cream), and a description (Lora 16px / 1.6, cream 85%, max ~480px).
+
+### Data Table (schedule / reference)
+
+For schedules and structured comparison, designed for a **dark surface**: `border-collapse`, a barely-there cream-4% fill, 1px Calm-Blue-28% outer border. Column headers (`thead th`) League Spartan 600, 13px, uppercase, 0.1em, **Calm Blue**; row headers (`tbody th scope="row"`) League Spartan 600, 16px, cream, ~34% width; cells Lora 16px, cream 88%; hairline Calm-Blue-20% row dividers (none on the last row). A row can be highlighted with a **gold-10% band**, and secondary notes sit in a small **gold** Inconsolata 11px line.
 
 ### Callouts/Annotations
 

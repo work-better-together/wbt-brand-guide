@@ -935,17 +935,21 @@
     <p class="section-intro">One testimonial at a time, advanced with circular prev/next arrows and a row of dots. Used on the homepage to let voices breathe instead of stacking a wall of quotes. The single-slide focus keeps each voice weighty; the controls read as hand-placed, not utilitarian.</p>
 
     <style>
-      .qc-demo { max-width:720px; }
+      .qc-demo { max-width:760px; margin-inline:auto; text-align:center; }
       .qc-viewport { overflow:hidden; }
       .qc-track { display:flex; transition:transform 420ms cubic-bezier(.4,0,.2,1); }
-      .qc-slide { flex:0 0 100%; padding:8px 4px; }
-      .qc-slide blockquote { margin:0; font-family:var(--font-body); font-style:italic; font-size:clamp(19px,2.4vw,25px); line-height:1.5; color:var(--ink-default); }
-      .qc-slide cite { display:block; margin-top:18px; font-family:var(--font-display); font-weight:500; font-style:normal; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:#061A49; }
-      .qc-controls { display:flex; align-items:center; gap:20px; margin-top:28px; }
+      .qc-slide { flex:0 0 100%; padding:8px 12px; }
+      .qc-mark { font-family:var(--font-body); font-style:italic; font-weight:700; font-size:90px; line-height:0.5; height:46px; color:#CD9F36; }  /* gold quotation mark */
+      .qc-slide blockquote { margin:14px 0 0; font-family:var(--font-body); font-style:italic; font-size:clamp(19px,2.4vw,25px); line-height:1.42; color:var(--ink-default); }
+      .qc-who { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:26px; }
+      .qc-avatar { width:56px; height:56px; border-radius:50%; object-fit:cover; background:var(--surface-canvas); box-shadow:inset 0 0 0 1px var(--border-subtle); }
+      .qc-name { font-family:var(--font-display); font-weight:700; font-size:17px; letter-spacing:-0.01em; color:var(--ink-default); }
+      .qc-role { font-family:var(--font-mono); font-size:13px; letter-spacing:0.07em; text-transform:uppercase; color:var(--ink-muted); margin-top:4px; }
+      .qc-controls { display:flex; align-items:center; justify-content:center; gap:18px; margin-top:32px; }
       .qc-arrow { width:48px; height:48px; border-radius:50%; border:1.5px solid var(--border-subtle); background:var(--surface-card); color:#061A49; font-family:var(--font-body); font-size:26px; line-height:1; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 180ms, color 180ms, border-color 180ms; }
       .qc-arrow:hover { background:#061A49; border-color:#061A49; color:#fff; }
       .qc-arrow:focus-visible { outline:2px solid #2531A5; outline-offset:3px; }
-      .qc-dots { display:flex; gap:10px; margin-left:6px; }
+      .qc-dots { display:flex; gap:10px; }
       .qc-dot { width:8px; height:8px; border-radius:50%; border:0; padding:0; background:rgba(31,30,30,0.22); cursor:pointer; transition:background 180ms, transform 180ms; }
       .qc-dot.is-active { background:#2531A5; transform:scale(1.3); }
     </style>
@@ -953,9 +957,9 @@
     <div class="qc-demo" data-qc>
       <div class="qc-viewport">
         <div class="qc-track">
-          <div class="qc-slide"><blockquote>“They helped our leadership team slow down and actually hear each other. The change in how we work together has been night and day.”</blockquote><cite>Executive Director, National Nonprofit</cite></div>
-          <div class="qc-slide"><blockquote>“I came in skeptical about coaching. I left with a way of leading that finally feels like mine.”</blockquote><cite>VP of Programs, Foundation</cite></div>
-          <div class="qc-slide"><blockquote>“Facilitation that never felt like facilitation — just the most honest conversation our team has had in years.”</blockquote><cite>Chief of Staff, Advocacy Org</cite></div>
+          <div class="qc-slide"><div class="qc-mark">&#8220;</div><blockquote>They helped our leadership team slow down and actually hear each other. The change in how we work together has been night and day.</blockquote><div class="qc-who"><span class="qc-avatar" aria-hidden="true"></span><div class="qc-name">Executive Director</div><div class="qc-role">National Nonprofit</div></div></div>
+          <div class="qc-slide"><div class="qc-mark">&#8220;</div><blockquote>I came in skeptical about coaching. I left with a way of leading that finally feels like mine.</blockquote><div class="qc-who"><span class="qc-avatar" aria-hidden="true"></span><div class="qc-name">VP of Programs</div><div class="qc-role">Foundation</div></div></div>
+          <div class="qc-slide"><div class="qc-mark">&#8220;</div><blockquote>Facilitation that never felt like facilitation — just the most honest conversation our team has had in years.</blockquote><div class="qc-who"><span class="qc-avatar" aria-hidden="true"></span><div class="qc-name">Chief of Staff</div><div class="qc-role">Advocacy Org</div></div></div>
         </div>
       </div>
       <div class="qc-controls">
@@ -980,8 +984,9 @@
     <div class="tokens-used" style="margin-top:20px;">
       <table>
         <tbody>
-          <tr><td style="white-space:nowrap;width:120px;"><strong>Quote</strong></td><td>Lora italic, <code>clamp(19–25px)</code> / 1.5</td></tr>
-          <tr><td><strong>Attribution</strong></td><td>League Spartan 500, 13px, uppercase, Steady Blue</td></tr>
+          <tr><td style="white-space:nowrap;width:120px;"><strong>Quote mark</strong></td><td>Lora italic 700, 90px, <strong>Radiant Gold</strong> — sits above the quote, centered</td></tr>
+          <tr><td><strong>Quote</strong></td><td>Lora italic, <code>clamp(19–25px)</code> / 1.42</td></tr>
+          <tr><td><strong>Attribution</strong></td><td>Client headshot (56px circle) over name (League Spartan 700, 17px) + role (Inconsolata, 13px, uppercase, muted)</td></tr>
           <tr><td><strong>Arrow</strong></td><td>48px circle, 1.5px rule border, Steady Blue glyph; hover fills Steady Blue</td></tr>
           <tr><td><strong>Dots</strong></td><td>8px; inactive Grounded Black 22%; active Intentional Blue, scale 1.3</td></tr>
           <tr><td><strong>Track</strong></td><td>flex slides <code>0 0 100%</code>; <code>transform</code> transition 420ms</td></tr>
@@ -1105,6 +1110,258 @@
     </div>
   </div>
 
+  <!-- ═══════ Feature heading ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Type · Big feature heading</div>
+    <p class="section-intro">The largest heading in the system — an <strong>uppercase League Spartan</strong> display line that opens service pages and major features. It’s always paired with a Lora italic subhead and a League Spartan “deck” paragraph, so the three weights (bold caps → italic serif → regular sans) create the brand’s signature vertical rhythm.</p>
+
+    <style>
+      .fh-demo { text-align:center; padding:8px 0 4px; }
+      .fh-demo h2.fh { font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:clamp(40px,7.4vw,72px); line-height:1.0; letter-spacing:-0.01em; color:var(--ink-default); margin:0; }
+      .fh-demo .fh-sub { font-family:var(--font-body); font-style:italic; font-weight:400; font-size:clamp(19px,3vw,27px); line-height:1.3; color:var(--ink-default); margin:12px 0 0; }
+      .fh-demo .fh-body { font-family:var(--font-display); font-weight:400; font-size:clamp(20px,2.4vw,24px); line-height:1.42; color:var(--ink-default); max-width:640px; margin:30px auto 0; }
+    </style>
+
+    <div class="fh-demo">
+      <h2 class="fh">Leadership Coaching</h2>
+      <p class="fh-sub">that Builds Mindset and Capacity</p>
+      <p class="fh-body">Coaching is a structured, relational partnership that creates space for leaders to reflect, experiment, and grow in real time.</p>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Heading</strong></td><td>League Spartan <strong>700</strong>, <strong>UPPERCASE</strong>, <code>clamp(40–82px)</code> / 1.0, tracking −0.01em</td></tr>
+          <tr><td><strong>Subhead</strong></td><td>Lora <em>italic</em> 400, <code>clamp(19–29px)</code> / 1.3 — often sentence-case, leads with “that…”</td></tr>
+          <tr><td><strong>Deck</strong></td><td>League Spartan 400 (the <code>.lede-thin</code> role), <code>clamp(20–26px)</code> / 1.42</td></tr>
+          <tr><td><strong>Reversed</strong></td><td>On dark surfaces the heading flips to Steady Blue / cream per the reversed-headline rule</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════ Editorial quotes ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Editorial quotes · Inline · Pull · Key takeaway</div>
+    <p class="section-intro">Three quote treatments for long-form (case studies, insights), distinct from the homepage carousel. <strong>Inline testimonials</strong> use a gold quotation mark; <strong>editorial pull quotes</strong> and <strong>key takeaways</strong> use the hand-drawn blue asterisk mark and outdent into the margin for emphasis.</p>
+
+    <style>
+      .eq-demo { max-width:640px; }
+      .eq-mark-gold { font-family:var(--font-body); font-style:italic; font-weight:700; font-size:64px; line-height:0.5; color:#CD9F36; display:block; margin-bottom:2px; }
+      .eq-inline blockquote { margin:0 0 40px; font-family:var(--font-body); font-style:italic; font-size:22px; line-height:1.5; color:var(--ink-default); }
+      .eq-inline cite { display:block; margin-top:14px; font-style:normal; font-family:var(--font-mono); font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-default); }
+      /* hand-drawn blue asterisk */
+      .eq-aster { display:inline-block; width:40px; height:42px; }
+      .eq-pull { display:grid; grid-template-columns:auto 1fr; column-gap:26px; align-items:start; margin:44px 0; }
+      .eq-pull .eq-aster { width:52px; height:54px; transform:rotate(-9deg); margin-top:4px; }
+      .eq-pull .eq-pull-body { font-family:var(--font-body); font-style:italic; font-size:clamp(24px,3.2vw,32px); line-height:1.4; color:var(--ink-default); }
+      .eq-take { display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; column-gap:26px; row-gap:12px; align-items:start; margin:44px 0 8px; }
+      .eq-take .eq-aster { grid-column:1; grid-row:1 / span 2; width:52px; height:54px; margin-top:2px; }
+      .eq-take .eq-eyebrow { grid-column:2; grid-row:1; align-self:center; font-family:var(--font-mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2531A5; }
+      .eq-take .eq-take-body { grid-column:2; grid-row:2; font-family:var(--font-body); font-style:italic; font-size:clamp(22px,3vw,30px); line-height:1.4; color:var(--ink-default); }
+    </style>
+
+    <div class="eq-demo">
+      <div class="eq-inline">
+        <blockquote><span class="eq-mark-gold">&#8220;</span>The time in our smaller team was really impactful. I realized that even in spaces I already lead, I can show up differently to make collaboration more intentional and visible.<cite>Program Director · National Nonprofit</cite></blockquote>
+      </div>
+
+      <div class="eq-pull">
+        <svg class="eq-aster" viewBox="0 0 40 42" fill="none" stroke="#2531A5" stroke-width="4" stroke-linecap="round"><path d="M20 4v34M6 12l28 18M34 12L6 30"/></svg>
+        <div class="eq-pull-body">Naming something out loud is the moment a team stops guessing and starts moving.</div>
+      </div>
+
+      <div class="eq-take">
+        <svg class="eq-aster" viewBox="0 0 40 42" fill="none" stroke="#2531A5" stroke-width="4" stroke-linecap="round"><path d="M20 4v34M6 12l28 18M34 12L6 30"/></svg>
+        <div class="eq-eyebrow">Key takeaway</div>
+        <div class="eq-take-body">A single, well-facilitated day gave the team shared language for motivation, recognition, and values.</div>
+      </div>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Inline quote</strong></td><td>Gold <code>&#8220;</code> mark (Lora italic 700, 64px) over Lora italic 22px; mono attribution</td></tr>
+          <tr><td><strong>Pull quote</strong></td><td>Blue hand-drawn asterisk to the left (rotated ±7–9°, alternating), Lora italic <code>clamp(24–32px)</code>; outdents ~100–200px into the margin</td></tr>
+          <tr><td><strong>Key takeaway</strong></td><td>Pull quote + a “KEY TAKEAWAY” eyebrow (Inconsolata 12px, 0.16em, Intentional Blue); asterisk spans both rows</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════ Card carousel ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Card carousel · Multi-format (Recent Wins)</div>
+    <p class="section-intro">A horizontally-scrolling deck of full-height cards that mixes formats — testimonial, full-bleed photo with caption, and a closing prompt — each in a different brand colorway. Snap-scrolls one card at a time with the same circular arrows as the quote carousel; used on case-study pages to string wins and voices into one browsable row.</p>
+
+    <style>
+      .cc-wrap { position:relative; }
+      .cc-track { display:flex; gap:20px; margin:8px -8px 0; padding:8px 8px 24px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
+      .cc-track::-webkit-scrollbar { display:none; }
+      .cc-card { flex:0 0 auto; width:min(360px,78vw); height:460px; border-radius:16px; overflow:hidden; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:space-between; padding:36px; position:relative; box-shadow:0 14px 34px rgba(31,30,30,0.10); }
+      .cc-paper  { background:var(--surface-card); color:var(--ink-default); border:1px solid var(--border-subtle); }
+      .cc-calm   { background:#ACCDD9; color:#061A49; }
+      .cc-steady { background:#061A49; color:#F9F8F2; }
+      .cc-slate  { background:#1E4D5C; color:#F9F8F2; }
+      .cc-mark { font-family:var(--font-body); font-style:italic; font-weight:700; font-size:100px; line-height:0.6; height:52px; color:#CD9F36; }
+      .cc-quote { font-family:var(--font-body); font-style:italic; font-size:21px; line-height:1.5; }
+      .cc-person { display:flex; align-items:center; gap:16px; margin-top:24px; }
+      .cc-avatar { width:60px; height:60px; border-radius:50%; background:rgba(31,30,30,0.12); flex:0 0 auto; box-shadow:inset 0 0 0 1px rgba(31,30,30,0.12); }
+      .cc-name { font-family:var(--font-display); font-weight:700; font-size:18px; letter-spacing:-0.01em; }
+      .cc-role { font-family:var(--font-mono); font-size:12px; letter-spacing:0.07em; text-transform:uppercase; opacity:0.72; margin-top:5px; }
+      .cc-photo { padding:0; justify-content:flex-end; color:#F9F8F2; background-size:cover; background-position:center; }
+      .cc-caption { padding:28px 30px; width:100%; background:linear-gradient(180deg, rgba(6,26,73,0) 0%, rgba(6,26,73,0.82) 78%, rgba(6,26,73,0.92) 100%); }
+      .cc-cap-title { font-family:var(--font-display); font-weight:700; font-size:25px; line-height:1.05; letter-spacing:-0.01em; }
+      .cc-cap-sub { font-family:var(--font-body); font-size:15px; line-height:1.4; color:#ACCDD9; margin-top:6px; }
+      .cc-close-h { font-family:var(--font-display); font-weight:700; font-size:30px; line-height:1.05; letter-spacing:-0.02em; }
+      .cc-close-p { font-family:var(--font-body); font-size:16px; line-height:1.55; margin-top:14px; color:#ACCDD9; }
+      .cc-nav { display:flex; gap:10px; margin-top:22px; }
+      .cc-arrow { width:48px; height:48px; border-radius:50%; border:1.5px solid var(--border-subtle); background:var(--surface-card); color:#061A49; font-family:var(--font-body); font-size:26px; line-height:1; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:background 150ms,border-color 150ms,color 150ms,opacity 150ms; }
+      .cc-arrow:hover { background:#061A49; border-color:#061A49; color:#F9F8F2; }
+      .cc-arrow:disabled { opacity:0.32; cursor:default; }
+    </style>
+
+    <div class="cc-wrap" data-cc>
+      <div class="cc-track" data-cc-track>
+        <div class="cc-card cc-paper">
+          <div class="cc-mark">&#8220;</div>
+          <div class="cc-quote">What’s valuable about working with you all is there’s both the deep experience coaching and the focus on what it takes to run a strong campaign that’s built to win.</div>
+          <div class="cc-person"><span class="cc-avatar"></span><div><div class="cc-name">Eli Northrup</div><div class="cc-role">Candidate, NY State Assembly</div></div></div>
+        </div>
+        <div class="cc-card cc-photo" style="background-image:url('assets/Photography/WBT-Jenna-and-Stacy-Floor.jpg');">
+          <div class="cc-caption"><div class="cc-cap-title">One day to get aligned.</div><div class="cc-cap-sub">The campaign team at their retreat.</div></div>
+        </div>
+        <div class="cc-card cc-calm">
+          <div class="cc-mark" style="color:#061A49;">&#8220;</div>
+          <div class="cc-quote">The difference was huge. There’s a level of groundedness on the campaign now — we really show up for each other.</div>
+          <div class="cc-person"><span class="cc-avatar"></span><div><div class="cc-name">Campaign Manager</div><div class="cc-role">Statewide Race</div></div></div>
+        </div>
+        <div class="cc-card cc-steady">
+          <div class="cc-close-h">Want a team that’s built to win?</div>
+          <div class="cc-close-p">Every engagement starts with a conversation about where you are and where you want to go.</div>
+          <div class="cc-close-p" style="opacity:1;color:#F9F8F2;"><strong>Let’s talk →</strong></div>
+        </div>
+      </div>
+      <div class="cc-nav">
+        <button class="cc-arrow" data-cc-prev aria-label="Previous card">&#8249;</button>
+        <button class="cc-arrow" data-cc-next aria-label="Next card">&#8250;</button>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        var root=document.querySelector('[data-cc]'); if(!root) return;
+        var track=root.querySelector('[data-cc-track]');
+        function step(){ var c=track.querySelector('.cc-card'); return c? c.offsetWidth+20 : 360; }
+        function upd(){ var max=track.scrollWidth-track.clientWidth-2; root.querySelector('[data-cc-prev]').disabled=track.scrollLeft<=2; root.querySelector('[data-cc-next]').disabled=track.scrollLeft>=max; }
+        root.querySelector('[data-cc-next]').addEventListener('click',function(){ track.scrollBy({left:step(),behavior:'smooth'}); });
+        root.querySelector('[data-cc-prev]').addEventListener('click',function(){ track.scrollBy({left:-step(),behavior:'smooth'}); });
+        track.addEventListener('scroll',upd); upd();
+      })();
+    </script>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Card</strong></td><td>Fixed height (~460–520px), <code>16px</code> radius, soft shadow; <code>flex:0 0 auto</code>, snap-aligns to start</td></tr>
+          <tr><td><strong>Colorways</strong></td><td>Paper (bordered), Calm Blue, Steady Blue, Clean Slate — alternate so no two neighbors match</td></tr>
+          <tr><td><strong>Testimonial</strong></td><td>Gold quote mark (100px) → Lora italic 21–22px → 60px avatar + name + mono role</td></tr>
+          <tr><td><strong>Photo card</strong></td><td>Full-bleed cover image; bottom Steady-Blue gradient caption; League Spartan title + Lora/Calm-Blue sub</td></tr>
+          <tr><td><strong>Track</strong></td><td>Horizontal <code>scroll-snap</code> (x mandatory), scrollbar hidden, 20px gaps</td></tr>
+          <tr><td><strong>Nav</strong></td><td>Same circular arrows; disabled state at <code>0.32</code> opacity at the ends</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════ Timeline ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Timeline · Journey / phases</div>
+    <p class="section-intro">A vertical timeline for mapping an engagement phase-by-phase. Lives on a <strong>dark surface</strong> (Clean Slate or Steady Blue) with a Calm-Blue connector line and gold “target” markers, so it reads as a considered roadmap rather than a plain list.</p>
+
+    <style>
+      .tl-demo { background:#1E4D5C; padding:clamp(40px,5vw,64px) clamp(28px,5vw,64px); }
+      .tl-eyebrow { font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#CD9F36; margin:0 0 14px; }
+      .tl-demo h3.tl-head { font-family:var(--font-display); font-weight:700; font-size:clamp(26px,3.4vw,40px); line-height:1.05; letter-spacing:-0.01em; color:#F9F8F2; margin:0 0 40px; }
+      .tl-track { position:relative; max-width:760px; }
+      .tl-track::before { content:""; position:absolute; left:7px; top:8px; bottom:8px; width:2px; background:rgba(172,205,217,0.35); }
+      .tl-phase { position:relative; padding:0 0 40px 48px; }
+      .tl-phase:last-child { padding-bottom:0; }
+      .tl-phase::before { content:""; position:absolute; left:0; top:4px; width:16px; height:16px; border-radius:50%; background:#CD9F36; border:3px solid #1E4D5C; box-shadow:0 0 0 2px #CD9F36; }
+      .tl-date { font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#ACCDD9; margin-bottom:6px; }
+      .tl-phase h4 { font-family:var(--font-display); font-weight:700; font-size:24px; letter-spacing:-0.01em; color:#F9F8F2; margin:0 0 8px; }
+      .tl-phase p { font-family:var(--font-body); font-size:16px; line-height:1.6; color:rgba(249,248,242,0.85); max-width:480px; margin:0; }
+    </style>
+
+    <div class="tl-demo">
+      <p class="tl-eyebrow">Mapping the journey</p>
+      <h3 class="tl-head">A full-cycle partnership, phase by phase.</h3>
+      <div class="tl-track">
+        <div class="tl-phase"><div class="tl-date">Jan – Feb</div><h4>Planning Phase</h4><p>Program setup; development of shared goals.</p></div>
+        <div class="tl-phase"><div class="tl-date">Feb – Apr</div><h4>Kickoff + Retreat</h4><p>In-person or virtual team launch; begin 1:1 coaching.</p></div>
+        <div class="tl-phase"><div class="tl-date">Mar – Jun</div><h4>Deepening Phase</h4><p>Continued 1:1 coaching; midpoint team retreat.</p></div>
+        <div class="tl-phase"><div class="tl-date">Nov – Dec</div><h4>Strong Close</h4><p>Close-out retreat; transition sessions; final 1:1 coaching.</p></div>
+      </div>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Surface</strong></td><td>Dark — Clean Slate or Steady Blue; type reverses to cream</td></tr>
+          <tr><td><strong>Connector</strong></td><td>2px vertical line, Calm Blue at 35%</td></tr>
+          <tr><td><strong>Marker</strong></td><td>16px gold dot, 3px surface-colored inner border + 2px gold outer ring (a “target”)</td></tr>
+          <tr><td><strong>Date</strong></td><td>Inconsolata 500, 12px, uppercase, 0.14em, Calm Blue</td></tr>
+          <tr><td><strong>Phase title</strong></td><td>League Spartan 700, 24px, cream</td></tr>
+          <tr><td><strong>Body</strong></td><td>Lora 16px / 1.6, cream at 85%, max-width ~480px</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════ Data table ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Data table · Schedule</div>
+    <p class="section-intro">For schedules, comparisons, and structured reference. Designed for a <strong>dark surface</strong>: a barely-there fill, Calm-Blue uppercase column headers, cream row-headers, and hairline Calm-Blue dividers. A row can be highlighted with a faint gold band, and secondary notes sit in a small gold Inconsolata line.</p>
+
+    <style>
+      .dt-demo { background:#1E4D5C; padding:clamp(32px,4vw,52px); }
+      .dt-note { font-family:var(--font-body); font-size:16px; line-height:1.7; color:rgba(249,248,242,0.9); max-width:60ch; margin:0 0 28px; }
+      table.dt { width:100%; border-collapse:collapse; font-family:var(--font-body); background:rgba(249,248,242,0.04); border:1px solid rgba(172,205,217,0.28); }
+      table.dt th, table.dt td { text-align:left; padding:14px 18px; border-bottom:1px solid rgba(172,205,217,0.2); }
+      table.dt thead th { font-family:var(--font-display); font-weight:600; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:#ACCDD9; }
+      table.dt tbody th { font-family:var(--font-display); font-weight:600; font-size:16px; color:#F9F8F2; width:34%; }
+      table.dt tbody td { font-size:16px; color:rgba(249,248,242,0.88); }
+      table.dt tbody tr:last-child th, table.dt tbody tr:last-child td { border-bottom:none; }
+      table.dt .dt-band { background:rgba(205,159,54,0.1); }
+      table.dt .dt-note-sm { font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#CD9F36; display:block; margin-top:3px; }
+    </style>
+
+    <div class="dt-demo">
+      <p class="dt-note">Two cohorts run the same arc on offset dates.</p>
+      <table class="dt">
+        <thead><tr><th scope="col">Session</th><th scope="col">Cohort 1</th><th scope="col">Cohort 2</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Launch</th><td>July 9</td><td>Sep 2</td></tr>
+          <tr><th scope="row">Training #1</th><td>July 30</td><td>Sep 16</td></tr>
+          <tr><th scope="row">Coaching &times;3</th><td>Aug–Oct <span class="dt-note-sm">Opt-in</span></td><td>Oct <span class="dt-note-sm">Opt-in</span></td></tr>
+          <tr class="dt-band"><th scope="row">Transition</th><td>November 5</td><td>November 5</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Table</strong></td><td>Full width, <code>border-collapse</code>, cream-4% fill, 1px Calm-Blue-28% border</td></tr>
+          <tr><td><strong>Column head</strong></td><td>League Spartan 600, 13px, uppercase, 0.1em, Calm Blue</td></tr>
+          <tr><td><strong>Row head</strong></td><td>League Spartan 600, 16px, cream, ~34% width (<code>&lt;th scope="row"&gt;</code>)</td></tr>
+          <tr><td><strong>Cells</strong></td><td>Lora 16px, cream at 88%; hairline Calm-Blue-20% row dividers, none on last row</td></tr>
+          <tr><td><strong>Highlight</strong></td><td>Gold-10% row band; secondary note in Inconsolata 11px gold</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- ═══════ DO / DON'T ═══════ -->
   <div class="section-block">
     <div class="section-label">Component patterns · Do / Don't</div>
@@ -1142,7 +1399,7 @@
     <div class="section-label">Not yet documented</div>
     <p class="section-intro">Components below exist in the brand expression but haven't been formalized as DS components. Add when first needed:</p>
     <ul style="font-family:var(--font-body); font-size:14px; line-height:1.8; padding-left:22px;">
-      <li><strong>Table</strong> — sort, sticky header, dense vs comfortable density</li>
+      <li><strong>Table — interactive</strong> — sort, sticky header, dense vs comfortable density (the static schedule table is documented above)</li>
       <li><strong>Pagination</strong></li>
       <li><strong>Breadcrumb</strong></li>
       <li><strong>Avatar / People row</strong> — leverage portrait photography styling</li>
