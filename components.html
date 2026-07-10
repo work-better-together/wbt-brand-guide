@@ -23,7 +23,7 @@
     .page-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1; color: var(--ink-default); margin-bottom: 12px; }
     .page-header p { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--ink-default); max-width: 560px; }
 
-    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-default); padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-default); padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
     .section-intro { font-family: var(--font-body); font-size: 15px; color: var(--ink-default); max-width: 720px; margin-bottom: 28px; line-height: 1.65; }
     .section-block { margin-bottom: 96px; }
     .section-block h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin: 32px 0 14px; }
@@ -964,8 +964,8 @@
       </div>
       <div class="qc-controls">
         <button class="qc-arrow" data-qc-prev aria-label="Previous testimonial">&#8249;</button>
-        <button class="qc-arrow" data-qc-next aria-label="Next testimonial">&#8250;</button>
         <div class="qc-dots" data-qc-dots></div>
+        <button class="qc-arrow" data-qc-next aria-label="Next testimonial">&#8250;</button>
       </div>
     </div>
 
@@ -1198,9 +1198,9 @@
 
     <style>
       .cc-wrap { position:relative; }
-      .cc-track { display:flex; gap:20px; margin:8px -8px 0; padding:8px 8px 24px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
+      .cc-track { display:flex; gap:20px; margin:8px -8px 0; padding:8px 8px 52px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
       .cc-track::-webkit-scrollbar { display:none; }
-      .cc-card { flex:0 0 auto; width:min(360px,78vw); height:460px; border-radius:16px; overflow:hidden; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:space-between; padding:36px; position:relative; box-shadow:0 14px 34px rgba(31,30,30,0.10); }
+      .cc-card { flex:0 0 auto; width:min(360px,78vw); height:460px; border-radius:16px; overflow:hidden; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:space-between; padding:36px; position:relative; box-shadow:0 20px 44px -8px rgba(31,30,30,0.14); }
       .cc-paper  { background:var(--surface-card); color:var(--ink-default); border:1px solid var(--border-subtle); }
       .cc-calm   { background:#ACCDD9; color:#061A49; }
       .cc-steady { background:#061A49; color:#F9F8F2; }
@@ -1208,7 +1208,7 @@
       .cc-mark { font-family:var(--font-body); font-style:italic; font-weight:700; font-size:100px; line-height:0.6; height:52px; color:#CD9F36; }
       .cc-quote { font-family:var(--font-body); font-style:italic; font-size:21px; line-height:1.5; }
       .cc-person { display:flex; align-items:center; gap:16px; margin-top:24px; }
-      .cc-avatar { width:60px; height:60px; border-radius:50%; background:rgba(31,30,30,0.12); flex:0 0 auto; box-shadow:inset 0 0 0 1px rgba(31,30,30,0.12); }
+      .cc-avatar { width:60px; height:60px; border-radius:50%; object-fit:cover; background:rgba(31,30,30,0.12); flex:0 0 auto; box-shadow:inset 0 0 0 1px rgba(31,30,30,0.12); }
       .cc-name { font-family:var(--font-display); font-weight:700; font-size:18px; letter-spacing:-0.01em; }
       .cc-role { font-family:var(--font-mono); font-size:12px; letter-spacing:0.07em; text-transform:uppercase; opacity:0.72; margin-top:5px; }
       .cc-photo { padding:0; justify-content:flex-end; color:#F9F8F2; background-size:cover; background-position:center; }
@@ -1228,7 +1228,7 @@
         <div class="cc-card cc-paper">
           <div class="cc-mark">&#8220;</div>
           <div class="cc-quote">What’s valuable about working with you all is there’s both the deep experience coaching and the focus on what it takes to run a strong campaign that’s built to win.</div>
-          <div class="cc-person"><span class="cc-avatar"></span><div><div class="cc-name">Eli Northrup</div><div class="cc-role">Candidate, NY State Assembly</div></div></div>
+          <div class="cc-person"><img class="cc-avatar" src="assets/Photography/WBT-Eli-Northrup-Candidate.jpg" alt="Eli Northrup"><div><div class="cc-name">Eli Northrup</div><div class="cc-role">Candidate, NY State Assembly</div></div></div>
         </div>
         <div class="cc-card cc-photo" style="background-image:url('assets/Photography/WBT-Jenna-and-Stacy-Floor.jpg');">
           <div class="cc-caption"><div class="cc-cap-title">One day to get aligned.</div><div class="cc-cap-sub">The campaign team at their retreat.</div></div>
@@ -1236,7 +1236,7 @@
         <div class="cc-card cc-calm">
           <div class="cc-mark" style="color:#061A49;">&#8220;</div>
           <div class="cc-quote">The difference was huge. There’s a level of groundedness on the campaign now — we really show up for each other.</div>
-          <div class="cc-person"><span class="cc-avatar"></span><div><div class="cc-name">Campaign Manager</div><div class="cc-role">Statewide Race</div></div></div>
+          <div class="cc-person"><img class="cc-avatar" src="assets/Photography/WBT-Courtney-Curd-Smiling.jpg" alt="Courtney Curd"><div><div class="cc-name">Courtney Curd</div><div class="cc-role">Campaign Manager</div></div></div>
         </div>
         <div class="cc-card cc-steady">
           <div class="cc-close-h">Want a team that’s built to win?</div>
