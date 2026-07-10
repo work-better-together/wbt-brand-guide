@@ -880,10 +880,6 @@ async function drawBold(ctx, slide, W, H, PAD, col) {
   const subSz  = isWide ? W * 0.026 : W * 0.031;
   const attrSz = W * 0.022;
 
-  // Accent bar
-  ctx.fillStyle = col.accent;
-  ctx.fillRect(PAD, PAD * 0.9, W * 0.055, W * 0.005);
-
   // Headline
   ctx.font = `700 ${headSz}px 'League Spartan', sans-serif`;
   ctx.fillStyle = col.text;
@@ -960,7 +956,7 @@ async function drawQuote(ctx, slide, W, H, PAD, col) {
   ctx.font = `700 ${W * 0.22}px Georgia, serif`;
   ctx.fillStyle = rgba(col.text, 0.1);
   ctx.textBaseline = 'top';
-  ctx.fillText('"', PAD * 0.5, PAD * 0.1);
+  ctx.fillText('“', PAD * 0.5, PAD * 0.1);
 
   // Quote text
   const qSz = isWide ? W * 0.044 : W * 0.056;
