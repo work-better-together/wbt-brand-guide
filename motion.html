@@ -353,6 +353,30 @@
   </div>
 
 
+  <!-- ─── Scroll-linked patterns ─── -->
+  <div class="section-block">
+    <div class="section-label">Scroll-linked patterns</div>
+    <p class="section-intro">Two signature scroll-driven treatments from the website. Both are subtle, and both honor reduced motion (below).</p>
+    <div class="tokens-used" style="margin-top:0;">
+      <table>
+        <thead><tr><th>Pattern</th><th>What it does</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>In-frame parallax</strong></td>
+            <td>A prominent photo drifts a few pixels <em>within its own frame</em> on scroll — alive without page-jump, and never enough to reveal an edge.</td>
+            <td>Fixed-ratio frame, <code>overflow:hidden</code>; the <code>&lt;img&gt;</code> at <strong>108–110%</strong> with <code>object-fit:cover</code>, a slight negative inset, and <strong><code>max-width:none</code></strong> (a global <code>img{max-width:100%}</code> reset otherwise silently cancels the oversize and reintroduces edge gaps); <code>data-parallax</code> <strong>0.08–0.14</strong>. Desktop-only ≥ 820px — bio-page collages are the deliberate exception.</td>
+          </tr>
+          <tr>
+            <td><strong>Hand-drawn annotations</strong></td>
+            <td>Sketch-style ink in <strong>Intentional Blue</strong> drawn in on scroll — a wobbly <strong>underline</strong>, or an open <strong>circle</strong> around a key phrase.</td>
+            <td><strong>Underline = single stroke</strong> (1 iteration); <strong>circle = double stroke</strong> (2 iterations) — don't match them. Underlines may wrap across lines; circles stay on one line. Marks animate <strong>once</strong> on first appearance, then persist — never re-animate on scroll or on mobile address-bar resize. A fixed seed keeps the wobble stable across reloads.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
   <!-- ─── Reduced motion ─── -->
   <div class="section-block">
     <div class="section-label">Reduced motion · The contract</div>

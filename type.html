@@ -38,7 +38,7 @@
       --ink: #1a1a1a;
       --ink-muted: #6b6b6b;
       --ink-faint: #c8c8c8;
-      --bg: #faf9f7;
+      --bg: #f9f8f2;
       --bg-card: #ffffff;
       --accent: #2d5a3d;
       --accent-light: #e8f0eb;
@@ -579,9 +579,14 @@
 
     <div class="weight-grid">
       <div class="weight-cell">
+        <div class="weight-sample" style="font-family:'League Spartan';font-weight:400;">Regular</div>
+        <div class="weight-label">400 · Regular</div>
+        <div class="weight-note">The <strong>deck / subtitle</strong> directly under a page headline (the <code>.lede-thin</code> role) — <code>clamp(20–26px)</code>, line-height 1.42. Deck role only; not for headings or labels.</div>
+      </div>
+      <div class="weight-cell">
         <div class="weight-sample" style="font-family:'League Spartan';font-weight:500;">Medium</div>
         <div class="weight-label">500 · Medium</div>
-        <div class="weight-note">Eyebrows, section labels, agenda times, page metadata, supporting text under headlines, button/nav labels.</div>
+        <div class="weight-note">Eyebrows, section labels, agenda times, page metadata, button/nav labels.</div>
       </div>
       <div class="weight-cell">
         <div class="weight-sample" style="font-family:'League Spartan';font-weight:700;">Bold</div>
@@ -597,7 +602,7 @@
     <div class="donts">
       <h4>Don’ts · League Spartan</h4>
       <ul>
-        <li>No third weight beyond 500 and 700 — no 300, 400, 600, 800, or 900.</li>
+        <li>Weights are 500 and 700 for headings &amp; labels, plus <strong>400 for the deck/subtitle role only</strong> — no 300, 600, 800, or 900.</li>
         <li>Never use Inconsolata for eyebrows or section labels — those are League Spartan 500.</li>
         <li>Never set Lora for the lead paragraph under a page-level headline — that supporting text is League Spartan.</li>
       </ul>
