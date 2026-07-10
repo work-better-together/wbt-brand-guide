@@ -668,6 +668,51 @@
   </div>
 
 
+  <!-- ═══════ Accordion ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Accordion · Disclosure</div>
+    <p class="section-intro">Native <code>&lt;details&gt;/&lt;summary&gt;</code> — no custom JS, inherently keyboard- and screen-reader-accessible. The standard for any expandable/FAQ UI. A <code>+</code> marker flips to <code>–</code> when open. (Try it — click a question.)</p>
+
+    <style>
+      .acc-demo { max-width:720px; border-top:1px solid var(--border-subtle); }
+      .acc-item { border-bottom:1px solid var(--border-subtle); }
+      .acc-item summary { list-style:none; cursor:pointer; padding:22px 44px 22px 0; position:relative; font-family:var(--font-display); font-weight:700; font-size:clamp(17px,2vw,21px); letter-spacing:-0.01em; line-height:1.25; color:var(--ink-default); }
+      .acc-item summary::-webkit-details-marker { display:none; }
+      .acc-item summary::after { content:'+'; position:absolute; right:4px; top:19px; font-family:var(--font-display); font-weight:500; font-size:26px; line-height:1; color:#2531A5; }
+      .acc-item[open] summary::after { content:'\2013'; }
+      .acc-item summary:focus-visible { outline:2px solid #2531A5; outline-offset:3px; }
+      .acc-item .acc-answer { padding:0 44px 24px 0; font-family:var(--font-body); }
+      .acc-item .acc-answer p { font-size:16px; line-height:1.75; max-width:68ch; margin:0; color:var(--ink-default); }
+    </style>
+
+    <div class="acc-demo">
+      <details class="acc-item" open>
+        <summary>How is coaching different from consulting?</summary>
+        <div class="acc-answer"><p>Consulting hands you answers; coaching builds your own capacity to find them. We partner with you to think more clearly and lead more intentionally — so the growth stays with you long after the engagement ends.</p></div>
+      </details>
+      <details class="acc-item">
+        <summary>Do you work with whole teams, or just individual leaders?</summary>
+        <div class="acc-answer"><p>Both. We coach individual leaders one-on-one, and we work with whole teams to strengthen how people work together over time.</p></div>
+      </details>
+      <details class="acc-item">
+        <summary>How long is a typical engagement?</summary>
+        <div class="acc-answer"><p>It depends on the goal — from a single facilitated session to an ongoing multi-month partnership. We’ll scope it together on a chemistry call.</p></div>
+      </details>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:120px;"><strong>Markup</strong></td><td>Native <code>&lt;details&gt;/&lt;summary&gt;</code> — accessible, no JS</td></tr>
+          <tr><td><strong>Question</strong></td><td>League Spartan 700, <code>clamp(18–22px)</code> / 1.25</td></tr>
+          <tr><td><strong>Answer</strong></td><td>Lora 17px / 1.75, max-width ~68ch</td></tr>
+          <tr><td><strong>Marker</strong></td><td><code>+</code> → <code>–</code>, Intentional Blue, top-right</td></tr>
+          <tr><td><strong>Divider</strong></td><td>1px rule between items; no box per item</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- ═══════ CALLOUT ═══════ -->
   <div class="section-block">
     <div class="section-label">Callout</div>
@@ -704,6 +749,59 @@
           <tr><td>Max-width</td><td>720px (prose container)</td></tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ NAV ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Nav · Header</div>
+    <p class="section-intro">Top-level site navigation. Active link uses Radiant Gold. Hover lifts a subtle Clear White overlay (12% alpha).</p>
+
+    <div class="stage" style="padding:0;">
+      <div class="nav-component">
+        <div class="nav-brand">
+          <img class="b-mark" src="assets/Logos/WBT-20260502-WBT-Monogram-Black.svg" alt="WBT">
+          <span>Brand Guide · 2026</span>
+        </div>
+        <div class="nav-links">
+          <a class="nav-link" href="#">Voice</a>
+          <a class="nav-link" href="#">Logo</a>
+          <a class="nav-link" href="#">Type</a>
+          <a class="nav-link is-active" href="#">Color</a>
+          <a class="nav-link" href="#">Elements</a>
+          <a class="nav-link" href="#">Tokens</a>
+        </div>
+        <button class="nav-hamburger">☰</button>
+      </div>
+    </div>
+
+    <div class="tokens-used">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Background</td><td><code>--nav-bg</code> → <code>--c-grounded-black</code></td></tr>
+          <tr><td>Ink</td><td><code>--nav-ink</code> → <code>--c-clear-white</code></td></tr>
+          <tr><td>Active ink</td><td><code>--nav-ink-active</code> → <code>--c-radiant-gold</code></td></tr>
+          <tr><td>Hover overlay</td><td>rgba(249,248,242,0.12)</td></tr>
+          <tr><td>Type</td><td>League Spartan 500 · 11px · +0.12em · uppercase</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════ TABS ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Tabs</div>
+    <p class="section-intro">Section switcher. Active tab signals with a 2px underline in <code>--ink-default</code>. Inactive tabs sit in <code>--ink-muted</code>; hover lifts to default ink.</p>
+    <div class="stage">
+      <div class="tabs">
+        <span class="tab is-active">Overview</span>
+        <span class="tab">Strategy</span>
+        <span class="tab">Identity</span>
+        <span class="tab">Web</span>
+      </div>
     </div>
   </div>
 
@@ -831,182 +929,6 @@
   </div>
 
 
-  <!-- ═══════ NAV ═══════ -->
-  <div class="section-block">
-    <div class="section-label">Nav · Header</div>
-    <p class="section-intro">Top-level site navigation. Active link uses Radiant Gold. Hover lifts a subtle Clear White overlay (12% alpha).</p>
-
-    <div class="stage" style="padding:0;">
-      <div class="nav-component">
-        <div class="nav-brand">
-          <img class="b-mark" src="assets/Logos/WBT-20260502-WBT-Monogram-Black.svg" alt="WBT">
-          <span>Brand Guide · 2026</span>
-        </div>
-        <div class="nav-links">
-          <a class="nav-link" href="#">Voice</a>
-          <a class="nav-link" href="#">Logo</a>
-          <a class="nav-link" href="#">Type</a>
-          <a class="nav-link is-active" href="#">Color</a>
-          <a class="nav-link" href="#">Elements</a>
-          <a class="nav-link" href="#">Tokens</a>
-        </div>
-        <button class="nav-hamburger">☰</button>
-      </div>
-    </div>
-
-    <div class="tokens-used">
-      <table>
-        <thead><tr><th>Property</th><th>Token</th></tr></thead>
-        <tbody>
-          <tr><td>Background</td><td><code>--nav-bg</code> → <code>--c-grounded-black</code></td></tr>
-          <tr><td>Ink</td><td><code>--nav-ink</code> → <code>--c-clear-white</code></td></tr>
-          <tr><td>Active ink</td><td><code>--nav-ink-active</code> → <code>--c-radiant-gold</code></td></tr>
-          <tr><td>Hover overlay</td><td>rgba(249,248,242,0.12)</td></tr>
-          <tr><td>Type</td><td>League Spartan 500 · 11px · +0.12em · uppercase</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-
-  <!-- ═══════ TABS ═══════ -->
-  <div class="section-block">
-    <div class="section-label">Tabs</div>
-    <p class="section-intro">Section switcher. Active tab signals with a 2px underline in <code>--ink-default</code>. Inactive tabs sit in <code>--ink-muted</code>; hover lifts to default ink.</p>
-    <div class="stage">
-      <div class="tabs">
-        <span class="tab is-active">Overview</span>
-        <span class="tab">Strategy</span>
-        <span class="tab">Identity</span>
-        <span class="tab">Web</span>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══════ DO / DON'T ═══════ -->
-  <div class="section-block">
-    <div class="section-label">Component patterns · Do / Don't</div>
-    <div class="stage-grid cols-2" style="gap:2px;">
-      <div class="callout-component callout-success">
-        <span class="ce-tag">Do — buttons</span>
-        <p>Pair every primary button with a clear secondary or cancel path. Never show three primaries in the same scope.</p>
-      </div>
-      <div class="callout-component callout-warning">
-        <span class="ce-tag">Don't — buttons</span>
-        <p>Don't use destructive styling for "Cancel" or "Close". Reserve Honest Ochre for actions that genuinely can't be undone.</p>
-      </div>
-      <div class="callout-component callout-success">
-        <span class="ce-tag">Do — focus</span>
-        <p>Always show the focus ring on keyboard focus. If you're styling a custom element, replicate the 2px Intentional Blue ring with 2px offset.</p>
-      </div>
-      <div class="callout-component callout-warning">
-        <span class="ce-tag">Don't — focus</span>
-        <p>Don't <code>outline:none</code> without a replacement focus indicator. This breaks accessibility for keyboard-only users.</p>
-      </div>
-      <div class="callout-component callout-success">
-        <span class="ce-tag">Do — color signaling</span>
-        <p>Pair color with an icon, label, or position. A red border alone is not enough — add an error message, an icon, or both.</p>
-      </div>
-      <div class="callout-component callout-warning">
-        <span class="ce-tag">Don't — color signaling</span>
-        <p>Don't rely on color alone to convey state. ~8% of users have color vision differences.</p>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══════ Accordion ═══════ -->
-  <div class="section-block">
-    <div class="section-label">Accordion · Disclosure</div>
-    <p class="section-intro">Native <code>&lt;details&gt;/&lt;summary&gt;</code> — no custom JS, inherently keyboard- and screen-reader-accessible. The standard for any expandable/FAQ UI. A <code>+</code> marker flips to <code>–</code> when open. (Try it — click a question.)</p>
-
-    <style>
-      .acc-demo { max-width:720px; border-top:1px solid var(--border-subtle); }
-      .acc-item { border-bottom:1px solid var(--border-subtle); }
-      .acc-item summary { list-style:none; cursor:pointer; padding:22px 44px 22px 0; position:relative; font-family:var(--font-display); font-weight:700; font-size:clamp(17px,2vw,21px); letter-spacing:-0.01em; line-height:1.25; color:var(--ink-default); }
-      .acc-item summary::-webkit-details-marker { display:none; }
-      .acc-item summary::after { content:'+'; position:absolute; right:4px; top:19px; font-family:var(--font-display); font-weight:500; font-size:26px; line-height:1; color:#2531A5; }
-      .acc-item[open] summary::after { content:'\2013'; }
-      .acc-item summary:focus-visible { outline:2px solid #2531A5; outline-offset:3px; }
-      .acc-item .acc-answer { padding:0 44px 24px 0; font-family:var(--font-body); }
-      .acc-item .acc-answer p { font-size:16px; line-height:1.75; max-width:68ch; margin:0; color:var(--ink-default); }
-    </style>
-
-    <div class="acc-demo">
-      <details class="acc-item" open>
-        <summary>How is coaching different from consulting?</summary>
-        <div class="acc-answer"><p>Consulting hands you answers; coaching builds your own capacity to find them. We partner with you to think more clearly and lead more intentionally — so the growth stays with you long after the engagement ends.</p></div>
-      </details>
-      <details class="acc-item">
-        <summary>Do you work with whole teams, or just individual leaders?</summary>
-        <div class="acc-answer"><p>Both. We coach individual leaders one-on-one, and we work with whole teams to strengthen how people work together over time.</p></div>
-      </details>
-      <details class="acc-item">
-        <summary>How long is a typical engagement?</summary>
-        <div class="acc-answer"><p>It depends on the goal — from a single facilitated session to an ongoing multi-month partnership. We’ll scope it together on a chemistry call.</p></div>
-      </details>
-    </div>
-
-    <div class="tokens-used" style="margin-top:20px;">
-      <table>
-        <tbody>
-          <tr><td style="white-space:nowrap;width:120px;"><strong>Markup</strong></td><td>Native <code>&lt;details&gt;/&lt;summary&gt;</code> — accessible, no JS</td></tr>
-          <tr><td><strong>Question</strong></td><td>League Spartan 700, <code>clamp(18–22px)</code> / 1.25</td></tr>
-          <tr><td><strong>Answer</strong></td><td>Lora 17px / 1.75, max-width ~68ch</td></tr>
-          <tr><td><strong>Marker</strong></td><td><code>+</code> → <code>–</code>, Intentional Blue, top-right</td></tr>
-          <tr><td><strong>Divider</strong></td><td>1px rule between items; no box per item</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ═══════ Layout pattern · Offset 2-of-3 ═══════ -->
-  <div class="section-block">
-    <div class="section-label">Layout · Offset “2-of-3” (staggered)</div>
-    <p class="section-intro">A signature editorial layout: blocks capped at ~two-thirds width, alternately hugged left then right, with the right block dropped down so the two stagger diagonally instead of stacking flush. The alternative to a centered single column — use it for an intro statement paired with a supporting list.</p>
-
-    <style>
-      .offset-demo { border:1px solid var(--border-subtle); padding:36px clamp(20px,4vw,56px); background:var(--surface-card); }
-      .offset-demo .off-left  { max-width:66%; margin-right:auto; }
-      .offset-demo .off-right { max-width:66%; margin-left:auto; margin-top:56px; }
-      .offset-demo .od-lede { font-family:var(--font-display); font-weight:400; font-size:clamp(18px,2vw,24px); line-height:1.42; color:var(--ink-default); margin:0; }
-      .offset-demo .od-eyebrow { font-family:var(--font-display); font-weight:500; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#B55312; margin:0 0 14px; }
-      .offset-demo ul.od-list { columns:2; column-gap:40px; list-style:none; padding:0; margin:0; font-family:var(--font-body); font-size:14px; line-height:1.5; }
-      .offset-demo ul.od-list li { break-inside:avoid; margin-bottom:12px; padding-left:18px; position:relative; }
-      .offset-demo ul.od-list li::before { content:""; position:absolute; left:0; top:8px; width:6px; height:6px; background:#2531A5; }
-      .offset-spec { width:100%; border-collapse:collapse; margin-top:20px; font-family:var(--font-body); font-size:13px; }
-      .offset-spec td { border-top:1px solid var(--border-subtle); padding:10px 12px; vertical-align:top; }
-      .offset-spec td:first-child { white-space:nowrap; width:130px; }
-      @media (max-width:640px){ .offset-demo .off-left, .offset-demo .off-right{ max-width:100%; margin:0; } .offset-demo .off-right{ margin-top:28px; } .offset-demo ul.od-list{ columns:1; } }
-    </style>
-
-    <div class="offset-demo">
-      <div class="off-left">
-        <p class="od-lede">We help leaders and teams slow down, see what’s really happening, and move forward with clarity and care.</p>
-      </div>
-      <div class="off-right">
-        <p class="od-eyebrow">What we work on together</p>
-        <ul class="od-list">
-          <li>Navigating tension on a team</li>
-          <li>Leading through burnout</li>
-          <li>Giving &amp; receiving feedback</li>
-          <li>Delegating effectively</li>
-          <li>Managing up</li>
-          <li>Building healthy team culture</li>
-        </ul>
-      </div>
-    </div>
-
-    <table class="offset-spec">
-      <tbody>
-        <tr><td><code>.offset-left</code></td><td><code>max-width: 66%</code>; hugs left (<code>margin-right: auto</code>)</td></tr>
-        <tr><td><code>.offset-right</code></td><td><code>max-width: 66%</code>; hugs right (<code>margin-left: auto</code>); dropped down <code>margin-top: ~60px</code></td></tr>
-        <tr><td>Mobile ≤ 640px</td><td>both go full-width and stack; offsets reset to 0, the drop shrinks to ~32px</td></tr>
-      </tbody>
-    </table>
-  </div>
-
   <!-- ═══════ Quote carousel ═══════ -->
   <div class="section-block">
     <div class="section-label">Quote carousel · Testimonials</div>
@@ -1068,6 +990,52 @@
     </div>
   </div>
 
+  <!-- ═══════ Layout pattern · Offset 2-of-3 ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Layout · Offset “2-of-3” (staggered)</div>
+    <p class="section-intro">A signature editorial layout: blocks capped at ~two-thirds width, alternately hugged left then right, with the right block dropped down so the two stagger diagonally instead of stacking flush. The alternative to a centered single column — use it for an intro statement paired with a supporting list.</p>
+
+    <style>
+      .offset-demo { border:1px solid var(--border-subtle); padding:36px clamp(20px,4vw,56px); background:var(--surface-card); }
+      .offset-demo .off-left  { max-width:66%; margin-right:auto; }
+      .offset-demo .off-right { max-width:66%; margin-left:auto; margin-top:56px; }
+      .offset-demo .od-lede { font-family:var(--font-display); font-weight:400; font-size:clamp(18px,2vw,24px); line-height:1.42; color:var(--ink-default); margin:0; }
+      .offset-demo .od-eyebrow { font-family:var(--font-display); font-weight:500; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#B55312; margin:0 0 14px; }
+      .offset-demo ul.od-list { columns:2; column-gap:40px; list-style:none; padding:0; margin:0; font-family:var(--font-body); font-size:14px; line-height:1.5; }
+      .offset-demo ul.od-list li { break-inside:avoid; margin-bottom:12px; padding-left:18px; position:relative; }
+      .offset-demo ul.od-list li::before { content:""; position:absolute; left:0; top:8px; width:6px; height:6px; background:#2531A5; }
+      .offset-spec { width:100%; border-collapse:collapse; margin-top:20px; font-family:var(--font-body); font-size:13px; }
+      .offset-spec td { border-top:1px solid var(--border-subtle); padding:10px 12px; vertical-align:top; }
+      .offset-spec td:first-child { white-space:nowrap; width:130px; }
+      @media (max-width:640px){ .offset-demo .off-left, .offset-demo .off-right{ max-width:100%; margin:0; } .offset-demo .off-right{ margin-top:28px; } .offset-demo ul.od-list{ columns:1; } }
+    </style>
+
+    <div class="offset-demo">
+      <div class="off-left">
+        <p class="od-lede">We help leaders and teams slow down, see what’s really happening, and move forward with clarity and care.</p>
+      </div>
+      <div class="off-right">
+        <p class="od-eyebrow">What we work on together</p>
+        <ul class="od-list">
+          <li>Navigating tension on a team</li>
+          <li>Leading through burnout</li>
+          <li>Giving &amp; receiving feedback</li>
+          <li>Delegating effectively</li>
+          <li>Managing up</li>
+          <li>Building healthy team culture</li>
+        </ul>
+      </div>
+    </div>
+
+    <table class="offset-spec">
+      <tbody>
+        <tr><td><code>.offset-left</code></td><td><code>max-width: 66%</code>; hugs left (<code>margin-right: auto</code>)</td></tr>
+        <tr><td><code>.offset-right</code></td><td><code>max-width: 66%</code>; hugs right (<code>margin-left: auto</code>); dropped down <code>margin-top: ~60px</code></td></tr>
+        <tr><td>Mobile ≤ 640px</td><td>both go full-width and stack; offsets reset to 0, the drop shrinks to ~32px</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- ═══════ Decorative bleed ═══════ -->
   <div class="section-block">
     <div class="section-label">Layout · Decorative bleed (spots &amp; scribbles off-edge)</div>
@@ -1106,6 +1074,68 @@
       </table>
     </div>
   </div>
+
+  <!-- ═══════ Headline over image ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Layout · Headline reversed over image</div>
+    <p class="section-intro">The signature hero move: a big League Spartan headline in <strong>cream</strong>, centered low over a full-width photo, with a soft shadow so it clears the image underneath. Used for the homepage hero (“Leadership is hard. Let’s work on it.”) and the site’s Open Graph share image. Reserve it for a short, declarative line over a photo with calm midtones in the lower third — never body copy, never over a busy area.</p>
+
+    <style>
+      .hoi-demo { position:relative; overflow:hidden; }
+      .hoi-demo img { width:100%; height:auto; display:block; }
+      .hoi-title { position:absolute; left:50%; top:72%; transform:translate(-50%,-50%); width:92%; text-align:center; color:#F9F8F2; font-family:var(--font-display); font-weight:700; font-size:clamp(24px,6.6vw,68px); line-height:1.0; letter-spacing:-0.02em; text-shadow:0 2px 26px rgba(0,0,0,0.34), 0 1px 4px rgba(0,0,0,0.28); margin:0; }
+      @media (max-width:640px){ .hoi-title{ top:62%; font-size:clamp(22px,7vw,40px); } }
+    </style>
+
+    <div class="hoi-demo">
+      <img src="assets/Photography/WBT-Jenna-Stacy-Triptych.png" alt="Triptych of Jenna and Stacy in conversation">
+      <h3 class="hoi-title">Leadership is hard.<br>Let’s work on it.</h3>
+    </div>
+
+    <div class="tokens-used" style="margin-top:20px;">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;width:130px;"><strong>Type</strong></td><td>League Spartan <strong>700</strong>, <code>clamp(34–92px)</code> / 1.0, tracking −0.02em</td></tr>
+          <tr><td><strong>Color</strong></td><td>Cream (<code>#F9F8F2</code>) — reversed out, never a brand hue</td></tr>
+          <tr><td><strong>Legibility</strong></td><td>Text-shadow <code>0 2px 26px rgba(0,0,0,.34)</code> + <code>0 1px 4px rgba(0,0,0,.28)</code>; place over calm midtones, not a busy area</td></tr>
+          <tr><td><strong>Placement</strong></td><td>Absolute, centered, sitting low (<code>top: ~72%</code>); drops to <code>~62%</code> and shrinks on mobile</td></tr>
+          <tr><td><strong>Use for</strong></td><td>Homepage hero &amp; OG share image — one short declarative line only</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════ DO / DON'T ═══════ -->
+  <div class="section-block">
+    <div class="section-label">Component patterns · Do / Don't</div>
+    <div class="stage-grid cols-2" style="gap:2px;">
+      <div class="callout-component callout-success">
+        <span class="ce-tag">Do — buttons</span>
+        <p>Pair every primary button with a clear secondary or cancel path. Never show three primaries in the same scope.</p>
+      </div>
+      <div class="callout-component callout-warning">
+        <span class="ce-tag">Don't — buttons</span>
+        <p>Don't use destructive styling for "Cancel" or "Close". Reserve Honest Ochre for actions that genuinely can't be undone.</p>
+      </div>
+      <div class="callout-component callout-success">
+        <span class="ce-tag">Do — focus</span>
+        <p>Always show the focus ring on keyboard focus. If you're styling a custom element, replicate the 2px Intentional Blue ring with 2px offset.</p>
+      </div>
+      <div class="callout-component callout-warning">
+        <span class="ce-tag">Don't — focus</span>
+        <p>Don't <code>outline:none</code> without a replacement focus indicator. This breaks accessibility for keyboard-only users.</p>
+      </div>
+      <div class="callout-component callout-success">
+        <span class="ce-tag">Do — color signaling</span>
+        <p>Pair color with an icon, label, or position. A red border alone is not enough — add an error message, an icon, or both.</p>
+      </div>
+      <div class="callout-component callout-warning">
+        <span class="ce-tag">Don't — color signaling</span>
+        <p>Don't rely on color alone to convey state. ~8% of users have color vision differences.</p>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ═══════ Whats next ═══════ -->
   <div class="section-block">

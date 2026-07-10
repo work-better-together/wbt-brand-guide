@@ -315,6 +315,83 @@
   <div class="section-divider"></div>
 
   <!-- ══════════════════════════════════════
+       THE THREE SERVICE COLLAGES
+  ══════════════════════════════════════ -->
+
+  <section class="static-section">
+    <div class="static-section-intro">
+      <div>
+        <h2>The three <strong>service collages</strong></h2>
+      </div>
+      <div>
+        <p>Each service area has a fixed collage identity — a specific illustration and watercolor colorway that recurs everywhere the service appears (homepage cards, service-page heroes, case-study colorways). Keep these pairings consistent; they’re how the brand signals which kind of work you’re looking at. Each is still the same three-layer build (spot → scribble → illustration) — only the variables below change.</p>
+      </div>
+    </div>
+
+    <style>
+      .svc-collage-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:8px; }
+      .svc-collage-card { border:1px solid var(--border-subtle); background:var(--surface-card); }
+      .svc-collage-thumb { aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--surface-canvas); }
+      .svc-collage-thumb img { max-width:100%; max-height:100%; object-fit:contain; }
+      .svc-collage-body { padding:20px 22px 24px; }
+      .svc-collage-body h3 { font-family:var(--font-display); font-weight:700; font-size:19px; letter-spacing:-0.01em; margin:0 0 4px; color:var(--ink-default); }
+      .svc-collage-accent { display:inline-flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-muted); margin-bottom:14px; }
+      .svc-collage-accent .swatch { width:12px; height:12px; border-radius:50%; }
+      .svc-collage-vars { list-style:none; padding:0; margin:0; font-family:var(--font-body); font-size:13px; line-height:1.5; }
+      .svc-collage-vars li { display:flex; gap:8px; padding:6px 0; border-top:1px solid var(--border-subtle); }
+      .svc-collage-vars .k { flex:0 0 84px; color:var(--ink-muted); }
+      .svc-collage-vars .v { color:var(--ink-default); }
+      @media (max-width:720px){ .svc-collage-grid{ grid-template-columns:1fr; } }
+    </style>
+
+    <div class="svc-collage-grid">
+      <div class="svc-collage-card">
+        <div class="svc-collage-thumb"><img src="assets/Finished Collages/WBT-collage-moon-gold.png" alt="Full moon with radiant-gold watercolor spot and black scribble"></div>
+        <div class="svc-collage-body">
+          <h3>Leadership Coaching</h3>
+          <div class="svc-collage-accent"><span class="swatch" style="background:#CD9F36;"></span>Radiant Gold · #CD9F36</div>
+          <ul class="svc-collage-vars">
+            <li><span class="k">Illustration</span><span class="v">Full moon (Saturn as a secondary/celestial pairing)</span></li>
+            <li><span class="k">Spot</span><span class="v">Radiant Gold watercolor</span></li>
+            <li><span class="k">Scribble</span><span class="v">Single black looping line</span></li>
+            <li><span class="k">Idea</span><span class="v">Rising capacity, orbit, the long view</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="svc-collage-card">
+        <div class="svc-collage-thumb"><img src="assets/Finished Collages/WBT-collage-bees-blue-circle.png" alt="Bees over an intentional-blue watercolor spot with black scribble"></div>
+        <div class="svc-collage-body">
+          <h3>Team Coaching</h3>
+          <div class="svc-collage-accent"><span class="swatch" style="background:#2531A5;"></span>Intentional Blue · #2531A5</div>
+          <ul class="svc-collage-vars">
+            <li><span class="k">Illustration</span><span class="v">Bees — a pair or trio (the team as a unit)</span></li>
+            <li><span class="k">Spot</span><span class="v">Intentional Blue watercolor</span></li>
+            <li><span class="k">Scribble</span><span class="v">Dense black loops weaving through</span></li>
+            <li><span class="k">Idea</span><span class="v">Coordinated effort, working as one</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="svc-collage-card">
+        <div class="svc-collage-thumb"><img src="assets/Finished Collages/WBT-collage-lightbulb-orange.png" alt="Lightbulb over an honest-ochre brushstroke with black scribble"></div>
+        <div class="svc-collage-body">
+          <h3>Facilitation + Training</h3>
+          <div class="svc-collage-accent"><span class="swatch" style="background:#B55312;"></span>Honest Ochre · #B55312</div>
+          <ul class="svc-collage-vars">
+            <li><span class="k">Illustration</span><span class="v">Lightbulb (filament visible)</span></li>
+            <li><span class="k">Spot</span><span class="v">Honest Ochre brushstroke</span></li>
+            <li><span class="k">Scribble</span><span class="v">Long black line trailing off both sides</span></li>
+            <li><span class="k">Idea</span><span class="v">Ideas surfacing, clarity, the “aha”</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
        GENERATED COLLAGES (localStorage-backed)
   ══════════════════════════════════════ -->
 

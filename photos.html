@@ -524,7 +524,7 @@
           <div class="mark">−</div>
           <div>
             <span class="label">Don't</span>
-            <p class="text">Crop a duo into a single person, flip horizontally, or apply duotone or heavy color treatments.</p>
+            <p class="text">Crop a duo into a single person, flip horizontally, or apply duotone or heavy color treatments <em>to these portraits</em> — tinting is for supporting case-study imagery only (see Photo tinting below).</p>
           </div>
         </div>
         <div class="rule-row dont">
@@ -533,6 +533,54 @@
             <span class="label">Don't</span>
             <p class="text">Use unapproved candids, Zoom screenshots, or older photography — request new shots if these don’t fit.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Photo tinting / duotone ── -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Photo tinting · Duotone</h2>
+        <span class="meta">Case-study &amp; supporting imagery</span>
+      </div>
+      <p class="section-intro">The one deliberate exception to “use photos as shot.” <strong>Supporting</strong> photography — case-study thumbnails, session and client photos, editorial context shots — is rendered as a <strong>duotone keyed to the service colorway</strong>: shadows in the service’s dark ink, highlights in cream. It unifies a grid of mismatched source photos into one brand system and instantly signals which kind of work a story is about. This applies to contextual imagery only — the approved <strong>founder portraits above stay full-colour, as shot</strong>.</p>
+
+      <style>
+        .duo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin:6px 0 26px; }
+        .duo-card figure { margin:0; }
+        .duo-card .duo-img { aspect-ratio:3/2; overflow:hidden; background:var(--surface-canvas); }
+        .duo-card .duo-img img { width:100%; height:100%; object-fit:cover; display:block; }
+        .duo-card figcaption { display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-muted); margin-top:10px; }
+        .duo-card figcaption .swatch { width:12px; height:12px; border-radius:50%; }
+        @media (max-width:720px){ .duo-grid{ grid-template-columns:1fr; } }
+      </style>
+
+      <div class="duo-grid">
+        <div class="duo-card"><figure>
+          <div class="duo-img"><img src="assets/Photography/case-study-duotones/coaching-to-support-leadership-development.jpg" alt="Team photo, gold duotone"></div>
+          <figcaption><span class="swatch" style="background:#CD9F36;"></span>Leadership · Radiant Gold</figcaption>
+        </figure></div>
+        <div class="duo-card"><figure>
+          <div class="duo-img"><img src="assets/Photography/case-study-duotones/moving-from-stress-to-strategy-with-a-team.jpg" alt="Team session, intentional-blue duotone"></div>
+          <figcaption><span class="swatch" style="background:#2531A5;"></span>Team · Intentional Blue</figcaption>
+        </figure></div>
+        <div class="duo-card"><figure>
+          <div class="duo-img"><img src="assets/Photography/case-study-duotones/facilitation-to-prepare-for-uncertainty.jpg" alt="Facilitation session, ochre duotone"></div>
+          <figcaption><span class="swatch" style="background:#B55312;"></span>Facilitation · Honest Ochre</figcaption>
+        </figure></div>
+      </div>
+
+      <div class="callout">
+        <div>
+          <div class="callout-eyebrow">How it works</div>
+          <h3 class="callout-title">One colorway<br>per service.</h3>
+          <p class="callout-body">Leadership → Radiant Gold, Team → Intentional Blue, Facilitation → Honest Ochre. Steady Blue and Clean Slate are available for extended or archival stories. The duotone is baked into the asset, not a live filter.</p>
+        </div>
+        <div class="callout-rules">
+          <div class="rule-row do"><div class="mark">+</div><div><span class="label">Do</span><p class="text">Tint case-study thumbnails and contextual session photos to their service colorway so the grid reads as one system.</p></div></div>
+          <div class="rule-row do"><div class="mark">+</div><div><span class="label">Do</span><p class="text">Keep enough tonal range that faces stay legible. On a light tint (gold), flip any overlaid type to ink for contrast (<code>.tint-light</code>).</p></div></div>
+          <div class="rule-row do"><div class="mark">+</div><div><span class="label">Do</span><p class="text">On solid-color case-study heroes, pre-darken the base (e.g. gold <code>#856226</code>, team <code>#4860c8</code>, facilitation <code>#a15324</code>) so cream text clears WCAG.</p></div></div>
+          <div class="rule-row dont"><div class="mark">−</div><div><span class="label">Don't</span><p class="text">Duotone the founder portraits, or mix a service’s photo with another service’s colorway.</p></div></div>
         </div>
       </div>
     </section>

@@ -380,6 +380,8 @@ Shows **one testimonial at a time**, advanced with circular prev/next arrows and
 
 **Color treatment:** Natural, slightly warm. Avoid cold/desaturated looks. Images may use Calm Blue or Clean Slate tones in backgrounds naturally.
 
+**Photo tinting (duotone) — the deliberate exception.** *Supporting* photography (case-study thumbnails, session/client photos, editorial context shots) is rendered as a **duotone keyed to the service colorway** — shadows in the service's dark ink, highlights in cream — to unify a grid of mismatched source photos and signal which service a story belongs to. Colorways: **Leadership → Radiant Gold, Team → Intentional Blue, Facilitation → Honest Ochre** (Steady Blue / Clean Slate for extended or archival stories). The duotone is **baked into the asset**, not a live CSS filter. Founder/brand portraits are the exception to the exception — they stay **full-colour, as shot**. On solid-color case-study heroes (a flat tint over no photo), pre-darken the base so cream text clears WCAG — e.g. leadership `#856226`, team `#4860c8`, facilitation `#a15324`; when the tint is light (gold), flip overlaid type to ink (`.tint-light`).
+
 ---
 
 ## Design Elements
@@ -393,7 +395,14 @@ Shows **one testimonial at a time**, advanced with circular prev/next arrows and
 
 Everything overlaps and sits slightly off-center — a hand-placed, considered composition, not a symmetric grid. This is the brand's "mosaic of people and perspectives" quality made literal. (Production note: watercolor spots are *not* binary alpha masks — crop them to their content box using a **low** alpha threshold, ~10–30, or you'll silently clip half the organic edge; scale spots from their center, never a corner.)
 
+**The three service collages (fixed identities).** Each service area owns a specific illustration + watercolor colorway that recurs everywhere the service appears (homepage cards, service-page heroes, and the matching case-study duotone). Same three-layer build — only these variables change. Keep the pairings consistent; they're how the brand signals which kind of work you're looking at.
+- **Leadership Coaching** — *Full moon* (Saturn as a celestial pairing) on a **Radiant Gold** (`#CD9F36`) spot; idea: rising capacity, orbit, the long view.
+- **Team Coaching** — *Bees* (pair/trio, the team as a unit) on an **Intentional Blue** (`#2531A5`) spot; idea: coordinated effort, working as one.
+- **Facilitation + Training** — *Lightbulb* on an **Honest Ochre** (`#B55312`) brushstroke; idea: ideas surfacing, clarity, the "aha."
+
 **Bio-page "scrapbook" collage:** a hand-placed, tilted, overlapping photo collage (4 photos at varied sizes/rotations) layered with a colored spot + scribble bleeding from a corner. Give each subject a *different* named spot color to differentiate otherwise-identical layouts.
+
+**Headline reversed over image (hero move).** A big League Spartan **700** headline in **cream** (`#F9F8F2`), centered and sitting low over a full-width photo, with a soft text-shadow (`0 2px 26px rgba(0,0,0,.34)`, `0 1px 4px rgba(0,0,0,.28)`) so it clears the image. Type is `clamp(34–92px)` / line-height 1.0 / tracking −0.02em, positioned `top: ~72%` (drops to ~62% and shrinks on mobile). Used for the homepage hero ("Leadership is hard. Let's work on it.") and the site's **OG share image**. Reserve it for one short declarative line over calm midtones — never body copy, never a brand-hue fill, never over a busy area.
 
 **Decorative bleed (spots & scribbles cropped off the page edges).** Beyond focal collages, large watercolor spots and looping scribbles are placed to **crop off the edges of a section** — a colored blob peeking in from one side, a scribble tail escaping the other — to add hand-made warmth and depth without competing with the content. Recipe: the section is `position: relative` with `overflow: hidden` (or `overflow-x: clip`); each deco is a `position: absolute`, `z-index: 0`, `pointer-events: none` image pushed off-frame with **negative offsets**; spots run 360–640px at opacity 0.55–0.92, scribbles 520–1128px, rotated or `scaleX(-1)` for a natural gesture. Content always sits above at `position: relative; z-index: 1`. Match the spot's colorway to the page. On mobile, **shrink the spot and drop the scribble** — a deco must never force horizontal scroll.
 
