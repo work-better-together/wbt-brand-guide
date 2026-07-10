@@ -1134,5 +1134,90 @@ function downloadMonogramTile(btn) {
   img.src = url;
 }
 </script>
+
+<script src="actions.js"></script>
+<style>
+  /* consistent Copy/Download overlay on every logo & monogram colorway tile */
+  .variant { position: relative; }
+  .ga-tile-ov { position:absolute; left:0; right:0; bottom:0; display:flex; gap:6px; justify-content:center;
+    padding:10px 8px; opacity:0; transition:opacity .15s; pointer-events:none; z-index:2; }
+  .variant:hover .ga-tile-ov, .ga-tile-ov:focus-within { opacity:1; pointer-events:auto; }
+  .ga-tile-ov .ga-btn { color:currentColor; border-color:currentColor; background:transparent; opacity:0.9; }
+  .ga-tile-ov .ga-btn:hover { color:currentColor; border-color:currentColor; opacity:1; background:rgba(127,127,127,0.16); }
+  .ga-tile-ov .ga-btn.ga-done { color:currentColor; border-color:currentColor; opacity:1; }
+  .social-tile-dl { display:none !important; }  /* replaced by the consistent overlay */
+</style>
+<script>
+  (function () {
+    function fb(btn, txt) {
+      if (btn._o === undefined) btn._o = btn.textContent;
+      btn.textContent = txt; btn.classList.add('ga-done');
+      clearTimeout(btn._t);
+      btn._t = setTimeout(function () { btn.textContent = btn._o; btn.classList.remove('ga-done'); }, 1200);
+    }
+    // Render any inline-SVG tile (wordmark or monogram) to a PNG blob, resolving
+    // the referenced <symbol>, filling with the tile's color, over its background.
+    function tileBlob(tile) {
+      var svg = tile.querySelector('svg');
+      if (!svg) return Promise.resolve(null);
+      var use = svg.querySelector('use');
+      var sym = use ? document.getElementById((use.getAttribute('href') || use.getAttribute('xlink:href') || '').replace('#', '')) : null;
+      var vbAttr = (sym && sym.getAttribute('viewBox')) || svg.getAttribute('viewBox') || '0 0 1000 409.21';
+      var vb = vbAttr.split(/\s+/).map(Number), vbW = vb[2], vbH = vb[3];
+      var inner = sym ? sym.innerHTML : svg.innerHTML;
+      var cs = getComputedStyle(tile);
+      var fg = cs.color, bg = tile.dataset.dlBg || cs.backgroundColor;
+      var scale = 1400 / Math.max(vbW, vbH), pad = 1400 * 0.13;
+      var artW = vbW * scale, artH = vbH * scale, cw = Math.round(artW + pad * 2), ch = Math.round(artH + pad * 2);
+      var svgStr = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + vbW + ' ' + vbH + '" width="' + artW + '" height="' + artH + '"><g fill="' + fg + '">' + inner + '</g></svg>';
+      var url = URL.createObjectURL(new Blob([svgStr], { type: 'image/svg+xml' }));
+      return new Promise(function (res) {
+        var im = new Image();
+        im.onload = function () {
+          var c = document.createElement('canvas'); c.width = cw; c.height = ch;
+          var x = c.getContext('2d'); x.fillStyle = bg; x.fillRect(0, 0, cw, ch);
+          x.drawImage(im, pad, pad, artW, artH); URL.revokeObjectURL(url);
+          c.toBlob(res, 'image/png');
+        };
+        im.onerror = function () { URL.revokeObjectURL(url); res(null); };
+        im.src = url;
+      });
+    }
+    function dl(tile, btn) {
+      tileBlob(tile).then(function (b) {
+        if (!b) { fb(btn, 'Error'); return; }
+        var a = document.createElement('a');
+        a.download = (tile.dataset.dlName || 'wbt-logo') + '.png';
+        a.href = URL.createObjectURL(b); a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+        fb(btn, 'Saved');
+      });
+    }
+    function copyTile(tile, btn) {
+      if (!(navigator.clipboard && window.ClipboardItem)) { dl(tile, btn); return; }
+      tileBlob(tile).then(function (b) {
+        if (!b) { fb(btn, 'Error'); return; }
+        navigator.clipboard.write([new ClipboardItem({ 'image/png': b })])
+          .then(function () { fb(btn, 'Copied'); })
+          .catch(function () { dl(tile, btn); });
+      });
+    }
+    function overlay(tile) {
+      if (tile.querySelector('.ga-tile-ov')) return;
+      var ov = document.createElement('div'); ov.className = 'ga-tile-ov';
+      [['Copy', copyTile], ['Download', dl]].forEach(function (a) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'ga-btn'; b.textContent = a[0];
+        b.addEventListener('click', function (e) { e.stopPropagation(); a[1](tile, b); });
+        ov.appendChild(b);
+      });
+      tile.appendChild(ov);
+    }
+    document.querySelectorAll('.variant-grid:not(.social-grid) > .variant').forEach(function (t) {
+      if (!t.dataset.dlName) { var cw = (t.className.match(/variant\s+([a-z]+)/) || [])[1] || 'variant'; t.dataset.dlName = 'wbt-wordmark-' + cw; }
+      overlay(t);
+    });
+    document.querySelectorAll('.social-grid > .variant').forEach(overlay);
+  })();
+</script>
 </body>
 </html>
