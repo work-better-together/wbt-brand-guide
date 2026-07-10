@@ -737,12 +737,14 @@
           <span class="role-meta">Wordmark</span>
           <svg class="wm wm-xl"><use href="#wbt-wordmark"/></svg>
           <p class="name"><strong>Wordmark</strong>The full name in custom letterforms — the default identity.</p>
+          <div class="ga-actions" style="margin-top:18px;"><button class="ga-btn" type="button" onclick="wbtDownloadMarkSVG(this)">Download SVG</button></div>
         </div>
         <div class="cell" style="color: var(--grounded-black);">
           <span class="role">Secondary</span>
           <span class="role-meta">Monogram</span>
           <svg class="mn mn-xl"><use href="#wbt-monogram"/></svg>
           <p class="name"><strong>Monogram</strong>“WBT” inside a rounded square. Avatars, app icons, watermarks.</p>
+          <div class="ga-actions" style="margin-top:18px;"><button class="ga-btn" type="button" onclick="wbtDownloadMarkSVG(this)">Download SVG</button></div>
         </div>
       </div>
     </section>
@@ -1167,9 +1169,12 @@ function downloadMonogramTile(btn) {
       var inner = sym ? sym.innerHTML : svg.innerHTML;
       var cs = getComputedStyle(tile);
       var fg = cs.color, bg = tile.dataset.dlBg || cs.backgroundColor;
+      // the symbol paths use fill="currentColor"; resolve it to the tile's color
+      // (a standalone SVG has no color context, so currentColor would default to black)
+      inner = inner.replace(/currentColor/g, fg);
       var scale = 1400 / Math.max(vbW, vbH), pad = 1400 * 0.13;
       var artW = vbW * scale, artH = vbH * scale, cw = Math.round(artW + pad * 2), ch = Math.round(artH + pad * 2);
-      var svgStr = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + vbW + ' ' + vbH + '" width="' + artW + '" height="' + artH + '"><g fill="' + fg + '">' + inner + '</g></svg>';
+      var svgStr = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + vbW + ' ' + vbH + '" width="' + artW + '" height="' + artH + '" color="' + fg + '"><g fill="' + fg + '">' + inner + '</g></svg>';
       var url = URL.createObjectURL(new Blob([svgStr], { type: 'image/svg+xml' }));
       return new Promise(function (res) {
         var im = new Image();
@@ -1212,6 +1217,23 @@ function downloadMonogramTile(btn) {
       });
       tile.appendChild(ov);
     }
+    // Transparent-background SVG of a primary mark (wordmark or monogram)
+    window.wbtDownloadMarkSVG = function (btn) {
+      var cell = btn.closest('.cell') || btn.parentElement.parentElement;
+      var svg = cell.querySelector('svg.wm, svg.mn'); if (!svg) return;
+      var use = svg.querySelector('use');
+      var sym = document.getElementById((use.getAttribute('href') || use.getAttribute('xlink:href') || '').replace('#', ''));
+      var vb = (sym && sym.getAttribute('viewBox')) || svg.getAttribute('viewBox') || '0 0 1000 409.21';
+      var fg = getComputedStyle(cell).color;
+      var inner = (sym ? sym.innerHTML : svg.innerHTML).replace(/currentColor/g, fg);
+      var name = svg.classList.contains('wm') ? 'wbt-wordmark' : 'wbt-monogram';
+      var out = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + vb + '"><g fill="' + fg + '">' + inner + '</g></svg>';
+      var a = document.createElement('a');
+      a.download = name + '.svg';
+      a.href = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(out);
+      a.click();
+      fb(btn, 'Saved');
+    };
     document.querySelectorAll('.variant-grid:not(.social-grid) > .variant').forEach(function (t) {
       if (!t.dataset.dlName) { var cw = (t.className.match(/variant\s+([a-z]+)/) || [])[1] || 'variant'; t.dataset.dlName = 'wbt-wordmark-' + cw; }
       overlay(t);
