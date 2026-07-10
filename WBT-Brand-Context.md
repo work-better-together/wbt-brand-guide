@@ -2,6 +2,7 @@
 
 **Brand:** Work Better Together (WBT)
 **Generated:** 2026-05-05
+**Updated:** 2026-07-09 — reconciled against the production **workbettertogether.coach** build: added the `.lede-thin` deck role, the three-layer collage system, and the in-frame-parallax + hand-drawn-annotation motion patterns; clarified the headline-color rule; fixed internal color/weight inconsistencies.
 **Use:** Paste this document into Claude Design as brand context before generating any components, pages, or layouts.
 
 ---
@@ -66,7 +67,7 @@
 | Name | Hex | Emotion | Use |
 |------|-----|---------|-----|
 | Clear White | `#F9F8F2` | open, transparent, neutral | Primary page background; text on dark surfaces; slight warmth vs pure white keeps brand from feeling clinical |
-| Grounded Black | `#1F1E1E` | solid, direct, stable | Body text, footers, high-contrast; use instead of pure black to maintain warmth; avoid as large background areas |
+| Grounded Black | `#1F1E1E` | solid, direct, stable | Body text, **headlines on light/cream backgrounds**, footers, high-contrast; use instead of pure black to maintain warmth; avoid as large background areas |
 
 **Primary**
 
@@ -74,7 +75,7 @@
 |------|-----|---------|-----|
 | Radiant Gold | `#CD9F36` | warm, insight, emphasis | Accent only — pull quotes, key stats, highlights, moments of insight; use sparingly; pairs strongly with all three blues |
 | Intentional Blue | `#2531A5` | action, purpose, confidence | CTAs, buttons, interactive elements, focus rings; signals something is clickable |
-| Steady Blue | `#061A49` | leadership, authority, safety | Primary brand color — hero backgrounds, key headlines, navigation, authoritative contexts |
+| Steady Blue | `#061A49` | leadership, authority, safety | Primary brand color — hero/section **backgrounds** (surfaces), navigation, authoritative contexts, and **headlines reversed out on dark surfaces**. On light/cream backgrounds headlines are Grounded Black, *not* Steady Blue — see "Headline color" under Typography Rules. |
 
 **Secondary**
 
@@ -137,7 +138,7 @@ Focus ring:             Intentional Blue (#2531A5), 2px solid
 
 | Font | Role | Weights |
 |------|------|---------|
-| **League Spartan** | Display · Headlines · Labels | 500 Medium, 700 Bold only |
+| **League Spartan** | Display · Headlines · Labels · Decks | 400 Regular *(deck/subtitle role only — see below)*, 500 Medium, 700 Bold |
 | **Lora** | Body · Editorial · Quotes | 400 Regular, 700 Bold, 400 Italic, 700 Italic |
 | **Inconsolata** | Attributions · CTAs only | 500 Medium only (uppercase, tracked) |
 
@@ -153,6 +154,7 @@ Focus ring:             Intentional Blue (#2531A5), 2px solid
 | H3 | 28px | 700 | −0.01em | 1.1 | Sub-sections |
 | H4 | 20px | 500 | 0 | 1.2 | Cards, panels |
 | H5 | 16px | 500 | +0.01em | 1.3 | List titles, UI labels |
+| Deck / Headline Support | `clamp(20px, 2.4vw, 26px)` | **400** | 0 | 1.42 | Subtitle/deck set directly under an H1/H2 — the `.lede-thin` role (sentence case, not uppercase) |
 
 **Body (Lora)**
 
@@ -173,14 +175,17 @@ Focus ring:             Intentional Blue (#2531A5), 2px solid
 ### Typography Rules
 
 - **Eyebrows/section labels:** League Spartan 500, uppercase, +0.18em — never Inconsolata
-- **Supporting text under a page headline:** League Spartan (not Lora)
+- **Supporting text / deck under a page headline:** League Spartan **Regular 400** at `clamp(20px, 2.4vw, 26px)`, line-height 1.42 — the `.lede-thin` **deck role** (sentence case). This is the *first* text block under an H1/H2. Serif Lora body copy (Body Large / Body) picks up *below* the deck, once the reader is past the headline zone. Rule of thumb: first block under a headline = League Spartan deck; further-down prose = Lora.
+- **Headline color:** headlines on light/cream backgrounds are **Grounded Black** (`#1F1E1E`), not Steady Blue. Steady Blue headlines are only for text **reversed out on a dark/Steady-Blue surface** (e.g. a hero title over a photo or on a blue band). This keeps "one headline color per context" while honoring "body/headlines are full ink on light."
 - **Lora italic:** reserved for quotes and callouts only — never general emphasis
 - **Inconsolata:** stays small (10–14px), uppercase, never mixed-case prose
 - **Buttons/CTAs:** Inconsolata 500 uppercase — this is the brand voice for actions
 - **Body emphasis:** Lora 700 Bold (optionally + Intentional Blue color)
-- **Only two weights per font:** 500/700 for League Spartan; 400/700 for Lora
+- **Weights:** League Spartan **500 / 700** for headlines & labels, plus **400 for the deck/subtitle role** only; Lora **400 / 700**. (Don't introduce other weights.)
 - **Tight tracking at large sizes:** −0.02em to −0.03em for headlines
 - **Positive tracking for small labels:** +0.14em to +0.18em at eyebrow/attribution sizes
+- **Curly quotes only:** always use typographic quotes and apostrophes (`'` `'` `"` `"`), never straight ASCII (`'` `"`), in any reader-facing copy — prose, headlines, page titles, meta descriptions, and image alt text. (Straight quotes are correct *only* inside code/markup, never in copy.)
+- **No single-word orphans:** the last line of a paragraph or list item should never be a single stranded word — glue the final two words with a non-breaking space so they wrap together.
 
 ---
 
@@ -315,7 +320,17 @@ Button radius: 10px
 - Exit: `cubic-bezier(0.4, 0, 1, 1)` — things leaving
 - Emphasis: `cubic-bezier(0.4, 0, 0.2, 1)` — emphasis moments
 
-**Reduced motion:** All animations must be disabled or reduced under `prefers-reduced-motion: reduce`.
+### Scroll-linked motion patterns
+
+**In-frame parallax (photos).** Any prominent photo (hero images, headshots, feature photos) can drift subtly *within its own frame* on scroll, so it feels alive without page-jump. Recipe: a fixed-aspect-ratio container with `overflow: hidden`; the `<img>` sized at **108–110%** with `object-fit: cover`, a slight negative inset, and **`max-width: none`** (a global `img { max-width: 100% }` reset will otherwise silently cancel the oversize and reintroduce edge gaps); plus a small `data-parallax` value (**0.08–0.14**). The image shifts a few pixels within its frame — enough to feel considered, never enough to reveal an edge. Decorative parallax is desktop-only by default (≥ 820px); bio-page collages are the deliberate exception (they keep their absolute layout at every width).
+
+**Hand-drawn annotations.** Key phrases can be marked with sketch-style ink in **Intentional Blue** that draws in on scroll — an open **circle** around a phrase, or a wobbly **underline**. Rules:
+- **Underline = single stroke** (one pass); **circle = double stroke** (two passes). Don't match them — a doubled underline reads as busy.
+- Underlines **may wrap** across multiple lines (each visual line gets its own segment); circles stay on **one line** (a circle around wrapped text looks broken).
+- Marks **animate once on first appearance, then persist** — they must not re-animate on scroll or on address-bar-driven mobile resize events.
+- A stable random seed keeps the wobble consistent across reloads.
+
+**Reduced motion:** All animations — including in-frame parallax and hand-drawn annotations — must be disabled or reduced under `prefers-reduced-motion: reduce`.
 
 ---
 
@@ -333,9 +348,16 @@ Button radius: 10px
 
 ## Design Elements
 
-**Watercolor textures:** Used as background layers at low opacity (15–25%) in hero sections, personality blocks, and editorial panels. Brand colors (Clean Slate, Grounded Black) are the primary sources.
+**Watercolor spots & textures:** Torn/rough-edged single-color watercolor blobs ("spots") from the brand texture library, plus soft textures used as low-opacity (15–25%) background washes. Spots come in four named color families — **Calm Blue, Clean Slate, Honest Ochre, Radiant Gold** — each with ~9 numbered shape variants. Reuse the *same* numbered shape across a page for visual rhyme, or vary for texture.
 
-**Collage compositions:** Layered portraits, color fills, and textures assembled into structured grids. The collage aesthetic expresses the brand's "mosaic of people and perspectives" quality.
+**Collage system (three-layer) — the signature decorative motif.** Used on hero sections, service pages, bio pages, and card icons. Always **three layers, in this fixed stacking order**:
+1. **Watercolor spot** (bottom) — a single-color blob; sets the color mood.
+2. **Scribble** (middle) — a thin black hand-drawn loop/line weaving through or behind the focal element; adds motion and a sketched quality.
+3. **Illustration or photo** (top) — the focal point (planet, cairn, telephone, compass, armillary sphere, etc., or a photo).
+
+Everything overlaps and sits slightly off-center — a hand-placed, considered composition, not a symmetric grid. This is the brand's "mosaic of people and perspectives" quality made literal. (Production note: watercolor spots are *not* binary alpha masks — crop them to their content box using a **low** alpha threshold, ~10–30, or you'll silently clip half the organic edge; scale spots from their center, never a corner.)
+
+**Bio-page "scrapbook" collage:** a hand-placed, tilted, overlapping photo collage (4 photos at varied sizes/rotations) layered with a colored spot + scribble bleeding from a corner. Give each subject a *different* named spot color to differentiate otherwise-identical layouts.
 
 **Editorial grid:** 2px gaps between adjacent panels create a newspaper/magazine feel — intentional density, not whitespace-heavy SaaS.
 
@@ -381,11 +403,11 @@ These variables are available via `tokens/tokens.css` — import this file to re
 
 ```css
 /* Colors */
---surface-canvas:         #FAF9F7  /* page bg */
+--surface-canvas:         #F9F8F2  /* page bg — Clear White */
 --surface-card:           #FFFFFF  /* card bg */
 --surface-brand-primary:  #061A49  /* Steady Blue panels */
 --surface-brand-secondary:#1E4D5C  /* Clean Slate panels */
---ink-default:            #1A1A1A  /* body text — always full ink */
+--ink-default:            #1F1E1E  /* body text — Grounded Black, always full ink */
 --ink-muted:              #6B6B6B  /* meta, captions, disabled */
 --ink-on-brand:           #F9F8F2  /* text on dark brand surfaces */
 --border-default:         #E4E2DE  /* dividers, card edges */
@@ -418,9 +440,9 @@ These variables are available via `tokens/tokens.css` — import this file to re
 
 2. **Body text is always full ink.** `--ink-muted` (#6B6B6B) is only for meta, captions, and disabled states. Never muted body copy.
 
-3. **Inconsolata locked to attributions and CTAs.** Buttons use Inconsolata 700 uppercase — that's the brand voice for actions. Eyebrows and labels use League Spartan 500, not mono.
+3. **Inconsolata locked to attributions and CTAs.** Buttons use Inconsolata **500** uppercase — that's the brand voice for actions. Eyebrows and labels use League Spartan 500, not mono. *(Inconsolata is 500-weight only; buttons are 500, +0.12em, 14px.)*
 
-4. **Supporting text under a page headline uses League Spartan (not Lora).** Lora picks up at the next body level, below the first paragraph under a headline.
+4. **Supporting text under a page headline uses League Spartan — the `.lede-thin` deck role** (Regular **400**, `clamp(20px, 2.4vw, 26px)`, line-height 1.42), *not* Lora. Lora body copy picks up at the next level, below the deck.
 
 5. **Honest Ochre is the warning/tension color.** The brand runs warm — Ochre is the natural friction color. Clean Slate–derived colors are the affirm/info color.
 
@@ -433,3 +455,9 @@ These variables are available via `tokens/tokens.css` — import this file to re
 9. **Motion ≤ 480ms everywhere.** The brand is "calm under pressure" — this extends to animation. No bouncy springs, no long expressive choreography.
 
 10. **Lucide icon library.** 1.5px stroke weight, round caps/joins, `currentColor`, 24px default viewport. Sizes: 16/20/24/32px.
+
+11. **Headlines on light backgrounds are Grounded Black, not Steady Blue.** Steady Blue is a *surface/background* color and the color for headlines **reversed out on dark surfaces** — reach for black on cream/white, not blue. (An easy thing to get wrong: "Steady Blue is the primary brand color" does *not* mean blue headline text on light pages.)
+
+12. **The collage motif is always three layers, in order: watercolor spot → scribble → illustration/photo.** Single named spot color per collage (Calm Blue / Clean Slate / Honest Ochre / Radiant Gold); overlap everything, keep it slightly off-center. See *Design Elements → Collage system*.
+
+13. **Curly quotes always; single-word orphans never.** Typographic `'` `"` in all copy (never straight ASCII), and glue the last two words of any paragraph so a lone word never wraps to its own line. See *Typography Rules*.
