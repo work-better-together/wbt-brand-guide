@@ -184,7 +184,7 @@
   /* Layout */
   --container-narrow:  640px;
   --container-prose:   720px;   /* pull quotes, long-form */
-  --container-default: 960px;   /* standard guide pages */
+  --container-default: 1175px;   /* standard guide pages */
   --container-wide:    1200px;  /* hero / dashboard */
   --container-full:    100%;
 
