@@ -155,6 +155,24 @@
       border-bottom: 1px solid var(--rule);
       margin-bottom: 32px;
     }
+    .family-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--ink);
+      margin: 8px 0 6px;
+    }
+    .family-note {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-style: italic;
+      color: var(--slate);
+      margin-bottom: 32px;
+      max-width: 620px;
+    }
 
     /* ── Sub-section header ── */
     .subsection {
@@ -4357,13 +4375,17 @@
   <section id="images" class="static-section">
     <div class="static-section-intro">
       <div>
-        <h2>Vintage Etched <strong>Illustration Set</strong></h2>
+        <h2>Concept <strong>Image Library</strong></h2>
       </div>
       <div>
-        <p>A collected library of symbolic, etched, and watercolor illustrations — eyes, hands, hearts, doors, suns, roots, keys. They live alongside our photographic concepts as moodier, more allegorical alternatives.</p>
-        <p>Use them when a layout calls for warmth, mystery, or a literary register — book covers, opening slides, journal-style spreads, hero composition with a single anchor object.</p>
+        <p>Our full library of concept imagery, in two complementary families: <strong>etched &amp; symbolic</strong> illustrations — eyes, hands, hearts, doors, suns, roots, keys — and <strong>photographic concepts</strong> organized by the ideas they express.</p>
+        <p>Reach for the etched pieces when a layout calls for warmth, mystery, or a literary register; reach for the photographic concepts when you want a direct, contemporary read on a specific theme.</p>
       </div>
     </div>
+
+    <!-- ══ Family 1: Etched & Symbolic ══ -->
+    <div class="family-label">Etched &amp; Symbolic</div>
+    <p class="family-note">Symbolic, etched, and watercolor illustrations — moodier, more allegorical alternatives, grouped by theme.</p>
 
     <!-- ── Ideas & Light ── -->
     <div class="section-label">Ideas &amp; Light · 4 illustrations</div>
@@ -4729,25 +4751,18 @@
       </div>
     </div>
 
-  </section>
+    <!-- ══ Family 2: Photographic Concepts ══ -->
+    <div class="family-label" style="margin-top:56px;">Photographic Concepts</div>
+    <p class="family-note">Photographic cut-outs organized by the concept they express — served from our local asset library.</p>
 
-  <div class="section-divider"></div>
-
-  <!-- ══════════════════════════════════════
-       LIVE FROM AIRTABLE
-  ══════════════════════════════════════ -->
-
-  <div style="font-family:var(--font-display);font-weight:700;font-size:28px;letter-spacing:-0.02em;color:var(--ink);margin-bottom:8px;">
-    Concept Library <span style="font-family:var(--font-body);font-style:italic;font-weight:400;color:var(--slate);font-size:22px;">— our working library</span>
-  </div>
-  <p style="font-family:var(--font-body);font-size:14px;color:var(--ink);font-style:italic;margin-bottom:32px;max-width:600px;">Photographic illustrations organized by concept, served from our local asset library.</p>
-
-  <div id="app">
-    <div class="loading-state">
-      <div class="loading-spinner"></div>
-      <div class="loading-text">Loading…</div>
+    <div id="app">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading…</div>
+      </div>
     </div>
-  </div>
+
+  </section>
 
   <div class="section-divider"></div>
 
