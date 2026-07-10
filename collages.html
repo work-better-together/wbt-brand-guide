@@ -651,6 +651,16 @@
   renderSavedCollages();
   // No localStorage polling needed — GitHub manifest is the source of truth.
 </script>
+<script src="actions.js"></script>
+<script>
+  (function () {
+    var acts = [{ label: 'Save', fn: gaCopyImg }, { label: 'Download', fn: gaDownload }];
+    function wire() { gaWireOverlay({ cards: '.finished-thumb', img: 'img', actions: acts }); }
+    wire();
+    setTimeout(wire, 600);
+    setTimeout(wire, 1800);
+  })();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>

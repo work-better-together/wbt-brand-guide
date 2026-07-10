@@ -409,6 +409,16 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 
+<script src="actions.js"></script>
+<script>
+  gaWireTiles({
+    cards: '.logo-card', img: '.logo-thumb img', bar: '.logo-body', wrap: true,
+    actions: [
+      { label: 'Copy', fn: gaCopyImg },
+      { label: 'Download', fn: gaDownload }
+    ]
+  });
+</script>
 <script src="nav.js"></script>
 </body>
 </html>

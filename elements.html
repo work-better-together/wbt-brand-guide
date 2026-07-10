@@ -4487,6 +4487,20 @@
 
   render();
 </script>
+<script src="actions.js"></script>
+<script>
+  (function () {
+    var acts = [{ label: 'Copy', fn: gaCopyImg }, { label: 'Download', fn: gaDownload }];
+    function wire() {
+      gaWireOverlay({ cards: '.spot-thumb', img: 'img', actions: acts });
+      gaWireOverlay({ cards: '.bg-thumb', img: 'img', actions: acts });
+      gaWireOverlay({ cards: '.image-cell', img: 'img', actions: acts });
+    }
+    wire();
+    setTimeout(wire, 600);
+    setTimeout(wire, 1800);
+  })();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>

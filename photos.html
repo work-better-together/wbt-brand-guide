@@ -615,6 +615,15 @@
 
   </main>
 
+<script src="actions.js"></script>
+<script>
+  (function () {
+    var acts = [{ label: 'Copy', fn: gaCopyImg }, { label: 'Download', fn: gaDownload }];
+    gaWireOverlay({ cards: '.hero-portrait', img: 'img', actions: acts });
+    gaWireOverlay({ cards: '.portrait-image', img: 'img', actions: acts });
+    gaWireOverlay({ cards: '.duo-img', img: 'img', actions: acts });
+  })();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>

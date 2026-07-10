@@ -1224,6 +1224,31 @@
   </div>
 
 </div>
+<style>
+  /* copy-hex button on each swatch — inherits the swatch's own text color so it reads on any colorway */
+  .swatch { }
+  .ga-swatch-copy { position: absolute; left: 28px; bottom: 26px; color: currentColor; border-color: currentColor; opacity: 0.62; }
+  .ga-swatch-copy:hover { opacity: 1; color: currentColor; border-color: currentColor; background: rgba(127,127,127,0.14); }
+  .ga-swatch-copy.ga-done { opacity: 1; color: currentColor; border-color: currentColor; }
+  @media (max-width: 640px) { .ga-swatch-copy { left: 20px; bottom: 18px; padding: 5px 9px; } }
+</style>
+<script src="actions.js"></script>
+<script>
+  (function () {
+    document.querySelectorAll('.swatch').forEach(function (sw) {
+      var hexEl = sw.querySelector('.swatch-hex');
+      if (!hexEl) return;
+      var hex = hexEl.textContent.trim();
+      if (!/^#?[0-9A-Fa-f]{3,8}$/.test(hex.replace('#',''))) return;
+      var b = document.createElement('button');
+      b.className = 'ga-btn ga-swatch-copy';
+      b.type = 'button';
+      b.textContent = 'Copy hex';
+      b.addEventListener('click', function (e) { gaCopyHex(hex, b, e); });
+      sw.appendChild(b);
+    });
+  })();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>
