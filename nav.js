@@ -16,6 +16,7 @@
     { file: 'social-maker.html',               title: 'Social Maker',    num: '14' },
     { file: 'tokens.html',               title: 'Tokens',          num: '15' },
     { file: 'components.html',           title: 'Components',      num: '15' },
+    { file: 'patterns.html',             title: 'Patterns',        num: '16' },
     { file: 'iconography.html',          title: 'Iconography',     num: '16' },
     { file: 'data-viz.html',             title: 'Data Viz',        num: '17' },
     { file: 'microcopy.html',            title: 'Microcopy',       num: '18' }
