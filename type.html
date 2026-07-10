@@ -457,6 +457,7 @@
     .t-h3      { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.01em; line-height: 1.1; color: var(--ink); }
     .t-h4      { font-family: var(--font-display); font-weight: 500; font-size: 20px; letter-spacing: 0; line-height: 1.2; color: var(--ink); }
     .t-h5      { font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: 0.01em; line-height: 1.3; color: var(--ink); }
+    .t-lede    { font-family: var(--font-display); font-weight: 400; font-size: 24px; letter-spacing: 0; line-height: 1.42; color: var(--ink); max-width: 32ch; }
     .t-body-lg { font-family: var(--font-body); font-weight: 400; font-size: 19px; line-height: 1.75; color: var(--ink); }
     .t-body    { font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.75; color: var(--ink); }
     .t-body-sm { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.65; color: var(--ink); }
@@ -555,7 +556,7 @@
     <p>Three typefaces and a defined scale. Each typeface has a distinct voice; together with sizes, weights, and roles for every level of the hierarchy, they form a coherent, expressive system.</p>
     <div class="element-note">
       <span class="note-tag">This page-header is the example</span>
-      Eyebrow: League Spartan 500, uppercase, positive tracking. Lead paragraph: League Spartan 400, roman, full ink. Supporting text under a page-level headline stays in the same family — Lora picks up at the next body level.
+      Eyebrow: League Spartan 500, uppercase, positive tracking. Sans-serif lede: League Spartan 400, roman, full ink — <code>clamp(20–26px)</code>/1.42, the <code>.lede-thin</code> role. The intro paragraph under a page-level headline stays in the same family; Lora picks up at the next body level.
     </div>
   </header>
 
@@ -581,7 +582,7 @@
       <div class="weight-cell">
         <div class="weight-sample" style="font-family:'League Spartan';font-weight:400;">Regular</div>
         <div class="weight-label">400 · Regular</div>
-        <div class="weight-note">The <strong>deck / subtitle</strong> directly under a page headline (the <code>.lede-thin</code> role) — <code>clamp(20–26px)</code>, line-height 1.42. Deck role only; not for headings or labels.</div>
+        <div class="weight-note">The <strong>sans-serif lede</strong> (deck) — the intro paragraph directly under a page headline (the <code>.lede-thin</code> role), <code>clamp(20–26px)</code>/1.42. This role only; not for headings or labels.</div>
       </div>
       <div class="weight-cell">
         <div class="weight-sample" style="font-family:'League Spartan';font-weight:500;">Medium</div>
@@ -776,7 +777,7 @@
     <div class="eyebrow">What we work on</div>
     <h2 style="margin-bottom:18px;">We help leaders and teams work better together.</h2>
     <p style="font-family:var(--font-display); font-weight:400; font-size:clamp(20px,2.4vw,26px); line-height:1.42; letter-spacing:0; color:var(--ink); max-width:40ch;">We help leaders and teams slow down, see what’s really happening, and move forward with <span class="tm-wave">clarity</span> and <span class="tm-uline" style="position:relative; white-space:nowrap;">care<svg viewBox="0 0 60 12" fill="none" preserveAspectRatio="none" style="position:absolute;left:-8%;bottom:-42%;width:116%;height:52%;overflow:visible;pointer-events:none;"><path d="M2 7 C14 4 30 10 44 6 C52 4 58 7 58 7" stroke="#2531A5" stroke-width="2" stroke-linecap="round"/></svg></span>.</p>
-    <p style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-muted); margin-top:16px;">Deck / <code>.lede-thin</code> · League Spartan 400 · clamp(20–26px) / 1.42 · the first block under a headline (Lora body picks up below)</p>
+    <p style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-muted); margin-top:16px;">Sans-serif lede (deck) · <code>.lede-thin</code> · League Spartan 400 · clamp(20–26px) / 1.42 · the first block under a headline (Lora body picks up below)</p>
   </div>
 
 
@@ -870,6 +871,20 @@
       <div class="spec-item"><span class="spec-label">Tracking</span><span class="spec-value">+0.01em</span></div>
       <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.3</span></div>
       <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">List titles, UI labels</span></div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-sample">
+      <div class="type-role-tag">Sans-serif Lede</div>
+      <div class="t-lede">We help leaders and teams slow down, see what’s really happening, and move forward with clarity and care.</div>
+    </div>
+    <div class="type-specs">
+      <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">clamp(20–26px)</span></div>
+      <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-value">400 Regular</span></div>
+      <div class="spec-item"><span class="spec-label">Leading</span><span class="spec-value">1.42</span></div>
+      <div class="spec-item"><span class="spec-label">Class</span><span class="spec-value">.lede-thin</span></div>
+      <div class="spec-item"><span class="spec-label">Use</span><span class="spec-value">Intro paragraph under a headline</span></div>
     </div>
   </div>
 
