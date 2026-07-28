@@ -7,7 +7,7 @@
  *
  * Secrets (set with `wrangler secret put`, NEVER commit these):
  *   GITHUB_TOKEN   — a fine-grained GitHub PAT with "Contents: Read and write"
- *                    on ONLY the deroyperaza/wbt-brand-guide repo.
+ *                    on ONLY the work-better-together/wbt-brand-guide repo.
  *   SHARED_SECRET  — a passphrase the team enters once in the collage maker.
  *                    Gates writes so the endpoint isn't open to the internet.
  *
@@ -22,7 +22,7 @@
  * Response: 200 { ok: true, path } | 401 | 400 | 502
  */
 
-const REPO         = 'deroyperaza/wbt-brand-guide';
+const REPO         = 'work-better-together/wbt-brand-guide';
 const BRANCH       = 'main';
 const IMG_DIR      = 'assets/Generated Illustrations';
 const MANIFEST     = 'assets/Generated Illustrations/manifest.json';

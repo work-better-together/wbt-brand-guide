@@ -22,7 +22,7 @@ collage-maker.html  ──POST (collage PNG + passphrase)──▶  this Worker 
 
 1. **Create a fine-grained GitHub token** (much narrower than the old one):
    GitHub → Settings → Developer settings → Fine-grained tokens →
-   - Repository access: **Only** `deroyperaza/wbt-brand-guide`
+   - Repository access: **Only** `work-better-together/wbt-brand-guide` (resource owner: the org)
    - Permissions: **Contents → Read and write** (nothing else)
    - Copy the token (starts with `github_pat_…`).
 
