@@ -157,6 +157,31 @@
       .section-block { margin-bottom: 56px; }
       .tokens-used { padding: 16px 18px; overflow-x: auto; }
     }
+
+    /* ── Brand motion: logo + social (Oct 2026) ── */
+    .mv-idea { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.015em; color: var(--ink-default); max-width: 820px; margin-bottom: 14px; }
+    .mv-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+    .mv-head .section-label { flex: 1 1 auto; }
+    .mv-dl { font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-default); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+    .mv-dl:hover { color: #2531A5; }
+    .mv-video { display: block; width: 100%; height: auto; background: #F9F8F2; }
+    .mv-hero { margin-bottom: 2px; border: 1px solid var(--border-subtle); }
+    .mv-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+    .mv-row figure, .mv-social figure { margin: 0; }
+    .mv-row figure .mv-video { aspect-ratio: 1 / 1; object-fit: cover; }
+    .mv-social { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .mv-social .mv-video { aspect-ratio: 4 / 5; border: 1px solid var(--border-subtle); }
+    figcaption { font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: 0.04em; color: var(--ink-default); padding-top: 10px; }
+    figcaption span { display: block; font-family: var(--font-body); font-weight: 400; letter-spacing: 0; color: var(--ink-default); margin-top: 4px; line-height: 1.55; }
+    .mv-desc { margin-top: 16px; max-width: 760px; }
+    .mv-desc summary { cursor: pointer; font-family: var(--font-display); font-weight: 500; font-size: 14px; color: var(--ink-default); list-style: none; }
+    .mv-desc summary::after { content: '+'; color: #2531A5; margin-left: 8px; }
+    .mv-desc[open] summary::after { content: '–'; }
+    .mv-desc p { font-family: var(--font-body); font-size: 15px; line-height: 1.65; margin-top: 10px; }
+    .mv-pause { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 50; font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; background: #F9F8F2; color: #1F1E1E; border: 1px solid #1F1E1E; border-radius: 10px; padding: 10px 16px; cursor: pointer; }
+    @media (max-width: 700px) {
+      .mv-row, .mv-social { grid-template-columns: minmax(0, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -167,6 +192,61 @@
     <h1>Motion</h1>
     <p>Movement should feel calm and intentional — like the brand itself. Confident without urgency. Considered, not flashy.</p>
   </header>
+
+
+  <!-- ─── Brand motion: idea ─── -->
+  <div class="section-block">
+    <div class="section-label">The motion idea</div>
+    <p class="mv-idea">Calm under pressure. Hold steady, then move with&nbsp;intent.</p>
+    <p class="section-intro">Our brand moves the way we coach: nothing rushed, nothing showy. Things arrive in order, settle into place and stay still long enough to read. Each move is short and eases out; the holds do the&nbsp;work.</p>
+  </div>
+
+  <!-- ─── Brand motion: logo animation ─── -->
+  <div class="section-block">
+    <div class="mv-head"><div class="section-label">Logo animation</div><a class="mv-dl" href="assets/Motion/WBT-20261020-Wordmark-End-Card-Clear-White-16x9.mp4" download>Download MP4</a></div>
+    <p class="section-intro"><strong>Word by Word.</strong> Each word of the wordmark rises into place inside its own line, one after another, then holds. Use it to open or close a video, and as the end card on every piece of motion.</p>
+    <div class="mv-hero"><video class="mv-video" src="assets/Motion/WBT-20261020-Wordmark-End-Card-Clear-White-16x9.mp4" poster="assets/Motion/WBT-20261020-Wordmark-End-Card-Clear-White-16x9-poster.jpg" muted loop playsinline preload="metadata" aria-label="Wordmark End Card Clear White 16x9"></video></div>
+    <div class="mv-row">
+      <figure><video class="mv-video" src="assets/Motion/WBT-20261020-Wordmark-End-Card-Steady-Blue-16x9.mp4" poster="assets/Motion/WBT-20261020-Wordmark-End-Card-Steady-Blue-16x9-poster.jpg" muted loop playsinline preload="metadata" aria-label="Wordmark End Card Steady Blue 16x9"></video><figcaption>Word by Word · Steady Blue</figcaption></figure>
+      <figure><video class="mv-video" src="assets/Motion/WBT-20261020-Monogram-Sting-Steady-Blue-1x1.mp4" poster="assets/Motion/WBT-20261020-Monogram-Sting-Steady-Blue-1x1-poster.jpg" muted loop playsinline preload="metadata" aria-label="Monogram Sting Steady Blue 1x1"></video><figcaption>Monogram Settle · Steady Blue</figcaption></figure>
+      <figure><video class="mv-video" src="assets/Motion/WBT-20261020-Monogram-Sting-Clear-White-1x1.mp4" poster="assets/Motion/WBT-20261020-Monogram-Sting-Clear-White-1x1-poster.jpg" muted loop playsinline preload="metadata" aria-label="Monogram Sting Clear White 1x1"></video><figcaption>Monogram Settle · Clear White</figcaption></figure>
+    </div>
+    <details class="mv-desc"><summary>Animation description</summary>
+      <p><strong>Word by Word:</strong> after a 0.5s lead, “Work”, “Better” and “Together” each rise from below their own baseline (0.42s each, 0.16s apart, ease-out <code>cubic-bezier(0,0,.2,1)</code>). The full wordmark holds for 2.4s, then the words rise out (0.32s, ease-in). The held frame is the official wordmark file, unchanged.</p>
+      <p><strong>Monogram Settle:</strong> the ring settles from 96% to 100% as it appears (0.42s), then the letters rise into place inside it. Hold 2.4s, then the letters rise out and the ring clears. Use it for short stings and avatars.</p>
+      <p>End cards come in 16:9, 9:16 and 1:1, on Clear White and Steady Blue: <a href="assets/Motion/WBT-20261020-Wordmark-End-Card-Clear-White-9x16.mp4" download>9:16 Clear White</a> · <a href="assets/Motion/WBT-20261020-Wordmark-End-Card-Steady-Blue-9x16.mp4" download>9:16 Steady Blue</a> · <a href="assets/Motion/WBT-20261020-Wordmark-End-Card-Clear-White-1x1.mp4" download>1:1 Clear White</a> · <a href="assets/Motion/WBT-20261020-Wordmark-End-Card-Steady-Blue-16x9.mp4" download>16:9 Steady Blue</a> · <a href="assets/Motion/WBT-20261020-Monogram-Sting-Steady-Blue-1x1.mp4" download>Monogram sting</a>.</p>
+    </details>
+  </div>
+
+  <!-- ─── Brand motion: social posts ─── -->
+  <div class="section-block">
+    <div class="section-label">Social posts in motion</div>
+    <p class="section-intro">Our post templates, animated. The collage gathers, then the words rise in line by line and hold long enough to read. Built at 1080×1350 for Instagram and LinkedIn.</p>
+    <div class="mv-social">
+      <figure><video class="mv-video" src="assets/Motion/WBT-20261020-Social-Headline-Collage-Gather-4x5.mp4" poster="assets/Motion/WBT-20261020-Social-Headline-Collage-Gather-4x5-poster.jpg" muted loop playsinline preload="metadata" aria-label="Social Headline Collage Gather 4x5"></video><figcaption>Collage Gather + Line Rise<span>The spot blooms, the scribble and moon settle, then each line of type rises in.</span></figcaption></figure>
+      <figure><video class="mv-video" src="assets/Motion/WBT-20261020-Social-Quote-Line-Rise-4x5.mp4" poster="assets/Motion/WBT-20261020-Social-Quote-Line-Rise-4x5-poster.jpg" muted loop playsinline preload="metadata" aria-label="Social Quote Line Rise 4x5"></video><figcaption>Line Rise · Quote<span>The gold quote mark arrives, then the quote rises in line by line, then who said it.</span></figcaption></figure>
+      <figure><video class="mv-video" src="assets/Motion/WBT-20261020-Social-Stat-Line-Rise-4x5.mp4" poster="assets/Motion/WBT-20261020-Social-Stat-Line-Rise-4x5-poster.jpg" muted loop playsinline preload="metadata" aria-label="Social Stat Line Rise 4x5"></video><figcaption>Line Rise · Stat<span>The number rises in whole, never counting up; the source arrives with the monogram.</span></figcaption></figure>
+    </div>
+  </div>
+
+  <!-- ─── Brand motion: move library ─── -->
+  <div class="section-block">
+    <div class="section-label">Move library</div>
+    <p class="section-intro">Every move has a name, so you can ask for it: “Collage Gather, then Line Rise, then the Word by Word end card.”</p>
+    <div class="tokens-used" style="margin-top:0;">
+      <table>
+        <thead><tr><th>Move</th><th>What happens</th><th>Timing</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Word by Word</strong></td><td>Each word of the wordmark rises into place inside its own line.</td><td>0.42s a word, 0.16s apart; hold 2.4s</td><td>Logo opens and end cards</td></tr>
+          <tr><td><strong>Monogram Settle</strong></td><td>The ring settles in, then the letters rise inside it.</td><td>0.42s + 0.42s; hold 2.4s</td><td>Stings, avatars, small screens</td></tr>
+          <tr><td><strong>Collage Gather</strong></td><td>The three collage layers arrive in order: the spot blooms, the scribble settles, the illustration settles on top.</td><td>0.48s each, 0.16s apart</td><td>Any post or slide with a collage</td></tr>
+          <tr><td><strong>Line Rise</strong></td><td>Each line of type rises into place inside its own line. Nothing moves while it’s being read.</td><td>0.42s a line, 0.12s apart; hold ≥ 3s</td><td>Headlines, quotes, stats</td></tr>
+          <tr><td><strong>In-frame Drift</strong></td><td>A photo drifts a few pixels inside its frame on scroll.</td><td>Scroll-linked, speed 0.08–0.14</td><td>Website photos (see below)</td></tr>
+          <tr><td><strong>Ink Draw</strong></td><td>A hand-drawn underline or circle draws in along its own path, once.</td><td>Once, on first view</td><td>Key phrases on the website</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 
   <!-- ─── Scroll-linked patterns ─── -->
@@ -462,5 +542,21 @@
 
 </div>
 <script src="nav.js"></script>
+
+<button class="mv-pause" type="button" aria-pressed="false">Pause motion</button>
+<script>
+(() => {
+  const vids = [...document.querySelectorAll('.mv-video')], btn = document.querySelector('.mv-pause');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let paused = reduce;
+  const rest = v => { v.pause(); v.currentTime = /Social/.test(v.src) ? 4.0 : 2.2; };   // held frame: the full logo / full post
+  const io = new IntersectionObserver(es => es.forEach(e => { if (paused) return; e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause(); }), { threshold: .25 });
+  vids.forEach(v => { v.addEventListener('loadedmetadata', () => paused && rest(v), { once: true }); io.observe(v); });
+  const set = p => { paused = p; btn.textContent = p ? 'Play motion' : 'Pause motion'; btn.setAttribute('aria-pressed', p);
+    vids.forEach(v => p ? rest(v) : (v.getBoundingClientRect().top < innerHeight && v.play().catch(() => {}))); };
+  btn.addEventListener('click', () => set(!paused));
+  set(paused);
+})();
+</script>
 </body>
 </html>
