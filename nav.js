@@ -19,7 +19,8 @@
     { file: 'collage-maker.html',        title: 'Collage Maker', num: '17' },
     { file: 'deck-template/index.html',  title: 'Deck Template', num: '18' },
     { file: 'newsletter.html',           title: 'Newsletter',    num: '19' },
-    { file: 'social-maker.html',         title: 'Social Maker',  num: '20' }
+    { file: 'social-maker.html',         title: 'Social Maker',  num: '20' },
+    { file: 'downloads.html',            title: 'Downloads',     num: '21' }
   ];
 
   const here = decodeURIComponent((location.pathname.split('/').pop() || '')).replace(/\.html$/i, '').toLowerCase();
@@ -309,6 +310,7 @@
       { file: 'deck-template/index.html',  title: 'Deck Template' },
       { file: 'newsletter.html',           title: 'Newsletter' },
       { file: 'social-maker.html',         title: 'Social Maker', wip: true },
+      { file: 'downloads.html',            title: 'Downloads' },
     ]},
   ];
 

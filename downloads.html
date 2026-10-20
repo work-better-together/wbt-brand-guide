@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="assets/Logos/WBT-20260505-Favicon-Intentional-Blue.svg">
+  <link rel="apple-touch-icon" href="assets/Logos/apple-touch-icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Downloads — Work Better Together</title>
+  <link rel="stylesheet" href="tokens/tokens.css">
+  <style>
+    @font-face { font-family: 'League Spartan'; src: url('assets/Fonts/LeagueSpartan-Variable.ttf') format('truetype'); font-weight: 100 900; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: normal; }
+    @font-face { font-family: 'Lora'; src: url('assets/Fonts/Lora-Italic-Variable.ttf') format('truetype'); font-weight: 400 700; font-style: italic; }
+    @font-face { font-family: 'Inconsolata'; src: url('assets/Fonts/Inconsolata-Variable.ttf') format('truetype'); font-weight: 200 900; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--surface-canvas); color: var(--ink-default); font-family: var(--font-body); line-height: 1.6; }
+    .page { max-width: var(--container-default); margin: 0 auto; padding: var(--page-padding-y) var(--page-padding-x) var(--space-24); }
+
+    .page-header { margin-bottom: var(--gap-section); padding-bottom: var(--space-8); border-bottom: 1px solid var(--border-subtle); }
+    .page-header .label { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-brand); display: block; margin-bottom: 8px; }
+    .page-header h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1; color: var(--ink-default); margin-bottom: 12px; }
+    .page-header p { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--ink-default); max-width: 560px; }
+
+    .section-label { font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-default); padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
+    .section-intro { font-family: var(--font-body); font-size: 15px; color: var(--ink-default); max-width: 720px; margin-bottom: 28px; line-height: 1.65; }
+
+    .section-block { margin-bottom: 96px; }
+    .section-block a:not(.dl-btn) { color: inherit; }
+    .dl-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+    .dl-head .section-label { flex: 1 1 auto; }
+    .dl-btn { font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-default); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; white-space: nowrap; }
+    .dl-btn:hover, .dl-tile a:hover { color: #2531A5; }
+    .dl-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
+    .dl-grid.mono { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .dl-tile { margin: 0; }
+    .dl-ground { aspect-ratio: 4 / 3; display: grid; place-items: center; padding: 18%; }
+    .mono .dl-ground { aspect-ratio: 1; padding: 22%; }
+    .dl-ground img { width: 100%; height: 100%; object-fit: contain; }
+    .dl-tile figcaption { font-family: var(--font-display); font-weight: 500; font-size: 13px; padding: 10px 12px 20px 0; display: flex; flex-direction: column; gap: 8px; }
+    .dl-tile figcaption span { display: flex; gap: 14px; }
+    .dl-tile a { font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.14em; color: var(--ink-default); text-decoration: none; border-bottom: 1px solid currentColor; }
+    .dl-list { list-style: none; border-top: 1px solid var(--border-subtle); }
+    .dl-list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 24px; padding: 16px 0; border-bottom: 1px solid var(--border-subtle); }
+    .dl-list strong { font-family: var(--font-display); font-weight: 700; font-size: 18px; flex: 0 0 200px; }
+    .dl-list p { font-family: var(--font-body); font-size: 15px; line-height: 1.6; flex: 1 1 360px; }
+    @media (max-width: 1000px) { .dl-grid.mono { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    @media (max-width: 700px) { .dl-grid, .dl-grid.mono { grid-template-columns: repeat(2, minmax(0, 1fr)); } .section-block { margin-bottom: 56px; } }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <h1>Downloads</h1>
+    <p>Every file you need to make something on brand, in one place. Use the official files; never redraw the logo.</p>
+  </header>
+
+  <div class="section-block">
+    <div class="dl-head"><div class="section-label">Wordmark</div><a class="dl-btn" href="assets/Downloads/WBT-20261020-Logo-Kit.zip" download>Logo kit · ZIP</a></div>
+    <p class="section-intro">The wordmark in every approved ink, shown on the ground it pairs with. SVG for anything digital or print; PNG (1000px, transparent) for apps that can’t place SVG. The kit has both marks in every ink. See the <a href="logo.html">Logo</a> page for clearspace and sizing.</p>
+    <div class="dl-grid">
+      <figure class="dl-tile"><div class="dl-ground" style="background:#F9F8F2"><img src="assets/Downloads/Logos/WBT-20261020-Wordmark-Grounded-Black.svg" alt="Wordmark, Grounded Black on Clear White"></div>
+        <figcaption>Grounded Black on Clear White<span><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Grounded-Black.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Grounded-Black.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#F9F8F2"><img src="assets/Downloads/Logos/WBT-20261020-Wordmark-Intentional-Blue.svg" alt="Wordmark, Intentional Blue on Clear White"></div>
+        <figcaption>Intentional Blue on Clear White<span><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Intentional-Blue.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Intentional-Blue.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#ACCDD9"><img src="assets/Downloads/Logos/WBT-20261020-Wordmark-Clean-Slate.svg" alt="Wordmark, Clean Slate on Calm Blue"></div>
+        <figcaption>Clean Slate on Calm Blue<span><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Clean-Slate.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Clean-Slate.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#1E4D5C"><img src="assets/Downloads/Logos/WBT-20261020-Wordmark-Calm-Blue.svg" alt="Wordmark, Calm Blue on Clean Slate"></div>
+        <figcaption>Calm Blue on Clean Slate<span><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Calm-Blue.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Calm-Blue.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#CD9F36"><img src="assets/Downloads/Logos/WBT-20261020-Wordmark-Steady-Blue.svg" alt="Wordmark, Steady Blue on Radiant Gold"></div>
+        <figcaption>Steady Blue on Radiant Gold<span><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Steady-Blue.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Steady-Blue.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#061A49"><img src="assets/Downloads/Logos/WBT-20261020-Wordmark-Radiant-Gold.svg" alt="Wordmark, Radiant Gold on Steady Blue"></div>
+        <figcaption>Radiant Gold on Steady Blue<span><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Radiant-Gold.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Radiant-Gold.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#2531A5"><img src="assets/Downloads/Logos/WBT-20261020-Wordmark-Clear-White.svg" alt="Wordmark, Clear White on Intentional Blue"></div>
+        <figcaption>Clear White on Intentional Blue<span><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Clear-White.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Wordmark-Clear-White.png" download>PNG</a></span></figcaption></figure>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="dl-head"><div class="section-label">Monogram</div><a class="dl-btn" href="assets/Downloads/WBT-20261020-Logo-Kit.zip" download>Logo kit · ZIP</a></div>
+    <p class="section-intro">The monogram for avatars, small spaces and sign-offs, in the same inks.</p>
+    <div class="dl-grid mono">
+      <figure class="dl-tile"><div class="dl-ground" style="background:#F9F8F2"><img src="assets/Downloads/Logos/WBT-20261020-Monogram-Grounded-Black.svg" alt="Monogram, Grounded Black on Clear White"></div>
+        <figcaption>Grounded Black on Clear White<span><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Grounded-Black.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Grounded-Black.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#F9F8F2"><img src="assets/Downloads/Logos/WBT-20261020-Monogram-Intentional-Blue.svg" alt="Monogram, Intentional Blue on Clear White"></div>
+        <figcaption>Intentional Blue on Clear White<span><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Intentional-Blue.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Intentional-Blue.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#ACCDD9"><img src="assets/Downloads/Logos/WBT-20261020-Monogram-Clean-Slate.svg" alt="Monogram, Clean Slate on Calm Blue"></div>
+        <figcaption>Clean Slate on Calm Blue<span><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Clean-Slate.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Clean-Slate.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#1E4D5C"><img src="assets/Downloads/Logos/WBT-20261020-Monogram-Calm-Blue.svg" alt="Monogram, Calm Blue on Clean Slate"></div>
+        <figcaption>Calm Blue on Clean Slate<span><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Calm-Blue.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Calm-Blue.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#CD9F36"><img src="assets/Downloads/Logos/WBT-20261020-Monogram-Steady-Blue.svg" alt="Monogram, Steady Blue on Radiant Gold"></div>
+        <figcaption>Steady Blue on Radiant Gold<span><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Steady-Blue.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Steady-Blue.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#061A49"><img src="assets/Downloads/Logos/WBT-20261020-Monogram-Radiant-Gold.svg" alt="Monogram, Radiant Gold on Steady Blue"></div>
+        <figcaption>Radiant Gold on Steady Blue<span><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Radiant-Gold.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Radiant-Gold.png" download>PNG</a></span></figcaption></figure>
+      <figure class="dl-tile"><div class="dl-ground" style="background:#2531A5"><img src="assets/Downloads/Logos/WBT-20261020-Monogram-Clear-White.svg" alt="Monogram, Clear White on Intentional Blue"></div>
+        <figcaption>Clear White on Intentional Blue<span><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Clear-White.svg" download>SVG</a><a href="assets/Downloads/Logos/WBT-20261020-Monogram-Clear-White.png" download>PNG</a></span></figcaption></figure>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-label">Templates, motion and fonts</div>
+    <ul class="dl-list">
+      <li><strong>Starter deck</strong><p>Eight editable 16:9 slides: cover, section divider, content, photo, quote, stats, bio, thank you. Brand fonts and colors are set in the theme. Opens in PowerPoint, Keynote and Google Slides (File › Import slides).</p><a class="dl-btn" href="assets/Downloads/WBT-20261020-Starter-Deck.pptx" download>PPTX · 2 MB</a></li>
+      <li><strong>Motion kit</strong><p>The Word by Word end cards (16:9, 9:16, 1:1 on Clear White and Steady Blue), the Monogram Settle stings and the animated social posts, as MP4. See <a href="motion.html">Motion</a>.</p><a class="dl-btn" href="assets/Downloads/WBT-20261020-Motion-Kit.zip" download>ZIP · 1.8 MB</a></li>
+      <li><strong>Fonts</strong><p>League Spartan, Lora and Inconsolata, free under the SIL Open Font License (included). Install them before editing the deck in PowerPoint or Keynote; Google Slides has them built in.</p><a class="dl-btn" href="assets/Downloads/WBT-20261020-Fonts.zip" download>ZIP · 0.5 MB</a></li>
+      <li><strong>Brand assets</strong><p>Watercolor spots and backgrounds, scribbles, illustrations, shapes, frames and patterns live on <a href="elements.html">Elements</a>, <a href="patterns.html">Patterns</a> and <a href="photos.html">Photos</a>, with a download on every file.</p><a class="dl-btn" href="elements.html">Open Elements</a></li>
+      <li><strong>Claude design skill</strong><p>Teaches Claude our colors, type, voice, templates and asset library, so what it makes looks and sounds like us. For WBT staff: download it from the Skills tab on tools.wbt.coach (sign-in), then upload it in Claude under Settings › Skills.</p><a class="dl-btn" href="https://tools.wbt.coach/#skills">tools.wbt.coach</a></li>
+    </ul>
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
