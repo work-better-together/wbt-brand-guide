@@ -12,7 +12,7 @@ import os, re, shutil, subprocess, zipfile, tempfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 A = os.path.join(ROOT, 'assets')
 OUT = os.path.join(A, 'Downloads')
-SKILL = os.path.expanduser('~/.claude/skills/wbt-brand-designer')
+SKILL = os.path.expanduser('~/.claude/skills/wbt-brand')
 CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 D = '20261020'
 
