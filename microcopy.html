@@ -105,6 +105,10 @@
       .state-grid { grid-template-columns: 1fr; }
       .state-card { padding: 18px; }
     }
+  
+    /* Open columns, not boxes (Oct 2026): text groups are type separated by space and a hairline, never bordered or filled cards. */
+    .principle, .length-card { background: transparent; border: 0; border-top: 1px solid var(--border-subtle); padding: 20px 0 0; box-shadow: none; }
+    .principles, .lengths { gap: 32px 40px; }
   </style>
 </head>
 <body>

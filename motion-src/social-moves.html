@@ -1,9 +1,10 @@
 <!doctype html>
 <!-- WBT social tile moves (draft for review, Oct 2026). Animated versions of the design skill's post templates.
-     Collage Gather: the spot blooms (94% → 100%), the scribble settles (drifts 18px, turns 2°), the illustration settles (rises 24px).
-     Line Rise: each line of type rises into place inside its own line, one after another.
-     Monogram Settle (small): the monogram arrives last, with the CTA.
-     Hold, then a calm exit: lines rise out, the collage settles out. Every single move ≤ 480ms, ease-out, no bounce.
+     Come Together, the logo's move applied to a whole post: the collage's spot, scribble and illustration start 35% further
+     from the collage's centre and fade in as they converge (spot, scribble, illustration, 0.18s apart); then each line of
+     type does the same, its words starting further apart and closing up to their real spacing, one line after another
+     (0.32s apart); the CTA and monogram fade in last. Hold long enough to read, then everything drifts slightly apart and fades.
+     Soft ease-out cubic-bezier(.16,1,.3,1), 1.1s moves, 0.6s fades, no bounce.
      Render API: window.TOTAL, window.seek(t), body.dataset.motion = 1.   ?layout=headline|quote|stat  &render=1 -->
 <html lang="en"><head><meta charset="utf-8"><title>WBT social moves</title>
 <style>
@@ -30,8 +31,8 @@
   .mono { font: 500 22px/1.4 'Inconsolata'; letter-spacing: .18em; text-transform: uppercase; color: var(--calm); }
   .cta { font: 500 26px/1 'Inconsolata'; letter-spacing: .18em; text-transform: uppercase; color: var(--blue); position: absolute; left: 86px; bottom: 84px; z-index: 1; }
   .logo { position: absolute; right: 86px; bottom: 72px; height: 70px; z-index: 1; }
-  .line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
-  .line > span { display: inline-block; will-change: transform; }
+  .line { display: block; white-space: nowrap; }   /* keep each measured line intact while its words move */
+  .line .w { display: inline-block; white-space: pre; will-change: transform, opacity; }
 </style></head>
 <body>
 <div class="canvas" id="c"></div>
@@ -75,7 +76,7 @@ const L = {
 const cfg = L[LAYOUT], c = document.getElementById('c');
 c.classList.toggle('dark', cfg.dark); c.innerHTML = cfg.html;
 
-// Split each [data-lines] block into rendered lines, each wrapped in an overflow mask.
+// Split each [data-lines] block into rendered lines of word spans (so words can close up, like the logo's letters).
 function splitLines(el) {
   const words = []; const walk = (n, bold) => n.childNodes.forEach(k => {
     if (k.nodeType === 3) k.textContent.split(/(?<=\s)/).forEach(w => w && words.push([w, bold]));
@@ -84,32 +85,53 @@ function splitLines(el) {
   el.innerHTML = words.map(([w, b]) => `<span class="w">${b ? '<b>' + w + '</b>' : w}</span>`).join('');
   const spans = [...el.querySelectorAll('.w')], rows = [];
   spans.forEach(s => { const y = Math.round(s.offsetTop); (rows.at(-1)?.y === y ? rows.at(-1).s : (rows.push({ y, s: [] }), rows.at(-1).s)).push(s); });
-  el.innerHTML = rows.map(r => `<span class="line"><span>${r.s.map(s => s.innerHTML).join('')}</span></span>`).join('');
-  return [...el.querySelectorAll('.line > span')];
+  el.innerHTML = rows.map(r => `<span class="line">${r.s.map(s => `<span class="w">${s.innerHTML}</span>`).join('')}</span>`).join('');
+  return [...el.querySelectorAll('.line')].map(line => {
+    const ws = [...line.querySelectorAll('.w')], rs = ws.map(w => w.getBoundingClientRect());
+    const mid = (rs[0].left + rs.at(-1).right) / 2;
+    return ws.map((w, k) => ({ w, dx: (rs[k].left + rs[k].width / 2) - mid }));
+  });
 }
 
-const IN = 'cubic-bezier(0,0,.2,1)', OUT = 'cubic-bezier(.4,0,1,1)', anims = [];
+// Come Together (same move as the logo): things start a little further apart, fade in and ease into place.
+const SPREAD = 0.35, MOVE = 1.1, FADE = 0.6, LINE_GAP = 0.32, HOLD_MIN = 3;
+const IN = 'cubic-bezier(.16,1,.3,1)', OUT = 'cubic-bezier(.4,0,1,1)', anims = [];
 const add = (el, kf, start, dur, easing, fill = 'both') => { const a = el.animate(kf, { duration: dur * 1000, delay: start * 1000, easing, fill }); a.pause(); anims.push(a); };
+const fadeIn = (el, start, to = 1) => add(el, [{ opacity: 0 }, { opacity: to }], start, FADE, 'linear');
 
 document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {})))).then(() => {
   let t = 0.4;
   const m = n => [...c.querySelectorAll(`[data-m="${n}"]`)];
   const keep = el => el.style.transform || '';
-  m('spot').forEach(el => { add(el, [{ transform: keep(el) + ' scale(.94)', opacity: 0 }, { transform: keep(el) + ' scale(1)', opacity: el.style.opacity || 1 }], t, .48, IN); });
-  m('scribble').forEach(el => { add(el, [{ transform: keep(el) + ' translate(-18px,8px) rotate(-2deg)', opacity: 0 }, { transform: keep(el), opacity: 1 }], t + .16, .48, IN); });
-  m('figure').forEach(el => { add(el, [{ transform: 'translateY(24px)', opacity: 0 }, { transform: 'none', opacity: 1 }], t + .3, .48, IN); });
-  m('mark').forEach(el => { add(el, [{ transform: 'translateY(30px)', opacity: 0 }, { transform: 'none', opacity: 1 }], t + .1, .42, IN); });
-  t += m('figure').length || m('scribble').length ? .7 : .35;
+  // Collage layers converge on the collage's centre: spot, then scribble, then illustration.
+  const art = c.querySelector('.art'), ar = art && art.getBoundingClientRect();
+  const layers = [...m('spot'), ...m('scribble'), ...m('figure')];
+  const offset = el => { const r = el.getBoundingClientRect(); return [(r.left + r.width / 2 - (ar.left + ar.width / 2)) * SPREAD, (r.top + r.height / 2 - (ar.top + ar.height / 2)) * SPREAD]; };
+  layers.forEach((el, i) => {
+    const [dx, dy] = offset(el), start = t + i * 0.18;
+    const from = el.dataset.m === 'spot' ? `${keep(el)} translate(${dx}px,${dy}px) scale(1.08)` : `translate(${dx}px,${dy}px) ${keep(el)}`;
+    add(el, [{ transform: from }, { transform: keep(el) || 'none' }], start, MOVE, IN);
+    fadeIn(el, start, +(el.style.opacity || 1));
+  });
+  m('mark').forEach(el => { add(el, [{ transform: 'translate(-24px,-12px)' }, { transform: 'none' }], t + .1, MOVE, IN); fadeIn(el, t + .1); });
+  t += layers.length ? 0.9 : 0.35;
+  // Type: each line's words close up to their real spacing; lines follow one another with a short pause.
   const lines = [...c.querySelectorAll('[data-lines]')].flatMap(splitLines);
-  lines.forEach((s, i) => add(s, [{ transform: 'translateY(110%)' }, { transform: 'none' }], t + i * .12, .42, IN));
-  t += lines.length * .12 + .3;
-  m('last').forEach(el => add(el, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], t, .32, IN));
-  const read = Math.max(3, 1 + lines.length * 0.45);       // hold long enough to read
-  const out = t + .32 + read;
-  lines.forEach((s, i) => add(s, [{ transform: 'none' }, { transform: 'translateY(-110%)' }], out + i * .05, .32, OUT, 'forwards'));
-  [...m('last'), ...m('mark'), ...m('figure'), ...m('scribble'), ...m('spot')].forEach((el, i) =>
-    add(el, [{ opacity: getComputedStyle(el).opacity }, { opacity: 0 }], out + .2 + i * .04, .32, OUT, 'forwards'));
-  window.TOTAL = out + lines.length * .05 + .9;
+  lines.forEach((ws, i) => ws.forEach(({ w, dx }) => {
+    add(w, [{ transform: `translateX(${dx * SPREAD}px)` }, { transform: 'none' }], t + i * LINE_GAP, MOVE, IN);
+    fadeIn(w, t + i * LINE_GAP);
+  }));
+  t += (lines.length - 1) * LINE_GAP + MOVE * 0.7;
+  m('last').forEach(el => fadeIn(el, t));
+  const read = Math.max(HOLD_MIN, 1 + lines.length * 0.45);   // hold long enough to read
+  const out = t + FADE + read;
+  // Exit: everything drifts slightly apart and fades, like the logo.
+  lines.forEach((ws, i) => ws.forEach(({ w, dx }) =>
+    add(w, [{ transform: 'none', opacity: 1 }, { transform: `translateX(${dx * SPREAD * 0.3}px)`, opacity: 0 }], out + i * .04, .5, OUT, 'forwards')));
+  [...m('last'), ...m('mark')].forEach(el => add(el, [{ opacity: 1 }, { opacity: 0 }], out + .1, .5, OUT, 'forwards'));
+  layers.forEach(el => { const [dx, dy] = offset(el);
+    add(el, [{ transform: keep(el) || 'none', opacity: +(el.style.opacity || 1) }, { transform: `translate(${dx * .3}px,${dy * .3}px) ${keep(el)}`, opacity: 0 }], out + .2, .5, OUT, 'forwards'); });
+  window.TOTAL = out + lines.length * .04 + 1.1;
   window.seek = s => anims.forEach(a => a.currentTime = s * 1000);
   seek(0); document.body.dataset.motion = 1;
   if (!q.has('render')) {

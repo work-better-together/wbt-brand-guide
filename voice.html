@@ -173,6 +173,11 @@
         font-size: 28px !important;
       }
     }
+  
+    /* Open columns, not boxes (Oct 2026): text groups are type separated by space and a hairline, never bordered or filled cards. */
+    .voice-attr, .value-cell, .pmv-card, .pmv-card.dark { background: transparent; border: 0; border-top: 1px solid var(--rule); padding: 20px 0 0; box-shadow: none; }
+    .voice-attrs, .values-grid, .pmv-grid { gap: 32px 40px; }
+    .pmv-card.dark, .pmv-card.dark * { color: var(--ink, #1F1E1E); }
   </style>
 </head>
 <body>
