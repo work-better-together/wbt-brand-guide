@@ -35,7 +35,7 @@ This is the Work Better Together brand guide and toolkit, built as a collection 
 - `.github/workflows/update-last-updated.yml` rewrites `last-updated.json` on every push to `main`, so origin moves ahead of you after each push.
 
 **To ship a change:**
-1. **Edit in the repo** (on a branch for anything a reviewer should see first; `guide-v2` holds the Oct 2026 Motion / Downloads / cleanup work).
+1. **Edit in the repo** (on a branch for anything a reviewer should see first; `guide-v2`, the Oct 2026 Motion / Downloads / Social work, was merged and published Oct 21 2026).
 2. **Verify locally**: `python3 -m http.server 8791` in the repo root, then check in a browser at 1440 and 375 wide (drive the actual UI; don't trust a syntax check alone).
 3. `git add …` → **`git pull --rebase origin main`** first (the collage maker and the last-updated workflow both commit to `main`) → `git push origin main`.
 4. Netlify publishes in ~1 min. **Verify against the live URL**, not just the push.
@@ -54,7 +54,7 @@ WBT Brand Guide/
 ├── nav.js                  ← shared navigation injected into every page (ORDER pager + drawer groups)
 ├── motion-src/             ← sources for the Motion page videos (logo-moves.html, social-moves.html, render-all.sh)
 ├── downloads-src/          ← build_downloads.py: makes assets/Downloads/ (logo kit, motion kit, fonts, starter deck)
-├── social-src/             ← Social page examples: extract.py (verbatim beats) → build_social.py (render) → build_page.py (social.html)
+├── social-src/             ← Social page examples: extract.py (verbatim beats) → build_social.py (render) → render_stories.py (animated Story MP4s) → build_page.py (social.html)
 ├── _redirects              ← Netlify redirects (old /social-maker → /social)
 ├── deck-stage.js           ← deck builder utility
 ├── [page].html             ← brand guide pages (see Page Index below)
@@ -193,12 +193,12 @@ url('assets/Fonts/LeagueSpartan-Variable.ttf')
 ## Generated files (edit the source, then rebuild)
 
 - `assets/Motion/*.mp4` + posters ← `motion-src/*.html` via `bash motion-src/render-all.sh` (needs the local server on :8791, node, ffmpeg, Chrome). Version filenames when re-rendering a published video.
-- `assets/Social/` + `social.html` ← `social-src/` (`extract.py`, then `build_social.py` with the :8791 server running, then `build_page.py`). Copy comes word for word from workbettertogether.coach and resources.wbt.coach.
+- `assets/Social/` + `social.html` ← `social-src/` (`extract.py`, then `build_social.py` with the :8791 server running, then `render_stories.py` for the animated Stories in `assets/Social/stories/`, then `build_page.py`). `post.html` is the renderer for every card (`?id=&s=`, `&anim=1` for motion, `&probe=1` to QA animated text). Copy comes word for word from workbettertogether.coach and resources.wbt.coach.
 - `assets/Downloads/` ← `python3 downloads-src/build_downloads.py` (logo kit = wordmark + monogram in the 7 approved inks; starter deck and fonts come from the WBT design skill at `~/.claude/skills/wbt-brand`).
 
 ## The WBT design skill
 
-The Claude skill `wbt-brand` (one version for everyone) lives at `~/.claude/skills/wbt-brand`; build notes in its `build/README.md`. WBT staff get it from tools.wbt.coach › Skills (repo `work-better-together/wbt-tools`; publishing that site is Jenna's: it's in WBT's own Netlify team). The guide's Downloads page points there. When the guide's rules change, update the skill too.
+The Claude skill `wbt-brand` (one version for everyone) lives at `~/.claude/skills/wbt-brand`; build notes in its `build/README.md`. WBT staff get it from tools.wbt.coach › Skills (repo `work-better-together/wbt-tools`; publishing that site is Jenna's: it's in WBT's own Netlify team). The guide's Downloads page also offers the ZIP publicly with install steps (`downloads.html#claude-skill`, copied by `build_downloads.py`). When the guide's rules change, update the skill too.
 
 ## Reference vs Reference Documents
 
