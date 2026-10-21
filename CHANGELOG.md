@@ -20,6 +20,9 @@ Notable changes to the brand guide site (brand.wbt.coach). Newest first.
 ### Social (`social.html`, replaces the Social Card Maker)
 - The maker is retired (staff make cards with the WBT Brand skill in Claude); `/social-maker` redirects to `/social`. The page shows 21 single posts (services, testimonials, stats, resources, Insights), 5 case study carousels (cover → The Challenge → Our Approach → what shifted → client quote → key takeaway) with matching Stories, and a Story series for each of 6 free resources: 100 frames, all copy verbatim from the site. Mostly solid brand grounds with a few watercolor washes (tinted for contrast on dark), text never under 26px. Built from `social-src/`.
 - Social posts and the logo share one move, *Come Together*.
+- **Every case study** on the site (12) now has a carousel and a matching Story. Beats the page writes as prose use its opening sentences word for word; named quotes carry the person's name, role and round headshot (Eli Northrup, Courtney Curd). Six of the new seven covers use Cowbird's full-color originals; *Coaching to Support Leadership Development* keeps the website's duotone (no original found). *Moving From Stress to Strategy* shows only its cover and key takeaway, because its page body currently repeats *Individual Coaching for Each Team Member* word for word.
+- **Animated Stories:** each Story is also an MP4 (`assets/Social/stories/`, built by `social-src/render_stories.py`) using *Come Together*: words gather line by line, bullets appear with their line, a hold to read, then a drift-out. They're the first tile in each Story row and play only while on screen.
+- Corner spots drop out of any slide whose text would reach them; the Collaboration whiteboard photo is cropped clean on the top and right.
 
 ### No boxed text
 - Text groups (voice attributes, values, principles, spec and length cards, usage notes) are open columns with a hairline instead of bordered boxes.

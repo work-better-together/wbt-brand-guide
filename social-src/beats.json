@@ -1,39 +1,374 @@
 {
  "cases": [
   {
-   "slug": "leading-together-under-pressure",
-   "title": "Leading Together Under Pressure",
-   "service": "Team Coaching",
-   "lede": "Team coaching with senior leadership to support alignment.",
+   "slug": "building-conditions-for-results",
+   "title": "Building Conditions for Results",
+   "service": "Facilitation + Training",
+   "lede": "Retreats to invest in team effectiveness from the jump.",
+   "client": "Empower Project",
    "challenge": [
-    "High pressure and fatigue",
-    "Strained dynamics",
-    "Unspoken impact",
-    "A need for shared identity"
+    "New team members were hired to step into new roles while still learning one another’s strengths, preferences, and needs.",
+    "Expectations around roles, workflows, and decision-making had not yet been fully articulated - it was only the second week on the job for 2 members of the team.",
+    "The team needed to translate Empower’s broader mission into a clear, shared vision for development work in the year ahead.",
+    "There was a strong desire to build trust and sustainability early, rather than retrofitting norms after challenges emerged."
+   ],
+   "challenge_p": [
+    "Like many newly assembled teams, and especially those working remotely, the Development team faced a familiar set of tensions:",
+    "Leadership understood that without an intentional pause to build shared understanding, the team risked misalignment, duplicated effort, and unnecessary strain at a moment when focus and cohesion matter."
    ],
    "approach": [
-    "Co-created agendas",
-    "Team identity work",
-    "Relational experiments",
-    "Trauma-informed leadership practices",
-    "After-action reflection"
+    "Creating a Shared Container",
+    "Humanizing the Team",
+    "Surfacing Values through Experience",
+    "Anchoring to Mission and Leadership Expectations",
+    "Clarifying Roles and Interdependence",
+    "Establishing Habits for Sustainability"
+   ],
+   "approach_p": [
+    "We designed and facilitated a one-day, in-person retreat to serve as a foundational launch point for the Development team. The retreat was structured to balance relationship-building and practical clarity, anchoring the team in both purpose and practice.",
+    "The day opened by acknowledging the significance of this moment of transition and formation. We worked together to set the tone for honest conversation and collective ownership.",
+    "Team members shared formative experiences, strengths they bring to the team, and areas in which they anticipate needing support. This exercise was framed not as storytelling for its own sake, but as a way to become better collaborators. The result was early trust and empathy building, and a clearer understanding of how individuals show up at work.",
+    "Rather than prescribing team values, we invited reflection on participants’ most impactful past team experiences. By identifying behaviors and conditions that made those teams successful, the group surfaced a set of emergent values - clear communication, accountability, and assuming positive intent - that was revisited and formalized over the course of the day.",
+    "The retreat intentionally connected team formation to organizational purpose. Empower’s senior leaders joined to share the organization’s mission and vision, clarify how development work advances impact, and name what effective managing up looks like in practice. The Development Director then articulated the team’s priorities, success metrics, and how individual roles contribute to shared outcomes.",
+    "Using visual mapping and facilitated dialogue, we guided the team through a detailed exploration of roles, responsibilities, decision ownership, and handoffs. This work is meant to reduce ambiguity, highlight interdependencies, and reinforce shared accountability for how work flows across the team.",
+    "The final working block focused on the day-to-day habits that enable strong performance over time. Together, the team aligned on norms, routines, and rituals. They talked through meeting rhythms, communication norms, feedback and conflict practices, workload management, and burnout prevention, and ensured that expectations were explicit and shared."
    ],
    "shifted": [
-    "Greater clarity and alignment around roles, decision-making, and leadership expectations.",
-    "Improved communication and trust, including more direct feedback and fewer workarounds.",
-    "Increased self-awareness and empathy, as leaders better understood how stress and protection strategies were shaping their interactions.",
-    "A renewed sense of shared purpose and leadership identity, grounded in values rather than reactivity."
+    "A shared understanding that team effectiveness is a strategic lever. One team member wrote, “I walked out of the session feeling impressed about my new organization’s investment in team effectiveness and positive team dynamics.”",
+    "Clear alignment between Empower’s organizational mission and strategy and the Development team’s own vision, priorities, and ways of working.",
+    "Increased trust and relational depth, allowing team members to collaborate more openly, surface challenges earlier, and rely on one another with confidence. One team member reflected that, ” Understanding each other’s strengths, motivations, and blind spots is going to be so much easier now, which will unlock our ability to collaborate with understanding, patience, and pride in our teammates and ourselves.”",
+    "Defined roles, decision-making authority, and interdependencies that reduce friction and support efficient, coordinated execution. A team member wrote, in reflection, “Had we not done this retreat, we might have been in danger of failing to see how each of us can fit into and contribute to our team’s goals.”",
+    "Explicitly stated team habits and routines around communication, feedback, meetings, and workload management."
    ],
-   "takeaway": "Under sustained pressure and grief, a senior team rebuilt trust by naming what they’d been carrying and articulating how they wanted to lead together.",
+   "shifted_p": [
+    "By the end of the retreat, the Development team had made a deliberate shift: from focusing solely on what needed to get done to paying equal attention to how the team works together as the engine that makes strong results possible.",
+    "By grounding day-to-day ways of working in shared purpose and strategy, the team positioned itself to move forward with greater clarity, cohesion, and momentum, ensuring that how the work gets done actively advances what the organization is trying to achieve."
+   ],
+   "shift_label": "Outcomes & Impact",
+   "takeaway": "Building trust and shared norms at a team’s formation—before problems emerge—set the conditions for results, instead of retrofitting culture after strain sets in.",
    "quotes": [
-    "Jenna and Stacy are phenomenal coaches who help you and your team to discover your strengths and perform at your highest level. They are extremely perceptive, identifying issues easily and providing tailored and actionable advice to help you and your team get to the next level. They both bring an uplifting and authentic approach to their coaching, which makes any session with them fly by! — Leadership Team Member",
-    "Jenna and Stacy meshed well with our team and were able to bring the right energy to help us work through our more difficult issues. I particularly appreciated both Jenna and Stacy’s calling out when we need to grapple with something a bit more, explaining/synthesizing things for the group, and being particularly flexible on timing and the agenda. — Leadership Team Member"
+    {
+     "text": "I walked out of the session feeling impressed about my new organization’s investment in team effectiveness and positive team dynamics. Understanding each other’s strengths, motivations, and blind spots is going to be so much easier now, which will unlock our ability to collaborate with understanding, patience, and pride in our teammates and ourselves. Had we not done this retreat, we might have been in danger of failing to see how each of us can fit into and contribute to our team’s goals.",
+     "name": "— Client",
+     "role": "— Client"
+    },
+    {
+     "text": "I walked out of the session feeling confident about my team’s roles and responsibilities and how we are aligned on achieving our overall mission. Getting to know each other and how we operate at our best is going to be so much easier now, which will unlock our ability to accomplish our objectives and realize our strategy for the year and beyond.",
+     "name": "— Client",
+     "role": "— Client"
+    }
+   ],
+   "sections": [
+    "Background",
+    "The Challenge",
+    "Our Approach",
+    "Outcomes & Impact",
+    "Reflection",
+    "Navigating something similar?"
+   ]
+  },
+  {
+   "slug": "building-trust-and-motivation-in-one-day",
+   "title": "Building Trust and Motivation in One Day",
+   "service": "Facilitation + Training",
+   "lede": "Team retreats to build relationships and move forward together.",
+   "client": "Planned Parenthood Federation of America",
+   "challenge": [],
+   "challenge_p": [
+    "As one of the leaders of the policy team shared:",
+    "Rather than facilitate internally again, the leadership team partnered with us to bring intentional structure, emotional intelligence, and grounded facilitation to a day centered around motivation, recognition, and alignment."
+   ],
+   "approach": [
+    "Motivation Awareness",
+    "Recognition that Lands",
+    "Shared Values, Clear Agreements"
+   ],
+   "approach_p": [
+    "Through a custom-designed retreat using a method that emphasized the team’s present-moment experience and fostered greater awareness of both individual and collective dynamics, we helped the Policy Team tackle some of their stickiest challenges:"
+   ],
+   "shifted": [],
+   "shifted_p": [
+    "Looking ahead, the team acknowledged big opportunities for growth and recalibration. As one leader noted:"
+   ],
+   "shift_label": "The Road Ahead",
+   "takeaway": "A single, well-facilitated day gave the team shared language for motivation, recognition, and values—and the honesty to name what still needed work.",
+   "quotes": [
+    {
+     "text": "I tried to run a retreat myself when I first started here, and it was more work than I expected. I couldn’t fully participate. This time, we needed outside support to make space for real participation and to work through some deep challenges on the team.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "The time in our smaller team was really impactful. I realized that even in spaces I already lead, I can show up differently to make the point of collaboration more intentional and visible.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "It became really clear that I need to be more direct about my expectations. I’ve worried that naming something will make it a ‘forever’ priority, but I’m seeing how my hesitation might be contributing to the team’s uncertainty.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "Even where the day didn’t resolve every tension, leaders walked away with a deeper understanding of what’s alive on the team, and what’s needed next.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "My team is happy—and that’s great—but I also need to push them more. I want their work to meet the full needs of the organization. That means shifting my leadership style, and the retreat helped me realize where (those shifts) might be necessary.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "We came out of it with real things to work on as individuals and as a team. It’s a challenging moment, but this gave us a better foundation.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "There’s an opportunity in the shifts that are coming, not just to set expectations differently, but to create the kind of recognition and accountability culture that supports our best work.",
+     "name": "",
+     "role": ""
+    }
+   ],
+   "sections": [
+    "The Partnership",
+    "The Challenge",
+    "Our Approach",
+    "Leadership Growth Moments",
+    "The Road Ahead",
+    "Navigating something similar?"
+   ]
+  },
+  {
+   "slug": "campaign-team-retreat-to-align-at-the-start",
+   "title": "Campaign Team Retreat to Align at the Start",
+   "service": "Team Coaching",
+   "lede": "Kickoff retreat to set norms, routines, and rituals.",
+   "client": "Eli Northrup for NY State Assembly",
+   "challenge": [
+    "An emerging (but not yet fully codified) path to victory",
+    "Overlapping roles and informal power that hadn’t been named",
+    "The need to build trust and rapport quickly, while already “in motion”"
+   ],
+   "challenge_p": [
+    "Campaign teams face a seemingly neverending cascade of challenges and tensions, often including urgency without alignment. Eli’s team was committed and deeply invested in winning - but like many early-stage campaigns, they were navigating:",
+    "Without intentional space to clarify roles, decision-making, and team norms, even strong teams can lose energy to confusion, duplication, or unspoken friction."
+   ],
+   "approach": [
+    "Goal #1: Anchor to the Path to Victory",
+    "Goal #2: Make Roles Clear and Power Visible",
+    "Goal #3: Establish Habits That Support Performance and Sustainability"
+   ],
+   "approach_p": [
+    "We designed and facilitated a one-day Campaign Team Kickoff Retreat focused on clarity, coordination, and care.",
+    "Our day began with the personal. In the candidate’s words: “I felt like a really valuable part (of the morning) was getting to know each team member more personally, their identified strengths and weaknesses. I think this set the stage for the broader, more honest conversation (that followed).” After spending time getting to know each other, we set out to help the team do three essential things:",
+    "Goal #1: Anchor to the Path to Victory We guided the team through a strategic conversation, connecting goals, strategies, audiences, messages, tactics, and timing, so everyone could see how their role contributed to winning.",
+    "Rather than finalizing every detail, the work focused on building a collective orientation to success.",
+    "Goal #2: Make Roles Clear and Power Visible Through role mapping and real campaign scenarios (events, volunteer engagement, communications moments), the team clarified:",
+    "This surfaced direct conversation about formal and informal power and influence, reduced ambiguity, and set the conditions for coordinated decision-making.",
+    "Goal #3: Establish Habits That Support Performance and Sustainability Together, the team co-created norms, routines, and rituals that would guide how they work day-to-day. These explicitly discussed working habits included clear communication and feedback expectations, weekly rhythms for data review and goal-setting, and rituals that attend to morale, connection, and meaning. The emphasis wasn’t just on efficiency, it was on building a campaign culture that could endure.",
+    "Throughout the day, we focused on translating strategy into lived practice: How do we actually work together when it’s busy, stressful, and high-stakes?"
+   ],
+   "shifted": [],
+   "shifted_p": [
+    "By the end of the retreat, the campaign team had developed the outline for a shared understanding of the path to victory, clearer role definitions and interdependencies, explicit norms and routines to support accountability and care, and a sense of momentum grounded in alignment, not urgency alone.",
+    "Perhaps most importantly, though, the team left with a shared language for how they want to show up for the campaign and for one another.",
+    "What shifted was the team’s leadership capacity. Strategy became a shared point of orientation, creating conditions for the team to work with more confidence and coherence. They named and thought through power dynamics and decision-making structures. The team committed to give and receive real-time feedback, ask for help early, and lead through ambiguity. They began to see their leadership not as a title or function, but as a set of daily practices for decision-making, responsibility-taking, and caring for each other on their path to winning."
+   ],
+   "shift_label": "The Results",
+   "takeaway": "One day of alignment at the start gave the team a shared operating system—clear roles, honest feedback, and momentum grounded in trust, not just urgency.",
+   "quotes": [
+    {
+     "text": "What’s really valuable about you all is there’s both the deep experience coaching and providing insight, almost like a work therapist with the leadership coaching, combined with the campaign strategy and the focus on what it takes to run a strong campaign that’s built to win… What you provide is so important and effective because it draws from both of those disciplines… you’re all about building a team that’s built to win. The (retreat) day allowed us all to express both anxieties and strengths, and I think we understand each other better coming out of it. People had things that they’d been holding on to and, during the retreat, they felt like there was space to let go and put those things out in the open, which has created a culture where I think we can do that as a norm moving forward. We defined roles, we connected and we have language to use moving forward to make sure we’re working well together. It was such an important step to building our team’s foundation.",
+     "name": "Eli Northrup",
+     "role": "Candidate, New York State Assembly"
+    },
+    {
+     "text": "We’ve used MOCHA (from The Management Center) more than 5 times, including yesterday. Someone tried to take something off my plate, but I paused, referred to the visual of our roles that we developed in the retreat, and said, “that’s mine to manage.” We all know that we have really clear roles and we’re all committed to sticking to them. Call time was a big topic of conversation (during the retreat) and it’s been night and day. We are hitting our goals faster and in less time overall, Eli’s more focused, and the follow-up reports sent afterwards get us competitive and wanting to beat ourselves! The difference this time together made is huge. Campaigns are planes already in flight when the team boards. This (day together) felt like we got to do some ground work, put the wheels on the plane, and made sure the wings were sturdy before we took off. There’s a lot less tension than I typically see on campaign teams. We were all able to really ground ourselves in trust and respect for each other during that day. Eli prioritizing this time together gave all of us a lot of security and confidence that he is prioritizing us as a team, and he sees us as whole people that he wants to invest in. He’s committed to everyone’s growth and we’re all committed to the success of the campaign.",
+     "name": "Courtney Curd",
+     "role": "Campaign Manager"
+    }
+   ],
+   "sections": [
+    "The Partnership",
+    "The Challenge",
+    "Our Approach",
+    "What We Did to Create Space and Structure for Engagement",
+    "The Results",
+    "Navigating something similar?"
+   ]
+  },
+  {
+   "slug": "choosing-the-culture-we-build-on-campaigns",
+   "title": "Choosing the Culture We Build on Campaigns",
+   "service": "Team Coaching",
+   "lede": "Team and leadership development in a statewide coordinated political campaign.",
+   "client": "Democratic National Committee",
+   "challenge": [
+    "Middle managers were carrying significant emotional and operational load.",
+    "Team culture was being shaped in real time, often under extreme pressure.",
+    "The team wanted space to reflect, connect, and build resilience. Timing and system-level constraints complicated the waters.",
+    "There was a real risk that insight would not translate into sustained behavior change without intentional follow-through."
+   ],
+   "challenge_p": [
+    "in a high-stress, rapidly scaling environment. It’s familiar to anyone who has worked on a campaign:",
+    "The question was not whether leadership support was needed - it was how to design and offer it in a way that truly met the moment."
+   ],
+   "approach": [
+    "Leadership Retreats",
+    "Team Culture & Resilience Virtual Workshops",
+    "Iterative Design & Deep Listening",
+    "Learning-Oriented Partnership"
+   ],
+   "approach_p": [
+    "Empower Project’s leadership team faced the dual challenges of intense demands and the emotional toll of managing quickly constructed teams that are built to last only through the cycle. Recognizing the need for structured support, Amanda sought coaching to help leaders manage stress, improve communication, and maintain focus on their mission. We designed and facilitated a multi-modal leadership development pilot that combined retreats, virtual learning, and coaching-informed practices."
+   ],
+   "shifted": [
+    "Stronger relationships and a deeper sense of alignment across the team.",
+    "Increased awareness of how personal stress affects team culture.",
+    "Renewed commitment to centering joy, assuming positive intent, and supporting one another more intentionally.",
+    "Greater clarity about individual growth edges as managers and leaders.",
+    "Virtual sessions were less effective given campaign timing and unaddressed system-level pressures.",
+    "Leaders wanted more role-specific spaces (e.g., ROD-only)."
+   ],
+   "shifted_p": [
+    "The most powerful impact came from the in-person experiences, after which the team reported:",
+    "The team consistently named connection, emotional resilience, and culture visioning as the most valuable elements of the work. Leaders articulated specific commitments around delegation, communication, self-care, and peer support.",
+    "At the same time, the engagement surfaced important constraints:"
+   ],
+   "shift_label": "What Shifted",
+   "takeaway": "Even under relentless campaign pressure, leaders found that culture is a choice—and that time to reconnect as people, not just roles, is what makes it hold.",
+   "quotes": [
+    {
+     "text": "I learned how much my stress impacts team culture, and that I have real choices about how I show up every day.",
+     "name": "Campaign Leader",
+     "role": ""
+    },
+    {
+     "text": "This created space to connect as people, not just as roles. It reminded me that we choose the culture we build, even under pressure.",
+     "name": "Regional Leader",
+     "role": ""
+    },
+    {
+     "text": "I’m committed to centering joy, assuming positive intent, and being more thoughtful about how I communicate, especially when things are hard.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "I realized I need to delegate more, ask for what I need, and seek counsel from my peers instead of carrying everything alone.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "The team cares deeply about each other and this work. Being together in person helped that come back into focus.",
+     "name": "",
+     "role": ""
+    },
+    {
+     "text": "I walked out of the session feeling impressed about my new organization’s investment in team effectiveness and positive team dynamics. Understanding each other’s strengths, motivations, and blind spots is going to be so much easier now, which will unlock our ability to collaborate with understanding, patience, and pride in our teammates and ourselves. Had we not done this retreat, we might have been in danger of failing to see how each of us can fit into and contribute to our team’s goals.",
+     "name": "",
+     "role": ""
+    }
    ],
    "sections": [
     "Background",
     "The Challenge",
     "Our Approach",
     "What Shifted",
+    "Testimonials",
+    "Navigating something similar?"
+   ]
+  },
+  {
+   "slug": "co-leading-an-organization",
+   "title": "Co-leading an Organization",
+   "service": "Team Coaching",
+   "lede": "2:2 coaching to support the relationship between two leaders.",
+   "client": "",
+   "challenge": [
+    "Difficulty sharing feedback without triggering defensiveness, withdrawal, or escalation.",
+    "A cycle of repeated conversations that did not lead to decision-making or sustained change.",
+    "Frustration around overlapping portfolios and unclear ownership on work streams.",
+    "Stress-driven communication patterns that made disagreement feel risky - especially in front of staff.",
+    "A felt sense that trust had been compromised, even when neither leader intended harm."
+   ],
+   "challenge_p": [
+    "As the organization scaled, the co-leaders experienced a growing gap between intention and impact. While both were deeply committed to the mission and to the organization’s success, their working relationship had become strained.",
+    "Externally, pressure was mounting. Staff needed clarity. Stakeholders expected coherence. Internally, both leaders felt the weight of responsibility and the belief that “it should be getting easier by now.”",
+    "WBT’s diagnosis surfaced a stuck dynamic: moments of misalignment quickly activated stress responses, reduced emotional intelligence, and reinforced habits of blame, withdrawal, or control. Without intervention, the relational strain risked cascading into organizational systems, decision-making, and culture.",
+    "The central question was not whether either leader was capable, but whether they could interrupt entrenched patterns and rebuild trust, accountability, and clarity together."
+   ],
+   "approach": [
+    "1. Individual Reflection",
+    "2. Shared Vision and Strengths Mapping",
+    "3. Role Definition and Decision Authority",
+    "4. Operating Agreements and Repair Practices"
+   ],
+   "approach_p": [
+    "Through ongoing 2x2 Coaching, we created a protected, structured space for the co-leaders to work on the relationship as critical organizational infrastructure.",
+    "The coaching has focused on two core developmental goals:",
+    "We’ve observed the leaders in real-time conversation, surfaced patterns while we listen, and introduced small, supported experiments to shift how they engaged with one another.",
+    "One element of the engagement was our Co-Leadership Role Clarity Process, which brought structure to both relational and operational alignment:",
+    "1. Individual Reflection Each leader reflected on core responsibilities, strengths, energy drivers, and areas of strain, surfacing where they felt overextended, underutilized, or unclear.",
+    "2. Shared Vision and Strengths Mapping Coaching sessions re-centered the purpose of co-leadership itself. Together, the leaders explored why co-leadership exists in this context, what they hoped it would enable, and how their distinct strengths, values, and working styles could be complementary rather than conflicting.",
+    "3. Role Definition and Decision Authority Using clear buckets of work, the leaders clarified primary and secondary ownership, decision rights, and expectations, reducing ambiguity that had previously fueled stress and rework.",
+    "4. Operating Agreements and Repair Practices The leaders established explicit agreements for communication, feedback, disagreement, and capacity signaling. Drawing on Action Design and the Cycle for Repairing Harm, they practiced naming impact, listening without defense, and making small, concrete acts of repair.",
+    "Rather than aiming for perfection, the work emphasized awareness, accountability, and iteration, recognizing that co-leadership requires ongoing attention as conditions change."
+   ],
+   "shifted": [
+    "Reduced duplication of effort and fewer missed handoffs.",
+    "Clearer signals to staff about leadership ownership and accountability.",
+    "An improving sense of trust and partnership between the co-leaders."
+   ],
+   "shifted_p": [
+    "Because this engagement is ongoing, outcomes continue to unfold. Early shifts include:",
+    "Perhaps most importantly, the co-leaders reported feeling less alone. The 2x2 Coaching space gave them permission to step out of constant execution mode and invest in the health of their relationship."
+   ],
+   "shift_label": "Impact and Early Outcomes",
+   "takeaway": "When co-leaders treated their relationship itself as the work, they broke the cycle of repeated conversations and rebuilt the trust that scaling had strained.",
+   "quotes": [],
+   "sections": [
+    "Background",
+    "The Challenge",
+    "Our Approach",
+    "Impact and Early Outcomes",
+    "Investing in the Relationship Matters",
+    "Navigating something similar?"
+   ]
+  },
+  {
+   "slug": "coaching-to-support-leadership-development",
+   "title": "Coaching to Support Leadership Development",
+   "service": "Leadership Coaching",
+   "lede": "1:1 coaching for an expanding team.",
+   "client": "Empower Project",
+   "challenge": [],
+   "challenge_p": [
+    "Empower Project’s leadership team faced the dual challenges of intense demands and the emotional toll of managing quickly constructed teams that are built to last only through the cycle. Recognizing the need for structured support, Amanda sought coaching to help leaders manage stress, improve communication, and maintain focus on their mission."
+   ],
+   "approach": [],
+   "approach_p": [
+    "Over the course of the 6 months leading up to the 2024 elections, Empower Project engaged us to support their quickly expanding leadership team. Amanda Brink, Empower’s Executive Director, opened the opportunity for coaching to more staff in the final weeks before the election. By the time November 4th rolled around, we’d worked with 19 members of the Empower team, providing a combination of individual coaching and group coaching tailored to the unique pressures of their work (we’ve since worked with another 5 Empower leaders!). We adapted to the needs of each individual team member. Some people chose to meet with us for weekly coaching, others worked at different cadences. A number of leaders opted to complete a Prism Personality Assessment, which we then used as a tool to inform our coaching. Individual coaching was later complemented by group coaching sessions, 90 minutes each, offered to staff looking for support at the very end of the cycle, when pressure and stress increase.",
+    "Our coaching all along has focused on developing emotional intelligence, strategic thinking, and building habits to support effective team dynamics. Participants who worked with us during the 2024 cycle reported significant personal and professional growth, attributing improvements in their leadership skills and team collaboration directly to the coaching experience.",
+    "One Empower Project team member noted, “I think I have become more emotionally intelligent and aware of how I show up in the workplace.”",
+    "Another shared, “Coaching has helped me through a number of situations and helped me to think through how I can be a better leader.”",
+    "A third reflected, “I always took a very left-brained approach before and now I’m better at thinking about how my team is feeling and letting that guide what they might need from me as a leader.”",
+    "The impact of the coaching extended beyond individual development. Teams reported enhanced cohesion and a greater ability to navigate the complexities of campaign work. As one participant observed, “I was able to try tactics in working with a team that I had not used before.”"
+   ],
+   "shifted": [],
+   "shifted_p": [
+    "Empower Project’s collaboration with WBT demonstrates the power of sustained, multi-level leadership support. By investing in individual coaching, founder partnership and team facilitation that are delivered simultaneously across the leadership system, they strengthen not only personal leadership capacity, but the connective tissue of the organization itself. Because our work spans roles and levels, we are able to help leaders see patterns, anticipate challenges, and make more aligned decisions in real time. The result is not just improved individual performance, but a more self-aware, adaptive leadership culture; one better equipped to navigate complexity and drive ambitious outcomes over time.",
+    "For organizations operating in similarly demanding contexts, Empower Project’s experience underscores the importance of proactive leadership development and support. Engaging with coaching programs like the one we built for the Empower team can be a strategic move to enhance team resilience and effectiveness."
+   ],
+   "shift_label": "Conclusion",
+   "takeaway": "Opt-in, individualized coaching—scaled across two dozen leaders—let a fast-growing team keep developing under election-cycle pressure, without forcing everyone through one program.",
+   "quotes": [],
+   "sections": [
+    "The Partnership",
+    "The Initial Program",
+    "The Challenge",
+    "The Transformation",
+    "Continuous Support Through 2026",
+    "Conclusion",
     "Navigating something similar?"
    ]
   },
@@ -42,16 +377,33 @@
    "title": "Developing Endurance and Agency",
    "service": "Leadership Coaching",
    "lede": "1:1 coaching with a senior leader to navigate relational tension.",
+   "client": "",
    "challenge": [
     "A power dynamic where honest upward feedback felt risky.",
     "Recurring interpersonal tension that drained energy and focus.",
     "A growing sense of burnout and disillusionment with how the work was being done.",
     "An unspoken question: Is the stress we’re carrying actually necessary?"
    ],
+   "challenge_p": [
+    "The challenge was not a lack of skill or commitment. It was the collision between values and reality.",
+    "They had already tried working harder, adapting their communication, and “managing up.” What they needed was not advice or a playbook, but a reflective space to think, practice, and choose differently."
+   ],
    "approach": [
-    "From Reaction to Reflection",
-    "Courageous, Regulated Communication",
-    "Expanding the Frame"
+    "1. From Reaction to Reflection",
+    "2. Practicing Courageous, Regulated Communication",
+    "3. Expanding the Frame: From Individual Coping to Organizational Health"
+   ],
+   "approach_p": [
+    "We partnered with the client through a structured, relational coaching process grounded in deep listening, thoughtful inquiry, and real-time application. Rather than offering solutions, we focused on strengthening the client’s capacity to see patterns, test new approaches, and act with intention.",
+    "Over 12 sessions, our work centered on three interconnected arcs:",
+    "Slow down, name what’s happening, and shift from reacting to a grounded, strategic stance.",
+    "Rehearse hard conversations, then experiment, reflect, and apply between sessions.",
+    "Move from individual coping to advocating for organizational health and shared norms.",
+    "1. From Reaction to Reflection Early sessions created space for the client to slow down and name what was actually happening, both internally and relationally. Together, we explored how stress was showing up in their body, decision-making, and leadership presence. This reflective pause helped the client shift from constant reaction to a more grounded, strategic stance.",
+    "2. Practicing Courageous, Regulated Communication Coaching became a laboratory for experimentation. We practiced difficult conversations, clarified boundaries, and refined language that aligned with the client’s values while acknowledging the realities of power. Between sessions, the client tested these approaches in real interactions, then returned to reflect, adjust, and integrate what they were learning.",
+    "This cycle (experiment, reflect, apply) helped build confidence and emotional agility, even when outcomes were uncertain.",
+    "3. Expanding the Frame: From Individual Coping to Organizational Health As the client’s clarity grew, so did their sense of agency. What began as a focus on one relationship evolved into a broader insight: the organization lacked shared values and working norms that protected against unnecessary stress, burnout, and mission drift.",
+    "With coaching support, the client began to advocate not just for themselves, but for an organizational reset. They initiated conversations about values, expectations, and how leaders wanted to work together. This reframed the issue from a “difficult leader” problem to a collective leadership opportunity."
    ],
    "shifted": [
     "Greater self-trust and emotional regulation in high-stakes interactions.",
@@ -60,6 +412,11 @@
     "The courage to name patterns affecting morale and sustainability.",
     "A renewed sense of alignment with the mission, rooted in how the work could be done, not just what the work achieved."
    ],
+   "shifted_p": [
+    "By the end of the coaching engagement, the client reported meaningful shifts:",
+    "Perhaps most importantly, the client moved from endurance to agency, no longer absorbing stress as inevitable, but actively shaping conditions for healthier leadership and culture."
+   ],
+   "shift_label": "Outcomes and Shifts",
    "takeaway": "Coaching didn’t fix the organization—it moved one leader from enduring stress to actively shaping healthier conditions, with clarity, courage, and agency.",
    "quotes": [],
    "sections": [
@@ -72,42 +429,197 @@
    ]
   },
   {
-   "slug": "building-conditions-for-results",
-   "title": "Building Conditions for Results",
+   "slug": "facilitation-to-prepare-for-uncertainty",
+   "title": "Facilitation to Prepare for Uncertainty",
    "service": "Facilitation + Training",
-   "lede": "Retreats to invest in team effectiveness from the jump.",
+   "lede": "Facilitated conversations to support long-term, strategic planning.",
+   "client": "Planned Parenthood Federation of America",
    "challenge": [
-    "New team members were hired to step into new roles while still learning one another’s strengths, preferences, and needs.",
-    "Expectations around roles, workflows, and decision-making had not yet been fully articulated - it was only the second week on the job for 2 members of the team.",
-    "The team needed to translate Empower’s broader mission into a clear, shared vision for development work in the year ahead.",
-    "There was a strong desire to build trust and sustainability early, rather than retrofitting norms after challenges emerged."
+    "Firm up and pressure test their public/external plans for multiple election outcomes.",
+    "Clarify decision-making and communication norms.",
+    "Foster collaboration and trust across the range of internal stakeholders representing unique bodies of work.",
+    "Prepare both emotionally and operationally for potential post-election crises."
+   ],
+   "challenge_p": [
+    "PPFA leadership team members were juggling the complexity of cross-team communication, collaboration, and a pressing need to unify their organizational readiness and scenario planning efforts. As one leader shared, “We needed a moment to pause for engagement (in the planning process).”"
    ],
    "approach": [
-    "Creating a Shared Container",
-    "Humanizing the Team",
-    "Surfacing Values through Experience",
-    "Anchoring to Mission and Leadership Expectations",
-    "Clarifying Roles and Interdependence",
-    "Establishing Habits for Sustainability"
+    "Emotional intelligence exercises to address their own fear and uncertainty.",
+    "Circles of Influence and Control frameworks to clarify where action was possible.",
+    "Ideation and strategy sprints to generate ideas and prioritize initiatives."
+   ],
+   "approach_p": [
+    "Facilitated a Series of Thoughtfully Designed Scenario Planning Sessions",
+    "We facilitated three full-day sessions over the course of six months, starting with emotional grounding and moving into structured ideation and planning. Participants worked through:",
+    "We used methodologies like productive conflict modeling, explorations of stress and window of tolerance, and cross-functional fishbowl discussions. These created new levels of understanding and trust between historically siloed teams.",
+    "We established space for synthesis and decision-making to move beyond conversation and into planning for action."
    ],
    "shifted": [
-    "A shared understanding that team effectiveness is a strategic lever. One team member wrote, “I walked out of the session feeling impressed about my new organization’s investment in team effectiveness and positive team dynamics.”",
-    "Clear alignment between Empower’s organizational mission and strategy and the Development team’s own vision, priorities, and ways of working.",
-    "Increased trust and relational depth, allowing team members to collaborate more openly, surface challenges earlier, and rely on one another with confidence. One team member reflected that, ” Understanding each other’s strengths, motivations, and blind spots is going to be so much easier now, which will unlock our ability to collaborate with understanding, patience, and pride in our teammates and ourselves.”",
-    "Defined roles, decision-making authority, and interdependencies that reduce friction and support efficient, coordinated execution. A team member wrote, in reflection, “Had we not done this retreat, we might have been in danger of failing to see how each of us can fit into and contribute to our team’s goals.”",
-    "Explicitly stated team habits and routines around communication, feedback, meetings, and workload management."
+    "Aligned on key strategies for both election scenarios.",
+    "Created a shared language and understanding of organizational readiness.",
+    "Named tension points and modeled how to productively manage them.",
+    "Increased confidence in their collective post-election preparedness."
    ],
-   "takeaway": "Building trust and shared norms at a team’s formation—before problems emerge—set the conditions for results, instead of retrofitting culture after strain sets in.",
+   "shifted_p": [
+    "By the end of the sessions, the group had:"
+   ],
+   "shift_label": "The Results",
+   "takeaway": "Three facilitated scenario-planning days helped a 40-person leadership team prepare emotionally and operationally for uncertainty—pressure-testing plans and clarifying how they’d decide together under crisis.",
    "quotes": [
-    "I walked out of the session feeling impressed about my new organization’s investment in team effectiveness and positive team dynamics. Understanding each other’s strengths, motivations, and blind spots is going to be so much easier now, which will unlock our ability to collaborate with understanding, patience, and pride in our teammates and ourselves. Had we not done this retreat, we might have been in danger of failing to see how each of us can fit into and contribute to our team’s goals. — Client",
-    "I walked out of the session feeling confident about my team’s roles and responsibilities and how we are aligned on achieving our overall mission. Getting to know each other and how we operate at our best is going to be so much easier now, which will unlock our ability to accomplish our objectives and realize our strategy for the year and beyond. — Client"
+    {
+     "text": "This process gave us the clarity and accountability we needed. We walked out with actionable plans and a stronger sense of community across the teams.",
+     "name": "",
+     "role": ""
+    }
+   ],
+   "sections": [
+    "The Partnership",
+    "The Challenge",
+    "Navigating Complexity and Tension",
+    "Our Approach",
+    "What We Did to Create Space and Structure for Engagement",
+    "The Results",
+    "Navigating something similar?"
+   ]
+  },
+  {
+   "slug": "individual-coaching-for-each-team-member",
+   "title": "Individual Coaching for Each Team Member",
+   "service": "Leadership Coaching",
+   "lede": "1:1 coaching as professional development for all.",
+   "client": "Planned Parenthood Federation of America",
+   "challenge": [],
+   "challenge_p": [
+    "Team members have been navigating increasing pressure and complexity. While cohort-based leadership programs can be valuable, this group needed a flexible, opt-in development option that allowed folks to engage at different times, at different career stages, and around distinct leadership challenges - all without requiring a single, centralized program."
+   ],
+   "approach": [
+    "Leadership presence and confidence",
+    "Navigating complexity and ambiguity",
+    "Managing relationships and difficult conversations",
+    "Aligning personal values with organizational leadership demands"
+   ],
+   "approach_p": [
+    "We provide each team member who reaches out to us five one-on-one coaching sessions that team members can elect to use their professional development funds to support. Over time, we’ve coached more than a dozen leaders across the same team, each in a confidential, tailored coaching relationship.",
+    "This model has allowed us to stretch across one team, supporting many leaders simultaneously while honoring individual needs, goals, and pacing."
+   ],
+   "shifted": [
+    "Is opt-in and individualized, not one-size-fits-all",
+    "Leverages existing professional development funding",
+    "Supports multiple leaders within a single team over time",
+    "Builds leadership capacity in complex, mission-driven organizations"
+   ],
+   "shifted_p": [
+    "This engagement highlights our ability to serve as a scalable professional leadership development option that:",
+    "For organizations seeking flexible ways to invest in leadership without launching a full cohort program, this approach offers depth, accessibility, and meaningful impact."
+   ],
+   "shift_label": "What This Demonstrates",
+   "takeaway": "Giving every team member their own confidential coaching—rather than a single shared program—built leadership capacity one relationship at a time, across the whole team.",
+   "quotes": [],
+   "sections": [
+    "The Partnership",
+    "The Challenge",
+    "Our Approach",
+    "What This Demonstrates",
+    "Navigating something similar?"
+   ]
+  },
+  {
+   "slug": "leading-together-under-pressure",
+   "title": "Leading Together Under Pressure",
+   "service": "Team Coaching",
+   "lede": "Team coaching with senior leadership to support alignment.",
+   "client": "Planned Parenthood Federation of America",
+   "challenge": [
+    "High pressure and fatigue",
+    "Strained dynamics",
+    "Unspoken impact",
+    "A need for shared identity"
+   ],
+   "challenge_p": [
+    "The leadership team entered the coaching engagement carrying multiple, overlapping tensions:",
+    "The team needed space to slow down, surface what had been happening beneath the surface, and intentionally reset how they showed up for one another and for the people they led."
+   ],
+   "approach": [
+    "Co-created agendas",
+    "Team identity work",
+    "Relational experiments",
+    "Trauma-informed leadership practices",
+    "After-action reflection"
+   ],
+   "approach_p": [
+    "We designed and facilitated a series of 6 team coaching sessions grounded in trust-building, trauma-aware leadership, and practical experimentation. Our approach combined structure with humanity; we aimed to create a container that could hold both accountability and care.",
+    "Throughout the process, we held space for difficult conversations, modeling curiosity and compassion, and helping leaders connect day-to-day behaviors to long-term culture and impact."
+   ],
+   "shifted": [
+    "Greater clarity and alignment around roles, decision-making, and leadership expectations.",
+    "Improved communication and trust, including more direct feedback and fewer workarounds.",
+    "Increased self-awareness and empathy, as leaders better understood how stress and protection strategies were shaping their interactions.",
+    "A renewed sense of shared purpose and leadership identity, grounded in values rather than reactivity."
+   ],
+   "shifted_p": [
+    "Over the course of the engagement, the Policy Team leadership experienced meaningful shifts:",
+    "Leaders left better equipped to navigate pressure together—without sacrificing their humanity or their relationships."
+   ],
+   "shift_label": "What Shifted",
+   "takeaway": "Under sustained pressure and grief, a senior team rebuilt trust by naming what they’d been carrying and articulating how they wanted to lead together.",
+   "quotes": [
+    {
+     "text": "Jenna and Stacy are phenomenal coaches who help you and your team to discover your strengths and perform at your highest level. They are extremely perceptive, identifying issues easily and providing tailored and actionable advice to help you and your team get to the next level. They both bring an uplifting and authentic approach to their coaching, which makes any session with them fly by!",
+     "name": "— Leadership Team Member",
+     "role": "— Leadership Team Member"
+    },
+    {
+     "text": "Jenna and Stacy meshed well with our team and were able to bring the right energy to help us work through our more difficult issues. I particularly appreciated both Jenna and Stacy’s calling out when we need to grapple with something a bit more, explaining/synthesizing things for the group, and being particularly flexible on timing and the agenda.",
+     "name": "— Leadership Team Member",
+     "role": "— Leadership Team Member"
+    }
    ],
    "sections": [
     "Background",
     "The Challenge",
     "Our Approach",
-    "Outcomes & Impact",
-    "Reflection",
+    "What Shifted",
+    "Navigating something similar?"
+   ]
+  },
+  {
+   "slug": "moving-from-stress-to-strategy-with-a-team",
+   "title": "Moving From Stress to Strategy with a Team",
+   "service": "Facilitation + Training",
+   "lede": "Team sessions to connect to each other and reinforce shared purpose.",
+   "client": "Planned Parenthood Federation of America",
+   "challenge": [],
+   "challenge_p": [
+    "Team members have been navigating increasing pressure and complexity. While cohort-based leadership programs can be valuable, this group needed a flexible, opt-in development option that allowed folks to engage at different times, at different career stages, and around distinct leadership challenges - all without requiring a single, centralized program."
+   ],
+   "approach": [
+    "Leadership presence and confidence",
+    "Navigating complexity and ambiguity",
+    "Managing relationships and difficult conversations",
+    "Aligning personal values with organizational leadership demands"
+   ],
+   "approach_p": [
+    "We provide each team member who reaches out to us five one-on-one coaching sessions that team members can elect to use their professional development funds to support. Over time, we’ve coached more than a dozen leaders across the same team, each in a confidential, tailored coaching relationship.",
+    "This model has allowed us to stretch across one team, supporting many leaders simultaneously while honoring individual needs, goals, and pacing."
+   ],
+   "shifted": [
+    "Is opt-in and individualized, not one-size-fits-all",
+    "Leverages existing professional development funding",
+    "Supports multiple leaders within a single team over time",
+    "Builds leadership capacity in complex, mission-driven organizations"
+   ],
+   "shifted_p": [
+    "This engagement highlights our ability to serve as a scalable professional leadership development option that:",
+    "For organizations seeking flexible ways to invest in leadership without launching a full cohort program, this approach offers depth, accessibility, and meaningful impact."
+   ],
+   "shift_label": "What This Demonstrates",
+   "takeaway": "A flexible, opt-in coaching benefit met each leader where they were, turning individual stress into steadier presence, clearer decisions, and stronger relationships across one team.",
+   "quotes": [],
+   "sections": [
+    "The Partnership",
+    "The Challenge",
+    "Our Approach",
+    "What This Demonstrates",
     "Navigating something similar?"
    ]
   },
@@ -116,11 +628,16 @@
    "title": "Repairing a Ruptured Relationship",
    "service": "Team Coaching",
    "lede": "2:2 coaching to repair a manager-employee relationship.",
+   "client": "",
    "challenge": [
     "Expectations felt unclear and misaligned, leading to frustration on both sides.",
     "Feedback was experienced as unproductive and, at times, threatening rather than developmental.",
     "Each person questioned the other’s intentions, assuming criticism or dismissal where none was intended.",
     "Anxiety and risk‑mitigation replaced trust, openness, and shared problem‑solving."
+   ],
+   "challenge_p": [
+    "The manager–employee relationship was marked by a cycle of misunderstanding and defensiveness, and deep concern about possible retaliation:",
+    "Both individuals named a desire for a relationship that felt safer, clearer, and more predictable. Both hoped to assume good intent, communicate openly, and stay aligned in the midst of constant organizational pressure."
    ],
    "approach": [
     "Surfacing goals and tensions openly.",
@@ -129,11 +646,20 @@
     "Practicing productive conversations.",
     "Making small, visible commitments."
    ],
+   "approach_p": [
+    "We designed and facilitated a multi‑session 2x2 Coaching engagement, working with dyad both individually and together. The work centered on building awareness, interrupting unhelpful patterns, and establishing new relational norms.",
+    "Throughout the engagement, we held space for emotion while anchoring the work in practical leadership behaviors. Consistent with the Cape Cod approach, we supported both individuals in slowing down, noticing their patterns in real time, and experimenting with new communication approaches in an effort to help them stay connected to growth."
+   ],
    "shifted": [
     "Increased clarity around expectations, priorities, and communication norms.",
     "Reduced fear and defensiveness, replaced by greater curiosity and generosity of interpretation.",
     "More consistent, predictable feedback routines and norms to support earlier communication when challenges arose."
    ],
+   "shifted_p": [
+    "After a total of 6 90-minute sessions, the manager and employee reported meaningful shifts:",
+    "Importantly, the pair left with tools they could continue to use independently, ensuring the relationship could withstand future stress rather than fracture under it."
+   ],
+   "shift_label": "Outcomes",
    "takeaway": "2x2 coaching turned a cycle of defensiveness and mistrust between a manager and their report into clearer expectations, safer feedback, and restored good faith.",
    "quotes": [],
    "sections": [
@@ -142,49 +668,6 @@
     "Our Approach",
     "Outcomes",
     "Why it Matters",
-    "Navigating something similar?"
-   ]
-  },
-  {
-   "slug": "choosing-the-culture-we-build-on-campaigns",
-   "title": "Choosing the Culture We Build on Campaigns",
-   "service": "Team Coaching",
-   "lede": "Team and leadership development in a statewide coordinated political campaign.",
-   "challenge": [
-    "Middle managers were carrying significant emotional and operational load.",
-    "Team culture was being shaped in real time, often under extreme pressure.",
-    "The team wanted space to reflect, connect, and build resilience. Timing and system-level constraints complicated the waters.",
-    "There was a real risk that insight would not translate into sustained behavior change without intentional follow-through."
-   ],
-   "approach": [
-    "Leadership Retreats",
-    "Team Culture & Resilience Virtual Workshops",
-    "Iterative Design & Deep Listening",
-    "Learning-Oriented Partnership"
-   ],
-   "shifted": [
-    "Stronger relationships and a deeper sense of alignment across the team.",
-    "Increased awareness of how personal stress affects team culture.",
-    "Renewed commitment to centering joy, assuming positive intent, and supporting one another more intentionally.",
-    "Greater clarity about individual growth edges as managers and leaders.",
-    "Virtual sessions were less effective given campaign timing and unaddressed system-level pressures.",
-    "Leaders wanted more role-specific spaces (e.g., ROD-only)."
-   ],
-   "takeaway": "Even under relentless campaign pressure, leaders found that culture is a choice—and that time to reconnect as people, not just roles, is what makes it hold.",
-   "quotes": [
-    "I learned how much my stress impacts team culture, and that I have real choices about how I show up every day. Campaign Leader",
-    "This created space to connect as people, not just as roles. It reminded me that we choose the culture we build, even under pressure. Regional Leader",
-    "I’m committed to centering joy, assuming positive intent, and being more thoughtful about how I communicate, especially when things are hard.",
-    "I realized I need to delegate more, ask for what I need, and seek counsel from my peers instead of carrying everything alone.",
-    "The team cares deeply about each other and this work. Being together in person helped that come back into focus.",
-    "I walked out of the session feeling impressed about my new organization’s investment in team effectiveness and positive team dynamics. Understanding each other’s strengths, motivations, and blind spots is going to be so much easier now, which will unlock our ability to collaborate with understanding, patience, and pride in our teammates and ourselves. Had we not done this retreat, we might have been in danger of failing to see how each of us can fit into and contribute to our team’s goals."
-   ],
-   "sections": [
-    "Background",
-    "The Challenge",
-    "Our Approach",
-    "What Shifted",
-    "Testimonials",
     "Navigating something similar?"
    ]
   }

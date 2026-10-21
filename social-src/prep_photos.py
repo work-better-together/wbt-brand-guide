@@ -18,7 +18,7 @@ ORIG = os.path.join(HERE, 'photos', 'originals')
 PALETTE = {'ochre': '#B55312', 'blue': '#2531A5', 'slate': '#1E4D5C'}
 TARGET_AB = {k: color.rgb2lab(np.array([[[int(v[i:i + 2], 16) / 255 for i in (1, 3, 5)]]]))[0, 0, 1:] for k, v in PALETTE.items()}
 # Per-photo crops: Collaboration loses the grey wall at left but keeps its title whole at the top.
-CROP = {'leading-together-under-pressure': (0.10, 0.12, 0.06, 0.06)}   # paper edge is ~9.5% from left, ~14% from top: keep the title whole
+CROP = {'leading-together-under-pressure': (0.10, 0.135, 0.10, 0.06)}   # paper edge is ~9.5% from left, ~14% from top: keep the title whole
 BOARDS = ['leading-together-under-pressure', 'developing-endurance-and-agency', 'building-conditions-for-results']
 
 def family(hue):

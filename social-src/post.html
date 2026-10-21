@@ -39,7 +39,8 @@
   .photo { position: absolute; left: 0; top: 0; width: 1080px; object-fit: cover; }
   ul.beats { list-style: none; margin-top: 40px; }
   ul.beats li { position: relative; padding-left: 44px; font: 400 42px/1.38 'Lora'; margin-bottom: 30px; }
-  ul.beats li::before { content: ''; position: absolute; left: 0; top: .55em; width: 12px; height: 12px; background: var(--bullet); }
+  ul.beats li::before, ul.beats .bul { content: ''; position: absolute; left: 0; top: .55em; width: 12px; height: 12px; background: var(--bullet); }
+  ul.beats li.anim::before { display: none; }   /* in motion, a real element stands in so the bullet can fade with its line */
   ul.beats.s li { font-size: 38px; margin-bottom: 24px; }
   .story .body { font-size: 50px; } .story .deck { font-size: 56px; } .story ul.beats li { font-size: 46px; } .story ul.beats.s li { font-size: 38px; }
 </style></head>
@@ -74,7 +75,7 @@ fetch('all.json').then(r => r.json()).then(all => {
   const knock = tone === 'dark' || (corner && corner[3]);
   // Corner (like the website's service heroes): a big brushstroke spot bleeding off the bottom-right corner, a thin
   // scribble crossing it and running off the edge, the logo sitting on it. Placed by ink bounds.
-  let cornerHtml = '';
+  let cornerHtml = '', cornerTop = Infinity;
   if (corner) {
     const spotFile = `WBT-20260403-${corner[1]}-Watercolor-Spots-${corner[2]}.png`;
     const [a0, a1, b0, b1] = all.ink[spotFile] || [.05, .95, .05, .95];
@@ -83,6 +84,7 @@ fetch('all.json').then(r => r.json()).then(all => {
     const inkW = story ? 820 : 760, sw = inkW / (a1 - a0), shh = sw * ar;
     const cx = 1080 - 60, cy = H - bottomSafe - 70;                     // ink centre: just inside the corner, so it bleeds off two edges
     const sx = cx - sw * (a0 + a1) / 2, sy = cy - shh * (b0 + b1) / 2;
+    cornerTop = cy - shh * (b1 - b0) / 2 - 40;                           // top of the spot's ink, rotation and scribble loop included
     const scr = 'Loops/WBT-scribble-loop-wavy-tail.png', [c0, c1, d0, d1] = all.ink['WBT-scribble-loop-wavy-tail.png'] || [.18, .9, .36, .72];
     const scw = 820 / (c1 - c0), sch = scw * 1080 / 1920;
     const scx = (cx - 40) - scw * (c0 + c1) / 2, scy = (cy - 40) - sch * (d0 + d1) / 2;   // loop sits on the spot, tail exits right
@@ -161,9 +163,68 @@ fetch('all.json').then(r => r.json()).then(all => {
     for (let k = 1; k <= 7 && t.getBoundingClientRect().bottom > limit; k++)
       parts.forEach((e, i) => e.style.fontSize = (base[i] * (1 - 0.04 * k)) + 'px');
     if (t.getBoundingClientRect().bottom > limit) document.body.dataset.collision = 1;
+    // The corner spot is optional: if the text would run into it, drop it (and its knocked-out logo) on this slide.
+    if (t.getBoundingClientRect().bottom > cornerTop - 40) {
+      c.querySelectorAll('.corner').forEach(e => e.remove());
+      if (tone !== 'dark') c.querySelector('.logo').src = `${A}Logos/WBT-20260502-WBT-Monogram-Black.svg`;
+      c.querySelectorAll('.cta').forEach(e => e.style.right = '');
+    }
   };
   document.fonts.ready.then(fit);
   return Promise.all([document.fonts.ready, ...[...document.images].map(i => i.decode().catch(() => {}))]);
-}).then(() => { document.body.dataset.ready = 1; });
+}).then(() => { document.body.dataset.ready = 1; if (q.get('anim') === '1') animate(); });
+
+// ── Animation mode (?anim=1): Come Together, the brand's move, applied to one frame ──────────────────────────────
+// Collage layers and corner art converge from slightly apart and fade in; photos settle; each line's words start apart
+// and close up, line by line; asterisk, CTA and logo arrive last. Hold to read, then everything drifts apart and fades.
+// Render API: window.TOTAL, window.seek(t), body.dataset.motion = 1.
+function animate() {
+  const c = document.getElementById('c'), anims = [];
+  const SPREAD = 0.35, MOVE = 1.1, FADE = 0.6, GAP = 0.28, IN = 'cubic-bezier(.16,1,.3,1)', OUT = 'cubic-bezier(.4,0,1,1)';
+  const add = (el, kf, start, dur, easing, fill = 'both') => { const a = el.animate(kf, { duration: dur * 1000, delay: start * 1000, easing, fill }); a.pause(); anims.push(a); };
+  const fadeIn = (el, start, to = 1) => add(el, [{ opacity: 0 }, { opacity: to }], start, FADE, 'linear');
+  const cr = c.getBoundingClientRect(), mid = { x: cr.left + cr.width / 2, y: cr.top + cr.height / 2 };
+  let t = 0.3;
+  // photo settles
+  c.querySelectorAll('.photo').forEach(el => { add(el, [{ transform: 'scale(1.05)' }, { transform: 'none' }], t, 1.6, IN); fadeIn(el, t); });
+  // collage layers converge on the collage centre (spot, scribble, illustration)
+  const art = c.querySelector('.art');
+  if (art) { const ar = art.getBoundingClientRect(), ac = { x: ar.left + ar.width / 2, y: ar.top + ar.height / 2 };
+    [...art.querySelectorAll('img')].forEach((el, i) => { const r = el.getBoundingClientRect(), keep = el.style.transform || '';
+      const dx = (r.left + r.width / 2 - ac.x) * SPREAD, dy = (r.top + r.height / 2 - ac.y) * SPREAD;
+      add(el, [{ transform: `translate(${dx}px,${dy}px) ${keep}` }, { transform: keep || 'none' }], t + i * 0.16, MOVE, IN); fadeIn(el, t + i * 0.16, +(el.style.opacity || 1)); });
+    t += 0.8; }
+  // corner spot + scribble slide in from the corner
+  c.querySelectorAll('.corner').forEach((el, i) => { const keep = el.style.transform || '';
+    add(el, [{ transform: `translate(90px,70px) ${keep}` }, { transform: keep || 'none' }], 0.2 + i * 0.15, MOVE, IN); fadeIn(el, 0.2 + i * 0.15); });
+  c.querySelectorAll('.qmark, .asterisk').forEach(el => { add(el, [{ transform: 'translateY(24px) ' + (getComputedStyle(el).transform === 'none' ? '' : '') }, { transform: '' }], t, MOVE, IN); fadeIn(el, t); t += 0.25; });
+  // text: split every text element into lines of words; words close up to their spacing, line after line
+  const lines = [], bullets = [];
+  c.querySelectorAll('.text .eyebrow, .text .headline, .text .takeaway, .text .deck, .text .body, .text .quote, .text li, .text .name, .text .role, .text .stat, .text .qual').forEach(el => {
+    if (el.closest('.who') && el.classList.contains('who')) return;
+    const words = el.innerHTML.split(/(\s+)/).filter(Boolean);
+    el.innerHTML = words.map(w => /^\s+$/.test(w) ? w : `<span class="aw" style="display:inline-block">${w}</span>`).join('');
+    if (el.matches('ul.beats li')) { el.classList.add('anim'); el.insertAdjacentHTML('afterbegin', '<span class="bul"></span>'); bullets.push([el.firstChild, lines.length]); }
+    const spans = [...el.querySelectorAll('.aw')], rows = [];
+    spans.forEach(sp => { const y = Math.round(sp.getBoundingClientRect().top); (rows.at(-1)?.y === y ? rows.at(-1).s : (rows.push({ y, s: [] }), rows.at(-1).s)).push(sp); });
+    rows.forEach(r => { const rs = r.s.map(x => x.getBoundingClientRect()), m = (rs[0].left + rs.at(-1).right) / 2;
+      lines.push(r.s.map((x, k) => ({ x, dx: (rs[k].left + rs[k].width / 2) - m }))); });
+  });
+  c.querySelectorAll('.who .head').forEach(el => { fadeIn(el, t + lines.length * GAP * 0.6); });
+  lines.forEach((ws, i) => ws.forEach(({ x, dx }) => { add(x, [{ transform: `translateX(${dx * SPREAD}px)` }, { transform: 'none' }], t + i * GAP, MOVE, IN); fadeIn(x, t + i * GAP); }));
+  bullets.forEach(([el, i]) => fadeIn(el, t + i * GAP));
+  t += Math.max(0, lines.length - 1) * GAP + MOVE * 0.7;
+  c.querySelectorAll('.cta, .logo').forEach(el => fadeIn(el, t));
+  const words = c.querySelector('.text') ? c.querySelector('.text').textContent.trim().split(/\s+/).length : 0;
+  const hold = Math.max(2.5, Math.min(7, 1.2 + words * 0.22));      // long enough to read
+  const out = t + FADE + hold;
+  // exit: drift slightly apart and fade
+  lines.forEach((ws, i) => ws.forEach(({ x, dx }) => add(x, [{ transform: 'none', opacity: 1 }, { transform: `translateX(${dx * SPREAD * 0.3}px)`, opacity: 0 }], out + i * .03, .45, OUT, 'forwards')));
+  c.querySelectorAll('.art img, .corner, .photo, .qmark, .asterisk, .cta, .logo, .who .head, .bul').forEach(el =>
+    add(el, [{ opacity: getComputedStyle(el).opacity }, { opacity: 0 }], out + .15, .45, OUT, 'forwards'));
+  window.TOTAL = out + lines.length * .03 + .7;
+  window.seek = s => anims.forEach(a => a.currentTime = s * 1000);
+  seek(0); document.body.dataset.motion = 1;
+}
 </script>
 </body></html>

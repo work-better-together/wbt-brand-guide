@@ -34,8 +34,16 @@ def tile(it):
     return (f'<figure class="sp-tile"><a href="{S}{f}" target="_blank" rel="noopener"><img src="{thumb(f)}" alt="{alt}" loading="lazy" width="600" height="750"></a>'
             f'<figcaption>{LAYOUT.get(sl["type"], sl["type"])} · {ground_name(it["ground"])}</figcaption></figure>')
 
+def video(it):
+    """The animated Story (render_stories.py), first in its row, playing only while in view."""
+    v = f"stories/WBT-{D}-Social-{it['id']}.mp4"
+    if not os.path.exists(os.path.join(ROOT, S, v)):
+        return ''
+    return (f'<figure class="sp-anim"><video src="{S}{v}" poster="{S}thumbs/{files(it)[0]}" muted loop playsinline preload="none" '
+            f'aria-label="{html.escape(it.get("title", ""), quote=True)}, animated Story"></video><figcaption>Animated</figcaption></figure>')
+
 def strip(it, cls):
-    imgs = ''.join(f'<a href="{S}{f}" target="_blank" rel="noopener"><img src="{thumb(f)}" alt="{html.escape(it.get("title", ""), quote=True)}, slide {k + 1}" loading="lazy"></a>'
+    imgs = (video(it) if cls == 'sto' else '') + ''.join(f'<a href="{S}{f}" target="_blank" rel="noopener"><img src="{thumb(f)}" alt="{html.escape(it.get("title", ""), quote=True)}, slide {k + 1}" loading="lazy"></a>'
                    for k, f in enumerate(files(it)))
     return f'<div class="sp-set"><div class="sp-set-head">{html.escape(it.get("title", ""))} <span>{len(it["slides"])} {"slides" if cls == "car" else "frames"}</span></div><div class="sp-strip {cls}">{imgs}</div></div>'
 
@@ -60,7 +68,10 @@ page = head + """
     .sp-strip { display: grid; grid-auto-flow: column; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
     .sp-strip.car { grid-auto-columns: minmax(220px, 1fr); }
     .sp-strip.sto { grid-auto-columns: 190px; }
-    .sp-strip a { scroll-snap-align: start; }
+    .sp-strip a, .sp-anim { scroll-snap-align: start; }
+    .sp-anim { margin: 0; position: relative; }
+    .sp-anim video { display: block; width: 100%; aspect-ratio: 9 / 16; background: var(--border-subtle); }
+    .sp-anim figcaption { position: absolute; left: 8px; top: 8px; font-family: var(--font-display); font-weight: 600; font-size: 12px; padding: 3px 8px; background: #F9F8F2; color: #061A49; }
     .sp-rules { columns: 2; column-gap: 48px; font-family: var(--font-body); font-size: 15px; line-height: 1.65; padding-left: 18px; }
     .sp-rules li { break-inside: avoid; margin-bottom: 10px; }
     .sp-prompts { list-style: none; border-top: 1px solid var(--border-subtle); }
@@ -85,12 +96,12 @@ page = head + """
 
   <div class="section-block">
     <div class="section-label">Case study carousels</div>
-    <p class="section-intro">Each case study becomes a carousel that walks through its beats: the photo and title, The Challenge, Our Approach, what shifted, the client in their own words, and the key takeaway. Swipe through each row.</p>
+    <p class="section-intro">Every case study on our site becomes a carousel that walks through its beats: the photo and title, The Challenge, Our Approach, what shifted, the client in their own words, and the key takeaway. Where a case study tells a beat in prose rather than a list, the slide uses its opening sentences, word for word. Swipe through each row.</p>
 """ + ''.join('    ' + strip(i, 'car') + '\n' for i in carousels) + """  </div>
 
   <div class="section-block">
     <div class="section-label">Stories</div>
-    <p class="section-intro">Stories at 1080×1920, with text kept out of the top 250px and bottom 340px where the app's buttons sit. Case studies tell the same beats as their carousels; each free resource gets a short series ending on the link.</p>
+    <p class="section-intro">Stories at 1080×1920, with text kept out of the top 250px and bottom 340px where the app's buttons sit. Case studies tell the same beats as their carousels; each free resource gets a short series ending on the link. The first tile in each row is the Story animated with <a href="motion.html">Come Together</a>: each frame's words gather line by line, hold long enough to read, then drift apart into the next.</p>
     <h3 class="sp-group">Case studies</h3>
 """ + ''.join('    ' + strip(i, 'sto') + '\n' for i in case_stories) + """    <h3 class="sp-group">Free resources</h3>
 """ + ''.join('    ' + strip(i, 'sto') + '\n' for i in res_stories) + """  </div>
@@ -122,6 +133,11 @@ page = head + """
 
 </div>
 <script src="nav.js"></script>
+<script>
+  // Animated Stories play while on screen and pause when scrolled away.
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold: 0.5 });
+  document.querySelectorAll('.sp-anim video').forEach(v => io.observe(v));
+</script>
 </body>
 </html>
 """

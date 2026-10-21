@@ -73,22 +73,60 @@ CASE_STYLE = {   # ground, tone, photo object-position
     'building-conditions-for-results': ('#F9F8F2', 'light', '50% 25%'),
     'repairing-a-ruptured-relationship': ('#ACCDD9', 'light', '50% 35%'),
     'choosing-the-culture-we-build-on-campaigns': ('#1E4D5C', 'dark', '50% 40%'),
+    'building-trust-and-motivation-in-one-day': ('#2531A5', 'dark', '50% 40%'),
+    'campaign-team-retreat-to-align-at-the-start': ('#F9F8F2', 'light', '50% 35%'),
+    'co-leading-an-organization': ('#ACCDD9', 'light', '50% 35%'),
+    'coaching-to-support-leadership-development': ('#061A49', 'dark', '50% 40%'),
+    'facilitation-to-prepare-for-uncertainty': ('#F9F8F2', 'light', '50% 35%'),
+    'individual-coaching-for-each-team-member': ('#1E4D5C', 'dark', '50% 35%'),
+    'moving-from-stress-to-strategy-with-a-team': ('#F9F8F2', 'light', '50% 40%'),
 }
+# The live “Moving From Stress to Strategy” page repeats the “Individual Coaching” body word for word (Oct 2026), so its
+# carousel keeps only what is its own: the cover and the key takeaway.
+BODY_IS_COPY = {'moving-from-stress-to-strategy-with-a-team'}
+ROLE = {'leading-together-under-pressure': 'PPFA Policy Team', 'building-conditions-for-results': 'Development team, Empower'}
+
+def beat(c, key, headline):
+    """One slide per case study beat: a list when the page lists it, else the section's opening sentences as a text slide."""
+    items = [first_sentence(re.sub(r'^\d+\.\s*', '', x)) for x in c[key]]
+    if len(items) >= 2:
+        if key == 'shifted':
+            items = items[:4] if sum(len(x) for x in items[:4]) < 340 else items[:3]
+        return {'type': 'list', 'eyebrow': c['title'], 'headline': headline, 'items': items[:5 if key == 'approach' else 4]}
+    fill = lambda p: whole_sentences(p, 42) if len(whole_sentences(p, 42).split()) >= 20 else whole_sentences(p, 58)   # a slide's worth, not one thin line
+    para = next((fill(p) for p in c[key + '_p'] if not p.rstrip().endswith(':') and fill(p)), '')
+    return {'type': 'text', 'eyebrow': c['title'], 'headline': headline, 'body': para} if para else None
+
+def excerpt(t, limit=32):
+    """Whole sentences from a quote, as many as fit in `limit` words: from the start when the opening sentence fits,
+    else from the first later sentence that does (still word for word, never cut mid-sentence)."""
+    sents = re.findall(r'[^.!?…]+[.!?…]+[”"]?', t)
+    for i in range(len(sents)):
+        out = whole_sentences(' '.join(x.strip() for x in sents[i:]), limit)
+        if out and len(out.split()) >= 18:
+            return out
+    return ''
+
+def head_for(name):
+    f = 'head-' + re.sub(r'[^a-z]+', '-', name.lower()).strip('-') + '.jpg'
+    return f if os.path.exists(os.path.join(HERE, 'photos', f)) else None
+
 for c in beats['cases']:
     ground, tone, pos = CASE_STYLE[c['slug']]
-    shifted = [first_sentence(x) for x in c['shifted']]
-    shifted = shifted[:4] if sum(len(x) for x in shifted[:4]) < 340 else shifted[:3]
-    slides = [
-        {'type': 'cover', 'photo': c['slug'] + '.jpg', 'pos': pos, 'eyebrow': 'Case study · ' + c['service'], 'headline': c['title'], 'deck': c['lede'], 'cta': 'Swipe →'},
-        {'type': 'list', 'eyebrow': c['title'], 'headline': 'The Challenge', 'items': [first_sentence(x) for x in c['challenge'][:4]]},
-        {'type': 'list', 'eyebrow': c['title'], 'headline': 'Our Approach', 'items': c['approach'][:5]},
-        {'type': 'list', 'eyebrow': c['title'], 'headline': next((s for s in c['sections'] if re.search('Shift|Outcome|Impact', s)), 'What Shifted'), 'items': shifted},
-    ]
-    q = next((whole_sentences(x) for x in c['quotes'] if whole_sentences(x)), '')
-    if q:
-        role = {'leading-together-under-pressure': 'PPFA Policy Team', 'building-conditions-for-results': 'Development team, Empower',
-                'choosing-the-culture-we-build-on-campaigns': 'Campaign Leader'}.get(c['slug'], 'Client')
-        slides.append({'type': 'quote', 'quote': q, 'name': 'In their words', 'role': role})
+    slides = [{'type': 'cover', 'photo': c['slug'] + '.jpg', 'pos': pos, 'eyebrow': 'Case study · ' + c['service'], 'headline': c['title'], 'deck': c['lede'], 'cta': 'Swipe →'}]
+    if c['slug'] not in BODY_IS_COPY:
+        slides += [b for b in (beat(c, 'challenge', 'The Challenge'), beat(c, 'approach', 'Our Approach'),
+                               beat(c, 'shifted', re.sub(r'^The ', '', c['shift_label']) if c['shift_label'] else 'What Shifted')) if b]
+        named = [q for q in c['quotes'] if q['role'] and q['name'] and not q['name'].startswith('—') and excerpt(q['text'])]
+        if named:   # named people with their own role line (and headshot when we have one): up to two voices
+            for q in named[:2]:
+                slides.append({'type': 'quote', 'quote': excerpt(q['text']), 'name': q['name'], 'role': q['role'], **({'head': head_for(q['name'])} if head_for(q['name']) else {})})
+        else:
+            q = next((q for q in c['quotes'] if excerpt(q['text'])), None)
+            if q:
+                cite = q['name'].lstrip('— ').strip()
+                slides.append({'type': 'quote', 'quote': excerpt(q['text']), 'name': 'In their words',
+                               'role': ROLE.get(c['slug']) or (cite if cite and cite != 'Client' else '') or c['client'] or 'Client'})
     # the asterisk takes the eyebrow's color (gold on dark, ochre on light, Clean Slate on Calm Blue), so takeaways keep the carousel's ground
     slides.append({'type': 'takeaway', 'eyebrow': 'Key takeaway', 'headline': c['takeaway'], 'cta': 'Read the case study at workbettertogether.coach'})
     for fmt in ('post', 'story'):
@@ -120,7 +158,7 @@ CAT = os.path.expanduser('~/.claude/skills/wbt-brand/references/asset-catalog.md
 INK = {name: [int(v) / 100 for v in box] for name, *box in re.findall(r'`([^`]+\.png)` \d+×\d+ ink (\d+)–(\d+)%×(\d+)–(\d+)%', open(CAT).read())}
 # Corner spots: on plain light grounds, some inside slides get a watercolor spot bleeding off the bottom-right corner,
 # under the logo. Light spots keep the dark logo; darker spots knock the logo out to Clear White. Not on every slide.
-SERVICE_SPOT = {'Team Coaching': ['Intentional Blue', 'Intentional-Blue', 7, True], 'Leadership Coaching': ['Radiant Gold', 'Gold', 1, False],
+SERVICE_SPOT = {'Team Coaching': ['Intentional Blue', 'Intentional-Blue', 7, True], 'Leadership Coaching': ['Radiant Gold', 'Gold', 1, False], '2:2 Coaching': ['Intentional Blue', 'Intentional-Blue', 7, True],
                 'Facilitation + Training': ['Honest Ochre', 'Honest-Ochre', 7, True]}   # brushstroke shape 7; textured wash 1 for gold
 LIGHT_SPOT = {'Calm Blue': False, 'Radiant Gold': False}
 for it in items:
