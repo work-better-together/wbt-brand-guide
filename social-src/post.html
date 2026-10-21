@@ -24,8 +24,10 @@
   .body { font: 400 38px/1.5 'Lora'; margin-top: 26px; }
   .quote { font: italic 400 58px/1.36 'Lora'; } .quote.s { font-size: 52px; }
   .qmark { font: italic 700 230px/.8 'Lora'; color: #CD9F36; position: absolute; left: 80px; }
-  .name { font: 700 34px/1.3 'League Spartan'; margin-top: 52px; }
-  .role { font: 500 26px/1.5 'Inconsolata'; letter-spacing: .18em; text-transform: uppercase; color: var(--soft); margin-top: 10px; }
+  .name { font: 700 38px/1.3 'League Spartan'; margin-top: 52px; }
+  .who { display: flex; align-items: center; gap: 30px; margin-top: 52px; } .who .name { margin-top: 0; }
+  .head { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; flex: none; }   /* round headshot, face-centred crop */
+  .role { font: 500 30px/1.45 'Inconsolata'; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); margin-top: 10px; }
   .stat { font: 700 280px/.9 'League Spartan'; letter-spacing: -0.03em; margin-top: 70px; }
   .qual { font: 400 42px/1.45 'Lora'; margin-top: 40px; } .qual b { font-weight: 700; }
   .cta { position: absolute; left: 86px; right: 210px; z-index: 1; font: 500 30px/1.4 'Inconsolata'; letter-spacing: .16em; text-transform: uppercase; color: var(--cta); }
@@ -43,7 +45,7 @@ const q = new URLSearchParams(location.search);
 const A = '../assets/';
 const esc = s => s;
 fetch('all.json').then(r => r.json()).then(all => {
-  const item = all.items.find(i => i.id === q.get('id'));
+  window.all = all; const item = all.items.find(i => i.id === q.get('id'));
   const sl = item.slides[+(q.get('s') || 0)];
   const story = item.format === 'story', H = story ? 1920 : 1350, c = document.getElementById('c');
   c.style.height = H + 'px'; if (story) c.classList.add('story');
@@ -61,11 +63,32 @@ fetch('all.json').then(r => r.json()).then(all => {
   const top = story ? 260 : 0, bottomSafe = story ? 360 : 0;        // story safe zones
   const logo = `<img class="logo" style="bottom:${72 + bottomSafe}px" src="${A}Logos/WBT-20260502-WBT-Monogram-${tone === 'dark' ? 'Clear-White' : 'Black'}.svg">`;
   const cta = t => t ? `<div class="cta" style="bottom:${88 + bottomSafe}px">${t}</div>` : '';
+  // Collage, proportioned like the resources.wbt.coach category collages: the ILLUSTRATION leads; the watercolor spot is
+  // about the illustration's size (95% of its larger side), shifted a little to one side and down so it peeks out; the
+  // scribble's ink is ~1.25× the illustration, centred on it, so thin loops wrap the illustration (over the spot, under
+  // the illustration). Everything is placed by its ink bounds (asset catalog), not by the file's canvas.
   const collage = (col, y, h) => { const [folder, file, n] = col.spot;
+    const spotFile = `WBT-20260403-${file}-Watercolor-Spots-${n}.png`, scrFile = col.scribble.split('/').pop();
+    const ink = (f, d) => all.ink[f] || d;                                   // [x0, x1, y0, y1] fractions
+    const side = [...(item.id || '')].reduce((a, ch) => a + ch.charCodeAt(0), 0) % 2 ? 1 : -1;   // vary which side the spot peeks
+    // illustration: square files, shown h*0.8 wide, centred in the band
+    const iw = h * 0.8, ix = 540 - iw / 2, iy = (h - iw) / 2;
+    const [p0, p1, q0, q1] = ink(col.illus, [0, 1, 0, 1]);
+    const I = { x: ix + iw * (p0 + p1) / 2, y: iy + iw * (q0 + q1) / 2, w: iw * (p1 - p0), h: iw * (q1 - q0) };
+    const L = Math.max(I.w, I.h);
+    // spot: ink ≈ 1.0 L, offset 25% L to one side and 8% L down so it peeks out
+    const [a0, a1, b0, b1] = ink(spotFile, [.05, .95, .05, .95]);
+    const sw = (1.0 * L) / Math.max(a1 - a0, (b1 - b0) * 1.057);       // spot files are ~1000×1057
+    const sxc = I.x + side * 0.25 * L, syc = I.y + 0.08 * L;
+    const sx = sxc - sw * (a0 + a1) / 2, sy = syc - sw * 1.057 * (b0 + b1) / 2;
+    // scribble: ink ≈ 1.25 L wide, never taller than 1.3 L, centred on the illustration (a touch high)
+    const [c0, c1, d0, d1] = ink(scrFile, [.1, .9, .2, .8]);
+    const scrW = Math.min((1.35 * L) / (c1 - c0), (1.35 * L) / ((d1 - d0) * 1080 / 1920)), scrH = scrW * 1080 / 1920;
+    const scx = I.x - scrW * (c0 + c1) / 2, scy = I.y - 0.03 * L - scrH * (d0 + d1) / 2;
     return `<div class="art" style="top:${y}px;height:${h}px">
-      <img src="${A}Watercolor Textures/Spots/${folder}/WBT-20260403-${file}-Watercolor-Spots-${n}.png" style="left:${540 - h * .44}px;top:${h * .06}px;width:${h * .88}px;opacity:.92">
-      ${tone === 'dark' ? '' : `<img src="${A}Scribbles/${col.scribble}" style="left:-60px;top:${-h * .05}px;width:1240px;transform:rotate(-7deg)">`}
-      <img src="${A}Illustrations/${col.illus}" style="left:${540 - h * .36}px;top:${h * .12}px;width:${h * .72}px"></div>`; };
+      <img src="${A}Watercolor Textures/Spots/${folder}/${spotFile}" style="left:${sx}px;top:${sy}px;width:${sw}px;opacity:.95">
+      ${tone === 'dark' ? '' : `<img src="${A}Scribbles/${col.scribble}" style="left:${scx}px;top:${scy}px;width:${scrW}px;transform:rotate(${side * 4}deg)">`}
+      <img src="${A}Illustrations/${col.illus}" style="left:${ix}px;top:${iy}px;width:${iw}px"></div>`; };
   const size = (t, big, mid) => t.length > big ? 's' : t.length > mid ? 'm' : '';
   let html = '';
   switch (sl.type) {
@@ -78,7 +101,9 @@ fetch('all.json').then(r => r.json()).then(all => {
          <h1 class="headline ${size(sl.headline, 40, 24)}">${sl.headline}</h1>${sl.deck ? `<p class="deck">${sl.deck}</p>` : ''}${sl.body ? `<p class="body">${sl.body}</p>` : ''}</div>` + cta(sl.cta) + logo; break;
     case 'quote':
       html = `<div class="qmark" style="top:${top + 120}px">“</div><div class="text" style="top:${top + 330}px">
-         <p class="quote ${sl.quote.length > 150 ? 's' : ''}">${sl.quote}</p><div class="name">${sl.name}</div><div class="role">${sl.role}</div></div>` + cta(sl.cta) + logo; break;
+         <p class="quote ${sl.quote.length > 150 ? 's' : ''}">${sl.quote}</p>
+         ${sl.head ? `<div class="who"><img class="head" src="photos/${sl.head}" alt=""><div><div class="name">${sl.name}</div><div class="role">${sl.role}</div></div></div>`
+                   : `<div class="name">${sl.name}</div><div class="role">${sl.role}</div>`}</div>` + cta(sl.cta) + logo; break;
     case 'stat':
       html = `<div class="text" style="top:${top + 120}px"><div class="eyebrow">${sl.eyebrow}</div>
          <div class="stat" style="color:${sl.statColor}">${sl.stat}</div><p class="qual"><b>${sl.strong}</b>${sl.rest}</p></div>

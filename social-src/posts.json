@@ -53,7 +53,7 @@
      "Honest-Ochre",
      3
     ],
-    "scribble": "Loops/WBT-scribble-double-oval-tail.png",
+    "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
     "illus": "Lightbulb-Glowing.png"
    },
    "eyebrow": "Facilitation + Training",
@@ -120,6 +120,28 @@
    "quote": "This process gave us the clarity and accountability we needed. We walked out with actionable plans and a stronger sense of community across the teams.",
    "name": "Leadership team",
    "role": "Facilitation to Prepare for Uncertainty"
+  },
+  {
+   "id": "quote-eli-northrup",
+   "group": "Testimonials",
+   "layout": "quote",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "head": "head-eli-northrup.jpg",
+   "quote": "We defined roles, we connected and we have language to use moving forward to make sure we’re working well together. It was such an important step to building our team’s foundation.",
+   "name": "Eli Northrup",
+   "role": "Candidate, New York State Assembly"
+  },
+  {
+   "id": "quote-courtney-curd",
+   "group": "Testimonials",
+   "layout": "quote",
+   "ground": "#061A49",
+   "tone": "dark",
+   "head": "head-courtney-curd.jpg",
+   "quote": "There’s a lot less tension than I typically see on campaign teams. We were all able to really ground ourselves in trust and respect for each other during that day.",
+   "name": "Courtney Curd",
+   "role": "Campaign Manager"
   },
   {
    "id": "stat-80",
@@ -224,7 +246,7 @@
      "Gold",
      5
     ],
-    "scribble": "Sweeps/WBT-scribble-s-curve-loop.png",
+    "scribble": "Loops/WBT-scribble-cascading-ovals.png",
     "illus": "Sun.png"
    },
    "eyebrow": "Free resource · For leaders",
@@ -366,7 +388,7 @@
      "Honest-Ochre",
      1
     ],
-    "scribble": "Loops/WBT-scribble-double-oval-tail.png",
+    "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
     "illus": "Heart-2.png"
    },
    "eyebrow": "Insights",

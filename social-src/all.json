@@ -82,7 +82,7 @@
        "Honest-Ochre",
        3
       ],
-      "scribble": "Loops/WBT-scribble-double-oval-tail.png",
+      "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
       "illus": "Lightbulb-Glowing.png"
      },
      "eyebrow": "Facilitation + Training",
@@ -220,6 +220,50 @@
    ]
   },
   {
+   "id": "quote-eli-northrup",
+   "group": "Testimonials",
+   "kind": "post",
+   "format": "post",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "slides": [
+    {
+     "id": "quote-eli-northrup",
+     "group": "Testimonials",
+     "layout": "quote",
+     "ground": "#F9F8F2",
+     "tone": "light",
+     "head": "head-eli-northrup.jpg",
+     "quote": "We defined roles, we connected and we have language to use moving forward to make sure we’re working well together. It was such an important step to building our team’s foundation.",
+     "name": "Eli Northrup",
+     "role": "Candidate, New York State Assembly",
+     "type": "quote"
+    }
+   ]
+  },
+  {
+   "id": "quote-courtney-curd",
+   "group": "Testimonials",
+   "kind": "post",
+   "format": "post",
+   "ground": "#061A49",
+   "tone": "dark",
+   "slides": [
+    {
+     "id": "quote-courtney-curd",
+     "group": "Testimonials",
+     "layout": "quote",
+     "ground": "#061A49",
+     "tone": "dark",
+     "head": "head-courtney-curd.jpg",
+     "quote": "There’s a lot less tension than I typically see on campaign teams. We were all able to really ground ourselves in trust and respect for each other during that day.",
+     "name": "Courtney Curd",
+     "role": "Campaign Manager",
+     "type": "quote"
+    }
+   ]
+  },
+  {
    "id": "stat-80",
    "group": "Stats",
    "kind": "post",
@@ -308,7 +352,7 @@
        "Gold",
        5
       ],
-      "scribble": "Sweeps/WBT-scribble-s-curve-loop.png",
+      "scribble": "Loops/WBT-scribble-cascading-ovals.png",
       "illus": "Sun.png"
      },
      "eyebrow": "Free resource · For leaders",
@@ -538,7 +582,7 @@
        "Honest-Ochre",
        1
       ],
-      "scribble": "Loops/WBT-scribble-double-oval-tail.png",
+      "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
       "illus": "Heart-2.png"
      },
      "eyebrow": "Insights",
@@ -1194,7 +1238,7 @@
        "Gold",
        5
       ],
-      "scribble": "Sweeps/WBT-scribble-s-curve-loop.png",
+      "scribble": "Loops/WBT-scribble-cascading-ovals.png",
       "illus": "Sun.png"
      },
      "eyebrow": "Free resource · For leaders",
@@ -1478,5 +1522,2113 @@
     }
    ]
   }
- ]
+ ],
+ "ink": {
+  "WBT-20260403-Calm-Blue-Watercolor-Spots-1.png": [
+   0.04,
+   0.94,
+   0.05,
+   0.98
+  ],
+  "WBT-20260403-Calm-Blue-Watercolor-Spots-3.png": [
+   0.07,
+   0.97,
+   0.15,
+   0.86
+  ],
+  "WBT-20260403-Calm-Blue-Watercolor-Spots-4.png": [
+   0.07,
+   0.94,
+   0.09,
+   0.92
+  ],
+  "WBT-20260403-Calm-Blue-Watercolor-Spots-5.png": [
+   0.15,
+   0.62,
+   0.1,
+   0.85
+  ],
+  "WBT-20260403-Calm-Blue-Watercolor-Spots-6.png": [
+   0.03,
+   1.0,
+   0.16,
+   0.93
+  ],
+  "WBT-20260403-Calm-Blue-Watercolor-Spots-7.png": [
+   0.07,
+   0.65,
+   0.13,
+   0.86
+  ],
+  "WBT-20260403-Calm-Blue-Watercolor-Spots-8.png": [
+   0.07,
+   0.96,
+   0.06,
+   0.93
+  ],
+  "WBT-20260403-Calm-Blue-Watercolor-Spots-9.png": [
+   0.12,
+   0.88,
+   0.09,
+   0.99
+  ],
+  "WBT-20260403-Clean-Slate-Watercolor-Spots-1.png": [
+   0.04,
+   0.94,
+   0.05,
+   0.98
+  ],
+  "WBT-20260403-Clean-Slate-Watercolor-Spots-3.png": [
+   0.07,
+   0.97,
+   0.15,
+   0.86
+  ],
+  "WBT-20260403-Clean-Slate-Watercolor-Spots-4.png": [
+   0.07,
+   0.94,
+   0.09,
+   0.92
+  ],
+  "WBT-20260403-Clean-Slate-Watercolor-Spots-5.png": [
+   0.15,
+   0.62,
+   0.1,
+   0.85
+  ],
+  "WBT-20260403-Clean-Slate-Watercolor-Spots-6.png": [
+   0.03,
+   1.0,
+   0.16,
+   0.93
+  ],
+  "WBT-20260403-Clean-Slate-Watercolor-Spots-7.png": [
+   0.07,
+   0.65,
+   0.13,
+   0.86
+  ],
+  "WBT-20260403-Clean-Slate-Watercolor-Spots-8.png": [
+   0.07,
+   0.96,
+   0.06,
+   0.93
+  ],
+  "WBT-20260403-Clean-Slate-Watercolor-Spots-9.png": [
+   0.12,
+   0.88,
+   0.09,
+   0.99
+  ],
+  "WBT-20260403-Grounded-Black-Watercolor-Spots-1.png": [
+   0.08,
+   0.9,
+   0.03,
+   1.0
+  ],
+  "WBT-20260403-Grounded-Black-Watercolor-Spots-3.png": [
+   0.08,
+   0.96,
+   0.13,
+   0.87
+  ],
+  "WBT-20260403-Grounded-Black-Watercolor-Spots-5.png": [
+   0.15,
+   0.62,
+   0.1,
+   0.85
+  ],
+  "WBT-20260403-Grounded-Black-Watercolor-Spots-6.png": [
+   0.03,
+   1.0,
+   0.16,
+   0.93
+  ],
+  "WBT-20260403-Grounded-Black-Watercolor-Spots-7.png": [
+   0.07,
+   0.65,
+   0.13,
+   0.86
+  ],
+  "WBT-20260403-Grounded-Black-Watercolor-Spots-8.png": [
+   0.07,
+   0.96,
+   0.06,
+   0.93
+  ],
+  "WBT-20260403-Grounded-Black-Watercolor-Spots-9.png": [
+   0.12,
+   0.88,
+   0.09,
+   0.99
+  ],
+  "WBT-20260403-Honest-Ochre-Watercolor-Spots-1.png": [
+   0.05,
+   0.93,
+   0.07,
+   0.98
+  ],
+  "WBT-20260403-Honest-Ochre-Watercolor-Spots-3.png": [
+   0.07,
+   0.98,
+   0.15,
+   0.87
+  ],
+  "WBT-20260403-Honest-Ochre-Watercolor-Spots-4.png": [
+   0.07,
+   0.94,
+   0.09,
+   0.92
+  ],
+  "WBT-20260403-Honest-Ochre-Watercolor-Spots-5.png": [
+   0.15,
+   0.62,
+   0.1,
+   0.85
+  ],
+  "WBT-20260403-Honest-Ochre-Watercolor-Spots-6.png": [
+   0.03,
+   1.0,
+   0.16,
+   0.93
+  ],
+  "WBT-20260403-Honest-Ochre-Watercolor-Spots-7.png": [
+   0.07,
+   0.65,
+   0.13,
+   0.86
+  ],
+  "WBT-20260403-Honest-Ochre-Watercolor-Spots-8.png": [
+   0.07,
+   0.96,
+   0.06,
+   0.93
+  ],
+  "WBT-20260403-Honest-Ochre-Watercolor-Spots-9.png": [
+   0.12,
+   0.88,
+   0.09,
+   0.99
+  ],
+  "WBT-20260403-Intentional-Blue-Watercolor-Spots-1.png": [
+   0.04,
+   0.94,
+   0.05,
+   0.98
+  ],
+  "WBT-20260403-Intentional-Blue-Watercolor-Spots-3.png": [
+   0.07,
+   0.97,
+   0.15,
+   0.86
+  ],
+  "WBT-20260403-Intentional-Blue-Watercolor-Spots-4.png": [
+   0.07,
+   0.94,
+   0.09,
+   0.92
+  ],
+  "WBT-20260403-Intentional-Blue-Watercolor-Spots-5.png": [
+   0.15,
+   0.62,
+   0.1,
+   0.85
+  ],
+  "WBT-20260403-Intentional-Blue-Watercolor-Spots-6.png": [
+   0.03,
+   1.0,
+   0.16,
+   0.93
+  ],
+  "WBT-20260403-Intentional-Blue-Watercolor-Spots-7.png": [
+   0.07,
+   0.65,
+   0.13,
+   0.86
+  ],
+  "WBT-20260403-Intentional-Blue-Watercolor-Spots-8.png": [
+   0.07,
+   0.96,
+   0.06,
+   0.93
+  ],
+  "WBT-20260403-Intentional-Blue-Watercolor-Spots-9.png": [
+   0.12,
+   0.88,
+   0.09,
+   0.99
+  ],
+  "WBT-20260403-Gold-Watercolor-Spots-1.png": [
+   0.04,
+   0.94,
+   0.05,
+   0.98
+  ],
+  "WBT-20260403-Gold-Watercolor-Spots-3.png": [
+   0.07,
+   0.97,
+   0.15,
+   0.86
+  ],
+  "WBT-20260403-Gold-Watercolor-Spots-4.png": [
+   0.07,
+   0.94,
+   0.09,
+   0.92
+  ],
+  "WBT-20260403-Gold-Watercolor-Spots-5.png": [
+   0.15,
+   0.62,
+   0.1,
+   0.85
+  ],
+  "WBT-20260403-Gold-Watercolor-Spots-6.png": [
+   0.03,
+   1.0,
+   0.16,
+   0.93
+  ],
+  "WBT-20260403-Gold-Watercolor-Spots-7.png": [
+   0.07,
+   0.65,
+   0.13,
+   0.86
+  ],
+  "WBT-20260403-Gold-Watercolor-Spots-8.png": [
+   0.07,
+   0.96,
+   0.06,
+   0.93
+  ],
+  "WBT-20260403-Gold-Watercolor-Spots-9.png": [
+   0.12,
+   0.88,
+   0.09,
+   0.99
+  ],
+  "WBT-20260403-Steady-Blue-Watercolor-Spots-1.png": [
+   0.04,
+   0.94,
+   0.05,
+   0.98
+  ],
+  "WBT-20260403-Steady-Blue-Watercolor-Spots-3.png": [
+   0.07,
+   0.97,
+   0.15,
+   0.86
+  ],
+  "WBT-20260403-Steady-Blue-Watercolor-Spots-4.png": [
+   0.07,
+   0.94,
+   0.09,
+   0.92
+  ],
+  "WBT-20260403-Steady-Blue-Watercolor-Spots-5.png": [
+   0.15,
+   0.62,
+   0.1,
+   0.85
+  ],
+  "WBT-20260403-Steady-Blue-Watercolor-Spots-6.png": [
+   0.03,
+   1.0,
+   0.16,
+   0.93
+  ],
+  "WBT-20260403-Steady-Blue-Watercolor-Spots-7.png": [
+   0.07,
+   0.65,
+   0.13,
+   0.86
+  ],
+  "WBT-20260403-Steady-Blue-Watercolor-Spots-8.png": [
+   0.07,
+   0.96,
+   0.06,
+   0.93
+  ],
+  "WBT-20260403-Steady-Blue-Watercolor-Spots-9.png": [
+   0.12,
+   0.88,
+   0.09,
+   0.99
+  ],
+  "WBT-scribble-background-20.png": [
+   0.04,
+   0.97,
+   0.07,
+   0.96
+  ],
+  "WBT-scribble-block-02.png": [
+   0.08,
+   0.95,
+   0.06,
+   0.93
+  ],
+  "WBT-scribble-block-04.png": [
+   0.01,
+   0.97,
+   0.07,
+   0.92
+  ],
+  "WBT-scribble-block-22.png": [
+   0.07,
+   0.95,
+   0.04,
+   0.95
+  ],
+  "WBT-scribble-block-27.png": [
+   0.01,
+   1.0,
+   0.1,
+   0.92
+  ],
+  "WBT-scribble-block-30.png": [
+   0.0,
+   0.98,
+   0.05,
+   0.94
+  ],
+  "WBT-scribble-block-32.png": [
+   0.02,
+   0.98,
+   0.05,
+   0.91
+  ],
+  "WBT-scribble-block-33.png": [
+   0.03,
+   1.0,
+   0.08,
+   0.86
+  ],
+  "WBT-scribble-block-35.png": [
+   0.02,
+   0.98,
+   0.07,
+   0.9
+  ],
+  "WBT-scribble-block-36.png": [
+   0.0,
+   1.0,
+   0.06,
+   0.9
+  ],
+  "WBT-scribble-block-37.png": [
+   0.01,
+   1.0,
+   0.09,
+   0.93
+  ],
+  "WBT-scribble-block-38.png": [
+   0.02,
+   0.98,
+   0.17,
+   0.88
+  ],
+  "WBT-scribble-sweep-with-leaves.png": [
+   0.05,
+   0.93,
+   0.11,
+   0.89
+  ],
+  "WBT-scribble-swooping-line-leaves.png": [
+   0.05,
+   0.93,
+   0.11,
+   0.89
+  ],
+  "WBT-scribble-chaotic-13.png": [
+   0.04,
+   0.96,
+   0.05,
+   0.94
+  ],
+  "WBT-scribble-chaotic-15.png": [
+   0.04,
+   0.97,
+   0.05,
+   0.91
+  ],
+  "WBT-scribble-chaotic-17.png": [
+   0.02,
+   0.96,
+   0.06,
+   0.92
+  ],
+  "WBT-scribble-chaotic-18.png": [
+   0.05,
+   0.96,
+   0.08,
+   0.93
+  ],
+  "WBT-scribble-chaotic-26.png": [
+   0.05,
+   0.95,
+   0.04,
+   0.93
+  ],
+  "WBT-scribble-chaotic-40.png": [
+   0.09,
+   0.94,
+   0.06,
+   0.94
+  ],
+  "WBT-scribble-chaotic-57.png": [
+   0.03,
+   0.95,
+   0.06,
+   0.91
+  ],
+  "WBT-scribble-chaotic-58.png": [
+   0.0,
+   1.0,
+   0.08,
+   0.9
+  ],
+  "WBT-scribble-chaotic-62.png": [
+   0.01,
+   0.99,
+   0.13,
+   0.98
+  ],
+  "WBT-scribble-heart-black-converted.png": [
+   0.29,
+   0.64,
+   0.08,
+   0.84
+  ],
+  "WBT-scribble-heart-black.png": [
+   0.17,
+   0.83,
+   0.23,
+   0.81
+  ],
+  "WBT-scribble-heart-blue.png": [
+   0.29,
+   0.64,
+   0.08,
+   0.84
+  ],
+  "WBT-scribble-line-15.png": [
+   0.0,
+   0.99,
+   0.1,
+   0.98
+  ],
+  "WBT-scribble-line-19.png": [
+   0.0,
+   1.0,
+   0.12,
+   0.91
+  ],
+  "WBT-scribble-line-23.png": [
+   0.0,
+   1.0,
+   0.06,
+   0.95
+  ],
+  "WBT-scribble-line-24.png": [
+   0.01,
+   0.99,
+   0.18,
+   0.95
+  ],
+  "WBT-scribble-line-25.png": [
+   0.0,
+   0.99,
+   0.05,
+   0.84
+  ],
+  "WBT-scribble-line-26.png": [
+   0.01,
+   1.0,
+   0.2,
+   0.76
+  ],
+  "WBT-scribble-line-27.png": [
+   0.0,
+   1.0,
+   0.06,
+   0.72
+  ],
+  "WBT-scribble-line-28.png": [
+   0.0,
+   1.0,
+   0.07,
+   0.94
+  ],
+  "WBT-scribble-line-29.png": [
+   0.0,
+   1.0,
+   0.05,
+   0.94
+  ],
+  "WBT-scribble-line-30.png": [
+   0.0,
+   1.0,
+   0.13,
+   0.91
+  ],
+  "WBT-scribble-line-31.png": [
+   0.0,
+   1.0,
+   0.12,
+   0.8
+  ],
+  "WBT-scribble-line-32.png": [
+   0.0,
+   1.0,
+   0.07,
+   0.96
+  ],
+  "WBT-scribble-cascading-ovals.png": [
+   0.19,
+   0.73,
+   0.11,
+   0.7
+  ],
+  "WBT-scribble-double-oval-tail.png": [
+   0.62,
+   0.97,
+   0.14,
+   0.88
+  ],
+  "WBT-scribble-loop-wavy-tail.png": [
+   0.18,
+   0.9,
+   0.36,
+   0.72
+  ],
+  "WBT-scribble-overlapping-ovals.png": [
+   0.25,
+   0.92,
+   0.2,
+   0.98
+  ],
+  "WBT-scribble-misc-14.png": [
+   0.08,
+   0.94,
+   0.01,
+   0.99
+  ],
+  "WBT-scribble-ornamental-03.png": [
+   0.0,
+   1.0,
+   0.24,
+   0.95
+  ],
+  "WBT-scribble-ornamental-05.png": [
+   0.0,
+   1.0,
+   0.03,
+   0.91
+  ],
+  "WBT-scribble-ornamental-06.png": [
+   0.0,
+   1.0,
+   0.11,
+   0.98
+  ],
+  "WBT-scribble-ornamental-13.png": [
+   0.0,
+   1.0,
+   0.09,
+   0.9
+  ],
+  "WBT-scribble-ornamental-14.png": [
+   0.0,
+   1.0,
+   0.05,
+   0.95
+  ],
+  "WBT-scribble-ornamental-15.png": [
+   0.0,
+   1.0,
+   0.03,
+   0.9
+  ],
+  "WBT-scribble-ornamental-23.png": [
+   0.01,
+   0.99,
+   0.1,
+   0.99
+  ],
+  "WBT-scribble-ornamental-26.png": [
+   0.0,
+   0.98,
+   0.02,
+   0.9
+  ],
+  "WBT-scribble-ornamental-29.png": [
+   0.0,
+   1.0,
+   0.1,
+   0.97
+  ],
+  "WBT-scribble-ornamental-30.png": [
+   0.0,
+   1.0,
+   0.17,
+   0.98
+  ],
+  "WBT-scribble-straight-01.png": [
+   0.02,
+   0.98,
+   0.12,
+   0.88
+  ],
+  "WBT-scribble-straight-02.png": [
+   0.01,
+   0.99,
+   0.08,
+   0.92
+  ],
+  "WBT-scribble-straight-03.png": [
+   0.01,
+   0.99,
+   0.14,
+   0.85
+  ],
+  "WBT-scribble-straight-04.png": [
+   0.01,
+   0.99,
+   0.14,
+   0.87
+  ],
+  "WBT-scribble-straight-05.png": [
+   0.01,
+   0.99,
+   0.08,
+   0.92
+  ],
+  "WBT-scribble-straight-06.png": [
+   0.04,
+   1.0,
+   0.1,
+   0.9
+  ],
+  "WBT-scribble-straight-07.png": [
+   0.0,
+   1.0,
+   0.14,
+   0.84
+  ],
+  "WBT-scribble-straight-08.png": [
+   0.0,
+   1.0,
+   0.13,
+   0.88
+  ],
+  "WBT-scribble-straight-09.png": [
+   0.0,
+   1.0,
+   0.12,
+   0.82
+  ],
+  "WBT-scribble-straight-10.png": [
+   0.0,
+   1.0,
+   0.18,
+   0.59
+  ],
+  "WBT-scribble-straight-11.png": [
+   0.0,
+   1.0,
+   0.27,
+   0.73
+  ],
+  "WBT-scribble-straight-12.png": [
+   0.01,
+   1.0,
+   0.11,
+   0.89
+  ],
+  "WBT-scribble-straight-13.png": [
+   0.01,
+   1.0,
+   0.15,
+   0.86
+  ],
+  "WBT-scribble-straight-14.png": [
+   0.01,
+   0.99,
+   0.26,
+   0.73
+  ],
+  "WBT-scribble-straight-15.png": [
+   0.0,
+   1.0,
+   0.17,
+   0.96
+  ],
+  "WBT-scribble-straight-16.png": [
+   0.0,
+   1.0,
+   0.48,
+   0.92
+  ],
+  "WBT-scribble-straight-17.png": [
+   0.0,
+   1.0,
+   0.08,
+   0.82
+  ],
+  "WBT-scribble-straight-18.png": [
+   0.0,
+   1.0,
+   0.13,
+   0.9
+  ],
+  "WBT-scribble-straight-19.png": [
+   0.0,
+   0.99,
+   0.08,
+   0.89
+  ],
+  "WBT-scribble-straight-20.png": [
+   0.0,
+   1.0,
+   0.07,
+   0.93
+  ],
+  "WBT-scribble-straight-21.png": [
+   0.0,
+   1.0,
+   0.04,
+   0.89
+  ],
+  "WBT-scribble-straight-22.png": [
+   0.0,
+   1.0,
+   0.37,
+   0.81
+  ],
+  "WBT-scribble-straight-23.png": [
+   0.0,
+   1.0,
+   0.11,
+   0.92
+  ],
+  "WBT-scribble-straight-24.png": [
+   0.0,
+   1.0,
+   0.08,
+   0.92
+  ],
+  "WBT-scribble-straight-25.png": [
+   0.01,
+   1.0,
+   0.07,
+   0.95
+  ],
+  "WBT-scribble-underline-01.png": [
+   0.0,
+   1.0,
+   0.01,
+   0.89
+  ],
+  "WBT-scribble-underline-02.png": [
+   0.0,
+   1.0,
+   0.07,
+   0.89
+  ],
+  "WBT-scribble-underline-05.png": [
+   0.0,
+   1.0,
+   0.06,
+   0.94
+  ],
+  "WBT-scribble-underline-06.png": [
+   0.0,
+   1.0,
+   0.09,
+   0.99
+  ],
+  "WBT-scribble-underline-07.png": [
+   0.01,
+   0.99,
+   0.16,
+   0.93
+  ],
+  "WBT-scribble-underline-08.png": [
+   0.0,
+   1.0,
+   0.02,
+   0.85
+  ],
+  "WBT-scribble-underline-09.png": [
+   0.0,
+   1.0,
+   0.05,
+   0.93
+  ],
+  "WBT-scribble-underline-10.png": [
+   0.0,
+   1.0,
+   0.09,
+   0.85
+  ],
+  "WBT-scribble-underline-12.png": [
+   0.0,
+   0.95,
+   0.11,
+   0.78
+  ],
+  "WBT-scribble-underline-16.png": [
+   0.0,
+   1.0,
+   0.06,
+   0.93
+  ],
+  "WBT-scribble-underline-18.png": [
+   0.0,
+   1.0,
+   0.07,
+   0.94
+  ],
+  "WBT-scribble-underline-19.png": [
+   0.0,
+   1.0,
+   0.08,
+   0.92
+  ],
+  "WBT-scribble-underline-20.png": [
+   0.0,
+   1.0,
+   0.06,
+   0.94
+  ],
+  "WBT-scribble-underline-21.png": [
+   0.0,
+   1.0,
+   0.16,
+   0.96
+  ],
+  "WBT-scribble-underline-22.png": [
+   0.0,
+   1.0,
+   0.3,
+   0.98
+  ],
+  "WBT-scribble-underline-23.png": [
+   0.0,
+   1.0,
+   0.04,
+   0.64
+  ],
+  "WBT-scribble-underline-24.png": [
+   0.0,
+   1.0,
+   0.08,
+   0.92
+  ],
+  "WBT-scribble-underline-25.png": [
+   0.0,
+   1.0,
+   0.07,
+   0.93
+  ],
+  "WBT-scribble-underline-26.png": [
+   0.0,
+   1.0,
+   0.1,
+   0.9
+  ],
+  "WBT-scribble-underline-32.png": [
+   0.01,
+   1.0,
+   0.14,
+   0.94
+  ],
+  "WBT-scribble-underline-33.png": [
+   0.0,
+   1.0,
+   0.35,
+   0.83
+  ],
+  "WBT-scribble-underline-34.png": [
+   0.0,
+   1.0,
+   0.24,
+   0.97
+  ],
+  "WBT-scribble-long-sweep-spiral.png": [
+   0.14,
+   0.91,
+   0.59,
+   0.81
+  ],
+  "WBT-scribble-s-curve-loop.png": [
+   0.04,
+   0.42,
+   0.05,
+   0.85
+  ],
+  "WBT-scribble-looping-wave.png": [
+   0.15,
+   0.85,
+   0.14,
+   0.76
+  ],
+  "Agenda.png": [
+   0.19,
+   0.77,
+   0.09,
+   0.9
+  ],
+  "Armillary.png": [
+   0.2,
+   0.84,
+   0.15,
+   0.9
+  ],
+  "Assessment-4.png": [
+   0.23,
+   0.78,
+   0.11,
+   0.89
+  ],
+  "Assessment.png": [
+   0.21,
+   0.79,
+   0.1,
+   0.9
+  ],
+  "Bee-Single.png": [
+   0.68,
+   0.91,
+   0.58,
+   0.89
+  ],
+  "Bees-Pair.png": [
+   0.15,
+   0.87,
+   0.2,
+   0.83
+  ],
+  "Bees-Trio.png": [
+   0.22,
+   0.66,
+   0.22,
+   0.73
+  ],
+  "Blue-Blob.png": [
+   0.25,
+   0.7,
+   0.06,
+   0.95
+  ],
+  "Brainstorm.png": [
+   0.26,
+   0.74,
+   0.1,
+   0.9
+  ],
+  "Brainstorming-2.png": [
+   0.2,
+   0.85,
+   0.12,
+   0.9
+  ],
+  "Break.png": [
+   0.1,
+   0.92,
+   0.14,
+   0.79
+  ],
+  "Cairn-2.png": [
+   0.28,
+   0.75,
+   0.12,
+   0.82
+  ],
+  "Cairn.png": [
+   0.22,
+   0.76,
+   0.16,
+   0.82
+  ],
+  "Case-Study-2.png": [
+   0.38,
+   0.62,
+   0.1,
+   0.9
+  ],
+  "Case-Study-3.png": [
+   0.21,
+   0.79,
+   0.07,
+   0.93
+  ],
+  "Collaboration-3.png": [
+   0.1,
+   0.9,
+   0.11,
+   0.89
+  ],
+  "Collaboration.png": [
+   0.14,
+   0.88,
+   0.13,
+   0.87
+  ],
+  "Communication-2.png": [
+   0.21,
+   0.81,
+   0.31,
+   0.68
+  ],
+  "Concept-Noodles.png": [
+   0.21,
+   0.79,
+   0.1,
+   0.9
+  ],
+  "Conflict-Management-2.png": [
+   0.1,
+   0.9,
+   0.16,
+   0.84
+  ],
+  "Conflict-Management.png": [
+   0.19,
+   0.83,
+   0.22,
+   0.76
+  ],
+  "Difficult-Conversations-2.png": [
+   0.18,
+   0.82,
+   0.1,
+   0.9
+  ],
+  "Difficult-Conversations.png": [
+   0.1,
+   0.9,
+   0.15,
+   0.79
+  ],
+  "Emotional-Intelligence-1.png": [
+   0.1,
+   0.92,
+   0.1,
+   0.85
+  ],
+  "Extra-39.png": [
+   0.1,
+   0.9,
+   0.25,
+   0.75
+  ],
+  "Eye-Rays.png": [
+   0.04,
+   0.93,
+   0.05,
+   0.97
+  ],
+  "Feedback-Contact.png": [
+   0.15,
+   0.86,
+   0.24,
+   0.69
+  ],
+  "Feedback.png": [
+   0.29,
+   0.65,
+   0.07,
+   0.91
+  ],
+  "Fusebox.png": [
+   0.31,
+   0.73,
+   0.16,
+   0.85
+  ],
+  "Gold-Blue-Eye.png": [
+   0.04,
+   0.93,
+   0.1,
+   0.93
+  ],
+  "Growth-And-Development-1.png": [
+   0.34,
+   0.66,
+   0.1,
+   0.9
+  ],
+  "Growth-And-Development-2.png": [
+   0.14,
+   0.86,
+   0.2,
+   0.8
+  ],
+  "Hands-With-Eyes.png": [
+   0.03,
+   0.91,
+   0.16,
+   0.97
+  ],
+  "Heart-1.png": [
+   0.17,
+   0.83,
+   0.23,
+   0.81
+  ],
+  "Heart-2.png": [
+   0.16,
+   0.84,
+   0.1,
+   0.9
+  ],
+  "Heart-3.png": [
+   0.18,
+   0.79,
+   0.01,
+   0.94
+  ],
+  "Heart-Tablet.png": [
+   0.07,
+   0.93,
+   0.06,
+   0.95
+  ],
+  "Heart.png": [
+   0.08,
+   0.98,
+   0.05,
+   0.96
+  ],
+  "Horsebell.png": [
+   0.33,
+   0.74,
+   0.23,
+   0.82
+  ],
+  "Hourglass.png": [
+   0.08,
+   0.89,
+   0.07,
+   0.95
+  ],
+  "Key.png": [
+   0.09,
+   0.88,
+   0.03,
+   0.94
+  ],
+  "Leadership-2.png": [
+   0.1,
+   0.9,
+   0.1,
+   0.9
+  ],
+  "Leadership-3.png": [
+   0.19,
+   0.81,
+   0.1,
+   0.9
+  ],
+  "Leadership.png": [
+   0.25,
+   0.75,
+   0.17,
+   0.83
+  ],
+  "Lightbulb-3D.png": [
+   0.29,
+   0.71,
+   0.13,
+   0.87
+  ],
+  "Lightbulb-Glowing.png": [
+   0.19,
+   0.77,
+   0.07,
+   0.92
+  ],
+  "Lightbulb-Pendant.png": [
+   0.36,
+   0.59,
+   0.05,
+   0.92
+  ],
+  "Lunch.png": [
+   0.12,
+   0.9,
+   0.24,
+   0.72
+  ],
+  "Managing-Up.png": [
+   0.11,
+   0.9,
+   0.21,
+   0.8
+  ],
+  "Map.png": [
+   0.04,
+   0.93,
+   0.03,
+   0.96
+  ],
+  "Motivation-2.png": [
+   0.24,
+   0.73,
+   0.11,
+   0.84
+  ],
+  "Motivation.png": [
+   0.14,
+   0.84,
+   0.2,
+   0.86
+  ],
+  "Nest-Bird.png": [
+   0.05,
+   0.92,
+   0.05,
+   0.93
+  ],
+  "Open-Doors.png": [
+   0.09,
+   0.94,
+   0.07,
+   0.97
+  ],
+  "Perception-And-Bias.png": [
+   0.14,
+   0.87,
+   0.08,
+   0.84
+  ],
+  "Pink-Blob.png": [
+   0.17,
+   0.82,
+   0.08,
+   0.9
+  ],
+  "Pink-Torn-Paper-2.png": [
+   0.01,
+   0.99,
+   0.05,
+   0.94
+  ],
+  "Planet-Mars.png": [
+   0.1,
+   0.9,
+   0.1,
+   0.9
+  ],
+  "Planet-Neptune.png": [
+   0.1,
+   0.9,
+   0.1,
+   0.9
+  ],
+  "Psychological-Safety-2.png": [
+   0.25,
+   0.74,
+   0.14,
+   0.9
+  ],
+  "Psychological-Safety-3.png": [
+   0.1,
+   0.86,
+   0.06,
+   0.85
+  ],
+  "Psychological-Safety-4.png": [
+   0.24,
+   0.76,
+   0.1,
+   0.9
+  ],
+  "Psychological-Safety.png": [
+   0.1,
+   0.9,
+   0.1,
+   0.9
+  ],
+  "Red-Butterfly.png": [
+   0.07,
+   0.93,
+   0.15,
+   0.92
+  ],
+  "Reflection-2.png": [
+   0.14,
+   0.86,
+   0.1,
+   0.9
+  ],
+  "Reflection.png": [
+   0.35,
+   0.65,
+   0.14,
+   0.87
+  ],
+  "Renewal.png": [
+   0.18,
+   0.85,
+   0.25,
+   0.81
+  ],
+  "Resilience-Team-2.png": [
+   0.27,
+   0.79,
+   0.1,
+   0.82
+  ],
+  "Resilience-Team.png": [
+   0.2,
+   0.73,
+   0.09,
+   0.88
+  ],
+  "Resilience.png": [
+   0.1,
+   0.86,
+   0.28,
+   0.81
+  ],
+  "Resource-2.png": [
+   0.11,
+   0.88,
+   0.17,
+   0.78
+  ],
+  "Resource.png": [
+   0.1,
+   0.9,
+   0.23,
+   0.74
+  ],
+  "Roots.png": [
+   0.05,
+   0.9,
+   0.03,
+   0.94
+  ],
+  "Saturn-Rings.png": [
+   0.02,
+   0.98,
+   0.21,
+   0.79
+  ],
+  "Small-Group-Breakouts.png": [
+   0.2,
+   0.84,
+   0.15,
+   0.9
+  ],
+  "Spring.png": [
+   0.32,
+   0.69,
+   0.14,
+   0.85
+  ],
+  "Star-Colors.png": [
+   0.11,
+   0.87,
+   0.04,
+   0.93
+  ],
+  "Star.png": [
+   0.08,
+   0.91,
+   0.06,
+   0.97
+  ],
+  "Street-Lamp.png": [
+   0.33,
+   0.63,
+   0.03,
+   0.97
+  ],
+  "Stress-1.png": [
+   0.24,
+   0.77,
+   0.17,
+   0.86
+  ],
+  "Stress-2.png": [
+   0.22,
+   0.79,
+   0.22,
+   0.79
+  ],
+  "Stress-3.png": [
+   0.0,
+   1.0,
+   0.3,
+   0.6
+  ],
+  "Sun.png": [
+   0.09,
+   0.94,
+   0.07,
+   0.93
+  ],
+  "Sun2.png": [
+   0.07,
+   0.95,
+   0.04,
+   0.93
+  ],
+  "Sundial.png": [
+   0.05,
+   0.93,
+   0.07,
+   0.89
+  ],
+  "Tandem-Bicycle.png": [
+   0.04,
+   0.95,
+   0.26,
+   0.68
+  ],
+  "Target.png": [
+   0.13,
+   0.85,
+   0.14,
+   0.86
+  ],
+  "Team-Cohesion-2.png": [
+   0.1,
+   0.75,
+   0.15,
+   0.85
+  ],
+  "Team-Spotlight.png": [
+   0.18,
+   0.82,
+   0.1,
+   0.9
+  ],
+  "Telegraph.png": [
+   0.16,
+   0.87,
+   0.15,
+   0.84
+  ],
+  "Thank-You.png": [
+   0.26,
+   0.76,
+   0.26,
+   0.76
+  ],
+  "Watch.png": [
+   0.09,
+   0.82,
+   0.05,
+   0.92
+  ],
+  "Welcome.png": [
+   0.27,
+   0.73,
+   0.1,
+   0.9
+  ],
+  "Windmill.png": [
+   0.09,
+   0.81,
+   0.09,
+   0.95
+  ],
+  "WBT-shape-arrow-19.png": [
+   0.0,
+   1.0,
+   0.01,
+   0.89
+  ],
+  "WBT-shape-arrow-24.png": [
+   0.0,
+   1.0,
+   0.03,
+   0.79
+  ],
+  "WBT-shape-arrow-28.png": [
+   0.01,
+   0.99,
+   0.18,
+   0.97
+  ],
+  "WBT-shape-arrow-31.png": [
+   0.05,
+   0.95,
+   0.1,
+   0.94
+  ],
+  "WBT-shape-arrow-33.png": [
+   0.01,
+   0.99,
+   0.09,
+   0.96
+  ],
+  "WBT-shape-arrow-34.png": [
+   0.01,
+   0.99,
+   0.05,
+   0.93
+  ],
+  "WBT-shape-arrow-35.png": [
+   0.01,
+   0.99,
+   0.02,
+   0.91
+  ],
+  "WBT-shape-arrow-40.png": [
+   0.04,
+   0.97,
+   0.07,
+   0.93
+  ],
+  "WBT-shape-arrow-43.png": [
+   0.1,
+   0.99,
+   0.1,
+   0.98
+  ],
+  "WBT-shape-arrow-45.png": [
+   0.07,
+   0.91,
+   0.1,
+   0.88
+  ],
+  "WBT-shape-arrow-52.png": [
+   0.03,
+   0.98,
+   0.06,
+   0.93
+  ],
+  "WBT-shape-arrow-69.png": [
+   0.05,
+   0.99,
+   0.11,
+   0.99
+  ],
+  "WBT-shape-arrow-70.png": [
+   0.08,
+   0.96,
+   0.12,
+   0.93
+  ],
+  "WBT-shape-basic-11.png": [
+   0.05,
+   0.99,
+   0.07,
+   0.92
+  ],
+  "WBT-shape-cross-08.png": [
+   0.04,
+   0.93,
+   0.03,
+   0.96
+  ],
+  "WBT-shape-cross-16.png": [
+   0.1,
+   0.97,
+   0.01,
+   0.96
+  ],
+  "WBT-shape-cross-17.png": [
+   0.28,
+   0.98,
+   0.02,
+   0.98
+  ],
+  "WBT-shape-cross-19.png": [
+   0.01,
+   0.91,
+   0.01,
+   0.99
+  ],
+  "WBT-shape-face-04.png": [
+   0.15,
+   0.99,
+   0.03,
+   0.99
+  ],
+  "WBT-shape-face-06.png": [
+   0.07,
+   0.93,
+   0.04,
+   0.94
+  ],
+  "WBT-shape-face-18.png": [
+   0.04,
+   0.97,
+   0.07,
+   0.9
+  ],
+  "WBT-shape-face-22.png": [
+   0.0,
+   1.0,
+   0.08,
+   0.93
+  ],
+  "WBT-shape-face-25.png": [
+   0.03,
+   0.96,
+   0.07,
+   0.96
+  ],
+  "WBT-shape-face-42.png": [
+   0.03,
+   0.98,
+   0.12,
+   0.79
+  ],
+  "WBT-shape-face-43.png": [
+   0.04,
+   0.93,
+   0.08,
+   0.91
+  ],
+  "WBT-shape-face-44.png": [
+   0.0,
+   1.0,
+   0.14,
+   0.98
+  ],
+  "WBT-shape-face-48.png": [
+   0.04,
+   0.98,
+   0.08,
+   0.94
+  ],
+  "WBT-shape-face-50.png": [
+   0.09,
+   0.89,
+   0.05,
+   0.94
+  ],
+  "WBT-shape-face-54.png": [
+   0.04,
+   0.96,
+   0.07,
+   0.92
+  ],
+  "WBT-shape-face-58.png": [
+   0.05,
+   0.93,
+   0.12,
+   0.85
+  ],
+  "WBT-shape-face-59.png": [
+   0.04,
+   0.9,
+   0.14,
+   0.91
+  ],
+  "WBT-shape-face-64.png": [
+   0.04,
+   0.97,
+   0.09,
+   0.92
+  ],
+  "WBT-shape-face-69.png": [
+   0.07,
+   0.94,
+   0.07,
+   0.87
+  ],
+  "WBT-shape-heart-09.png": [
+   0.02,
+   0.9,
+   0.03,
+   0.99
+  ],
+  "WBT-shape-heart-16.png": [
+   0.11,
+   0.92,
+   0.01,
+   0.99
+  ],
+  "WBT-shape-misc-03.png": [
+   0.01,
+   0.99,
+   0.1,
+   0.99
+  ],
+  "WBT-shape-misc-07.png": [
+   0.0,
+   0.9,
+   0.01,
+   0.92
+  ],
+  "WBT-shape-misc-14.png": [
+   0.03,
+   1.0,
+   0.06,
+   0.93
+  ],
+  "WBT-shape-misc-23.png": [
+   0.06,
+   0.95,
+   0.02,
+   0.96
+  ],
+  "WBT-shape-misc-34.png": [
+   0.07,
+   0.92,
+   0.01,
+   0.99
+  ],
+  "WBT-shape-misc-39.png": [
+   0.08,
+   0.96,
+   0.05,
+   0.95
+  ],
+  "WBT-shape-misc-42.png": [
+   0.01,
+   0.99,
+   0.1,
+   0.88
+  ],
+  "WBT-shape-misc-47.png": [
+   0.07,
+   0.94,
+   0.02,
+   0.98
+  ],
+  "WBT-shape-misc-49.png": [
+   0.02,
+   0.95,
+   0.03,
+   0.93
+  ],
+  "WBT-shape-misc-58.png": [
+   0.06,
+   0.94,
+   0.06,
+   0.92
+  ],
+  "WBT-shape-misc-62.png": [
+   0.01,
+   0.9,
+   0.05,
+   0.99
+  ],
+  "WBT-shape-misc-75.png": [
+   0.05,
+   0.97,
+   0.04,
+   0.93
+  ],
+  "WBT-shape-punctuation-01.png": [
+   0.07,
+   0.93,
+   0.08,
+   0.92
+  ],
+  "WBT-shape-punctuation-03.png": [
+   0.01,
+   0.95,
+   0.06,
+   0.96
+  ],
+  "WBT-shape-punctuation-12.png": [
+   0.07,
+   0.91,
+   0.01,
+   0.99
+  ],
+  "WBT-shape-punctuation-14.png": [
+   0.07,
+   0.93,
+   0.06,
+   0.94
+  ],
+  "WBT-shape-punctuation-15.png": [
+   0.08,
+   0.92,
+   0.06,
+   0.94
+  ],
+  "WBT-shape-punctuation-17.png": [
+   0.09,
+   0.91,
+   0.01,
+   0.99
+  ],
+  "WBT-shape-punctuation-18.png": [
+   0.06,
+   0.94,
+   0.01,
+   0.99
+  ],
+  "WBT-shape-punctuation-19.png": [
+   0.1,
+   0.91,
+   0.01,
+   1.0
+  ],
+  "WBT-shape-punctuation-21.png": [
+   0.08,
+   0.97,
+   0.01,
+   0.99
+  ],
+  "WBT-shape-punctuation-36.png": [
+   0.15,
+   0.98,
+   0.03,
+   0.95
+  ],
+  "WBT-shape-smiley-01.png": [
+   0.12,
+   0.91,
+   0.04,
+   0.93
+  ],
+  "WBT-shape-smiley-17.png": [
+   0.04,
+   0.98,
+   0.02,
+   0.92
+  ],
+  "WBT-shape-star-01.png": [
+   0.07,
+   0.92,
+   0.06,
+   0.93
+  ],
+  "WBT-shape-star-18.png": [
+   0.06,
+   0.95,
+   0.07,
+   0.95
+  ],
+  "WBT-frame-box-52.png": [
+   0.0,
+   1.0,
+   0.01,
+   0.9
+  ],
+  "WBT-frame-box-53.png": [
+   0.0,
+   0.99,
+   0.08,
+   0.97
+  ],
+  "WBT-frame-box-54.png": [
+   0.01,
+   0.98,
+   0.06,
+   0.95
+  ],
+  "WBT-frame-circle-06.png": [
+   0.01,
+   1.0,
+   0.02,
+   0.92
+  ],
+  "WBT-frame-speech-bubble-15.png": [
+   0.16,
+   1.0,
+   0.03,
+   1.0
+  ],
+  "WBT-frame-speech-bubble-20.png": [
+   0.06,
+   0.91,
+   0.04,
+   0.95
+  ],
+  "WBT-pattern-23.png": [
+   0.02,
+   0.98,
+   0.06,
+   0.96
+  ],
+  "WBT-collage-bees-blue-circle.png": [
+   0.08,
+   0.88,
+   0.11,
+   0.84
+  ],
+  "WBT-collage-compass.png": [
+   0.16,
+   0.88,
+   0.1,
+   0.86
+  ],
+  "WBT-collage-eyeglasses-eye-chart.png": [
+   0.08,
+   0.88,
+   0.07,
+   0.88
+  ],
+  "WBT-collage-gramophone.png": [
+   0.11,
+   0.8,
+   0.1,
+   0.9
+  ],
+  "WBT-collage-lightbulb-orange.png": [
+   0.2,
+   0.76,
+   0.08,
+   0.82
+  ],
+  "WBT-collage-megaphone.png": [
+   0.06,
+   0.71,
+   0.06,
+   1.0
+  ],
+  "WBT-collage-moon-gold.png": [
+   0.1,
+   0.82,
+   0.06,
+   0.99
+  ],
+  "WBT-collage-rotary-telephone.png": [
+   0.02,
+   0.98,
+   0.16,
+   0.9
+  ],
+  "WBT-collage-empower-training-sessions-20260706.png": [
+   0.11,
+   0.88,
+   0.0,
+   0.76
+  ],
+  "WBT-collage-planetary-exploration-20260507.png": [
+   0.06,
+   0.99,
+   0.14,
+   0.88
+  ],
+  "WBT-collage-unlock-pathways-20260506.png": [
+   0.13,
+   0.88,
+   0.09,
+   0.86
+  ],
+  "WBT-collage-vision-20260709.png": [
+   0.06,
+   0.94,
+   0.22,
+   0.72
+  ],
+  "WBT-client-logo-adoptions-together.png": [
+   0.12,
+   0.86,
+   0.25,
+   0.76
+  ],
+  "WBT-client-logo-allied-for-progress.png": [
+   0.21,
+   0.77,
+   0.16,
+   0.89
+  ],
+  "WBT-client-logo-august.png": [
+   0.16,
+   0.84,
+   0.26,
+   0.74
+  ],
+  "WBT-client-logo-basic.png": [
+   0.16,
+   0.86,
+   0.22,
+   0.83
+  ],
+  "WBT-client-logo-casey-foundation.png": [
+   0.17,
+   0.84,
+   0.02,
+   0.97
+  ],
+  "WBT-client-logo-centennial-state-prosperity.png": [
+   0.17,
+   0.83,
+   0.16,
+   0.85
+  ],
+  "WBT-client-logo-champ.png": [
+   0.12,
+   0.88,
+   0.3,
+   0.69
+  ],
+  "WBT-client-logo-climateworks.png": [
+   0.12,
+   0.88,
+   0.31,
+   0.69
+  ],
+  "WBT-client-logo-dnc.png": [
+   0.11,
+   0.86,
+   0.12,
+   0.86
+  ],
+  "WBT-client-logo-emilys-list.png": [
+   0.16,
+   0.84,
+   0.19,
+   0.81
+  ],
+  "WBT-client-logo-empower-project.png": [
+   0.09,
+   0.91,
+   0.29,
+   0.71
+  ],
+  "WBT-client-logo-maryland-childcare-network.png": [
+   0.12,
+   0.88,
+   0.33,
+   0.67
+  ],
+  "WBT-client-logo-maryland-family-network.png": [
+   0.13,
+   0.87,
+   0.23,
+   0.77
+  ],
+  "WBT-client-logo-mtrny.png": [
+   0.13,
+   0.84,
+   0.1,
+   0.91
+  ],
+  "WBT-client-logo-nyc-community-schools.png": [
+   0.3,
+   0.7,
+   0.21,
+   0.79
+  ],
+  "WBT-client-logo-nyc-doe-oswp.png": [
+   0.12,
+   0.86,
+   0.24,
+   0.76
+  ],
+  "WBT-client-logo-pivot.png": [
+   0.14,
+   0.86,
+   0.23,
+   0.77
+  ],
+  "WBT-client-logo-pivotal.png": [
+   0.13,
+   0.86,
+   0.21,
+   0.69
+  ],
+  "WBT-client-logo-planned-parenthood-for-america.png": [
+   0.13,
+   0.87,
+   0.3,
+   0.7
+  ]
+ }
 }

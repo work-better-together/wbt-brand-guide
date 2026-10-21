@@ -86,7 +86,10 @@ for r in beats['resources']:
     items.append({'id': 'story-' + RES_MAP[r['path']], 'group': 'Resources', 'kind': 'story', 'format': 'story',
                   'ground': cover['ground'], 'tone': cover['tone'], 'title': cover['headline'], 'slides': slides})
 
-json.dump({'items': items}, open(os.path.join(HERE, 'all.json'), 'w'), indent=1, ensure_ascii=False)
+# Ink bounds (fractions of each file's canvas) from the WBT skill's asset catalog, so collages place the real ink, not the canvas.
+CAT = os.path.expanduser('~/.claude/skills/wbt-brand/references/asset-catalog.md')
+INK = {name: [int(v) / 100 for v in box] for name, *box in re.findall(r'`([^`]+\.png)` \d+×\d+ ink (\d+)–(\d+)%×(\d+)–(\d+)%', open(CAT).read())}
+json.dump({'items': items, 'ink': INK}, open(os.path.join(HERE, 'all.json'), 'w'), indent=1, ensure_ascii=False)
 
 # Render every slide
 os.makedirs(OUT, exist_ok=True)
