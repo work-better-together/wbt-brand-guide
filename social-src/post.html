@@ -20,11 +20,14 @@
   .eyebrow { font: 500 30px/1.25 'League Spartan'; letter-spacing: .16em; text-transform: uppercase; color: var(--eyebrow); margin-bottom: 24px; }
   .headline { font: 700 92px/1.02 'League Spartan'; letter-spacing: -0.025em; }
   .headline.m { font-size: 76px; } .headline.s { font-size: 64px; }
-  .deck { font: 400 40px/1.32 'League Spartan'; margin-top: 26px; }
-  .body { font: 400 38px/1.5 'Lora'; margin-top: 26px; }
+  .deck { font: 400 52px/1.28 'League Spartan'; margin-top: 30px; }
+  .body { font: 400 44px/1.5 'Lora'; margin-top: 26px; }
   .quote { font: italic 400 58px/1.36 'Lora'; } .quote.s { font-size: 52px; }
   .qmark { font: italic 700 230px/.8 'Lora'; color: #CD9F36; position: absolute; left: 80px; }
   .name { font: 700 38px/1.3 'League Spartan'; margin-top: 52px; }
+  .asterisk { display: block; width: 150px; height: 150px; transform: rotate(-8deg); margin: 0 0 40px -6px; background: var(--eyebrow);
+    -webkit-mask: url('../assets/site/asterisk-mark.png') center / contain no-repeat; mask: url('../assets/site/asterisk-mark.png') center / contain no-repeat; }   /* the hand-drawn mark for key takeaways, in the eyebrow's color */
+  .takeaway { font: 700 72px/1.12 'League Spartan'; letter-spacing: -0.02em; } .takeaway.s { font-size: 62px; } .story .takeaway { font-size: 80px; } .story .takeaway.s { font-size: 68px; }
   .who { display: flex; align-items: center; gap: 30px; margin-top: 52px; } .who .name { margin-top: 0; }
   .head { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; flex: none; }   /* round headshot, face-centred crop */
   .role { font: 500 30px/1.45 'Inconsolata'; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); margin-top: 10px; }
@@ -37,7 +40,7 @@
   ul.beats li { position: relative; padding-left: 44px; font: 400 42px/1.38 'Lora'; margin-bottom: 30px; }
   ul.beats li::before { content: ''; position: absolute; left: 0; top: .55em; width: 12px; height: 12px; background: var(--bullet); }
   ul.beats.s li { font-size: 38px; margin-bottom: 24px; }
-  .story .body { font-size: 42px; } .story ul.beats li { font-size: 46px; } .story ul.beats.s li { font-size: 38px; }
+  .story .body { font-size: 50px; } .story .deck { font-size: 56px; } .story ul.beats li { font-size: 46px; } .story ul.beats.s li { font-size: 38px; }
 </style></head>
 <body><div class="c" id="c"></div>
 <script>
@@ -55,7 +58,12 @@ fetch('all.json').then(r => r.json()).then(all => {
     // Dark washes are uneven: a flat tint of the wash's own color keeps cream text readable across the light patches.
     const TINT = { 'Steady-Blue': '6,26,73', 'Clean-Slate': '30,77,92', 'Intentional-Blue': '37,49,165', 'Grounded-Black': '31,30,30' }[col];
     const dark = (sl.tone || item.tone) === 'dark';
-    c.style.backgroundImage = dark && TINT ? `linear-gradient(rgba(${TINT},.55), rgba(${TINT},.55)), ${url}` : url; }
+    c.style.backgroundImage = dark && TINT ? `linear-gradient(rgba(${TINT},.55), rgba(${TINT},.55)), ${url}` : url;
+    if (item.slides.length > 1) {     // series: each slide shows a different part of the same wash (one continuous wash, no tiling)
+      const k = +(q.get('s') || 0), pos = ['0% 0%', '100% 40%', '30% 100%', '75% 0%', '0% 75%', '55% 50%'][k % 6];
+      c.style.backgroundRepeat = 'no-repeat'; c.style.backgroundSize = dark && TINT ? 'cover, auto 130%' : 'auto 130%';
+      c.style.backgroundPosition = dark && TINT ? `center, ${pos}` : pos;
+    } }
   else c.style.background = g;
   const tone = sl.tone || item.tone; if (tone === 'dark') c.classList.add('dark');
   if (/ACCDD9|Calm-Blue/.test(g)) c.classList.add('calm');
@@ -72,8 +80,9 @@ fetch('all.json').then(r => r.json()).then(all => {
     const ink = (f, d) => all.ink[f] || d;                                   // [x0, x1, y0, y1] fractions
     const side = [...(item.id || '')].reduce((a, ch) => a + ch.charCodeAt(0), 0) % 2 ? 1 : -1;   // vary which side the spot peeks
     // illustration: square files, shown h*0.8 wide, centred in the band
-    const iw = h * 0.8, ix = 540 - iw / 2, iy = (h - iw) / 2;
+    // optical balance: build_social.py scales each collage so its visual weight (outline × ink, plus the spot) matches the others
     const [p0, p1, q0, q1] = ink(col.illus, [0, 1, 0, 1]);
+    const iw = Math.min(h * 0.8 * (col.scale || 1), (h * 0.95) / (q1 - q0), 900 / (p1 - p0)), ix = 540 - iw / 2, iy = (h - iw) / 2;
     const I = { x: ix + iw * (p0 + p1) / 2, y: iy + iw * (q0 + q1) / 2, w: iw * (p1 - p0), h: iw * (q1 - q0) };
     const L = Math.max(I.w, I.h);
     // spot: ink ≈ 1.0 L, offset 25% L to one side and 8% L down so it peeks out
@@ -108,6 +117,9 @@ fetch('all.json').then(r => r.json()).then(all => {
       html = `<div class="text" style="top:${top + 120}px"><div class="eyebrow">${sl.eyebrow}</div>
          <div class="stat" style="color:${sl.statColor}">${sl.stat}</div><p class="qual"><b>${sl.strong}</b>${sl.rest}</p></div>
          <div class="role" style="position:absolute;left:86px;right:210px;bottom:${80 + bottomSafe}px">Research from the International Coaching Federation&nbsp;(ICF)</div>` + logo; break;
+    case 'takeaway':
+      html = `<div class="text" style="top:${top + (story ? 300 : 140)}px"><span class="asterisk" aria-hidden="true"></span><div class="eyebrow">${sl.eyebrow}</div>
+         <p class="takeaway ${sl.headline.length > 170 ? 's' : ''}">${sl.headline}</p></div>` + cta(sl.cta) + logo; break;
     case 'cover':
       const ph = story ? 1000 : 760;
       html = `<img class="photo" style="height:${ph}px;object-position:${sl.pos || '50% 35%'}" src="photos/${sl.photo}">

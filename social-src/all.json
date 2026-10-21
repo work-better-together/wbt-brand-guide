@@ -21,7 +21,8 @@
        2
       ],
       "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
-      "illus": "Full-Moon.png"
+      "illus": "Full-Moon.png",
+      "scale": 0.867
      },
      "eyebrow": "Leadership Coaching",
      "headline": "Let’s figure out the right next step.",
@@ -52,7 +53,8 @@
        4
       ],
       "scribble": "Loops/WBT-scribble-cascading-ovals.png",
-      "illus": "Bees-Pair.png"
+      "illus": "Bees-Pair.png",
+      "scale": 1.3
      },
      "eyebrow": "Team Coaching",
      "headline": "The team as the unit of change.",
@@ -83,7 +85,8 @@
        3
       ],
       "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
-      "illus": "Lightbulb-Glowing.png"
+      "illus": "Lightbulb-Glowing.png",
+      "scale": 1.061
      },
      "eyebrow": "Facilitation + Training",
      "headline": "Retreats, workshops & labs.",
@@ -353,7 +356,8 @@
        5
       ],
       "scribble": "Loops/WBT-scribble-cascading-ovals.png",
-      "illus": "Sun.png"
+      "illus": "Sun.png",
+      "scale": 1.069
      },
      "eyebrow": "Free resource · For leaders",
      "headline": "Values & Energy",
@@ -384,7 +388,8 @@
        2
       ],
       "scribble": "Loops/WBT-scribble-overlapping-ovals.png",
-      "illus": "Reflection.png"
+      "illus": "Reflection.png",
+      "scale": 1.3
      },
      "eyebrow": "Free resource · For teams",
      "headline": "After Action Review",
@@ -437,7 +442,8 @@
        6
       ],
       "scribble": "Waves/WBT-scribble-looping-wave.png",
-      "illus": "Agenda.png"
+      "illus": "Agenda.png",
+      "scale": 1.3
      },
      "eyebrow": "Free resource · Retreat preparation",
      "headline": "Thinking about a team retreat?",
@@ -468,7 +474,8 @@
        4
       ],
       "scribble": "Sweeps/WBT-scribble-long-sweep-spiral.png",
-      "illus": "Map.png"
+      "illus": "Map.png",
+      "scale": 0.872
      },
      "eyebrow": "Free resource · Career transitions",
      "headline": "Career Timeline",
@@ -521,7 +528,8 @@
        3
       ],
       "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
-      "illus": "Emotional-Intelligence-1.png"
+      "illus": "Emotional-Intelligence-1.png",
+      "scale": 0.924
      },
      "eyebrow": "Insights",
      "headline": "Emotional Intelligence and Leadership",
@@ -552,7 +560,8 @@
        1
       ],
       "scribble": "Loops/WBT-scribble-cascading-ovals.png",
-      "illus": "Small-Group-Breakouts.png"
+      "illus": "Small-Group-Breakouts.png",
+      "scale": 1.3
      },
      "eyebrow": "Insights",
      "headline": "In Service of the Group: The Facilitator’s Role",
@@ -583,7 +592,8 @@
        1
       ],
       "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
-      "illus": "Heart-2.png"
+      "illus": "Heart-2.png",
+      "scale": 1.249
      },
      "eyebrow": "Insights",
      "headline": "Don’t Skip the Convo About Feelings at Your Next Retreat",
@@ -605,7 +615,7 @@
     {
      "type": "cover",
      "photo": "leading-together-under-pressure.jpg",
-     "pos": "50% 40%",
+     "pos": "50% 22%",
      "eyebrow": "Case study · Team Coaching",
      "headline": "Leading Together Under Pressure",
      "deck": "Team coaching with senior leadership to support alignment.",
@@ -651,7 +661,7 @@
      "role": "PPFA Policy Team"
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Under sustained pressure and grief, a senior team rebuilt trust by naming what they’d been carrying and articulating how they wanted to lead together.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -670,7 +680,7 @@
     {
      "type": "cover",
      "photo": "leading-together-under-pressure.jpg",
-     "pos": "50% 40%",
+     "pos": "50% 22%",
      "eyebrow": "Case study · Team Coaching",
      "headline": "Leading Together Under Pressure",
      "deck": "Team coaching with senior leadership to support alignment.",
@@ -716,7 +726,7 @@
      "role": "PPFA Policy Team"
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Under sustained pressure and grief, a senior team rebuilt trust by naming what they’d been carrying and articulating how they wanted to lead together.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -735,7 +745,7 @@
     {
      "type": "cover",
      "photo": "developing-endurance-and-agency.jpg",
-     "pos": "50% 35%",
+     "pos": "50% 45%",
      "eyebrow": "Case study · Leadership Coaching",
      "headline": "Developing Endurance and Agency",
      "deck": "1:1 coaching with a senior leader to navigate relational tension.",
@@ -774,7 +784,7 @@
      ]
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Coaching didn’t fix the organization—it moved one leader from enduring stress to actively shaping healthier conditions, with clarity, courage, and agency.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -793,7 +803,7 @@
     {
      "type": "cover",
      "photo": "developing-endurance-and-agency.jpg",
-     "pos": "50% 35%",
+     "pos": "50% 45%",
      "eyebrow": "Case study · Leadership Coaching",
      "headline": "Developing Endurance and Agency",
      "deck": "1:1 coaching with a senior leader to navigate relational tension.",
@@ -832,7 +842,7 @@
      ]
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Coaching didn’t fix the organization—it moved one leader from enduring stress to actively shaping healthier conditions, with clarity, courage, and agency.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -851,7 +861,7 @@
     {
      "type": "cover",
      "photo": "building-conditions-for-results.jpg",
-     "pos": "50% 40%",
+     "pos": "50% 25%",
      "eyebrow": "Case study · Facilitation + Training",
      "headline": "Building Conditions for Results",
      "deck": "Retreats to invest in team effectiveness from the jump.",
@@ -897,7 +907,7 @@
      "role": "Development team, Empower"
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Building trust and shared norms at a team’s formation—before problems emerge—set the conditions for results, instead of retrofitting culture after strain sets in.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -916,7 +926,7 @@
     {
      "type": "cover",
      "photo": "building-conditions-for-results.jpg",
-     "pos": "50% 40%",
+     "pos": "50% 25%",
      "eyebrow": "Case study · Facilitation + Training",
      "headline": "Building Conditions for Results",
      "deck": "Retreats to invest in team effectiveness from the jump.",
@@ -962,7 +972,7 @@
      "role": "Development team, Empower"
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Building trust and shared norms at a team’s formation—before problems emerge—set the conditions for results, instead of retrofitting culture after strain sets in.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -1021,7 +1031,7 @@
      ]
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "2x2 coaching turned a cycle of defensiveness and mistrust between a manager and their report into clearer expectations, safer feedback, and restored good faith.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -1080,7 +1090,7 @@
      ]
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "2x2 coaching turned a cycle of defensiveness and mistrust between a manager and their report into clearer expectations, safer feedback, and restored good faith.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -1145,7 +1155,7 @@
      "role": "Campaign Leader"
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Even under relentless campaign pressure, leaders found that culture is a choice—and that time to reconnect as people, not just roles, is what makes it hold.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -1210,7 +1220,7 @@
      "role": "Campaign Leader"
     },
     {
-     "type": "text",
+     "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Even under relentless campaign pressure, leaders found that culture is a choice—and that time to reconnect as people, not just roles, is what makes it hold.",
      "cta": "Read the case study at workbettertogether.coach"
@@ -1239,7 +1249,8 @@
        5
       ],
       "scribble": "Loops/WBT-scribble-cascading-ovals.png",
-      "illus": "Sun.png"
+      "illus": "Sun.png",
+      "scale": 1.069
      },
      "eyebrow": "Free resource · For leaders",
      "headline": "Values & Energy",
@@ -1295,7 +1306,8 @@
        2
       ],
       "scribble": "Loops/WBT-scribble-overlapping-ovals.png",
-      "illus": "Reflection.png"
+      "illus": "Reflection.png",
+      "scale": 1.3
      },
      "eyebrow": "Free resource · For teams",
      "headline": "After Action Review",
@@ -1385,7 +1397,8 @@
        6
       ],
       "scribble": "Waves/WBT-scribble-looping-wave.png",
-      "illus": "Agenda.png"
+      "illus": "Agenda.png",
+      "scale": 1.3
      },
      "eyebrow": "Free resource · Retreat preparation",
      "headline": "Thinking about a team retreat?",
@@ -1441,7 +1454,8 @@
        4
       ],
       "scribble": "Sweeps/WBT-scribble-long-sweep-spiral.png",
-      "illus": "Map.png"
+      "illus": "Map.png",
+      "scale": 0.872
      },
      "eyebrow": "Free resource · Career transitions",
      "headline": "Career Timeline",

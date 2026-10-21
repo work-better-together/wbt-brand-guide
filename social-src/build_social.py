@@ -32,19 +32,45 @@ def whole_sentences(t, limit=32):
         out.append(s.strip())
     return ' '.join(out)
 
+import math
+import numpy as np
+_CAT = open(os.path.expanduser('~/.claude/skills/wbt-brand/references/asset-catalog.md')).read()
+_INK = {n: [int(v) / 100 for v in b] for n, *b in re.findall(r'`([^`]+\.png)` \d+×\d+ ink (\d+)–(\d+)%×(\d+)–(\d+)%', _CAT)}
+_MASS = {}
+def mass(path):
+    """Darkness-weighted ink coverage of a file's canvas (0..1)."""
+    if path not in _MASS:
+        im = Image.open(path).convert('RGBA'); im.thumbnail((400, 400)); a = np.asarray(im).astype(float) / 255
+        _MASS[path] = float((a[..., 3] * (1 - (0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]))).mean())
+    return _MASS[path]
+def visual_weight(c, iw):
+    """Optical weight of a collage: geometric mean of the illustration's outline area and its ink, plus half the spot's ink."""
+    ink = _INK.get(c['illus'], [0, 1, 0, 1]); w, h = iw * (ink[1] - ink[0]), iw * (ink[3] - ink[2]); L = max(w, h)
+    m_i = mass(os.path.join(ROOT, 'assets/Illustrations', c['illus'])) * iw * iw
+    folder, file, n = c['spot']; sp = f'WBT-20260403-{file}-Watercolor-Spots-{n}.png'
+    si = _INK.get(sp, [.05, .95, .05, .95]); sw = L / max(si[1] - si[0], (si[3] - si[2]) * 1.057)
+    m_s = mass(os.path.join(ROOT, 'assets/Watercolor Textures/Spots', folder, sp)) * sw * sw * 1.057
+    return math.sqrt(w * h * m_i) + 0.5 * m_s
+# Target: the Leadership moon collage at a 430px illustration, which reads balanced next to the resources.wbt.coach collages.
+_TARGET = visual_weight({'illus': 'Full-Moon.png', 'spot': ['Radiant Gold', 'Gold', 2]}, 430)
+def balance(c, base=496):
+    return round(max(.75, min(1.3, math.sqrt(_TARGET / visual_weight(c, base)))), 3)
+
 items = []
 # 1 · Single posts (case studies become carousels instead)
 for p in posts:
     if p['layout'] == 'case':
         continue
     sl = dict(p, type=p['layout'])
+    if sl.get('collage'):
+        sl['collage'] = dict(sl['collage'], scale=balance(sl['collage']))
     items.append({'id': p['id'], 'group': p['group'], 'kind': 'post', 'format': 'post', 'ground': p['ground'], 'tone': p['tone'], 'slides': [sl]})
 
 # 2 · Case study carousels + stories
 CASE_STYLE = {   # ground, tone, photo object-position
-    'leading-together-under-pressure': ('#061A49', 'dark', '50% 40%'),
-    'developing-endurance-and-agency': ('#F9F8F2', 'light', '50% 35%'),
-    'building-conditions-for-results': ('#F9F8F2', 'light', '50% 40%'),
+    'leading-together-under-pressure': ('#061A49', 'dark', '50% 22%'),
+    'developing-endurance-and-agency': ('#F9F8F2', 'light', '50% 45%'),
+    'building-conditions-for-results': ('#F9F8F2', 'light', '50% 25%'),
     'repairing-a-ruptured-relationship': ('#ACCDD9', 'light', '50% 35%'),
     'choosing-the-culture-we-build-on-campaigns': ('#1E4D5C', 'dark', '50% 40%'),
 }
@@ -63,7 +89,8 @@ for c in beats['cases']:
         role = {'leading-together-under-pressure': 'PPFA Policy Team', 'building-conditions-for-results': 'Development team, Empower',
                 'choosing-the-culture-we-build-on-campaigns': 'Campaign Leader'}.get(c['slug'], 'Client')
         slides.append({'type': 'quote', 'quote': q, 'name': 'In their words', 'role': role})
-    slides.append({'type': 'text', 'eyebrow': 'Key takeaway', 'headline': c['takeaway'], 'cta': 'Read the case study at workbettertogether.coach'})
+    # the asterisk takes the eyebrow's color (gold on dark, ochre on light, Clean Slate on Calm Blue), so takeaways keep the carousel's ground
+    slides.append({'type': 'takeaway', 'eyebrow': 'Key takeaway', 'headline': c['takeaway'], 'cta': 'Read the case study at workbettertogether.coach'})
     for fmt in ('post', 'story'):
         items.append({'id': f"case-{c['slug']}-{fmt}", 'group': 'Case studies', 'kind': 'carousel' if fmt == 'post' else 'story',
                       'format': fmt, 'ground': ground, 'tone': tone, 'title': c['title'], 'slides': slides})
@@ -75,6 +102,8 @@ RES_MAP = {'leaders/values-and-energy': 'resource-values-energy', 'teams/after-a
            'career-transitions/career-timeline': 'resource-career', 'campaign-leaders': 'resource-campaign'}
 for r in beats['resources']:
     cover = dict(RES_COVER[RES_MAP[r['path']]]); cover['type'] = cover['layout']; cover.pop('cta', None)
+    if cover.get('collage'):
+        cover['collage'] = dict(cover['collage'], scale=balance(cover['collage']))
     paras = [p for p in r['paras'] if 'Load saved' not in p and 'Step 1 of' not in p and len(p.split()) >= 12]   # a real description, not a label
     slides = [cover]
     if paras:
