@@ -1,124 +1,90 @@
 <!doctype html>
-<!-- WBT logo moves (draft for review, Oct 2026). Source for the Motion page loops and the rendered end cards.
-     Moves use the official SVGs, inlined at load; nothing is redrawn.
-     Word by Word: each word of the wordmark rises into place inside its own line, one after another.
-     Monogram Settle: the ring settles (98% → 100%), then the letters rise inside it.
-     Timing: every single move ≤ 480ms, ease-out cubic-bezier(0,0,.2,1), no bounce; hold 2.4s; then a calm exit.
-     Render API (scripts: render-timeline.mjs): window.TOTAL (s), window.seek(t), body.dataset.motion = 1 when ready.
-     URL params: ?mark=wordmark|monogram  &ground=clear-white|steady-blue|intentional-blue  &w=1920&h=1080  &loop=1 -->
-<html lang="en"><head><meta charset="utf-8"><title>WBT logo moves</title>
+<!-- WBT logo move (draft for review, Oct 21 2026). Source for the Motion page loops and the rendered end cards.
+     Come Together: every letter starts a little further apart than in the finished logo (35% further from its line's
+     centre) and fades in as it eases into place. On the wordmark “Work Better” comes together first, then “Together”
+     after a short pause (0.55s), so the logo literally comes together. The monogram
+     does the same with its ring and letters. Uses the official SVGs, inlined at load; nothing is redrawn.
+     Timing: letters converge over 1.1s with a soft ease-out (cubic-bezier(.16,1,.3,1)), fading in over their first
+     0.6s, slightly staggered from the centre outward; hold 2.4s; then the letters drift a little apart and fade out.
+     Render API (motion-src/render-all.sh): window.TOTAL (s), window.seek(t), body.dataset.motion = 1 when ready.
+     URL params: ?mark=wordmark|monogram  &ground=clear-white|steady-blue|intentional-blue|calm-blue  &w=  &h=  &loop=1  &render=1 -->
+<html lang="en"><head><meta charset="utf-8"><title>WBT logo move · Come Together</title>
 <style>
-  :root { --clear-white:#F9F8F2; --ink:#1F1E1E; --steady-blue:#061A49; --intentional-blue:#2531A5; }
   html, body { margin: 0; height: 100%; }
-  body { display: grid; place-items: center; overflow: hidden; background: var(--ground, var(--clear-white)); }
-  .stage { position: relative; display: grid; place-items: center; }
+  body { display: grid; place-items: center; overflow: hidden; background: var(--ground, #F9F8F2); }
   svg { display: block; overflow: visible; }
-  svg path { fill: var(--ink-color, var(--ink)); }
-  .word, .mono-letters { will-change: transform; }
+  svg path { fill: var(--ink-color, #1F1E1E); }
 </style></head>
 <body>
-<div class="stage" id="stage"></div>
+<div id="stage"></div>
 <script>
 const q = new URLSearchParams(location.search);
 const MARK = q.get('mark') || 'wordmark';
-const GROUND = q.get('ground') || 'clear-white';
 const W = +q.get('w') || innerWidth, H = +q.get('h') || innerHeight;
 const LOOP = q.get('loop') === '1';
-const GROUNDS = { 'clear-white': ['#F9F8F2', '#1F1E1E'], 'steady-blue': ['#061A49', '#F9F8F2'], 'intentional-blue': ['#2531A5', '#F9F8F2'], 'calm-blue': ['#ACCDD9', '#1F1E1E'] };
-const [bg, ink] = GROUNDS[GROUND] || GROUNDS['clear-white'];
+const GROUNDS = { 'clear-white': ['#F9F8F2', '#1F1E1E'], 'steady-blue': ['#061A49', '#F9F8F2'],
+                  'intentional-blue': ['#2531A5', '#F9F8F2'], 'calm-blue': ['#ACCDD9', '#1F1E1E'] };
+const [bg, ink] = GROUNDS[q.get('ground')] || GROUNDS['clear-white'];
 document.documentElement.style.setProperty('--ground', bg);
 document.documentElement.style.setProperty('--ink-color', ink);
 
-const EASE_IN = 'cubic-bezier(0,0,.2,1)', EASE_OUT = 'cubic-bezier(.4,0,1,1)';
-const MOVE = 0.42, STAGGER = 0.16, HOLD = 2.4, EXIT = 0.32, LEAD = 0.5, TAIL = 0.6;
+const SPREAD = 0.35;                 // how much further apart the letters start (35% of their distance from centre)
+const IN = 1.1, FADE = 0.6, STAGGER = 0.12, HOLD = 2.4, OUT = 0.5, LEAD = 0.4, TAIL = 0.5;
+const LINE_GAP = 0.55;                // wordmark: “Together” starts this long after “Work Better”
+const EASE_IN = 'cubic-bezier(.16,1,.3,1)', EASE_OUT = 'cubic-bezier(.4,0,1,1)';
 const anims = [];
-window.TOTAL = 0;
+const add = (el, kf, start, dur, easing, fill = 'both') => {
+  const a = el.animate(kf, { duration: dur * 1000, delay: start * 1000, easing, fill }); a.pause(); anims.push(a); };
 
-async function svgEl(file) {
+async function build() {
+  const file = MARK === 'monogram' ? 'WBT-20260502-WBT-Monogram-Black.svg' : 'WBT-20260502-Work-Better-Together-Wordmark-Black.svg';
   const txt = await (await fetch('../assets/Logos/' + file)).text();
   const box = document.createElement('div'); box.innerHTML = txt.slice(txt.indexOf('<svg'));
   const svg = box.querySelector('svg'); svg.removeAttribute('id');
-  return svg;
-}
+  if (MARK === 'monogram') svg.style.height = Math.round(Math.min(W, H) * 0.34) + 'px';
+  else svg.style.width = Math.round(W * (W > H ? 0.42 : 0.62)) + 'px';
+  document.getElementById('stage').append(svg);
 
-// Wrap each word's paths in a <g class="word"> inside a clip so the word rises from its own baseline.
-function groupWords(svg) {
-  const paths = [...svg.querySelectorAll('path')];
-  const boxes = paths.map(p => ({ p, b: p.getBBox() }));
-  const lines = {};
-  boxes.forEach(o => { const k = o.b.y + o.b.height > 205 ? 'two' : 'one'; (lines[k] = lines[k] || []).push(o); });
-  const words = [];
-  for (const k of ['one', 'two']) {
-    const row = (lines[k] || []).sort((a, b) => a.b.x - b.b.x);
-    const gaps = row.slice(1).map((o, i) => o.b.x - (row[i].b.x + row[i].b.width));
-    const big = gaps.length ? Math.max(...gaps) : 0;
-    let cur = [];
-    row.forEach((o, i) => { if (i && gaps[i - 1] > big * 0.6 && big > 12) { words.push(cur); cur = []; } cur.push(o); });
-    if (cur.length) words.push(cur);
-  }
-  const NS = 'http://www.w3.org/2000/svg';
-  const defs = document.createElementNS(NS, 'defs'); svg.prepend(defs);
-  words.forEach((ws, i) => {
-    const x0 = Math.min(...ws.map(o => o.b.x)) - 6, x1 = Math.max(...ws.map(o => o.b.x + o.b.width)) + 6;
-    const y0 = Math.min(...ws.map(o => o.b.y)) - 4, y1 = Math.max(...ws.map(o => o.b.y + o.b.height)) + 4;
-    const cp = document.createElementNS(NS, 'clipPath'); cp.id = 'w' + i;
-    const r = document.createElementNS(NS, 'rect'); Object.entries({ x: x0, y: y0, width: x1 - x0, height: y1 - y0 }).forEach(([k, v]) => r.setAttribute(k, v));
-    cp.append(r); defs.append(cp);
-    const clip = document.createElementNS(NS, 'g'); clip.setAttribute('clip-path', `url(#w${i})`);
-    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'word');
-    ws.forEach(o => g.append(o.p)); clip.append(g); svg.append(clip);
-    g.dataset.h = (y1 - y0);
+  const vb = svg.viewBox.baseVal, cx = vb.x + vb.width / 2, cy = vb.y + vb.height / 2;
+  // Wordmark: two lines, “Work Better” then “Together”; each line's letters close in on that line's own centre.
+  const raw = [...svg.querySelectorAll('path')].map(p => ({ p, b: p.getBBox() }));
+  const lineOf = o => (MARK === 'wordmark' && o.b.y + o.b.height / 2 > cy) ? 1 : 0;
+  const lineCx = [0, 1].map(l => { const ls = raw.filter(o => lineOf(o) === l); if (!ls.length) return cx;
+    return (Math.min(...ls.map(o => o.b.x)) + Math.max(...ls.map(o => o.b.x + o.b.width))) / 2; });
+  const parts = raw.map(o => {
+    const line = lineOf(o), ccx = MARK === 'wordmark' ? lineCx[line] : cx;
+    const dx = o.b.x + o.b.width / 2 - ccx, dy = MARK === 'wordmark' ? 0 : o.b.y + o.b.height / 2 - cy;
+    return { p: o.p, line, dx, dy, d: Math.hypot(dx / vb.width, dy / vb.height) };
   });
-  return [...svg.querySelectorAll('.word')];
-}
+  const maxD = Math.max(...parts.map(o => o.d)) || 1;
+  // The monogram's ring is its largest part; it settles by scaling (it surrounds the letters) instead of sliding.
+  const ring = MARK === 'monogram' ? parts.reduce((a, b) => (a.p.getBBox().width > b.p.getBBox().width ? a : b)) : null;
 
-function add(el, frames, start, dur, easing, fill = 'both') {   // exits use 'forwards' so they don't override entrances
-  const a = el.animate(frames, { duration: dur * 1000, delay: start * 1000, easing, fill });
-  a.pause(); anims.push(a); return a;
-}
-
-async function build() {
-  const stage = document.getElementById('stage');
-  if (MARK === 'monogram') {
-    const svg = await svgEl('WBT-20260502-WBT-Monogram-Black.svg');
-    svg.style.height = Math.round(Math.min(W, H) * 0.34) + 'px';
-    stage.append(svg);
-    const [ring, ...letters] = svg.querySelectorAll('path');
-    const NS = 'http://www.w3.org/2000/svg';
-    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'mono-letters'); letters.forEach(p => g.append(p)); svg.append(g);
-    ring.style.transformOrigin = '50% 50%'; ring.style.transformBox = 'fill-box';
-    add(ring, [{ transform: 'scale(.96)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], LEAD, MOVE, EASE_IN);
-    const bb = g.getBBox();
-    const cp = document.createElementNS(NS, 'clipPath'); cp.id = 'mclip';
-    const r = document.createElementNS(NS, 'rect'); Object.entries({ x: bb.x - 4, y: bb.y - 4, width: bb.width + 8, height: bb.height + 8 }).forEach(([k, v]) => r.setAttribute(k, v));
-    cp.append(r); svg.prepend(cp);
-    const wrap = document.createElementNS(NS, 'g'); wrap.setAttribute('clip-path', 'url(#mclip)'); svg.append(wrap); wrap.append(g);
-    const inStart = LEAD + MOVE * 0.6;
-    add(g, [{ transform: `translateY(${bb.height + 8}px)` }, { transform: 'translateY(0)' }], inStart, MOVE, EASE_IN);
-    const out = inStart + MOVE + HOLD;
-    add(g, [{ transform: 'translateY(0)' }, { transform: `translateY(${-(bb.height + 8)}px)` }], out, EXIT, EASE_OUT, 'forwards');
-    add(ring, [{ opacity: 1 }, { opacity: 0 }], out + EXIT * 0.5, EXIT, EASE_OUT, 'forwards');
-    window.TOTAL = out + EXIT * 1.5 + TAIL;
-  } else {
-    const svg = await svgEl('WBT-20260502-Work-Better-Together-Wordmark-Black.svg');
-    svg.style.width = Math.round(W * (W > H ? 0.42 : 0.62)) + 'px';
-    stage.append(svg);
-    const words = groupWords(svg);
-    words.forEach((g, i) => add(g, [{ transform: `translateY(${g.dataset.h}px)` }, { transform: 'translateY(0)' }], LEAD + i * STAGGER, MOVE, EASE_IN));
-    const out = LEAD + (words.length - 1) * STAGGER + MOVE + HOLD;
-    words.forEach((g, i) => add(g, [{ transform: 'translateY(0)' }, { transform: `translateY(${-g.dataset.h}px)` }], out + i * 0.08, EXIT, EASE_OUT, 'forwards'));
-    window.TOTAL = out + (words.length - 1) * 0.08 + EXIT + TAIL;
-  }
+  parts.forEach(o => {
+    const start = LEAD + o.line * LINE_GAP + (o.d / maxD) * STAGGER;   // line 2 after a pause; centre letters first
+    if (o === ring) {
+      o.p.style.transformBox = 'fill-box'; o.p.style.transformOrigin = '50% 50%';
+      add(o.p, [{ transform: `scale(${1 + SPREAD * 0.4})` }, { transform: 'scale(1)' }], start, IN, EASE_IN);
+    } else {
+      add(o.p, [{ transform: `translate(${o.dx * SPREAD}px, ${o.dy * SPREAD}px)` }, { transform: 'translate(0,0)' }], start, IN, EASE_IN);
+    }
+    add(o.p, [{ opacity: 0 }, { opacity: 1 }], start, FADE, 'linear');
+  });
+  const out = LEAD + (MARK === 'wordmark' ? LINE_GAP : 0) + STAGGER + IN + HOLD;
+  parts.forEach(o => {
+    const kf = o === ring ? [{ transform: 'scale(1)', opacity: 1 }, { transform: `scale(${1 + SPREAD * 0.15})`, opacity: 0 }]
+                          : [{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${o.dx * SPREAD * 0.3}px, ${o.dy * SPREAD * 0.3}px)`, opacity: 0 }];
+    add(o.p, kf, out, OUT, EASE_OUT, 'forwards');
+  });
+  window.TOTAL = out + OUT + TAIL;
   window.seek = t => anims.forEach(a => { a.currentTime = t * 1000; });
-  window.seek(0);
+  seek(0);
   document.body.dataset.motion = 1;
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const t0 = performance.now();
-    const tick = now => { let t = (now - t0) / 1000; if (LOOP) t %= window.TOTAL; else t = Math.min(t, window.TOTAL); window.seek(t); requestAnimationFrame(tick); };
-    if (!q.has('render')) requestAnimationFrame(tick);
-  } else {
-    window.seek(LEAD + 1.5);   // resting state: the full logo
-  }
+  if (q.has('render')) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { seek(out - 0.5); return; }   // resting state: the full logo
+  const t0 = performance.now();
+  const tick = now => { let t = (now - t0) / 1000; seek(LOOP ? t % window.TOTAL : Math.min(t, window.TOTAL)); requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
 }
 build();
 </script>
