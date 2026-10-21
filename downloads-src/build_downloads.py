@@ -5,6 +5,7 @@
   Motion  the end cards, stings and social loops from assets/Motion/ as one ZIP
   Fonts   League Spartan, Lora, Inconsolata (SIL Open Font License) + their OFL files as one ZIP
   Deck    the starter deck .pptx from the WBT design skill build
+  Skill   the WBT Brand Claude skill ZIP (leak-checked build), with install steps on the page
 Re-run after a logo, motion or font change:  python3 downloads-src/build_downloads.py
 """
 import os, re, shutil, subprocess, zipfile, tempfile
@@ -56,6 +57,8 @@ kits = {
 for name, files in kits.items():
     zipdir(files, os.path.join(OUT, name))
 shutil.copy(os.path.join(SKILL, 'assets', 'templates', 'wbt-starter-deck.pptx'), os.path.join(OUT, f'WBT-{D}-Starter-Deck.pptx'))
+# The Claude skill itself (downloads.html › Claude skill): the leak-checked ZIP from the skill's build (python3 build/build.py)
+shutil.copy(os.path.join(SKILL, 'build', 'dist', 'wbt-brand.zip'), os.path.join(OUT, 'WBT-20261021-Claude-Skill-wbt-brand.zip'))
 
 for f in sorted(os.listdir(OUT)):
     p = os.path.join(OUT, f)

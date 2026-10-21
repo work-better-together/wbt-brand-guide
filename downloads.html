@@ -45,6 +45,13 @@
     .dl-list strong { font-family: var(--font-display); font-weight: 700; font-size: 18px; flex: 0 0 200px; }
     .dl-list p { font-family: var(--font-body); font-size: 15px; line-height: 1.6; flex: 1 1 360px; }
     @media (max-width: 1000px) { .dl-grid.mono { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .dl-howto { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 56px; padding-top: 32px; }
+    .dl-howto h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin-bottom: 14px; }
+    .dl-howto ol { font-family: var(--font-body); font-size: 16px; line-height: 1.65; padding-left: 22px; }
+    .dl-howto ol li { margin-bottom: 10px; padding-left: 4px; }
+    .dl-howto code { font-family: var(--font-mono); font-size: 14px; overflow-wrap: anywhere; }
+    .dl-note { font-family: var(--font-body); font-size: 14px; line-height: 1.6; margin-top: 14px; }
+    @media (max-width: 700px) { .dl-howto { grid-template-columns: minmax(0, 1fr); } }
     @media (max-width: 700px) { .dl-grid, .dl-grid.mono { grid-template-columns: repeat(2, minmax(0, 1fr)); } .section-block { margin-bottom: 56px; } }
   </style>
 </head>
@@ -105,8 +112,36 @@
       <li><strong>Motion kit</strong><p>The Come Together end cards (16:9, 9:16, 1:1 on Clear White and Steady Blue), the monogram stings and the animated social posts, as MP4. See <a href="motion.html">Motion</a>.</p><a class="dl-btn" href="assets/Downloads/WBT-20261020-Motion-Kit.zip" download>ZIP · 1.8 MB</a></li>
       <li><strong>Fonts</strong><p>League Spartan, Lora and Inconsolata, free under the SIL Open Font License (included). Install them before editing the deck in PowerPoint or Keynote; Google Slides has them built in.</p><a class="dl-btn" href="assets/Downloads/WBT-20261020-Fonts.zip" download>ZIP · 0.5 MB</a></li>
       <li><strong>Brand assets</strong><p>Watercolor spots and backgrounds, scribbles, illustrations, shapes, frames and patterns live on <a href="elements.html">Elements</a>, <a href="patterns.html">Patterns</a> and <a href="photos.html">Photos</a>, with a download on every file.</p><a class="dl-btn" href="elements.html">Open Elements</a></li>
-      <li><strong>Claude design skill</strong><p>Teaches Claude our colors, type, voice, templates and asset library, so what it makes looks and sounds like us. For WBT staff: download it from the Skills tab on tools.wbt.coach (sign-in), then upload it in Claude under Settings › Skills.</p><a class="dl-btn" href="https://tools.wbt.coach/#skills">tools.wbt.coach</a></li>
     </ul>
+  </div>
+
+  <div class="section-block" id="claude-skill">
+    <div class="section-label">Claude skill</div>
+    <ul class="dl-list">
+      <li><strong>WBT Brand skill</strong><p>Teaches Claude our colors, type, voice, layouts and asset library, so what it makes looks and sounds like us: social posts, carousels and Stories, one-pagers, worksheets, decks, emails, web pages and collages. It uses our real logo, watercolor, scribble and illustration files from this guide, and checks its own work before handing it over.</p><a class="dl-btn" href="assets/Downloads/WBT-20261021-Claude-Skill-wbt-brand.zip" download>ZIP · 3.4 MB</a></li>
+    </ul>
+    <div class="dl-howto">
+      <div>
+        <h3>In Claude (web or desktop app)</h3>
+        <ol>
+          <li>Download the ZIP above. Don't unzip it.</li>
+          <li>In Claude, open <b>Settings › Capabilities</b> and make sure <b>Code execution and file creation</b> is on.</li>
+          <li>On the same page, under <b>Skills</b>, choose <b>Upload skill</b> and pick the ZIP.</li>
+          <li>Check that <b>wbt-brand</b> appears in the list and is switched on.</li>
+          <li>Start a new chat and ask for what you need, for example “Make an Instagram post with a client quote from our website.” Claude picks the skill up whenever you mention WBT or Work Better Together.</li>
+        </ol>
+        <p class="dl-note">On a Team or Enterprise plan, an admin may need to turn on skills for the organization first. If you had an older WBT skill installed (<i>wbt-brand-designer</i> or <i>wbt-collage</i>), delete it so only this one runs.</p>
+      </div>
+      <div>
+        <h3>In Claude Code</h3>
+        <ol>
+          <li>Download the ZIP above.</li>
+          <li>Unzip it into your skills folder, so the skill sits at <code>~/.claude/skills/wbt-brand/</code>:<br><code>unzip WBT-20261021-Claude-Skill-wbt-brand.zip -d ~/.claude/skills/</code></li>
+          <li>Start a new Claude Code session. Ask for anything WBT, or type <code>/wbt-brand</code>.</li>
+        </ol>
+        <p class="dl-note">To update, download the newest ZIP here and repeat the steps: upload it again in Claude (replacing the old one), or unzip it over the old folder in Claude Code.</p>
+      </div>
+    </div>
   </div>
 
 </div>

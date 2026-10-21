@@ -6,6 +6,9 @@ Notable changes to the brand guide site (brand.wbt.coach). Newest first.
 
 ## 2026-10-21 — Motion, Downloads, Social Maker fixes, generic-UI cleanup (branch `guide-v2`, in review)
 
+### Claude skill download (`downloads.html#claude-skill`)
+- The WBT Brand skill ZIP is now a download on the guide itself, with step-by-step install for Claude (web/desktop: Settings › Capabilities › Skills › Upload skill) and Claude Code (unzip into `~/.claude/skills/`). The Social page links there. `downloads-src/build_downloads.py` copies the ZIP from the skill's build.
+
 ### Motion (`motion.html`)
 - New sections at the top: **the motion idea** (“Calm under pressure. Hold steady, then move with intent.”), **logo animation** (*Come Together*: the letters start spaced out, fade in and come together; wordmark and monogram) with end cards in 16:9, 9:16 and 1:1 on Clear White and Steady Blue, **social posts in motion** (*Collage Gather* + *Line Rise* on the headline, quote and stat posts), and a **move library** naming all six moves. Videos play only while visible, with a page-level Pause and poster frames; reduced motion shows the still logo.
 - Sources in `motion-src/` (`logo-moves.html`, `social-moves.html`, `render-all.sh`); output in `assets/Motion/`.

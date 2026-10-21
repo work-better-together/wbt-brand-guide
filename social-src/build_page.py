@@ -142,7 +142,7 @@ page = head + """
 
   <div class="section-block">
     <div class="section-label">Make your own</div>
-    <p class="section-intro">Make posts like these with the WBT Brand skill in Claude (staff: download it from the Skills tab on tools.wbt.coach). It knows these layouts, sizes and colors, uses our real collage files, and checks its own work. Try:</p>
+    <p class="section-intro">Make posts like these with the WBT Brand skill in Claude (download it, with install steps, from <a href="downloads.html#claude-skill">Downloads</a>). It knows these layouts, sizes and colors, uses our real collage files, and checks its own work. Try:</p>
     <ul class="sp-prompts">
       <li>Make an Instagram post with a client quote from our website.</li>
       <li>Turn our latest case study into a six-slide carousel and a Story.</li>
