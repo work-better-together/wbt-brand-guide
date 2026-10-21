@@ -118,6 +118,25 @@ for r in beats['resources']:
 # Ink bounds (fractions of each file's canvas) from the WBT skill's asset catalog, so collages place the real ink, not the canvas.
 CAT = os.path.expanduser('~/.claude/skills/wbt-brand/references/asset-catalog.md')
 INK = {name: [int(v) / 100 for v in box] for name, *box in re.findall(r'`([^`]+\.png)` \d+×\d+ ink (\d+)–(\d+)%×(\d+)–(\d+)%', open(CAT).read())}
+# Corner spots: on plain light grounds, some inside slides get a watercolor spot bleeding off the bottom-right corner,
+# under the logo. Light spots keep the dark logo; darker spots knock the logo out to Clear White. Not on every slide.
+SERVICE_SPOT = {'Team Coaching': ['Intentional Blue', 'Intentional-Blue', 7, True], 'Leadership Coaching': ['Radiant Gold', 'Gold', 1, False],
+                'Facilitation + Training': ['Honest Ochre', 'Honest-Ochre', 7, True]}   # brushstroke shape 7; textured wash 1 for gold
+LIGHT_SPOT = {'Calm Blue': False, 'Radiant Gold': False}
+for it in items:
+    if len(it['slides']) < 2 or it['tone'] != 'light' or it['ground'].startswith('wash:'):
+        continue
+    first = it['slides'][0]
+    if first.get('collage'):
+        folder, file, n = first['collage']['spot']; spot = [folder, file, 1 if folder in LIGHT_SPOT else 7, not LIGHT_SPOT.get(folder, False)]
+    else:
+        svc = next((v for k, v in SERVICE_SPOT.items() if k in (first.get('eyebrow') or '')), None)
+        if not svc:
+            continue
+        spot = svc
+    for i, sl in enumerate(it['slides']):
+        if i % 2 == 1 and sl.get('type') not in ('cover', 'collage') and (sl.get('tone') or it['tone']) == 'light':
+            sl['corner'] = spot
 json.dump({'items': items, 'ink': INK}, open(os.path.join(HERE, 'all.json'), 'w'), indent=1, ensure_ascii=False)
 
 # Render every slide
@@ -134,6 +153,10 @@ for it in items:
         subprocess.run([CHROME, '--headless=new', '--hide-scrollbars', '--force-device-scale-factor=1', '--virtual-time-budget=9000',
                         f'--window-size=1080,{h}', f'--screenshot={png}', f'http://localhost:8791/social-src/post.html?id={it["id"]}&s={i}'],
                        capture_output=True, check=True)
+        dom = subprocess.run([CHROME, '--headless=new', '--virtual-time-budget=9000', f'--window-size=1080,{h}', '--dump-dom',
+                              f'http://localhost:8791/social-src/post.html?id={it["id"]}&s={i}'], capture_output=True, text=True).stdout
+        if 'data-collision="1"' in dom:
+            print('COLLISION (text still reaches the CTA/logo):', name)
         im = Image.open(png).convert('RGB')
         im.save(os.path.join(OUT, name + '.jpg'), quality=84, optimize=True, progressive=True)
         os.replace(png, os.path.join(os.environ.get('TMPDIR', '/tmp'), os.path.basename(png)))

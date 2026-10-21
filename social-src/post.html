@@ -35,6 +35,7 @@
   .qual { font: 400 42px/1.45 'Lora'; margin-top: 40px; } .qual b { font-weight: 700; }
   .cta { position: absolute; left: 86px; right: 210px; z-index: 1; font: 500 30px/1.4 'Inconsolata'; letter-spacing: .16em; text-transform: uppercase; color: var(--cta); }
   .logo { position: absolute; right: 86px; height: 70px; z-index: 1; }
+  .corner { position: absolute; z-index: 0; pointer-events: none; }   /* keep the CTA clear of it */
   .photo { position: absolute; left: 0; top: 0; width: 1080px; object-fit: cover; }
   ul.beats { list-style: none; margin-top: 40px; }
   ul.beats li { position: relative; padding-left: 44px; font: 400 42px/1.38 'Lora'; margin-bottom: 30px; }
@@ -69,8 +70,28 @@ fetch('all.json').then(r => r.json()).then(all => {
   if (/ACCDD9|Calm-Blue/.test(g)) c.classList.add('calm');
   if (/Honest-Ochre|B55312/.test(g)) c.classList.add('ochre');
   const top = story ? 260 : 0, bottomSafe = story ? 360 : 0;        // story safe zones
-  const logo = `<img class="logo" style="bottom:${72 + bottomSafe}px" src="${A}Logos/WBT-20260502-WBT-Monogram-${tone === 'dark' ? 'Clear-White' : 'Black'}.svg">`;
-  const cta = t => t ? `<div class="cta" style="bottom:${88 + bottomSafe}px">${t}</div>` : '';
+  const corner = sl.corner;   // [folder, file, n, darkSpot]: a watercolor spot bleeding off the bottom-right, under the logo
+  const knock = tone === 'dark' || (corner && corner[3]);
+  // Corner (like the website's service heroes): a big brushstroke spot bleeding off the bottom-right corner, a thin
+  // scribble crossing it and running off the edge, the logo sitting on it. Placed by ink bounds.
+  let cornerHtml = '';
+  if (corner) {
+    const spotFile = `WBT-20260403-${corner[1]}-Watercolor-Spots-${corner[2]}.png`;
+    const [a0, a1, b0, b1] = all.ink[spotFile] || [.05, .95, .05, .95];
+    const isWide = (a1 - a0) > (b1 - b0) * 1.2 || corner[2] === 7 || corner[2] === 5;   // brushstroke files are 1920×1080
+    const ar = isWide ? 1080 / 1920 : 1.057;
+    const inkW = story ? 820 : 760, sw = inkW / (a1 - a0), shh = sw * ar;
+    const cx = 1080 - 60, cy = H - bottomSafe - 70;                     // ink centre: just inside the corner, so it bleeds off two edges
+    const sx = cx - sw * (a0 + a1) / 2, sy = cy - shh * (b0 + b1) / 2;
+    const scr = 'Loops/WBT-scribble-loop-wavy-tail.png', [c0, c1, d0, d1] = all.ink['WBT-scribble-loop-wavy-tail.png'] || [.18, .9, .36, .72];
+    const scw = 820 / (c1 - c0), sch = scw * 1080 / 1920;
+    const scx = (cx - 40) - scw * (c0 + c1) / 2, scy = (cy - 40) - sch * (d0 + d1) / 2;   // loop sits on the spot, tail exits right
+    cornerHtml = `<img class="corner" style="left:${sx}px;top:${sy}px;width:${sw}px;transform:rotate(-10deg)" src="${A}Watercolor Textures/Spots/${corner[0]}/${spotFile}">` +
+                 `<img class="corner" style="left:${scx}px;top:${scy}px;width:${scw}px;transform:rotate(-8deg)" src="${A}Scribbles/${scr}">`;
+  }
+  const logo = cornerHtml +
+    `<img class="logo" style="bottom:${72 + bottomSafe}px" src="${A}Logos/WBT-20260502-WBT-Monogram-${knock ? 'Clear-White' : 'Black'}.svg">`;
+  const cta = t => t ? `<div class="cta" style="bottom:${88 + bottomSafe}px${sl.corner ? ';right:380px' : ''}">${t}</div>` : '';
   // Collage, proportioned like the resources.wbt.coach category collages: the ILLUSTRATION leads; the watercolor spot is
   // about the illustration's size (95% of its larger side), shifted a little to one side and down so it peeks out; the
   // scribble's ink is ~1.25× the illustration, centred on it, so thin loops wrap the illustration (over the spot, under
@@ -130,6 +151,18 @@ fetch('all.json').then(r => r.json()).then(all => {
          <ul class="beats ${sl.items.join(' ').length > 300 ? 's' : ''}">${sl.items.map(i => `<li>${i}</li>`).join('')}</ul></div>` + cta(sl.cta) + logo; break;
   }
   c.innerHTML = html;
+  // Fit: the text block must clear the CTA and logo by 48px. If it doesn't, shrink its type in 4% steps (to 72% at most).
+  const fit = () => {
+    const t = c.querySelector('.text'); if (!t) return;
+    const stops = [...c.querySelectorAll('.cta, .logo')].map(e => e.getBoundingClientRect().top);
+    const limit = Math.min(...stops, c.getBoundingClientRect().bottom - (story ? 340 : 0)) - 48;
+    const parts = [...t.querySelectorAll('.headline, .takeaway, .deck, .body, .quote, ul.beats li, .qual, .name, .role')];
+    const base = parts.map(e => parseFloat(getComputedStyle(e).fontSize));
+    for (let k = 1; k <= 7 && t.getBoundingClientRect().bottom > limit; k++)
+      parts.forEach((e, i) => e.style.fontSize = (base[i] * (1 - 0.04 * k)) + 'px');
+    if (t.getBoundingClientRect().bottom > limit) document.body.dataset.collision = 1;
+  };
+  document.fonts.ready.then(fit);
   return Promise.all([document.fonts.ready, ...[...document.images].map(i => i.decode().catch(() => {}))]);
 }).then(() => { document.body.dataset.ready = 1; });
 </script>

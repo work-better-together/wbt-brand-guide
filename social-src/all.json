@@ -760,6 +760,12 @@
       "Recurring interpersonal tension that drained energy and focus.",
       "A growing sense of burnout and disillusionment with how the work was being done.",
       "An unspoken question: Is the stress we’re carrying actually necessary?"
+     ],
+     "corner": [
+      "Radiant Gold",
+      "Gold",
+      1,
+      false
      ]
     },
     {
@@ -781,6 +787,12 @@
       "Increased clarity about what was theirs to hold—and what was not.",
       "More direct, grounded conversations with the Executive Director.",
       "The courage to name patterns affecting morale and sustainability."
+     ],
+     "corner": [
+      "Radiant Gold",
+      "Gold",
+      1,
+      false
      ]
     },
     {
@@ -818,6 +830,12 @@
       "Recurring interpersonal tension that drained energy and focus.",
       "A growing sense of burnout and disillusionment with how the work was being done.",
       "An unspoken question: Is the stress we’re carrying actually necessary?"
+     ],
+     "corner": [
+      "Radiant Gold",
+      "Gold",
+      1,
+      false
      ]
     },
     {
@@ -839,6 +857,12 @@
       "Increased clarity about what was theirs to hold—and what was not.",
       "More direct, grounded conversations with the Executive Director.",
       "The courage to name patterns affecting morale and sustainability."
+     ],
+     "corner": [
+      "Radiant Gold",
+      "Gold",
+      1,
+      false
      ]
     },
     {
@@ -876,6 +900,12 @@
       "Expectations around roles, workflows, and decision-making had not yet been fully articulated - it was only the second week on the job for 2 members of the team.",
       "The team needed to translate Empower’s broader mission into a clear, shared vision for development work in the year ahead.",
       "There was a strong desire to build trust and sustainability early, rather than retrofitting norms after challenges emerged."
+     ],
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
      ]
     },
     {
@@ -898,6 +928,12 @@
       "A shared understanding that team effectiveness is a strategic lever.",
       "Clear alignment between Empower’s organizational mission and strategy and the Development team’s own vision, priorities, and ways of working.",
       "Increased trust and relational depth, allowing team members to collaborate more openly, surface challenges earlier, and rely on one another with confidence."
+     ],
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
      ]
     },
     {
@@ -910,7 +946,13 @@
      "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Building trust and shared norms at a team’s formation—before problems emerge—set the conditions for results, instead of retrofitting culture after strain sets in.",
-     "cta": "Read the case study at workbettertogether.coach"
+     "cta": "Read the case study at workbettertogether.coach",
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
+     ]
     }
    ]
   },
@@ -941,6 +983,12 @@
       "Expectations around roles, workflows, and decision-making had not yet been fully articulated - it was only the second week on the job for 2 members of the team.",
       "The team needed to translate Empower’s broader mission into a clear, shared vision for development work in the year ahead.",
       "There was a strong desire to build trust and sustainability early, rather than retrofitting norms after challenges emerged."
+     ],
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
      ]
     },
     {
@@ -963,6 +1011,12 @@
       "A shared understanding that team effectiveness is a strategic lever.",
       "Clear alignment between Empower’s organizational mission and strategy and the Development team’s own vision, priorities, and ways of working.",
       "Increased trust and relational depth, allowing team members to collaborate more openly, surface challenges earlier, and rely on one another with confidence."
+     ],
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
      ]
     },
     {
@@ -975,7 +1029,13 @@
      "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "Building trust and shared norms at a team’s formation—before problems emerge—set the conditions for results, instead of retrofitting culture after strain sets in.",
-     "cta": "Read the case study at workbettertogether.coach"
+     "cta": "Read the case study at workbettertogether.coach",
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
+     ]
     }
    ]
   },
@@ -1006,6 +1066,12 @@
       "Feedback was experienced as unproductive and, at times, threatening rather than developmental.",
       "Each person questioned the other’s intentions, assuming criticism or dismissal where none was intended.",
       "Anxiety and risk‑mitigation replaced trust, openness, and shared problem‑solving."
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
      ]
     },
     {
@@ -1028,6 +1094,12 @@
       "Increased clarity around expectations, priorities, and communication norms.",
       "Reduced fear and defensiveness, replaced by greater curiosity and generosity of interpretation.",
       "More consistent, predictable feedback routines and norms to support earlier communication when challenges arose."
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
      ]
     },
     {
@@ -1065,6 +1137,12 @@
       "Feedback was experienced as unproductive and, at times, threatening rather than developmental.",
       "Each person questioned the other’s intentions, assuming criticism or dismissal where none was intended.",
       "Anxiety and risk‑mitigation replaced trust, openness, and shared problem‑solving."
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
      ]
     },
     {
@@ -1087,6 +1165,12 @@
       "Increased clarity around expectations, priorities, and communication norms.",
       "Reduced fear and defensiveness, replaced by greater curiosity and generosity of interpretation.",
       "More consistent, predictable feedback routines and norms to support earlier communication when challenges arose."
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
      ]
     },
     {
@@ -1261,7 +1345,13 @@
      "type": "text",
      "eyebrow": "Values & Energy",
      "headline": "",
-     "body": "Clarity on your values and energy is the foundation for leading from a grounded place. This worksheet helps you name what matters most and what sustains you. Then you can make choices that align with both."
+     "body": "Clarity on your values and energy is the foundation for leading from a grounded place. This worksheet helps you name what matters most and what sustains you. Then you can make choices that align with both.",
+     "corner": [
+      "Radiant Gold",
+      "Gold",
+      1,
+      true
+     ]
     },
     {
      "type": "list",
@@ -1280,7 +1370,13 @@
      "eyebrow": "Free resource",
      "headline": "resources.wbt.coach",
      "deck": "Free when you join our newsletter.",
-     "cta": "Tap the link →"
+     "cta": "Tap the link →",
+     "corner": [
+      "Radiant Gold",
+      "Gold",
+      1,
+      true
+     ]
     }
    ]
   },
@@ -1318,7 +1414,13 @@
      "type": "text",
      "eyebrow": "After Action Review",
      "headline": "",
-     "body": "Use this after you finish a project or a specific phase of work. The goal is to build collective understanding about what happened, learn from it together, and apply that learning to the work ahead."
+     "body": "Use this after you finish a project or a specific phase of work. The goal is to build collective understanding about what happened, learn from it together, and apply that learning to the work ahead.",
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
+     ]
     },
     {
      "type": "list",
@@ -1336,7 +1438,13 @@
      "eyebrow": "Free resource",
      "headline": "resources.wbt.coach",
      "deck": "Free when you join our newsletter.",
-     "cta": "Tap the link →"
+     "cta": "Tap the link →",
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
+     ]
     }
    ]
   },
@@ -1466,7 +1574,13 @@
      "type": "text",
      "eyebrow": "Career Timeline",
      "headline": "",
-     "body": "Sometimes, reflecting on your career can come into focus when you can name the eras. Don't worry about being neat; you can come back and rearrange. Add as many as you need."
+     "body": "Sometimes, reflecting on your career can come into focus when you can name the eras. Don't worry about being neat; you can come back and rearrange. Add as many as you need.",
+     "corner": [
+      "Clean Slate",
+      "Clean-Slate",
+      7,
+      true
+     ]
     },
     {
      "type": "list",
@@ -1485,7 +1599,13 @@
      "eyebrow": "Free resource",
      "headline": "resources.wbt.coach",
      "deck": "Free when you join our newsletter.",
-     "cta": "Tap the link →"
+     "cta": "Tap the link →",
+     "corner": [
+      "Clean Slate",
+      "Clean-Slate",
+      7,
+      true
+     ]
     }
    ]
   },
