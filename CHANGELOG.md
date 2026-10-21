@@ -17,6 +17,13 @@ Notable changes to the brand guide site (brand.wbt.coach). Newest first.
 ### Social Card Maker
 - The line under a headline is now League Spartan 400 (was Lora), the quote mark is Lora italic 700 in Radiant Gold (was Georgia), the handle is @wbtcoaching (was @workbettertogether), and template thumbnails use the real watercolor and a WBT photo instead of CSS imitations.
 
+### Social (`social.html`, replaces the Social Card Maker)
+- The maker is retired (staff make cards with the WBT Brand skill in Claude); `/social-maker` redirects to `/social`. The page shows 21 single posts (services, testimonials, stats, resources, Insights), 5 case study carousels (cover → The Challenge → Our Approach → what shifted → client quote → key takeaway) with matching Stories, and a Story series for each of 6 free resources: 100 frames, all copy verbatim from the site. Mostly solid brand grounds with a few watercolor washes (tinted for contrast on dark), text never under 26px. Built from `social-src/`.
+- Social posts and the logo share one move, *Come Together*.
+
+### No boxed text
+- Text groups (voice attributes, values, principles, spec and length cards, usage notes) are open columns with a hairline instead of bordered boxes.
+
 ### Generic-UI cleanup
 - Removed decorative 01/02 numbering (Logo and Swag section heads, Photos labels, the Elements menu, Motion and Microcopy principles), dashed boxes and dividers, and a faded label. Kept on purpose: Data Viz series order, checkerboards, clearspace guides, photo scrims, white behind client logos and products.
 

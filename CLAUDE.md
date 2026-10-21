@@ -54,6 +54,8 @@ WBT Brand Guide/
 ├── nav.js                  ← shared navigation injected into every page (ORDER pager + drawer groups)
 ├── motion-src/             ← sources for the Motion page videos (logo-moves.html, social-moves.html, render-all.sh)
 ├── downloads-src/          ← build_downloads.py: makes assets/Downloads/ (logo kit, motion kit, fonts, starter deck)
+├── social-src/             ← Social page examples: extract.py (verbatim beats) → build_social.py (render) → build_page.py (social.html)
+├── _redirects              ← Netlify redirects (old /social-maker → /social)
 ├── deck-stage.js           ← deck builder utility
 ├── [page].html             ← brand guide pages (see Page Index below)
 ├── CLAUDE.md               ← you are here
@@ -112,13 +114,13 @@ Brand guide pages are named as kebab-case slugs of their nav title. Nav groups a
 | swag.html | Swag | Design System |
 | clients.html | Clients | Design System |
 | motion.html | Motion | Design System |
+| social.html | Social (posts, carousels, Stories; built from `social-src/`) | Design System |
 | data-viz.html | Data Viz | Design System |
 | microcopy.html | Microcopy | Design System |
 | tokens.html | Tokens | Design System |
 | collage-maker.html | Collage Maker | Tools |
 | deck-template/index.html | Deck Template | Tools |
 | newsletter.html | Newsletter | Tools |
-| social-maker.html | Social Maker | Tools |
 | downloads.html | Downloads | Tools |
 | type-scale.html | Type Scale | not in nav; linked from Tokens |
 
@@ -191,6 +193,7 @@ url('assets/Fonts/LeagueSpartan-Variable.ttf')
 ## Generated files (edit the source, then rebuild)
 
 - `assets/Motion/*.mp4` + posters ← `motion-src/*.html` via `bash motion-src/render-all.sh` (needs the local server on :8791, node, ffmpeg, Chrome). Version filenames when re-rendering a published video.
+- `assets/Social/` + `social.html` ← `social-src/` (`extract.py`, then `build_social.py` with the :8791 server running, then `build_page.py`). Copy comes word for word from workbettertogether.coach and resources.wbt.coach.
 - `assets/Downloads/` ← `python3 downloads-src/build_downloads.py` (logo kit = wordmark + monogram in the 7 approved inks; starter deck and fonts come from the WBT design skill at `~/.claude/skills/wbt-brand`).
 
 ## The WBT design skill

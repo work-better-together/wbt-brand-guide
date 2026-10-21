@@ -1,0 +1,378 @@
+{
+ "_about": "Social examples for social.html (Oct 2026). All copy is verbatim from workbettertogether.coach (service pages, case studies, testimonials, Insights) or describes a real resource on resources.wbt.coach. ground: solid hex or wash:<Color>; tone: light (ink text, scribbles allowed) or dark (cream text, no scribbles). Collages are built live from the transparent spot, scribble and illustration files.",
+ "posts": [
+  {
+   "id": "service-leadership",
+   "group": "Services",
+   "layout": "collage",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Radiant Gold",
+     "Gold",
+     2
+    ],
+    "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
+    "illus": "Full-Moon.png"
+   },
+   "eyebrow": "Leadership Coaching",
+   "headline": "Let’s figure out the right next step.",
+   "deck": "Coaching is collaborative and forward-leaning.",
+   "cta": "Learn more →"
+  },
+  {
+   "id": "service-team",
+   "group": "Services",
+   "layout": "collage",
+   "ground": "wash:Calm-Blue:2",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Intentional Blue",
+     "Intentional-Blue",
+     4
+    ],
+    "scribble": "Loops/WBT-scribble-cascading-ovals.png",
+    "illus": "Bees-Pair.png"
+   },
+   "eyebrow": "Team Coaching",
+   "headline": "The team as the unit of change.",
+   "deck": "Rather than focusing on individual performance, it strengthens how the group works together.",
+   "cta": "Learn more →"
+  },
+  {
+   "id": "service-facilitation",
+   "group": "Services",
+   "layout": "collage",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Honest Ochre",
+     "Honest-Ochre",
+     3
+    ],
+    "scribble": "Loops/WBT-scribble-double-oval-tail.png",
+    "illus": "Lightbulb-Glowing.png"
+   },
+   "eyebrow": "Facilitation + Training",
+   "headline": "Retreats, workshops & labs.",
+   "deck": "for Transforming Mindset and Building Skills",
+   "cta": "Learn more →"
+  },
+  {
+   "id": "quote-lindsey-harr",
+   "group": "Testimonials",
+   "layout": "quote",
+   "ground": "#061A49",
+   "tone": "dark",
+   "quote": "Stacy and Jenna helped our leadership team to individually and collectively identify actionable steps to improve our communication and work together.",
+   "name": "Lindsey Harr",
+   "role": "Former ED, Office of School Wellness Programs, NYCDOE"
+  },
+  {
+   "id": "quote-james-baumer",
+   "group": "Testimonials",
+   "layout": "quote",
+   "ground": "wash:Steady-Blue:1",
+   "tone": "dark",
+   "quote": "I walked out of our team retreat feeling confident about my team’s roles, responsibilities, and alignment on achieving our overall mission.",
+   "name": "James Baumer",
+   "role": "Development Director, Empower"
+  },
+  {
+   "id": "quote-ppfa",
+   "group": "Testimonials",
+   "layout": "quote",
+   "ground": "#1E4D5C",
+   "tone": "dark",
+   "quote": "It was great to name our fears — both personal and professional — and normalize the stress response.",
+   "name": "Participant",
+   "role": "Planned Parenthood Federation of America"
+  },
+  {
+   "id": "quote-campaign-leader",
+   "group": "Testimonials",
+   "layout": "quote",
+   "ground": "#ACCDD9",
+   "tone": "light",
+   "quote": "I learned how much my stress impacts team culture, and that I have real choices about how I show up every day.",
+   "name": "Campaign Leader",
+   "role": "Choosing the Culture We Build on Campaigns"
+  },
+  {
+   "id": "quote-regional-leader",
+   "group": "Testimonials",
+   "layout": "quote",
+   "ground": "#2531A5",
+   "tone": "dark",
+   "quote": "This created space to connect as people, not just as roles. It reminded me that we choose the culture we build, even under pressure.",
+   "name": "Regional Leader",
+   "role": "Choosing the Culture We Build on Campaigns"
+  },
+  {
+   "id": "quote-uncertainty",
+   "group": "Testimonials",
+   "layout": "quote",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "quote": "This process gave us the clarity and accountability we needed. We walked out with actionable plans and a stronger sense of community across the teams.",
+   "name": "Leadership team",
+   "role": "Facilitation to Prepare for Uncertainty"
+  },
+  {
+   "id": "stat-80",
+   "group": "Stats",
+   "layout": "stat",
+   "ground": "#061A49",
+   "tone": "dark",
+   "statColor": "#CD9F36",
+   "eyebrow": "The impact of coaching",
+   "stat": "80%",
+   "strong": "of people who receive coaching",
+   "rest": " report increased self-confidence"
+  },
+  {
+   "id": "stat-70",
+   "group": "Stats",
+   "layout": "stat",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "statColor": "#2531A5",
+   "eyebrow": "The impact of coaching",
+   "stat": "70%",
+   "strong": "of leaders",
+   "rest": " improve performance, communication, and relationships"
+  },
+  {
+   "id": "stat-86",
+   "group": "Stats",
+   "layout": "stat",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "statColor": "#B55312",
+   "eyebrow": "The impact of coaching",
+   "stat": "86%",
+   "strong": "of companies and organizations",
+   "rest": " report a positive ROI on coaching"
+  },
+  {
+   "id": "case-conditions",
+   "group": "Case studies",
+   "layout": "case",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "photo": "building-conditions-for-results.jpg",
+   "eyebrow": "Case study · Facilitation + Training",
+   "headline": "Building Conditions for Results",
+   "body": "Building trust and shared norms at a team’s formation—before problems emerge—set the conditions for results, instead of retrofitting culture after strain sets in."
+  },
+  {
+   "id": "case-pressure",
+   "group": "Case studies",
+   "layout": "case",
+   "ground": "#061A49",
+   "tone": "dark",
+   "photo": "leading-together-under-pressure.jpg",
+   "eyebrow": "Case study · Team Coaching",
+   "headline": "Leading Together Under Pressure",
+   "body": "Under sustained pressure and grief, a senior team rebuilt trust by naming what they’d been carrying and articulating how they wanted to lead together."
+  },
+  {
+   "id": "case-endurance",
+   "group": "Case studies",
+   "layout": "case",
+   "ground": "#ACCDD9",
+   "tone": "light",
+   "photo": "developing-endurance-and-agency.jpg",
+   "eyebrow": "Case study · Leadership Coaching",
+   "headline": "Developing Endurance and Agency",
+   "body": "Coaching didn’t fix the organization—it moved one leader from enduring stress to actively shaping healthier conditions, with clarity, courage, and agency."
+  },
+  {
+   "id": "case-repair",
+   "group": "Case studies",
+   "layout": "case",
+   "ground": "#1E4D5C",
+   "tone": "dark",
+   "photo": "repairing-a-ruptured-relationship.jpg",
+   "eyebrow": "Case study · Team Coaching",
+   "headline": "Repairing a Ruptured Relationship",
+   "body": "2x2 coaching turned a cycle of defensiveness and mistrust between a manager and their report into clearer expectations, safer feedback, and restored good faith."
+  },
+  {
+   "id": "case-culture",
+   "group": "Case studies",
+   "layout": "case",
+   "ground": "wash:Intentional-Blue:1",
+   "tone": "dark",
+   "photo": "choosing-the-culture-we-build-on-campaigns.jpg",
+   "eyebrow": "Case study · Team Coaching",
+   "headline": "Choosing the Culture We Build on Campaigns",
+   "body": "Even under relentless campaign pressure, leaders found that culture is a choice—and that time to reconnect as people, not just roles, is what makes it hold."
+  },
+  {
+   "id": "resource-values-energy",
+   "group": "Resources",
+   "layout": "collage",
+   "ground": "#ACCDD9",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Radiant Gold",
+     "Gold",
+     5
+    ],
+    "scribble": "Sweeps/WBT-scribble-s-curve-loop.png",
+    "illus": "Sun.png"
+   },
+   "eyebrow": "Free resource · For leaders",
+   "headline": "Values & Energy",
+   "deck": "An interactive values sort and energy map.",
+   "cta": "resources.wbt.coach →"
+  },
+  {
+   "id": "resource-after-action",
+   "group": "Resources",
+   "layout": "collage",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Intentional Blue",
+     "Intentional-Blue",
+     2
+    ],
+    "scribble": "Loops/WBT-scribble-overlapping-ovals.png",
+    "illus": "Reflection.png"
+   },
+   "eyebrow": "Free resource · For teams",
+   "headline": "After Action Review",
+   "deck": "A one-page guide for teams.",
+   "cta": "resources.wbt.coach →"
+  },
+  {
+   "id": "resource-role-clarity",
+   "group": "Resources",
+   "layout": "text",
+   "ground": "#2531A5",
+   "tone": "dark",
+   "eyebrow": "Free resource · For teams",
+   "headline": "Role Clarity",
+   "deck": "A one-page role worksheet.",
+   "cta": "resources.wbt.coach →"
+  },
+  {
+   "id": "resource-retreat",
+   "group": "Resources",
+   "layout": "collage",
+   "ground": "wash:Honest-Ochre:2",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Honest Ochre",
+     "Honest-Ochre",
+     6
+    ],
+    "scribble": "Waves/WBT-scribble-looping-wave.png",
+    "illus": "Agenda.png"
+   },
+   "eyebrow": "Free resource · Retreat preparation",
+   "headline": "Thinking about a team retreat?",
+   "deck": "An interactive checklist, plus a blank PDF.",
+   "cta": "resources.wbt.coach →"
+  },
+  {
+   "id": "resource-career",
+   "group": "Resources",
+   "layout": "collage",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Clean Slate",
+     "Clean-Slate",
+     4
+    ],
+    "scribble": "Sweeps/WBT-scribble-long-sweep-spiral.png",
+    "illus": "Map.png"
+   },
+   "eyebrow": "Free resource · Career transitions",
+   "headline": "Career Timeline",
+   "deck": "Map where you’ve been and where you’re headed.",
+   "cta": "resources.wbt.coach →"
+  },
+  {
+   "id": "resource-campaign",
+   "group": "Resources",
+   "layout": "text",
+   "ground": "wash:Clean-Slate:1",
+   "tone": "dark",
+   "eyebrow": "Free resource · Campaign leaders",
+   "headline": "The End-of-Cycle Transition playbook",
+   "deck": "17 one-page tools for the end of a campaign.",
+   "cta": "resources.wbt.coach →"
+  },
+  {
+   "id": "insight-ei",
+   "group": "Insights",
+   "layout": "collage",
+   "ground": "#ACCDD9",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Steady Blue",
+     "Steady-Blue",
+     3
+    ],
+    "scribble": "Loops/WBT-scribble-loop-wavy-tail.png",
+    "illus": "Emotional-Intelligence-1.png"
+   },
+   "eyebrow": "Insights",
+   "headline": "Emotional Intelligence and Leadership",
+   "deck": "Why the leaders who make the most impact are often the ones willing to feel — and how to build the skill.",
+   "cta": "Read the article →"
+  },
+  {
+   "id": "insight-facilitator",
+   "group": "Insights",
+   "layout": "collage",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Calm Blue",
+     "Calm-Blue",
+     1
+    ],
+    "scribble": "Loops/WBT-scribble-cascading-ovals.png",
+    "illus": "Small-Group-Breakouts.png"
+   },
+   "eyebrow": "Insights",
+   "headline": "In Service of the Group: The Facilitator’s Role",
+   "deck": "Team retreats aren’t about fixing problems — they’re about creating space for reflection, awareness, and growth.",
+   "cta": "Read the article →"
+  },
+  {
+   "id": "insight-feelings",
+   "group": "Insights",
+   "layout": "collage",
+   "ground": "#F9F8F2",
+   "tone": "light",
+   "collage": {
+    "spot": [
+     "Honest Ochre",
+     "Honest-Ochre",
+     1
+    ],
+    "scribble": "Loops/WBT-scribble-double-oval-tail.png",
+    "illus": "Heart-2.png"
+   },
+   "eyebrow": "Insights",
+   "headline": "Don’t Skip the Convo About Feelings at Your Next Retreat",
+   "deck": "Talking about feelings at work isn’t a distraction — it’s a leadership advantage.",
+   "cta": "Read the article →"
+  }
+ ]
+}

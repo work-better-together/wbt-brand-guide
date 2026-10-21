@@ -65,6 +65,7 @@ WBT Brand Guide/
 | Swag | swag.html |
 | Clients | clients.html |
 | Motion | motion.html |
+| Social | social.html |
 | Data Viz | data-viz.html |
 | Microcopy | microcopy.html |
 | Tokens | tokens.html (Type Scale: type-scale.html) |
@@ -75,7 +76,6 @@ WBT Brand Guide/
 | Collage Maker | collage-maker.html |
 | Deck Template | deck-template/index.html |
 | Newsletter | newsletter.html |
-| Social Maker | social-maker.html |
 | Downloads | downloads.html |
 
 ---

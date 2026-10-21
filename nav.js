@@ -1,26 +1,26 @@
 (function () {
   const ORDER = [
-    { file: 'voice.html',                title: 'Voice',         num: '01' },
-    { file: 'logo.html',                 title: 'Logo',          num: '02' },
-    { file: 'type.html',                 title: 'Type',          num: '03' },
-    { file: 'color.html',                title: 'Color',         num: '04' },
-    { file: 'elements.html',             title: 'Elements',      num: '05' },
-    { file: 'collages.html',             title: 'Collages',      num: '06' },
-    { file: 'photos.html',               title: 'Photos',        num: '07' },
-    { file: 'patterns.html',             title: 'Patterns',      num: '08' },
-    { file: 'components.html',           title: 'Components',    num: '09' },
-    { file: 'iconography.html',          title: 'Iconography',   num: '10' },
-    { file: 'swag.html',                 title: 'Swag',          num: '11' },
-    { file: 'clients.html',              title: 'Clients',       num: '12' },
-    { file: 'motion.html',               title: 'Motion',        num: '13' },
-    { file: 'data-viz.html',             title: 'Data Viz',      num: '14' },
-    { file: 'microcopy.html',            title: 'Microcopy',     num: '15' },
-    { file: 'tokens.html',               title: 'Tokens',        num: '16' },
-    { file: 'collage-maker.html',        title: 'Collage Maker', num: '17' },
-    { file: 'deck-template/index.html',  title: 'Deck Template', num: '18' },
-    { file: 'newsletter.html',           title: 'Newsletter',    num: '19' },
-    { file: 'social-maker.html',         title: 'Social Maker',  num: '20' },
-    { file: 'downloads.html',            title: 'Downloads',     num: '21' }
+    { file: 'voice.html',                 title: 'Voice',         num: '01' },
+    { file: 'logo.html',                  title: 'Logo',          num: '02' },
+    { file: 'type.html',                  title: 'Type',          num: '03' },
+    { file: 'color.html',                 title: 'Color',         num: '04' },
+    { file: 'elements.html',              title: 'Elements',      num: '05' },
+    { file: 'collages.html',              title: 'Collages',      num: '06' },
+    { file: 'photos.html',                title: 'Photos',        num: '07' },
+    { file: 'patterns.html',              title: 'Patterns',      num: '08' },
+    { file: 'components.html',            title: 'Components',    num: '09' },
+    { file: 'iconography.html',           title: 'Iconography',   num: '10' },
+    { file: 'swag.html',                  title: 'Swag',          num: '11' },
+    { file: 'clients.html',               title: 'Clients',       num: '12' },
+    { file: 'motion.html',                title: 'Motion',        num: '13' },
+    { file: 'social.html',                title: 'Social',        num: '14' },
+    { file: 'data-viz.html',              title: 'Data Viz',      num: '15' },
+    { file: 'microcopy.html',             title: 'Microcopy',     num: '16' },
+    { file: 'tokens.html',                title: 'Tokens',        num: '17' },
+    { file: 'collage-maker.html',         title: 'Collage Maker', num: '18' },
+    { file: 'deck-template/index.html',   title: 'Deck Template', num: '19' },
+    { file: 'newsletter.html',            title: 'Newsletter',    num: '20' },
+    { file: 'downloads.html',             title: 'Downloads',     num: '21' }
   ];
 
   const here = decodeURIComponent((location.pathname.split('/').pop() || '')).replace(/\.html$/i, '').toLowerCase();
@@ -301,6 +301,7 @@
       { file: 'swag.html',                 title: 'Swag' },
       { file: 'clients.html',              title: 'Clients' },
       { file: 'motion.html',               title: 'Motion' },
+      { file: 'social.html',               title: 'Social' },
       { file: 'data-viz.html',             title: 'Data Viz' },
       { file: 'microcopy.html',            title: 'Microcopy' },
       { file: 'tokens.html',               title: 'Tokens' },
@@ -309,7 +310,6 @@
       { file: 'collage-maker.html',        title: 'Collage Maker' },
       { file: 'deck-template/index.html',  title: 'Deck Template' },
       { file: 'newsletter.html',           title: 'Newsletter' },
-      { file: 'social-maker.html',         title: 'Social Maker', wip: true },
       { file: 'downloads.html',            title: 'Downloads' },
     ]},
   ];
@@ -361,7 +361,7 @@
   nav.querySelector('.wbt-nav-right').appendChild(menuBtn);
 
   // ── Footer page nav ──
-  if (isGuidePage && here !== 'collage-maker' && here !== 'newsletter' && here !== 'social-maker') {
+  if (isGuidePage && here !== 'collage-maker' && here !== 'newsletter') {
     const footer = document.createElement('div');
     footer.className = 'wbt-page-footer';
 
