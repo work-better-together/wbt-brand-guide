@@ -68,7 +68,7 @@ for p in posts:
 
 # 2 · Case study carousels + stories
 CASE_STYLE = {   # ground, tone, photo object-position
-    'leading-together-under-pressure': ('#061A49', 'dark', '50% 22%'),
+    'leading-together-under-pressure': ('#061A49', 'dark', '50% 0%'),   # top-anchored: keep the “Collaboration” title
     'developing-endurance-and-agency': ('#F9F8F2', 'light', '50% 45%'),
     'building-conditions-for-results': ('#F9F8F2', 'light', '50% 25%'),
     'repairing-a-ruptured-relationship': ('#ACCDD9', 'light', '50% 35%'),

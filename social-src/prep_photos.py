@@ -17,6 +17,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ORIG = os.path.join(HERE, 'photos', 'originals')
 PALETTE = {'ochre': '#B55312', 'blue': '#2531A5', 'slate': '#1E4D5C'}
 TARGET_AB = {k: color.rgb2lab(np.array([[[int(v[i:i + 2], 16) / 255 for i in (1, 3, 5)]]]))[0, 0, 1:] for k, v in PALETTE.items()}
+# Per-photo crops: Collaboration loses the grey wall at left but keeps its title whole at the top.
+CROP = {'leading-together-under-pressure': (0.10, 0.12, 0.06, 0.06)}   # paper edge is ~9.5% from left, ~14% from top: keep the title whole
 BOARDS = ['leading-together-under-pressure', 'developing-endurance-and-agency', 'building-conditions-for-results']
 
 def family(hue):
@@ -32,8 +34,9 @@ def family(hue):
 
 def prep(slug):
     im = Image.open(os.path.join(ORIG, slug + '.jpg')).convert('RGB')
-    w, h = im.size; m = 0.08
-    im = im.crop((int(w * m), int(h * m), int(w * (1 - m)), int(h * (1 - m))))
+    w, h = im.size
+    l, t, r, b = CROP.get(slug, (0.08, 0.08, 0.08, 0.08))      # fractions trimmed from left, top, right, bottom
+    im = im.crop((int(w * l), int(h * t), int(w * (1 - r)), int(h * (1 - b))))
     a = np.asarray(im).astype(float) / 255
     # 1 · levels: paper (92nd percentile of lightness) → white; slight gamma lift
     lum = a.mean(axis=2)
