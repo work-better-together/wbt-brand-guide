@@ -75,7 +75,7 @@ CASE_STYLE = {   # ground, tone, photo object-position
     'choosing-the-culture-we-build-on-campaigns': ('#1E4D5C', 'dark', '50% 40%'),
     'building-trust-and-motivation-in-one-day': ('#2531A5', 'dark', '50% 40%'),
     'campaign-team-retreat-to-align-at-the-start': ('#F9F8F2', 'light', '50% 35%'),
-    'co-leading-an-organization': ('#ACCDD9', 'light', '50% 35%'),
+    'co-leading-an-organization': ('#ACCDD9', 'light', '50% 0%'),   # overhead shot: keep both heads in
     'coaching-to-support-leadership-development': ('#061A49', 'dark', '50% 40%'),
     'facilitation-to-prepare-for-uncertainty': ('#F9F8F2', 'light', '50% 35%'),
     'individual-coaching-for-each-team-member': ('#1E4D5C', 'dark', '50% 35%'),

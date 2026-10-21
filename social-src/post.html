@@ -20,7 +20,7 @@
   .eyebrow { font: 500 30px/1.25 'League Spartan'; letter-spacing: .16em; text-transform: uppercase; color: var(--eyebrow); margin-bottom: 24px; }
   .headline { font: 700 92px/1.02 'League Spartan'; letter-spacing: -0.025em; }
   .headline.m { font-size: 76px; } .headline.s { font-size: 64px; }
-  .deck { font: 400 52px/1.28 'League Spartan'; margin-top: 30px; }
+  .deck { font: 400 60px/1.25 'League Spartan'; margin-top: 30px; }   /* supporting line: one size on every post */
   .body { font: 400 44px/1.5 'Lora'; margin-top: 26px; }
   .quote { font: italic 400 58px/1.36 'Lora'; } .quote.s { font-size: 52px; }
   .qmark { font: italic 700 230px/.8 'Lora'; color: #CD9F36; position: absolute; left: 80px; }
@@ -32,7 +32,8 @@
   .head { width: 170px; height: 170px; border-radius: 50%; object-fit: cover; flex: none; }   /* round headshot, face-centred crop */
   .role { font: 500 36px/1.4 'Inconsolata'; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); margin-top: 10px; }
   .stat { font: 700 280px/.9 'League Spartan'; letter-spacing: -0.03em; margin-top: 70px; }
-  .qual { font: 400 42px/1.45 'Lora'; margin-top: 40px; } .qual b { font-weight: 700; }
+  .text, .text *, .cta { text-wrap: pretty; }
+  .qual { font: 400 60px/1.3 'Lora'; margin-top: 44px; } .qual b { font-weight: 700; }
   .cta { position: absolute; left: 86px; right: 210px; z-index: 1; font: 500 30px/1.4 'Inconsolata'; letter-spacing: .16em; text-transform: uppercase; color: var(--cta); }
   .logo { position: absolute; right: 86px; height: 70px; z-index: 1; }
   .corner { position: absolute; z-index: 0; pointer-events: none; }   /* keep the CTA clear of it */
@@ -42,7 +43,7 @@
   ul.beats li::before, ul.beats .bul { content: ''; position: absolute; left: 0; top: .55em; width: 12px; height: 12px; background: var(--bullet); }
   ul.beats li.anim::before { display: none; }   /* in motion, a real element stands in so the bullet can fade with its line */
   ul.beats.s li { font-size: 38px; margin-bottom: 24px; }
-  .story .body { font-size: 50px; } .story .deck { font-size: 56px; } .story ul.beats li { font-size: 46px; } .story ul.beats.s li { font-size: 38px; }
+  .story .body { font-size: 50px; } .story .deck { font-size: 64px; } .story ul.beats li { font-size: 46px; } .story ul.beats.s li { font-size: 38px; }
 </style></head>
 <body><div class="c" id="c"></div>
 <script>
@@ -144,7 +145,7 @@ fetch('all.json').then(r => r.json()).then(all => {
       html = `<div class="text" style="top:${top + (story ? 300 : 140)}px"><span class="asterisk" aria-hidden="true"></span><div class="eyebrow">${sl.eyebrow}</div>
          <p class="takeaway ${sl.headline.length > 170 ? 's' : ''}">${sl.headline}</p></div>` + cta(sl.cta) + logo; break;
     case 'cover':
-      const ph = story ? 1000 : 760;
+      const ph = story ? 900 : 660;   // photo leaves room for a big supporting line
       html = `<img class="photo" style="height:${ph}px;object-position:${sl.pos || '50% 35%'}" src="photos/${sl.photo}">
          <div class="text" style="top:${ph + 56}px"><div class="eyebrow">${sl.eyebrow}</div><h1 class="headline ${size(sl.headline, 34, 22)}">${sl.headline}</h1>
          ${sl.deck ? `<p class="deck">${sl.deck}</p>` : ''}</div>` + cta(sl.cta) + logo; break;
@@ -153,12 +154,27 @@ fetch('all.json').then(r => r.json()).then(all => {
          <ul class="beats ${sl.items.join(' ').length > 300 ? 's' : ''}">${sl.items.map(i => `<li>${i}</li>`).join('')}</ul></div>` + cta(sl.cta) + logo; break;
   }
   c.innerHTML = html;
-  // Fit: the text block must clear the CTA and logo by 48px. If it doesn't, shrink its type in 4% steps (to 72% at most).
+  // No orphans: tie each block's last two words together, and let Chrome even out the rag (text-wrap: pretty).
+  c.querySelectorAll('.text .headline, .text .deck, .text .body, .text .quote, .text li, .text .takeaway, .text .qual, .text .role, .cta').forEach(el => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let last = null;
+    while (walker.nextNode()) if (walker.currentNode.nodeValue.trim()) last = walker.currentNode;
+    if (last) last.nodeValue = last.nodeValue.replace(/ (\S+\s*)$/, '\u00A0$1');
+  });
+  // Fit: the text block must clear the CTA and logo by 48px. First the picture gives way (a cover photo gets shorter, a
+  // collage scales down from its top, by up to 22%) and the text moves up; only then does type shrink, in 4% steps to 72%.
+  // Supporting lines (.deck) never shrink, so they stay one size on every card.
   const fit = () => {
     const t = c.querySelector('.text'); if (!t) return;
     const stops = [...c.querySelectorAll('.cta, .logo')].map(e => e.getBoundingClientRect().top);
     const limit = Math.min(...stops, c.getBoundingClientRect().bottom - (story ? 340 : 0)) - 48;
-    const parts = [...t.querySelectorAll('.headline, .takeaway, .deck, .body, .quote, ul.beats li, .qual, .name, .role')];
+    const over = t.getBoundingClientRect().bottom - limit, pic = c.querySelector('.photo, .art');
+    if (over > 0 && pic) {
+      const h = pic.getBoundingClientRect().height, d = Math.min(over, h * 0.22);
+      if (pic.classList.contains('photo')) pic.style.height = (h - d) + 'px';
+      else { pic.style.transformOrigin = '50% 0'; pic.style.transform = `scale(${(h - d) / h})`; }
+      t.style.top = (parseFloat(t.style.top) - d) + 'px';
+    }
+    const parts = [...t.querySelectorAll('.headline, .takeaway, .body, .quote, ul.beats li, .qual, .name, .role')];
     const base = parts.map(e => parseFloat(getComputedStyle(e).fontSize));
     for (let k = 1; k <= 7 && t.getBoundingClientRect().bottom > limit; k++)
       parts.forEach((e, i) => e.style.fontSize = (base[i] * (1 - 0.04 * k)) + 'px');
@@ -202,8 +218,8 @@ function animate() {
   const lines = [], bullets = [];
   c.querySelectorAll('.text .eyebrow, .text .headline, .text .takeaway, .text .deck, .text .body, .text .quote, .text li, .text .name, .text .role, .text .stat, .text .qual').forEach(el => {
     if (el.closest('.who') && el.classList.contains('who')) return;
-    const words = el.innerHTML.split(/(\s+)/).filter(Boolean);
-    el.innerHTML = words.map(w => /^\s+$/.test(w) ? w : `<span class="aw" style="display:inline-block">${w}</span>`).join('');
+    const words = el.innerHTML.split(/([ \t\n\r]+)/).filter(Boolean);
+    el.innerHTML = words.map(w => /^[ \t\n\r]+$/.test(w) ? w : `<span class="aw" style="display:inline-block">${w}</span>`).join('');
     if (el.matches('ul.beats li')) { el.classList.add('anim'); el.insertAdjacentHTML('afterbegin', '<span class="bul"></span>'); bullets.push([el.firstChild, lines.length]); }
     const spans = [...el.querySelectorAll('.aw')], rows = [];
     spans.forEach(sp => { const y = Math.round(sp.getBoundingClientRect().top); (rows.at(-1)?.y === y ? rows.at(-1).s : (rows.push({ y, s: [] }), rows.at(-1).s)).push(sp); });
