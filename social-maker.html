@@ -202,7 +202,7 @@
   .tmpl-split .t-rh3 { height: 2.5px; background: rgba(31,30,30,0.25); border-radius: 1px; width: 50%; }
 
   .tmpl-quote .template-thumb { background: #B55312; flex-direction: column; padding: 8px; align-items: flex-start; justify-content: center; gap: 5px; }
-  .tmpl-quote .t-qmark { font-family: Georgia, serif; font-size: 24px; color: rgba(249,248,242,0.2); line-height: 0.8; }
+  .tmpl-quote .t-qmark { font-family: 'Lora', serif; font-style: italic; font-weight: 700; font-size: 24px; color: #CD9F36; line-height: 0.8; }
   .tmpl-quote .t-ql1 { width: 90%; height: 3px; background: rgba(249,248,242,0.85); border-radius: 1px; }
   .tmpl-quote .t-ql2 { width: 75%; height: 3px; background: rgba(249,248,242,0.7); border-radius: 1px; }
   .tmpl-quote .t-ql3 { width: 55%; height: 3px; background: rgba(249,248,242,0.5); border-radius: 1px; }
@@ -596,7 +596,7 @@
           </div>
           <div class="field-item">
             <label for="fieldAttribution">Attribution</label>
-            <input type="text" id="fieldAttribution" placeholder="@workbettertogether" maxlength="80">
+            <input type="text" id="fieldAttribution" placeholder="@wbtcoaching" maxlength="80">
           </div>
           <div class="field-item" id="photoField" style="display:none;">
             <label>Photo</label>
@@ -745,7 +745,7 @@ function defaultSlide() {
   return {
     headline:         'Leadership starts here.',
     subhead:          'Coaching and facilitation for teams doing meaningful work together.',
-    attribution:      '@workbettertogether',
+    attribution:      '@wbtcoaching',
     colorId:          'steady-blue',
     watercolor:       false,
     wcVariant:        1,
@@ -889,7 +889,7 @@ async function drawBold(ctx, slide, W, H, PAD, col) {
 
   // Subhead
   if (slide.subhead) {
-    ctx.font = `400 ${subSz}px 'Lora', serif`;
+    ctx.font = `400 ${subSz}px 'League Spartan', sans-serif`;
     ctx.fillStyle = rgba(col.text, 0.72);
     const subY = headY + headLines * headSz * 1.1 + headSz * 0.55;
     drawWrapped(ctx, slide.subhead, PAD, subY, W - PAD * 2, subSz * 1.55);
@@ -934,7 +934,7 @@ async function drawSplit(ctx, slide, W, H, PAD, col) {
   // Right — subhead
   const rPad = PAD * 0.7;
   const subSz = isWide ? W * 0.026 : W * 0.030;
-  ctx.font = `400 ${subSz}px 'Lora', serif`;
+  ctx.font = `400 ${subSz}px 'League Spartan', sans-serif`;
   ctx.fillStyle = rgba(col.text, 0.78);
   drawWrapped(ctx, slide.subhead, splitX + rPad, H * 0.3, W - splitX - rPad * 2, subSz * 1.55);
 
@@ -953,8 +953,8 @@ async function drawQuote(ctx, slide, W, H, PAD, col) {
   const isWide = W > H;
 
   // Big decorative quote mark
-  ctx.font = `700 ${W * 0.22}px Georgia, serif`;
-  ctx.fillStyle = rgba(col.text, 0.1);
+  ctx.font = `italic 700 ${W * 0.22}px 'Lora', serif`;   // brand quote mark: Lora italic 700, Radiant Gold
+  ctx.fillStyle = '#CD9F36';
   ctx.textBaseline = 'top';
   ctx.fillText('“', PAD * 0.5, PAD * 0.1);
 
@@ -1072,7 +1072,7 @@ async function drawPhoto(ctx, slide, W, H, PAD, col) {
 
   if (slide.subhead) {
     const subSz = W * 0.030;
-    ctx.font = `400 ${subSz}px 'Lora', serif`;
+    ctx.font = `400 ${subSz}px 'League Spartan', sans-serif`;
     ctx.fillStyle = rgba(col.text, 0.72);
     drawWrapped(ctx, slide.subhead, splitX + rPad, H * 0.22 + headLines * headSz * 1.1 + headSz * 0.5, W - splitX - rPad * 1.5, subSz * 1.55);
   }
@@ -1136,6 +1136,7 @@ async function doRedraw() {
   if (drawPending) return;
   drawPending = true;
   await document.fonts.ready;
+  await Promise.all(["italic 700 40px 'Lora'", "400 40px 'League Spartan'", "700 40px 'League Spartan'", "400 40px 'Lora'"].map(f => document.fonts.load(f)));   // canvas faces the DOM may not have loaded yet
   drawPending = false;
   const slide = state.slides[state.activeSlide];
   const fmt   = FORMATS[state.format];
