@@ -10,15 +10,21 @@ A living brand guide and production toolkit for Work Better Together, built as a
 WBT Brand Guide/
 ├── index.html              ← start here
 ├── nav.js                  ← shared navigation (injected into every page)
+├── motion-src/             ← sources + render script for the Motion videos
+├── downloads-src/          ← script that builds assets/Downloads/
 ├── deck-stage.js           ← deck builder utility
 ├── [page].html             ← brand guide and tool pages
 │
 ├── assets/                 ← all brand assets — organized library
 │   ├── Client Logos/
+│   ├── Downloads/          ← generated (logo kit, motion kit, fonts, starter deck)
 │   ├── Finished Collages/
 │   ├── Fonts/
+│   ├── Frames/  Shapes/  Patterns/
+│   ├── Generated Illustrations/  ← saved from the Collage Maker
 │   ├── Illustrations/
 │   ├── Logos/
+│   ├── Motion/             ← generated end cards, stings, social loops
 │   ├── Photography/
 │   ├── Reference/
 │   ├── Reference Documents/
@@ -29,7 +35,7 @@ WBT Brand Guide/
 │       └── Spots/{Color}/
 │
 ├── deck-template/          ← standalone slide deck template
-│   ├── deck-assets/        ← mirrors assets/ — always keep in sync
+│   ├── deck-assets/        ← the deck's own copies of the files it uses
 │   ├── fonts/              ← self-contained (decks are standalone)
 │   ├── reference/          ← sample deck PDFs
 │   └── index.html
@@ -43,7 +49,7 @@ WBT Brand Guide/
 
 ## Pages
 
-### Brand Guide
+### Design System
 | Page | File |
 |---|---|
 | Voice | voice.html |
@@ -53,9 +59,15 @@ WBT Brand Guide/
 | Elements | elements.html |
 | Collages | collages.html |
 | Photos | photos.html |
+| Patterns | patterns.html |
+| Components | components.html |
+| Iconography | iconography.html |
 | Swag | swag.html |
 | Clients | clients.html |
 | Motion | motion.html |
+| Data Viz | data-viz.html |
+| Microcopy | microcopy.html |
+| Tokens | tokens.html (Type Scale: type-scale.html) |
 
 ### Tools
 | Page | File |
@@ -64,25 +76,13 @@ WBT Brand Guide/
 | Deck Template | deck-template/index.html |
 | Newsletter | newsletter.html |
 | Social Maker | social-maker.html |
-
-### Design System
-| Page | File |
-|---|---|
-| Tokens | tokens.html |
-| Components | components.html |
-| Iconography | iconography.html |
-| Data Viz | data-viz.html |
-| Microcopy | microcopy.html |
+| Downloads | downloads.html |
 
 ---
 
 ## Adding Assets
 
-All assets go in `assets/` — no loose files anywhere else. Follow the naming conventions below, then sync to `deck-template/deck-assets/`:
-
-```
-rsync -a assets/ deck-template/deck-assets/
-```
+All assets go in `assets/` — no loose files anywhere else. Follow the naming conventions below. `Downloads/` and `Motion/` are generated: change the source and rebuild (see CLAUDE.md › Generated files).
 
 ### Naming Conventions
 
@@ -112,7 +112,10 @@ rsync -a assets/ deck-template/deck-assets/
 
 The deck template is designed to be copied out as a standalone project. It does not depend on the brand guide folder — all assets are self-contained in `deck-assets/` and fonts are in its own `fonts/` folder.
 
-When the brand guide's `assets/` library grows, sync changes into `deck-assets/`:
-```
-rsync -a assets/ deck-template/deck-assets/
-```
+`deck-assets/` holds copies of only the files the deck uses (some under the deck's own names). When the deck needs a new file, copy that one file in; don't sync the whole library.
+
+---
+
+## Hosting
+
+Live at https://brand.wbt.coach (Netlify site `wbtbrand`, Hyperakt's team), deployed automatically from `main` of `github.com/work-better-together/wbt-brand-guide`. Details, previews and the build-credit caveat are in `CLAUDE.md`.

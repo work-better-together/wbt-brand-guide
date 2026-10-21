@@ -4,6 +4,27 @@ Notable changes to the brand guide site (brand.wbt.coach). Newest first.
 
 ---
 
+## 2026-10-21 — Motion, Downloads, Social Maker fixes, generic-UI cleanup (branch `guide-v2`, in review)
+
+### Motion (`motion.html`)
+- New sections at the top: **the motion idea** (“Calm under pressure. Hold steady, then move with intent.”), **logo animation** (*Word by Word* for the wordmark, *Monogram Settle* for the monogram) with end cards in 16:9, 9:16 and 1:1 on Clear White and Steady Blue, **social posts in motion** (*Collage Gather* + *Line Rise* on the headline, quote and stat posts), and a **move library** naming all six moves. Videos play only while visible, with a page-level Pause and poster frames; reduced motion shows the still logo.
+- Sources in `motion-src/` (`logo-moves.html`, `social-moves.html`, `render-all.sh`); output in `assets/Motion/`.
+
+### Downloads (`downloads.html`, new)
+- Wordmark and monogram in all seven approved inks (SVG + 1000px transparent PNG) on their paired grounds, a logo-kit ZIP, the motion kit, the fonts (OFL), the 8-slide starter deck (.pptx) and a pointer to the WBT Claude skill on tools.wbt.coach. Built by `downloads-src/build_downloads.py`; added to `nav.js` and the home page.
+- New Clear White logo masters in `assets/Logos/` (fill swapped from the black masters).
+
+### Social Card Maker
+- The line under a headline is now League Spartan 400 (was Lora), the quote mark is Lora italic 700 in Radiant Gold (was Georgia), the handle is @wbtcoaching (was @workbettertogether), and template thumbnails use the real watercolor and a WBT photo instead of CSS imitations.
+
+### Generic-UI cleanup
+- Removed decorative 01/02 numbering (Logo and Swag section heads, Photos labels, the Elements menu, Motion and Microcopy principles), dashed boxes and dividers, and a faded label. Kept on purpose: Data Viz series order, checkerboards, clearspace guides, photo scrims, white behind client logos and products.
+
+### Notes
+- `CLAUDE.md` and `README.md` brought up to date: the repo is `work-better-together/wbt-brand-guide`, the site is the Netlify site `wbtbrand` (not GitHub Pages), branch previews, build-credit caveat, full page index, generated folders, `deck-assets/` described as the deck's own copies (not a mirror), and the `wbt-brand` Claude skill.
+
+---
+
 ## 2026-07-10 — Reconcile with the live site, add the Patterns page, ship a copy/download system, and rebuild the homepage
 
 A large session that (a) reconciled the guide against the production **workbettertogether.coach** build, (b) documented every pattern the site uses, (c) split the big layout patterns onto their own page, (d) added a consistent copy/download component across every asset page, and (e) simplified the homepage. Everything below pulled its exact values from the live site source, not from eyeballing.
@@ -69,7 +90,7 @@ A large rework across `elements.html`, `collage-maker.html`, and a new Cloudflar
 - Added the 5 that were missing from its source lists: **`Armillary`** (→ Cosmos & Wonder) and the four layout accents **`Blue-Blob`, `Pink-Blob`, `Pink-Torn-Paper-1`, `Pink-Torn-Paper-2`** (→ new "Layout Accents & Textures" group).
 
 ### Workflow / docs
-- Documented the **repo ↔ Drive** relationship and switched to a **repo-first workflow**: edit in `~/Projects/wbt-brand-guide`, deploy from it, then mirror to the Google Drive copy. See `CLAUDE.md`.
+- Documented the **repo ↔ Drive** relationship and switched to a **repo-first workflow**: edit in `~/Projects/hkt-client-brand-guides/wbt-brand-guide`, deploy from it, then mirror to the Google Drive copy. See `CLAUDE.md`.
 
 ---
 
