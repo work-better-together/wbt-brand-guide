@@ -82,7 +82,8 @@ CASE_STYLE = {   # ground, tone, photo object-position
     'moving-from-stress-to-strategy-with-a-team': ('#F9F8F2', 'light', '50% 40%'),
 }
 # The live “Moving From Stress to Strategy” page repeats the “Individual Coaching” body word for word (Oct 2026), so its
-# carousel keeps only what is its own: the cover and the key takeaway.
+# carousel leads with its own cover and key takeaway and adds one beat in between: Our Approach as a text slide (the copied
+# page lists the approach, so “Individual Coaching” shows it as a list; this one quotes the paragraph instead).
 BODY_IS_COPY = {'moving-from-stress-to-strategy-with-a-team'}
 ROLE = {'leading-together-under-pressure': 'PPFA Policy Team', 'building-conditions-for-results': 'Development team, Empower'}
 
@@ -95,7 +96,8 @@ def beat(c, key, headline):
         return {'type': 'list', 'eyebrow': c['title'], 'headline': headline, 'items': items[:5 if key == 'approach' else 4]}
     fill = lambda p: whole_sentences(p, 42) if len(whole_sentences(p, 42).split()) >= 20 else whole_sentences(p, 58)   # a slide's worth, not one thin line
     para = next((fill(p) for p in c[key + '_p'] if not p.rstrip().endswith(':') and fill(p)), '')
-    return {'type': 'text', 'eyebrow': c['title'], 'headline': headline, 'body': para} if para else None
+    short = next((whole_sentences(p, 30) for p in c[key + '_p'] if not p.rstrip().endswith(':') and len(whole_sentences(p, 30).split()) >= 10), '')
+    return {'type': 'text', 'eyebrow': c['title'], 'headline': headline, 'body': para, **({'story_body': short} if short else {})} if para else None
 
 def excerpt(t, limit=32):
     """Whole sentences from a quote, as many as fit in `limit` words: from the start when the opening sentence fits,
@@ -107,6 +109,37 @@ def excerpt(t, limit=32):
             return out
     return ''
 
+def for_story(slides):
+    """Stories get less reading per screen than carousels (about 30 words a frame, at most two frames a beat). A long list
+    packs into frames of a point or two, leaving out any single point too long for one screen; a long paragraph splits into
+    frames of whole sentences, leaving out a sentence too long to read at a glance. Word for word; only selection and pacing change."""
+    W = 30
+    out = []
+    for sl in slides:
+        if sl['type'] == 'list' and len(' '.join(sl['items']).split()) > 24:
+            frames, cur = [], []
+            for x in (x for x in sl['items'] if len(x.split()) <= 26):
+                if cur and (len(' '.join(cur + [x]).split()) > W or len(cur) == 2):
+                    frames.append(cur); cur = []
+                cur.append(x)
+            frames.append(cur)
+            out += [dict(sl, items=f) for f in frames[:2] if f]
+        elif sl['type'] == 'text' and sl.get('story_body') and len(sl['body'].split()) > W and \
+                not any(len(ch.split()) <= W + 4 for ch in re.findall(r'[^.!?]+[.!?]+[”"]?', sl['body'])):
+            out.append(dict(sl, body=sl['story_body']))   # every sentence of the carousel's paragraph is too long: use a shorter passage from the same section
+        elif sl['type'] == 'text' and sl.get('body') and len(sl['body'].split()) > W:
+            chunks, cur = [], []
+            for sent in re.findall(r'[^.!?]+[.!?]+[”"]?', sl['body']):
+                if cur and len(' '.join(cur + [sent]).split()) > W:
+                    chunks.append(' '.join(x.strip() for x in cur)); cur = []
+                cur.append(sent)
+            chunks.append(' '.join(x.strip() for x in cur))
+            short = [ch for ch in chunks if len(ch.split()) <= W + 4] or chunks[:1]
+            out += [dict(sl, body=ch) for ch in short[:2]]
+        else:
+            out.append(sl)
+    return out
+
 def head_for(name):
     f = 'head-' + re.sub(r'[^a-z]+', '-', name.lower()).strip('-') + '.jpg'
     return f if os.path.exists(os.path.join(HERE, 'photos', f)) else None
@@ -114,7 +147,11 @@ def head_for(name):
 for c in beats['cases']:
     ground, tone, pos = CASE_STYLE[c['slug']]
     slides = [{'type': 'cover', 'photo': c['slug'] + '.jpg', 'pos': pos, 'eyebrow': 'Case study · ' + c['service'], 'headline': c['title'], 'deck': c['lede'], 'cta': 'Swipe →'}]
-    if c['slug'] not in BODY_IS_COPY:
+    if c['slug'] in BODY_IS_COPY:
+        para = next((whole_sentences(p, 58) for p in c['approach_p'] if not p.rstrip().endswith(':') and whole_sentences(p, 58)), '')
+        if para:
+            slides.append({'type': 'text', 'eyebrow': c['title'], 'headline': 'Our Approach', 'body': para})
+    else:
         slides += [b for b in (beat(c, 'challenge', 'The Challenge'), beat(c, 'approach', 'Our Approach'),
                                beat(c, 'shifted', re.sub(r'^The ', '', c['shift_label']) if c['shift_label'] else 'What Shifted')) if b]
         named = [q for q in c['quotes'] if q['role'] and q['name'] and not q['name'].startswith('—') and excerpt(q['text'])]
@@ -131,7 +168,7 @@ for c in beats['cases']:
     slides.append({'type': 'takeaway', 'eyebrow': 'Key takeaway', 'headline': c['takeaway'], 'cta': 'Read the case study at workbettertogether.coach'})
     for fmt in ('post', 'story'):
         items.append({'id': f"case-{c['slug']}-{fmt}", 'group': 'Case studies', 'kind': 'carousel' if fmt == 'post' else 'story',
-                      'format': fmt, 'ground': ground, 'tone': tone, 'title': c['title'], 'slides': slides})
+                      'format': fmt, 'ground': ground, 'tone': tone, 'title': c['title'], 'slides': slides if fmt == 'post' else for_story(slides)})
 
 # 3 · Resource stories
 RES_COVER = {p['id']: p for p in posts if p['group'] == 'Resources'}

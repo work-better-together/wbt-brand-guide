@@ -1,5 +1,5 @@
 """Write social.html (the Social page) from social-src/all.json and the rendered assets/Social/*.jpg.
-Makes 600px thumbnails in assets/Social/thumbs/. Run after build_social.py:  python3 social-src/build_page.py
+Makes 860px phone-size copies in assets/Social/phone/ (and Story posters in thumbs/). Run after build_social.py:  python3 social-src/build_page.py
 """
 import json, os, html
 from PIL import Image
@@ -10,12 +10,19 @@ S = 'assets/Social/'
 D = '20261021'
 items = json.load(open(os.path.join(HERE, 'all.json')))['items']
 os.makedirs(os.path.join(ROOT, S, 'thumbs'), exist_ok=True)
+os.makedirs(os.path.join(ROOT, S, 'phone'), exist_ok=True)
 
 def files(it):
     n = len(it['slides'])
     return [f"WBT-{D}-Social-{it['id']}" + (f"-{i + 1}" if n > 1 else '') + '.jpg' for i in range(n)]
 
-def thumb(f):
+def phone(f):
+    """An 860px copy for the page: posts show at phone size (390px wide, as Instagram shows them), sharp on 2x screens."""
+    src, dst = os.path.join(ROOT, S, f), os.path.join(ROOT, S, 'phone', f)
+    im = Image.open(src); im.thumbnail((860, 1600)); im.save(dst, quality=82, optimize=True, progressive=True)
+    return S + 'phone/' + f
+
+def thumb(f):   # small poster for the animated Stories
     src, dst = os.path.join(ROOT, S, f), os.path.join(ROOT, S, 'thumbs', f)
     im = Image.open(src); im.thumbnail((600, 1100)); im.save(dst, quality=80, optimize=True, progressive=True)
     return S + 'thumbs/' + f
@@ -27,25 +34,28 @@ def ground_name(g):
     return GROUND.get(g, g)
 
 LAYOUT = {'collage': 'Collage', 'quote': 'Quote', 'stat': 'Stat', 'text': 'Type only'}
-def tile(it):
-    f = files(it)[0]
-    sl = it['slides'][0]
-    alt = html.escape(sl.get('headline') or sl.get('quote') or sl.get('stat', ''), quote=True)
-    return (f'<figure class="sp-tile"><a href="{S}{f}" target="_blank" rel="noopener"><img src="{thumb(f)}" alt="{alt}" loading="lazy" width="600" height="750"></a>'
-            f'<figcaption>{LAYOUT.get(sl["type"], sl["type"])} · {ground_name(it["ground"])}</figcaption></figure>')
+def alt(it, k):
+    sl = it['slides'][k]
+    return html.escape(sl.get('headline') or sl.get('quote') or sl.get('stat') or sl.get('body') or it.get('title', ''), quote=True)
 
-def video(it):
-    """The animated Story (render_stories.py), first in its row, playing only while in view."""
+def post(it, caption):
+    """A post as it sits in the Instagram feed: one slide at a time, swipe or arrows, a 1/n counter and dots."""
+    fs = files(it); n = len(fs)
+    imgs = ''.join(f'<img src="{phone(f)}" alt="{alt(it, k)}" loading="lazy" width="860" height="1075">' for k, f in enumerate(fs))
+    nav = (f'<span class="ig-count">1/{n}</span><button class="ig-prev" aria-label="Previous slide" hidden></button><button class="ig-next" aria-label="Next slide"></button>'
+           if n > 1 else '')
+    dots = f'<div class="ig-dots">{"<i></i>" * n}</div>' if n > 1 else ''
+    return (f'<figure class="ig"><div class="ig-frame"><div class="ig-track">{imgs}</div>{nav}</div>{dots}'
+            f'<figcaption>{caption}</figcaption></figure>')
+
+def story(it):
+    """A Story at phone size, animated (render_stories.py), with a play/pause button."""
+    fs = files(it)
     v = f"stories/WBT-{D}-Social-{it['id']}.mp4"
-    if not os.path.exists(os.path.join(ROOT, S, v)):
-        return ''
-    return (f'<figure class="sp-anim"><video src="{S}{v}" poster="{S}thumbs/{files(it)[0]}" muted loop playsinline preload="none" '
-            f'aria-label="{html.escape(it.get("title", ""), quote=True)}, animated Story"></video><figcaption>Animated</figcaption></figure>')
-
-def strip(it, cls):
-    imgs = (video(it) if cls == 'sto' else '') + ''.join(f'<a href="{S}{f}" target="_blank" rel="noopener"><img src="{thumb(f)}" alt="{html.escape(it.get("title", ""), quote=True)}, slide {k + 1}" loading="lazy"></a>'
-                   for k, f in enumerate(files(it)))
-    return f'<div class="sp-set"><div class="sp-set-head">{html.escape(it.get("title", ""))} <span>{len(it["slides"])} {"slides" if cls == "car" else "frames"}</span></div><div class="sp-strip {cls}">{imgs}</div></div>'
+    title = html.escape(it.get("title", ""), quote=True)
+    return (f'<figure class="ig story"><div class="ig-frame"><video src="{S}{v}" poster="{phone(fs[0])}" muted playsinline preload="none" '
+            f'aria-label="{title}, animated Story"></video><button class="ig-play" aria-label="Play {title}"></button></div>'
+            f'<figcaption><b>{html.escape(it.get("title", ""))}</b> · {len(fs)} frames</figcaption></figure>')
 
 groups = ['Services', 'Testimonials', 'Stats', 'Resources', 'Insights']
 singles = {g: [i for i in items if i['kind'] == 'post' and i['group'] == g] for g in groups}
@@ -56,29 +66,38 @@ res_stories = [i for i in items if i['kind'] == 'story' and i['group'] == 'Resou
 head = open(os.path.join(ROOT, 'downloads.html')).read()
 head = head[:head.index('    .dl-head {')].replace('<title>Downloads — Work Better Together</title>', '<title>Social — Work Better Together</title>')
 page = head + """
-    .sp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 20px; }
-    .sp-tile { margin: 0; }
-    .sp-tile img, .sp-strip img { display: block; width: 100%; height: auto; }
-    .sp-tile figcaption { font-family: var(--font-display); font-weight: 500; font-size: 13px; padding-top: 10px; }
-    .sp-group { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin: 40px 0 16px; }
+    /* Phone size: Instagram shows a 1080px post about 390px wide on a phone, so that's how big they are here. */
+    .ig-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(0, 390px)); gap: 40px 32px; }
+    .ig { margin: 0; width: 100%; max-width: 390px; }
+    .ig-frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #F9F8F2; }
+    .ig.story .ig-frame { aspect-ratio: 9 / 16; cursor: pointer; background: #061A49; }
+    .ig-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .ig-track::-webkit-scrollbar { display: none; }
+    .ig-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; display: block; }
+    .ig.story img, .ig.story video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ig-count { position: absolute; top: 12px; right: 12px; font: 600 12px/1 var(--font-display); color: #fff; background: rgba(6, 26, 73, .62); padding: 6px 9px; border-radius: 12px; }
+    .ig-prev, .ig-next { position: absolute; top: 50%; width: 30px; height: 30px; margin-top: -15px; border: 0; border-radius: 50%; background: rgba(249, 248, 242, .88); cursor: pointer; padding: 0; }
+    .ig-prev { left: 10px; } .ig-next { right: 10px; }
+    .ig-prev::before, .ig-next::before { content: ''; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; border: solid #061A49; border-width: 2px 2px 0 0; }
+    .ig-next::before { transform: translate(-65%, -50%) rotate(45deg); } .ig-prev::before { transform: translate(-35%, -50%) rotate(-135deg); }
+    .ig-dots { display: flex; justify-content: center; gap: 4px; padding-top: 12px; }
+    .ig-dots i { width: 6px; height: 6px; border-radius: 50%; background: #C9CCD6; }
+    .ig-dots i.on { background: #2531A5; }
+    .ig-play { position: absolute; left: 14px; bottom: 14px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(249, 248, 242, .92); cursor: pointer; padding: 0; }
+    .ig-play::before { content: ''; position: absolute; left: 17px; top: 13px; border: solid transparent; border-width: 9px 0 9px 14px; border-left-color: #061A49; }
+    .ig-play.on::before { left: 15px; top: 14px; width: 4px; height: 16px; border: 0; border-left: 4px solid #061A49; border-right: 4px solid #061A49; box-sizing: content-box; }
+    .ig figcaption { font-family: var(--font-display); font-weight: 500; font-size: 13px; padding-top: 10px; }
+    .ig figcaption b { font-weight: 700; }
+    .sp-group { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin: 48px 0 18px; }
     .sp-group:first-of-type { margin-top: 0; }
-    .sp-set { margin-bottom: 36px; }
-    .sp-set-head { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin-bottom: 12px; }
-    .sp-set-head span { font-weight: 500; font-size: 13px; margin-left: 8px; }
-    .sp-strip { display: grid; grid-auto-flow: column; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
-    .sp-strip.car { grid-auto-columns: minmax(220px, 1fr); }
-    .sp-strip.sto { grid-auto-columns: 190px; }
-    .sp-strip a, .sp-anim { scroll-snap-align: start; }
-    .sp-anim { margin: 0; position: relative; }
-    .sp-anim video { display: block; width: 100%; aspect-ratio: 9 / 16; background: var(--border-subtle); }
-    .sp-anim figcaption { position: absolute; left: 8px; top: 8px; font-family: var(--font-display); font-weight: 600; font-size: 12px; padding: 3px 8px; background: #F9F8F2; color: #061A49; }
+    .ig-stories { display: grid; grid-template-columns: repeat(auto-fill, minmax(0, 390px)); gap: 48px 32px; }
+    .ig-pair { display: contents; }
     .sp-rules { columns: 2; column-gap: 48px; font-family: var(--font-body); font-size: 15px; line-height: 1.65; padding-left: 18px; }
     .sp-rules li { break-inside: avoid; margin-bottom: 10px; }
     .sp-prompts { list-style: none; border-top: 1px solid var(--border-subtle); }
     .sp-prompts li { font-family: var(--font-body); font-style: italic; font-size: 17px; padding: 14px 0; border-bottom: 1px solid var(--border-subtle); }
     .section-block a { color: inherit; }
-    @media (max-width: 1000px) { .sp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media (max-width: 700px) { .sp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; } .sp-rules { columns: 1; } .section-block { margin-bottom: 56px; } }
+    @media (max-width: 700px) { .ig-grid, .ig-stories { grid-template-columns: minmax(0, 1fr); justify-items: center; } .sp-rules { columns: 1; } .section-block { margin-bottom: 56px; } }
   </style>
 </head>
 <body>
@@ -91,20 +110,26 @@ page = head + """
 
   <div class="section-block">
     <div class="section-label">Posts</div>
-    <p class="section-intro">Single posts at 1080×1350. Collage posts sit on light grounds so the black scribble reads; quotes, stats and type-only posts can go dark. Most grounds are solid brand colors, with an occasional watercolor wash. Every word here comes from our site, case studies and resources. Click any post for the full-size file.</p>
-""" + ''.join(f'    <h3 class="sp-group">{g}</h3>\n    <div class="sp-grid">\n      ' + '\n      '.join(tile(i) for i in singles[g]) + '\n    </div>\n' for g in groups if singles[g]) + """  </div>
+    <p class="section-intro">Single posts at 1080×1350. Collage posts sit on light grounds so the black scribble reads; quotes, stats and type-only posts can go dark. Most grounds are solid brand colors, with an occasional watercolor wash. Every word here comes from our site, case studies and resources. Shown at phone size, as they appear in the feed.</p>
+""" + ''.join(f'    <h3 class="sp-group">{g}</h3>\n    <div class="ig-grid">\n      ' + '\n      '.join(post(i, f"{LAYOUT.get(i['slides'][0]['type'], i['slides'][0]['type'])} · {ground_name(i['ground'])}") for i in singles[g]) + '\n    </div>\n' for g in groups if singles[g]) + """  </div>
 
   <div class="section-block">
     <div class="section-label">Case study carousels</div>
-    <p class="section-intro">Every case study on our site becomes a carousel that walks through its beats: the photo and title, The Challenge, Our Approach, what shifted, the client in their own words, and the key takeaway. Where a case study tells a beat in prose rather than a list, the slide uses its opening sentences, word for word. Swipe through each row.</p>
-""" + ''.join('    ' + strip(i, 'car') + '\n' for i in carousels) + """  </div>
+    <p class="section-intro">Every case study on our site becomes a carousel that walks through its beats: the photo and title, The Challenge, Our Approach, what shifted, the client in their own words, and the key takeaway. Where a case study tells a beat in prose rather than a list, the slide uses its opening sentences, word for word. Swipe, or use the arrows, as on Instagram.</p>
+    <div class="ig-grid">
+""" + ''.join('      ' + post(i, f"<b>{html.escape(i['title'])}</b> · {len(i['slides'])} slides") + '\n' for i in carousels) + """    </div>
+""" + """  </div>
 
   <div class="section-block">
     <div class="section-label">Stories</div>
-    <p class="section-intro">Stories at 1080×1920, with text kept out of the top 250px and bottom 340px where the app's buttons sit. Case studies tell the same beats as their carousels; each free resource gets a short series ending on the link. The first tile in each row is the Story animated with <a href="motion.html">Come Together</a>: each frame's words gather line by line, hold long enough to read, then drift apart into the next.</p>
+    <p class="section-intro">Stories at 1080×1920, with text kept out of the top 250px and bottom 340px where the app's buttons sit. Case studies tell the same beats as their carousels; each free resource gets a short series ending on the link. Stories carry less reading than carousels: about 30 words a screen, so a long beat runs over two frames. Shown at phone size and animated with <a href="motion.html">Come Together</a>: each frame's words gather line by line, hold long enough to read, then drift apart into the next. Press play.</p>
     <h3 class="sp-group">Case studies</h3>
-""" + ''.join('    ' + strip(i, 'sto') + '\n' for i in case_stories) + """    <h3 class="sp-group">Free resources</h3>
-""" + ''.join('    ' + strip(i, 'sto') + '\n' for i in res_stories) + """  </div>
+    <div class="ig-stories">
+""" + ''.join('      ' + story(i) + '\n' for i in case_stories) + """    </div>
+    <h3 class="sp-group">Free resources</h3>
+    <div class="ig-stories">
+""" + ''.join('      ' + story(i) + '\n' for i in res_stories) + """    </div>
+""" + """  </div>
 
   <div class="section-block">
     <div class="section-label">The rules</div>
@@ -134,9 +159,26 @@ page = head + """
 </div>
 <script src="nav.js"></script>
 <script>
-  // Animated Stories play while on screen and pause when scrolled away.
-  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold: 0.5 });
-  document.querySelectorAll('.sp-anim video').forEach(v => io.observe(v));
+  // Carousels: swipe (scroll-snap) or arrows; the 1/n counter, dots and arrows follow the slide in view.
+  document.querySelectorAll('.ig').forEach(fig => {
+    const track = fig.querySelector('.ig-track'); if (!track || track.children.length < 2) return;
+    const n = track.children.length, dots = fig.querySelectorAll('.ig-dots i'), count = fig.querySelector('.ig-count');
+    const prev = fig.querySelector('.ig-prev'), next = fig.querySelector('.ig-next');
+    const show = () => { const k = Math.round(track.scrollLeft / track.clientWidth);
+      dots.forEach((d, i) => d.classList.toggle('on', i === k)); count.textContent = `${k + 1}/${n}`; prev.hidden = k === 0; next.hidden = k === n - 1; };
+    prev.onclick = () => track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
+    next.onclick = () => track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+    track.addEventListener('scroll', () => requestAnimationFrame(show), { passive: true }); show();
+  });
+  // Stories: one play/pause button each; only one plays at a time, and it pauses when scrolled away.
+  const vids = [...document.querySelectorAll('.ig.story video')];
+  const sync = v => { const b = v.nextElementSibling, on = !v.paused; b.classList.toggle('on', on); b.setAttribute('aria-label', (on ? 'Pause ' : 'Play ') + v.getAttribute('aria-label')); };
+  vids.forEach(v => {
+    v.nextElementSibling.onclick = () => { if (v.paused) { vids.forEach(o => o !== v && o.pause()); v.play().catch(() => {}); } else v.pause(); };
+    ['play', 'pause', 'ended'].forEach(e => v.addEventListener(e, () => sync(v)));
+  });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) e.target.pause(); }), { threshold: 0.2 });
+  vids.forEach(v => io.observe(v));
 </script>
 </body>
 </html>

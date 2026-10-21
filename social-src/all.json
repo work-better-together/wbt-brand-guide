@@ -648,6 +648,12 @@
       "Surfacing Values through Experience",
       "Anchoring to Mission and Leadership Expectations",
       "Clarifying Roles and Interdependence"
+     ],
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
      ]
     },
     {
@@ -709,16 +715,21 @@
      "eyebrow": "Building Conditions for Results",
      "headline": "The Challenge",
      "items": [
-      "New team members were hired to step into new roles while still learning one another’s strengths, preferences, and needs.",
-      "Expectations around roles, workflows, and decision-making had not yet been fully articulated - it was only the second week on the job for 2 members of the team.",
-      "The team needed to translate Empower’s broader mission into a clear, shared vision for development work in the year ahead.",
-      "There was a strong desire to build trust and sustainability early, rather than retrofitting norms after challenges emerged."
+      "New team members were hired to step into new roles while still learning one another’s strengths, preferences, and needs."
      ],
      "corner": [
       "Honest Ochre",
       "Honest-Ochre",
       7,
       true
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Building Conditions for Results",
+     "headline": "The Challenge",
+     "items": [
+      "The team needed to translate Empower’s broader mission into a clear, shared vision for development work in the year ahead."
      ]
     },
     {
@@ -731,6 +742,12 @@
       "Surfacing Values through Experience",
       "Anchoring to Mission and Leadership Expectations",
       "Clarifying Roles and Interdependence"
+     ],
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
      ]
     },
     {
@@ -739,7 +756,14 @@
      "headline": "Outcomes & Impact",
      "items": [
       "A shared understanding that team effectiveness is a strategic lever.",
-      "Clear alignment between Empower’s organizational mission and strategy and the Development team’s own vision, priorities, and ways of working.",
+      "Clear alignment between Empower’s organizational mission and strategy and the Development team’s own vision, priorities, and ways of working."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Building Conditions for Results",
+     "headline": "Outcomes & Impact",
+     "items": [
       "Increased trust and relational depth, allowing team members to collaborate more openly, surface challenges earlier, and rely on one another with confidence."
      ],
      "corner": [
@@ -791,7 +815,8 @@
      "type": "text",
      "eyebrow": "Building Trust and Motivation in One Day",
      "headline": "The Challenge",
-     "body": "Rather than facilitate internally again, the leadership team partnered with us to bring intentional structure, emotional intelligence, and grounded facilitation to a day centered around motivation, recognition, and alignment."
+     "body": "Rather than facilitate internally again, the leadership team partnered with us to bring intentional structure, emotional intelligence, and grounded facilitation to a day centered around motivation, recognition, and alignment.",
+     "story_body": "Rather than facilitate internally again, the leadership team partnered with us to bring intentional structure, emotional intelligence, and grounded facilitation to a day centered around motivation, recognition, and alignment."
     },
     {
      "type": "list",
@@ -839,7 +864,8 @@
      "type": "text",
      "eyebrow": "Building Trust and Motivation in One Day",
      "headline": "The Challenge",
-     "body": "Rather than facilitate internally again, the leadership team partnered with us to bring intentional structure, emotional intelligence, and grounded facilitation to a day centered around motivation, recognition, and alignment."
+     "body": "Rather than facilitate internally again, the leadership team partnered with us to bring intentional structure, emotional intelligence, and grounded facilitation to a day centered around motivation, recognition, and alignment.",
+     "story_body": "Rather than facilitate internally again, the leadership team partnered with us to bring intentional structure, emotional intelligence, and grounded facilitation to a day centered around motivation, recognition, and alignment."
     },
     {
      "type": "list",
@@ -914,6 +940,7 @@
      "eyebrow": "Campaign Team Retreat to Align at the Start",
      "headline": "Results",
      "body": "By the end of the retreat, the campaign team had developed the outline for a shared understanding of the path to victory, clearer role definitions and interdependencies, explicit norms and routines to support accountability and care, and a sense of momentum grounded in alignment, not urgency alone.",
+     "story_body": "Perhaps most importantly, though, the team left with a shared language for how they want to show up for the campaign and for one another.",
      "corner": [
       "Intentional Blue",
       "Intentional-Blue",
@@ -973,8 +1000,30 @@
      "headline": "The Challenge",
      "items": [
       "An emerging (but not yet fully codified) path to victory",
-      "Overlapping roles and informal power that hadn’t been named",
+      "Overlapping roles and informal power that hadn’t been named"
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Campaign Team Retreat to Align at the Start",
+     "headline": "The Challenge",
+     "items": [
       "The need to build trust and rapport quickly, while already “in motion”"
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Campaign Team Retreat to Align at the Start",
+     "headline": "Our Approach",
+     "items": [
+      "Goal #1: Anchor to the Path to Victory",
+      "Goal #2: Make Roles Clear and Power Visible"
      ],
      "corner": [
       "Intentional Blue",
@@ -988,8 +1037,6 @@
      "eyebrow": "Campaign Team Retreat to Align at the Start",
      "headline": "Our Approach",
      "items": [
-      "Goal #1: Anchor to the Path to Victory",
-      "Goal #2: Make Roles Clear and Power Visible",
       "Goal #3: Establish Habits That Support Performance and Sustainability"
      ]
     },
@@ -997,7 +1044,8 @@
      "type": "text",
      "eyebrow": "Campaign Team Retreat to Align at the Start",
      "headline": "Results",
-     "body": "By the end of the retreat, the campaign team had developed the outline for a shared understanding of the path to victory, clearer role definitions and interdependencies, explicit norms and routines to support accountability and care, and a sense of momentum grounded in alignment, not urgency alone.",
+     "body": "Perhaps most importantly, though, the team left with a shared language for how they want to show up for the campaign and for one another.",
+     "story_body": "Perhaps most importantly, though, the team left with a shared language for how they want to show up for the campaign and for one another.",
      "corner": [
       "Intentional Blue",
       "Intentional-Blue",
@@ -1122,7 +1170,14 @@
      "headline": "The Challenge",
      "items": [
       "Middle managers were carrying significant emotional and operational load.",
-      "Team culture was being shaped in real time, often under extreme pressure.",
+      "Team culture was being shaped in real time, often under extreme pressure."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Choosing the Culture We Build on Campaigns",
+     "headline": "The Challenge",
+     "items": [
       "The team wanted space to reflect, connect, and build resilience.",
       "There was a real risk that insight would not translate into sustained behavior change without intentional follow-through."
      ]
@@ -1144,7 +1199,14 @@
      "headline": "What Shifted",
      "items": [
       "Stronger relationships and a deeper sense of alignment across the team.",
-      "Increased awareness of how personal stress affects team culture.",
+      "Increased awareness of how personal stress affects team culture."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Choosing the Culture We Build on Campaigns",
+     "headline": "What Shifted",
+     "items": [
       "Renewed commitment to centering joy, assuming positive intent, and supporting one another more intentionally.",
       "Greater clarity about individual growth edges as managers and leaders."
      ]
@@ -1207,6 +1269,12 @@
       "Shared Vision and Strengths Mapping",
       "Role Definition and Decision Authority",
       "Operating Agreements and Repair Practices"
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
      ]
     },
     {
@@ -1257,9 +1325,7 @@
      "headline": "The Challenge",
      "items": [
       "Difficulty sharing feedback without triggering defensiveness, withdrawal, or escalation.",
-      "A cycle of repeated conversations that did not lead to decision-making or sustained change.",
-      "Frustration around overlapping portfolios and unclear ownership on work streams.",
-      "Stress-driven communication patterns that made disagreement feel risky - especially in front of staff."
+      "A cycle of repeated conversations that did not lead to decision-making or sustained change."
      ],
      "corner": [
       "Intentional Blue",
@@ -1271,12 +1337,27 @@
     {
      "type": "list",
      "eyebrow": "Co-leading an Organization",
+     "headline": "The Challenge",
+     "items": [
+      "Frustration around overlapping portfolios and unclear ownership on work streams.",
+      "Stress-driven communication patterns that made disagreement feel risky - especially in front of staff."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Co-leading an Organization",
      "headline": "Our Approach",
      "items": [
       "Individual Reflection",
       "Shared Vision and Strengths Mapping",
       "Role Definition and Decision Authority",
       "Operating Agreements and Repair Practices"
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
      ]
     },
     {
@@ -1285,7 +1366,14 @@
      "headline": "Impact and Early Outcomes",
      "items": [
       "Reduced duplication of effort and fewer missed handoffs.",
-      "Clearer signals to staff about leadership ownership and accountability.",
+      "Clearer signals to staff about leadership ownership and accountability."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Co-leading an Organization",
+     "headline": "Impact and Early Outcomes",
+     "items": [
       "An improving sense of trust and partnership between the co-leaders."
      ],
      "corner": [
@@ -1325,19 +1413,22 @@
      "type": "text",
      "eyebrow": "Coaching to Support Leadership Development",
      "headline": "The Challenge",
-     "body": "Empower Project’s leadership team faced the dual challenges of intense demands and the emotional toll of managing quickly constructed teams that are built to last only through the cycle."
+     "body": "Empower Project’s leadership team faced the dual challenges of intense demands and the emotional toll of managing quickly constructed teams that are built to last only through the cycle.",
+     "story_body": "Empower Project’s leadership team faced the dual challenges of intense demands and the emotional toll of managing quickly constructed teams that are built to last only through the cycle."
     },
     {
      "type": "text",
      "eyebrow": "Coaching to Support Leadership Development",
      "headline": "Our Approach",
-     "body": "Over the course of the 6 months leading up to the 2024 elections, Empower Project engaged us to support their quickly expanding leadership team."
+     "body": "Over the course of the 6 months leading up to the 2024 elections, Empower Project engaged us to support their quickly expanding leadership team.",
+     "story_body": "Over the course of the 6 months leading up to the 2024 elections, Empower Project engaged us to support their quickly expanding leadership team."
     },
     {
      "type": "text",
      "eyebrow": "Coaching to Support Leadership Development",
      "headline": "Conclusion",
-     "body": "Empower Project’s collaboration with WBT demonstrates the power of sustained, multi-level leadership support. By investing in individual coaching, founder partnership and team facilitation that are delivered simultaneously across the leadership system, they strengthen not only personal leadership capacity, but the connective tissue of the organization itself."
+     "body": "Empower Project’s collaboration with WBT demonstrates the power of sustained, multi-level leadership support. By investing in individual coaching, founder partnership and team facilitation that are delivered simultaneously across the leadership system, they strengthen not only personal leadership capacity, but the connective tissue of the organization itself.",
+     "story_body": "Empower Project’s collaboration with WBT demonstrates the power of sustained, multi-level leadership support."
     },
     {
      "type": "takeaway",
@@ -1369,19 +1460,29 @@
      "type": "text",
      "eyebrow": "Coaching to Support Leadership Development",
      "headline": "The Challenge",
-     "body": "Empower Project’s leadership team faced the dual challenges of intense demands and the emotional toll of managing quickly constructed teams that are built to last only through the cycle."
+     "body": "Empower Project’s leadership team faced the dual challenges of intense demands and the emotional toll of managing quickly constructed teams that are built to last only through the cycle.",
+     "story_body": "Empower Project’s leadership team faced the dual challenges of intense demands and the emotional toll of managing quickly constructed teams that are built to last only through the cycle."
     },
     {
      "type": "text",
      "eyebrow": "Coaching to Support Leadership Development",
      "headline": "Our Approach",
-     "body": "Over the course of the 6 months leading up to the 2024 elections, Empower Project engaged us to support their quickly expanding leadership team."
+     "body": "Over the course of the 6 months leading up to the 2024 elections, Empower Project engaged us to support their quickly expanding leadership team.",
+     "story_body": "Over the course of the 6 months leading up to the 2024 elections, Empower Project engaged us to support their quickly expanding leadership team."
     },
     {
      "type": "text",
      "eyebrow": "Coaching to Support Leadership Development",
      "headline": "Conclusion",
-     "body": "Empower Project’s collaboration with WBT demonstrates the power of sustained, multi-level leadership support. By investing in individual coaching, founder partnership and team facilitation that are delivered simultaneously across the leadership system, they strengthen not only personal leadership capacity, but the connective tissue of the organization itself."
+     "body": "Empower Project’s collaboration with WBT demonstrates the power of sustained, multi-level leadership support.",
+     "story_body": "Empower Project’s collaboration with WBT demonstrates the power of sustained, multi-level leadership support."
+    },
+    {
+     "type": "text",
+     "eyebrow": "Coaching to Support Leadership Development",
+     "headline": "Conclusion",
+     "body": "By investing in individual coaching, founder partnership and team facilitation that are delivered simultaneously across the leadership system, they strengthen not only personal leadership capacity, but the connective tissue of the organization itself.",
+     "story_body": "Empower Project’s collaboration with WBT demonstrates the power of sustained, multi-level leadership support."
     },
     {
      "type": "takeaway",
@@ -1434,6 +1535,12 @@
       "From Reaction to Reflection",
       "Practicing Courageous, Regulated Communication",
       "Expanding the Frame: From Individual Coping to Organizational Health"
+     ],
+     "corner": [
+      "Radiant Gold",
+      "Gold",
+      1,
+      false
      ]
     },
     {
@@ -1485,9 +1592,7 @@
      "headline": "The Challenge",
      "items": [
       "A power dynamic where honest upward feedback felt risky.",
-      "Recurring interpersonal tension that drained energy and focus.",
-      "A growing sense of burnout and disillusionment with how the work was being done.",
-      "An unspoken question: Is the stress we’re carrying actually necessary?"
+      "Recurring interpersonal tension that drained energy and focus."
      ],
      "corner": [
       "Radiant Gold",
@@ -1499,11 +1604,26 @@
     {
      "type": "list",
      "eyebrow": "Developing Endurance and Agency",
+     "headline": "The Challenge",
+     "items": [
+      "A growing sense of burnout and disillusionment with how the work was being done.",
+      "An unspoken question: Is the stress we’re carrying actually necessary?"
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Developing Endurance and Agency",
      "headline": "Our Approach",
      "items": [
       "From Reaction to Reflection",
       "Practicing Courageous, Regulated Communication",
       "Expanding the Frame: From Individual Coping to Organizational Health"
+     ],
+     "corner": [
+      "Radiant Gold",
+      "Gold",
+      1,
+      false
      ]
     },
     {
@@ -1512,7 +1632,14 @@
      "headline": "Outcomes and Shifts",
      "items": [
       "Greater self-trust and emotional regulation in high-stakes interactions.",
-      "Increased clarity about what was theirs to hold—and what was not.",
+      "Increased clarity about what was theirs to hold—and what was not."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Developing Endurance and Agency",
+     "headline": "Outcomes and Shifts",
+     "items": [
       "More direct, grounded conversations with the Executive Director.",
       "The courage to name patterns affecting morale and sustainability."
      ],
@@ -1597,7 +1724,13 @@
      "type": "quote",
      "quote": "This process gave us the clarity and accountability we needed. We walked out with actionable plans and a stronger sense of community across the teams.",
      "name": "In their words",
-     "role": "Planned Parenthood Federation of America"
+     "role": "Planned Parenthood Federation of America",
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
+     ]
     },
     {
      "type": "takeaway",
@@ -1637,9 +1770,31 @@
      "headline": "The Challenge",
      "items": [
       "Firm up and pressure test their public/external plans for multiple election outcomes.",
-      "Clarify decision-making and communication norms.",
+      "Clarify decision-making and communication norms."
+     ],
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Facilitation to Prepare for Uncertainty",
+     "headline": "The Challenge",
+     "items": [
       "Foster collaboration and trust across the range of internal stakeholders representing unique bodies of work.",
       "Prepare both emotionally and operationally for potential post-election crises."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Facilitation to Prepare for Uncertainty",
+     "headline": "Our Approach",
+     "items": [
+      "Emotional intelligence exercises to address their own fear and uncertainty.",
+      "Circles of Influence and Control frameworks to clarify where action was possible."
      ],
      "corner": [
       "Honest Ochre",
@@ -1653,8 +1808,6 @@
      "eyebrow": "Facilitation to Prepare for Uncertainty",
      "headline": "Our Approach",
      "items": [
-      "Emotional intelligence exercises to address their own fear and uncertainty.",
-      "Circles of Influence and Control frameworks to clarify where action was possible.",
       "Ideation and strategy sprints to generate ideas and prioritize initiatives."
      ]
     },
@@ -1664,9 +1817,7 @@
      "headline": "Results",
      "items": [
       "Aligned on key strategies for both election scenarios.",
-      "Created a shared language and understanding of organizational readiness.",
-      "Named tension points and modeled how to productively manage them.",
-      "Increased confidence in their collective post-election preparedness."
+      "Created a shared language and understanding of organizational readiness."
      ],
      "corner": [
       "Honest Ochre",
@@ -1676,10 +1827,25 @@
      ]
     },
     {
+     "type": "list",
+     "eyebrow": "Facilitation to Prepare for Uncertainty",
+     "headline": "Results",
+     "items": [
+      "Named tension points and modeled how to productively manage them.",
+      "Increased confidence in their collective post-election preparedness."
+     ]
+    },
+    {
      "type": "quote",
      "quote": "This process gave us the clarity and accountability we needed. We walked out with actionable plans and a stronger sense of community across the teams.",
      "name": "In their words",
-     "role": "Planned Parenthood Federation of America"
+     "role": "Planned Parenthood Federation of America",
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
+     ]
     },
     {
      "type": "takeaway",
@@ -1771,7 +1937,7 @@
      "type": "text",
      "eyebrow": "Individual Coaching for Each Team Member",
      "headline": "The Challenge",
-     "body": "Team members have been navigating increasing pressure and complexity. While cohort-based leadership programs can be valuable, this group needed a flexible, opt-in development option that allowed folks to engage at different times, at different career stages, and around distinct leadership challenges - all without requiring a single, centralized program."
+     "body": "Team members have been navigating increasing pressure and complexity."
     },
     {
      "type": "list",
@@ -1790,7 +1956,14 @@
      "headline": "What This Demonstrates",
      "items": [
       "Is opt-in and individualized, not one-size-fits-all",
-      "Leverages existing professional development funding",
+      "Leverages existing professional development funding"
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Individual Coaching for Each Team Member",
+     "headline": "What This Demonstrates",
+     "items": [
       "Supports multiple leaders within a single team over time",
       "Builds leadership capacity in complex, mission-driven organizations"
      ]
@@ -1915,7 +2088,14 @@
      "headline": "What Shifted",
      "items": [
       "Greater clarity and alignment around roles, decision-making, and leadership expectations.",
-      "Improved communication and trust, including more direct feedback and fewer workarounds.",
+      "Improved communication and trust, including more direct feedback and fewer workarounds."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Leading Together Under Pressure",
+     "headline": "What Shifted",
+     "items": [
       "Increased self-awareness and empathy, as leaders better understood how stress and protection strategies were shaping their interactions."
      ]
     },
@@ -1952,6 +2132,18 @@
      "cta": "Swipe →"
     },
     {
+     "type": "text",
+     "eyebrow": "Moving From Stress to Strategy with a Team",
+     "headline": "Our Approach",
+     "body": "We provide each team member who reaches out to us five one-on-one coaching sessions that team members can elect to use their professional development funds to support. Over time, we’ve coached more than a dozen leaders across the same team, each in a confidential, tailored coaching relationship.",
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
+     ]
+    },
+    {
      "type": "takeaway",
      "eyebrow": "Key takeaway",
      "headline": "A flexible, opt-in coaching benefit met each leader where they were, turning individual stress into steadier presence, clearer decisions, and stronger relationships across one team.",
@@ -1982,6 +2174,24 @@
      "headline": "Moving From Stress to Strategy with a Team",
      "deck": "Team sessions to connect to each other and reinforce shared purpose.",
      "cta": "Swipe →"
+    },
+    {
+     "type": "text",
+     "eyebrow": "Moving From Stress to Strategy with a Team",
+     "headline": "Our Approach",
+     "body": "We provide each team member who reaches out to us five one-on-one coaching sessions that team members can elect to use their professional development funds to support.",
+     "corner": [
+      "Honest Ochre",
+      "Honest-Ochre",
+      7,
+      true
+     ]
+    },
+    {
+     "type": "text",
+     "eyebrow": "Moving From Stress to Strategy with a Team",
+     "headline": "Our Approach",
+     "body": "Over time, we’ve coached more than a dozen leaders across the same team, each in a confidential, tailored coaching relationship."
     },
     {
      "type": "takeaway",
@@ -2042,6 +2252,12 @@
       "Shifting from blame to accountability.",
       "Practicing productive conversations.",
       "Making small, visible commitments."
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
      ]
     },
     {
@@ -2092,15 +2308,22 @@
      "headline": "The Challenge",
      "items": [
       "Expectations felt unclear and misaligned, leading to frustration on both sides.",
-      "Feedback was experienced as unproductive and, at times, threatening rather than developmental.",
-      "Each person questioned the other’s intentions, assuming criticism or dismissal where none was intended.",
-      "Anxiety and risk‑mitigation replaced trust, openness, and shared problem‑solving."
+      "Feedback was experienced as unproductive and, at times, threatening rather than developmental."
      ],
      "corner": [
       "Intentional Blue",
       "Intentional-Blue",
       7,
       true
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Repairing a Ruptured Relationship",
+     "headline": "The Challenge",
+     "items": [
+      "Each person questioned the other’s intentions, assuming criticism or dismissal where none was intended.",
+      "Anxiety and risk‑mitigation replaced trust, openness, and shared problem‑solving."
      ]
     },
     {
@@ -2113,6 +2336,12 @@
       "Shifting from blame to accountability.",
       "Practicing productive conversations.",
       "Making small, visible commitments."
+     ],
+     "corner": [
+      "Intentional Blue",
+      "Intentional-Blue",
+      7,
+      true
      ]
     },
     {
@@ -2121,7 +2350,14 @@
      "headline": "Outcomes",
      "items": [
       "Increased clarity around expectations, priorities, and communication norms.",
-      "Reduced fear and defensiveness, replaced by greater curiosity and generosity of interpretation.",
+      "Reduced fear and defensiveness, replaced by greater curiosity and generosity of interpretation."
+     ]
+    },
+    {
+     "type": "list",
+     "eyebrow": "Repairing a Ruptured Relationship",
+     "headline": "Outcomes",
+     "items": [
       "More consistent, predictable feedback routines and norms to support earlier communication when challenges arose."
      ],
      "corner": [
