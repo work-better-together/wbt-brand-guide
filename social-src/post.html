@@ -145,7 +145,7 @@ fetch('all.json').then(r => r.json()).then(all => {
       html = `<div class="text" style="top:${top + (story ? 300 : 140)}px"><span class="asterisk" aria-hidden="true"></span><div class="eyebrow">${sl.eyebrow}</div>
          <p class="takeaway ${sl.headline.length > 170 ? 's' : ''}">${sl.headline}</p></div>` + cta(sl.cta) + logo; break;
     case 'cover':
-      const ph = story ? 900 : 660;   // photo leaves room for a big supporting line
+      const ph = story ? 820 : 640;   // one height for every cover (the shortest that fits all titles); leaves room for a big supporting line
       html = `<img class="photo" style="height:${ph}px;object-position:${sl.pos || '50% 35%'}" src="photos/${sl.photo}">
          <div class="text" style="top:${ph + 56}px"><div class="eyebrow">${sl.eyebrow}</div><h1 class="headline ${size(sl.headline, 34, 22)}">${sl.headline}</h1>
          ${sl.deck ? `<p class="deck">${sl.deck}</p>` : ''}</div>` + cta(sl.cta) + logo; break;
@@ -160,18 +160,20 @@ fetch('all.json').then(r => r.json()).then(all => {
     while (walker.nextNode()) if (walker.currentNode.nodeValue.trim()) last = walker.currentNode;
     if (last) last.nodeValue = last.nodeValue.replace(/ (\S+\s*)$/, '\u00A0$1');
   });
-  // Fit: the text block must clear the CTA and logo by 48px. First the picture gives way (a cover photo gets shorter, a
-  // collage scales down from its top, by up to 22%) and the text moves up; only then does type shrink, in 4% steps to 72%.
+  // Fit: the text block must clear the CTA and logo by 48px. Cover photos keep one height on every card; a post collage
+  // may scale down from its top (by up to 22%) and the text moves up; then type shrinks, in 4% steps to 72%.
   // Supporting lines (.deck) never shrink, so they stay one size on every card.
   const fit = () => {
     const t = c.querySelector('.text'); if (!t) return;
     const stops = [...c.querySelectorAll('.cta, .logo')].map(e => e.getBoundingClientRect().top);
     const limit = Math.min(...stops, c.getBoundingClientRect().bottom - (story ? 340 : 0)) - 48;
-    const over = t.getBoundingClientRect().bottom - limit, pic = c.querySelector('.photo, .art');
-    if (over > 0 && pic) {
+    // Story collages are all drawn at 79% (the size the longest title needs), so every Story's art matches.
+    const art = c.querySelector('.art');
+    if (story && art) { art.style.transformOrigin = '50% 0'; art.style.transform = 'scale(.79)'; t.style.top = (parseFloat(t.style.top) - art.getBoundingClientRect().height * 0.21 / 0.79) + 'px'; }
+    const over = t.getBoundingClientRect().bottom - limit, pic = c.querySelector('.art');
+    if (over > 0 && pic && !story) {
       const h = pic.getBoundingClientRect().height, d = Math.min(over, h * 0.22);
-      if (pic.classList.contains('photo')) pic.style.height = (h - d) + 'px';
-      else { pic.style.transformOrigin = '50% 0'; pic.style.transform = `scale(${(h - d) / h})`; }
+      pic.style.transformOrigin = '50% 0'; pic.style.transform = `scale(${(h - d) / h})`;
       t.style.top = (parseFloat(t.style.top) - d) + 'px';
     }
     const parts = [...t.querySelectorAll('.headline, .takeaway, .body, .quote, ul.beats li, .qual, .name, .role')];
@@ -215,14 +217,19 @@ function animate() {
     add(el, [{ transform: `translate(90px,70px) ${keep}` }, { transform: keep || 'none' }], 0.2 + i * 0.15, MOVE, IN); fadeIn(el, 0.2 + i * 0.15); });
   c.querySelectorAll('.qmark, .asterisk').forEach(el => { add(el, [{ transform: 'translateY(24px) ' + (getComputedStyle(el).transform === 'none' ? '' : '') }, { transform: '' }], t, MOVE, IN); fadeIn(el, t); t += 0.25; });
   // text: split every text element into lines of words; words close up to their spacing, line after line
-  const lines = [], bullets = [];
+  const lines = [], bullets = [], stillBottom = c.querySelector('.text')?.getBoundingClientRect().bottom || 0;
   c.querySelectorAll('.text .eyebrow, .text .headline, .text .takeaway, .text .deck, .text .body, .text .quote, .text li, .text .name, .text .role, .text .stat, .text .qual').forEach(el => {
     if (el.closest('.who') && el.classList.contains('who')) return;
     const words = el.innerHTML.split(/([ \t\n\r]+)/).filter(Boolean);
-    el.innerHTML = words.map(w => /^[ \t\n\r]+$/.test(w) ? w : `<span class="aw" style="display:inline-block">${w}</span>`).join('');
-    if (el.matches('ul.beats li')) { el.classList.add('anim'); el.insertAdjacentHTML('afterbegin', '<span class="bul"></span>'); bullets.push([el.firstChild, lines.length]); }
+    // Lock the still's line breaks first: wrap words as plain inline spans (same layout as the still), note each word's
+    // line, put a <br> at every line end and stop wrapping. Only then make the words movable (inline-block), so animating
+    // never re-wraps a line, adds a line, or pushes text into the CTA.
+    el.innerHTML = words.map(w => /^[ \t\n\r]+$/.test(w) ? w : `<span class="aw">${w}</span>`).join('');
     const spans = [...el.querySelectorAll('.aw')], rows = [];
-    spans.forEach(sp => { const y = Math.round(sp.getBoundingClientRect().top); (rows.at(-1)?.y === y ? rows.at(-1).s : (rows.push({ y, s: [] }), rows.at(-1).s)).push(sp); });
+    spans.forEach(sp => { const y = Math.round(sp.getClientRects()[0].top); (rows.at(-1) && Math.abs(rows.at(-1).y - y) < 4 ? rows.at(-1).s : (rows.push({ y, s: [] }), rows.at(-1).s)).push(sp); });
+    rows.slice(1).forEach(r => { const prev = r.s[0].previousSibling; if (prev && prev.nodeType === 3 && !prev.nodeValue.trim()) prev.replaceWith(document.createElement('br')); else r.s[0].before(document.createElement('br')); });
+    el.style.whiteSpace = 'nowrap'; spans.forEach(sp => sp.style.display = 'inline-block');
+    if (el.matches('ul.beats li')) { el.classList.add('anim'); el.insertAdjacentHTML('afterbegin', '<span class="bul"></span>'); bullets.push([el.firstChild, lines.length]); }
     rows.forEach(r => { const rs = r.s.map(x => x.getBoundingClientRect()), m = (rs[0].left + rs.at(-1).right) / 2;
       lines.push(r.s.map((x, k) => ({ x, dx: (rs[k].left + rs[k].width / 2) - m }))); });
   });
@@ -232,7 +239,8 @@ function animate() {
   t += Math.max(0, lines.length - 1) * GAP + MOVE * 0.7;
   c.querySelectorAll('.cta, .logo').forEach(el => fadeIn(el, t));
   const words = c.querySelector('.text') ? c.querySelector('.text').textContent.trim().split(/\s+/).length : 0;
-  const hold = Math.max(2.5, Math.min(7, 1.2 + words * 0.22));      // long enough to read
+  let hold = Math.max(2.5, Math.min(7, 1.2 + words * 0.22));      // long enough to read
+  if (+(q.get('s') || 0) === 0) hold = Math.min(hold, 2.6);        // the cover only needs a glance: the title, then on to the story
   const out = t + FADE + hold;
   // exit: drift slightly apart and fade
   lines.forEach((ws, i) => ws.forEach(({ x, dx }) => add(x, [{ transform: 'none', opacity: 1 }, { transform: `translateX(${dx * SPREAD * 0.3}px)`, opacity: 0 }], out + i * .03, .45, OUT, 'forwards')));
@@ -240,6 +248,11 @@ function animate() {
     add(el, [{ opacity: getComputedStyle(el).opacity }, { opacity: 0 }], out + .15, .45, OUT, 'forwards'));
   window.TOTAL = out + lines.length * .03 + .7;
   window.seek = s => anims.forEach(a => a.currentTime = s * 1000);
+  if (q.get('probe')) {   // QA: after the text has settled, it must sit where the still has it and clear the CTA/logo
+    seek(out - 0.1); const ws = [...c.querySelectorAll('.text .aw')].map(x => x.getBoundingClientRect().bottom);
+    const lim = Math.min(...[...c.querySelectorAll('.cta, .logo')].map(e => e.getBoundingClientRect().top));
+    document.body.dataset.probe = JSON.stringify({ still: Math.round(stillBottom), anim: Math.round(Math.max(0, ...ws)), lim: Math.round(lim) });
+  }
   seek(0); document.body.dataset.motion = 1;
 }
 </script>

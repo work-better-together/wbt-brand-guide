@@ -25,6 +25,7 @@ Notable changes to the brand guide site (brand.wbt.coach). Newest first.
 - **Instagram grid:** posts, carousels and Stories sit three across with 3px gutters, like a profile grid. Carousels page one slide at a time (swipe, or hover for arrows; 1/n counter). Stories show only the animated version, with a play/pause button (one plays at a time).
 - **Lighter Stories:** about 30 words a screen; a long beat runs over two frames, and a point or sentence too long for one screen is left out of the Story (it stays in the carousel). *Moving From Stress to Strategy* gains an Our Approach slide.
 - **Type:** supporting lines are one size on every card (60px posts, 64px Stories) and never shrink; when text runs long, the picture gives way first (shorter photo, smaller collage). Stat supporting lines are 60px. No single-word orphans anywhere (last two words glued, `text-wrap: pretty`). Case-study cover photos are shorter so the line under the title can be bigger, and crops keep heads in (Co-leading anchored to the top).
+- **Consistent pictures:** every case-study cover photo is one height (640px posts, 820px Stories) and every Story collage one scale, sized so no title shrinks. Story covers hold ~2.5s. Animated text keeps the still's exact line breaks, so motion never pushes text into the CTA or logo (all 106 Story frames checked).
 - Corner spots drop out of any slide whose text would reach them; the Collaboration whiteboard photo is cropped clean on the top and right.
 
 ### No boxed text
