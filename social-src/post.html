@@ -224,7 +224,8 @@ function animate() {
     // Lock the still's line breaks first: wrap words as plain inline spans (same layout as the still), note each word's
     // line, put a <br> at every line end and stop wrapping. Only then make the words movable (inline-block), so animating
     // never re-wraps a line, adds a line, or pushes text into the CTA.
-    el.innerHTML = words.map(w => /^[ \t\n\r]+$/.test(w) ? w : `<span class="aw">${w}</span>`).join('');
+    // words also split after hyphens and dashes and before en/em dashes ("manager-|employee", "formation|—before"), where the still may break a line
+    el.innerHTML = words.map(w => /^[ \t\n\r]+$/.test(w) ? w : w.split(/(?<=[-–—])(?=[^\s<])|(?<=[^\s>])(?=[–—])/).map(p => `<span class="aw">${p}</span>`).join('')).join('');
     const spans = [...el.querySelectorAll('.aw')], rows = [];
     spans.forEach(sp => { const y = Math.round(sp.getClientRects()[0].top); (rows.at(-1) && Math.abs(rows.at(-1).y - y) < 4 ? rows.at(-1).s : (rows.push({ y, s: [] }), rows.at(-1).s)).push(sp); });
     rows.slice(1).forEach(r => { const prev = r.s[0].previousSibling; if (prev && prev.nodeType === 3 && !prev.nodeValue.trim()) prev.replaceWith(document.createElement('br')); else r.s[0].before(document.createElement('br')); });
@@ -251,7 +252,8 @@ function animate() {
   if (q.get('probe')) {   // QA: after the text has settled, it must sit where the still has it and clear the CTA/logo
     seek(out - 0.1); const ws = [...c.querySelectorAll('.text .aw')].map(x => x.getBoundingClientRect().bottom);
     const lim = Math.min(...[...c.querySelectorAll('.cta, .logo')].map(e => e.getBoundingClientRect().top));
-    document.body.dataset.probe = JSON.stringify({ still: Math.round(stillBottom), anim: Math.round(Math.max(0, ...ws)), lim: Math.round(lim) });
+    const right = Math.max(0, ...[...c.querySelectorAll('.text .aw')].map(x => x.getBoundingClientRect().right));
+    document.body.dataset.probe = JSON.stringify({ still: Math.round(stillBottom), anim: Math.round(Math.max(0, ...ws)), lim: Math.round(lim), right: Math.round(right) });
   }
   seek(0); document.body.dataset.motion = 1;
 }
