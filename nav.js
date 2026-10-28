@@ -1,3 +1,5 @@
+/* Hyperakt add-on for every brand guide: Google Analytics + skill purchase popup (source: projects.hyperakt.com/_hkt/guide.js). */
+(function(){if(document.querySelector('script[data-hkt-guide]'))return;var s=document.createElement('script');s.src='https://projects.hyperakt.com/_hkt/guide.js';s.defer=true;s.setAttribute('data-hkt-guide','');document.head.appendChild(s);})();
 (function () {
   const ORDER = [
     { file: 'voice.html',                 title: 'Voice',         num: '01' },
