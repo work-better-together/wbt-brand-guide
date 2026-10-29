@@ -48,7 +48,7 @@
     @media (max-width: 1000px) { .dl-grid.mono { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
     .dl-howto { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 56px; padding-top: 32px; }
     .dl-howto h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin-bottom: 14px; }
-    .dl-howto ol { font-family: var(--font-body); font-size: 16px; line-height: 1.65; padding-left: 22px; }
+    .dl-howto ol { font-family: var(--font-body); font-size: 16px; line-height: 1.65; padding-left: 22px; text-wrap: pretty; }
     .dl-howto ol li { margin-bottom: 10px; padding-left: 4px; }
     .dl-howto code { font-family: var(--font-mono); font-size: 14px; overflow-wrap: anywhere; }
     .dl-note { font-family: var(--font-body); font-size: 14px; line-height: 1.6; margin-top: 14px; }
@@ -122,8 +122,16 @@
       <li><strong>WBT Brand skill</strong><p>Teaches Claude our colors, type, voice, layouts and asset library, so what it makes looks and sounds like us: social posts, carousels and Stories, one-pagers, worksheets, decks, emails, web pages and collages. It uses our real logo, watercolor, scribble and illustration files from this guide, and checks its own work before handing it over.</p><a class="dl-btn" href="assets/Downloads/WBT-20261021-Claude-Skill-wbt-brand.zip" download>ZIP · 3.4 MB</a></li>
     </ul>
     <div class="dl-howto">
+      <div style="grid-column: 1 / -1">
+        <h3>Chat, Cowork or Code?</h3>
+        <ol>
+          <li><b>Chat: For quick, single pieces.</b> A social graphic, a slide image, a caption, a resized version. Fastest way to get going.</li>
+          <li><b>Cowork: For working with your files.</b> Decks, documents and folders on your computer. Point it at your template or your notes and let it build.</li>
+          <li><b>Code: For pages and anything you publish.</b> Web pages, interactive pieces, motion and anything kept in a repo. You can keep adding requests while it works.</li>
+        </ol>
+      </div>
       <div>
-        <h3>In Claude (web or desktop app)</h3>
+        <h3>In Claude chat, Cowork and Code</h3>
         <ol>
           <li>Download the ZIP above. Don't unzip it.</li>
           <li>In Claude, open <b>Settings › Capabilities</b> and make sure <b>Code execution and file creation</b> is on.</li>
@@ -134,13 +142,13 @@
         <p class="dl-note">On a Team or Enterprise plan, an admin may need to turn on skills for the organization first. If you had an older WBT skill installed (<i>wbt-brand-designer</i> or <i>wbt-collage</i>), delete it so only this one runs.</p>
       </div>
       <div>
-        <h3>In Claude Code</h3>
+        <h3>Install for a team</h3>
         <ol>
-          <li>Download the ZIP above.</li>
-          <li>Unzip it into your skills folder, so the skill sits at <code>~/.claude/skills/wbt-brand/</code>:<br><code>unzip WBT-20261021-Claude-Skill-wbt-brand.zip -d ~/.claude/skills/</code></li>
-          <li>Start a new Claude Code session. Ask for anything WBT, or type <code>/wbt-brand</code>.</li>
+          <li>On a Team or Enterprise plan, your Claude admin (often IT) can add the skill once in the organization’s settings. That makes it available to the whole team, so nobody has to upload it on their own.</li>
+          <li>Want to try it first? If your IT team allows it, a few people can install it on their own accounts to test before it rolls out to everyone.</li>
+          <li>One upload works in chat, Cowork and Claude Code. Claude Code picks it up when you sign in with the same account.</li>
         </ol>
-        <p class="dl-note">To update, download the newest ZIP here and repeat the steps: upload it again in Claude (replacing the old one), or unzip it over the old folder in Claude Code.</p>
+        <p class="dl-note">To update, download the newest ZIP here and upload it again in Claude, replacing the old one.</p>
       </div>
     </div>
   </div>
