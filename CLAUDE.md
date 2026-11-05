@@ -40,7 +40,7 @@ This is the Work Better Together brand guide and toolkit, built as a collection 
 3. `git add …` → **`git pull --rebase origin main`** first (the collage maker and the last-updated workflow both commit to `main`) → `git push origin main`.
 4. Netlify publishes in ~1 min. **Verify against the live URL**, not just the push.
 
-**Collage save (collage-maker.html):** saving a collage POSTs to a Cloudflare Worker — `wbt-collage-save.workbettertogether.workers.dev` (source in `collage-save-worker/`) — which holds the GitHub token server-side. **No API tokens live in any page.** Worker secrets (`GITHUB_TOKEN`, `SHARED_SECRET`) are set via `wrangler secret put`; never hard-code them. The gallery (`collages.html`) reads `assets/Generated Illustrations/manifest.json` over a plain public URL.
+**Collage save (collage-maker.html):** saving a collage POSTs to a Cloudflare Worker — `wbt-collage-save.hyperakt.workers.dev` (source in `collage-save-worker/`) — which holds the GitHub token server-side. **No API tokens live in any page.** Worker secrets (`GITHUB_TOKEN`, `SHARED_SECRET`) are set via `wrangler secret put`; never hard-code them. The gallery (`collages.html`) reads `assets/Generated Illustrations/manifest.json` over a plain public URL.
 
 **Concept illustrations** are served locally from `assets/Illustrations/`, not from Airtable. `elements.html` renders a single A–Z **`CONCEPTS`** array (the "Concept Image Library"); `collage-maker.html` builds its picker from `STATIC_CONCEPTS` + `LIBRARY_CONCEPTS`. Keep the two illustration sets in sync (both currently offer the same 102 illustrations). See `CHANGELOG.md` for the full history of this rework.
 

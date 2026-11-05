@@ -2351,10 +2351,19 @@ const STATIC_CONCEPTS = [
 /* ───────────────────────────────────────────────────────────
    SAVE ENDPOINT — Cloudflare Worker (holds the GitHub token server-side)
    No credentials live in this page. Deploy collage-save-worker/ and set
-   SAVE_ENDPOINT to its URL (or a same-origin route like '/collage-api/save').
+   SAVE_ENDPOINTS to its URL (or a same-origin route like '/collage-api/save').
 ─────────────────────────────────────────────────────────── */
 
-const SAVE_ENDPOINT = 'https://wbt-collage-save.workbettertogether.workers.dev';
+// Save Worker. The Cloudflare account's workers.dev name moved from workbettertogether to hyperakt (Nov 2026);
+// the old address stays as a fallback until every cached copy of this page has refreshed.
+const SAVE_ENDPOINTS = ['https://wbt-collage-save.hyperakt.workers.dev', 'https://wbt-collage-save.workbettertogether.workers.dev'];
+async function postSave(init) {
+  let lastErr;
+  for (const url of SAVE_ENDPOINTS) {
+    try { return await fetch(url, init); } catch (e) { lastErr = e; }   // network/DNS failure → try the next address
+  }
+  throw lastErr;
+}
 
 // The team enters the shared passphrase once; it's kept in localStorage,
 // never hard-coded. Wrong passphrases are cleared so the prompt reappears.
@@ -3452,7 +3461,7 @@ async function saveToBrandGuide(nameOverride) {
     const secret = getSaveSecret();
     if (!secret) throw new Error('Save passphrase required');
 
-    const res = await fetch(SAVE_ENDPOINT, {
+    const res = await postSave( {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Save-Secret': secret },
       body: JSON.stringify({

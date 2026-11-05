@@ -86,7 +86,7 @@ A large rework across `elements.html`, `collage-maker.html`, and a new Cloudflar
 
 ### Collage save → Cloudflare Worker
 - Added **`collage-save-worker/`** — a Cloudflare Worker that holds the GitHub token as a server-side secret and performs the commit on the page's behalf. The page POSTs the rendered collage to it.
-- Deployed at **`wbt-collage-save.workbettertogether.workers.dev`**. Secrets (`GITHUB_TOKEN`, `SHARED_SECRET`) are set via `wrangler secret put` — never in source.
+- Deployed at **`wbt-collage-save.hyperakt.workers.dev`**. Secrets (`GITHUB_TOKEN`, `SHARED_SECRET`) are set via `wrangler secret put` — never in source.
 - Save UX is unchanged: build a collage → **Save** → enter the shared passphrase (once, stored in localStorage) → it commits the PNG + updates `assets/Generated Illustrations/manifest.json`. The gallery (`collages.html`) reads that manifest over a plain public URL.
 - Deploy/rotate instructions: `collage-save-worker/README.md`.
 
